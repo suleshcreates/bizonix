@@ -9,7 +9,6 @@ import { HomeHero } from "@/components/sections/home-hero";
 import { IndustryBand } from "@/components/sections/industry-band";
 import { PlatformSpine } from "@/components/sections/platform-spine";
 import { SolutionsGrid } from "@/components/sections/solutions-grid";
-import { TrustStrip } from "@/components/sections/trust-strip";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -36,7 +35,6 @@ export default function Home() {
   return (
     <>
       <HomeHero />
-      <TrustStrip />
       <AudienceSection />
       <ChallengesSection />
       <PlatformSpine />

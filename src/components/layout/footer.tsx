@@ -1,4 +1,7 @@
-import { ArrowUpRight } from "lucide-react";
+"use client";
+
+import { ArrowUpRight, Mail, Phone, MapPin } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/button";
 import { industryLinks, siteConfig, solutionLinks } from "@/lib/site-config";
@@ -24,59 +27,77 @@ const footerGroups = [
       { label: "Contact", href: "/contact" },
     ],
   },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
-    ],
-  },
 ] as const;
 
 export function Footer() {
   return (
     <>
-      <section className="bg-bz-blue text-white">
-        <div className="shell flex flex-col items-start justify-between gap-8 py-12 md:flex-row md:items-center">
-          <div>
-            <p className="mb-2 text-sm font-bold uppercase tracking-[.14em] text-white/65">
-              A clearer operating day starts here
-            </p>
-            <h2 className="text-3xl font-bold tracking-[-.04em] md:text-4xl">
-              Ready to run ops smarter?
-            </h2>
-          </div>
-          <ButtonLink href="/contact" variant="light">
-            Book a demo <ArrowUpRight size={18} />
+      {/* CTA Banner with Team Photo */}
+      <section className="footer-cta-banner">
+        <div className="footer-cta-overlay" />
+        <Image
+          src="/brand/footer-team.jpg"
+          alt="The Bizonix team"
+          fill
+          className="footer-cta-bg-img"
+          sizes="100vw"
+        />
+        <div className="shell footer-cta-content">
+          <h2>
+            Ready to run your brand on
+            <br />
+            <span>one operating truth?</span>
+          </h2>
+          <ButtonLink
+            href="/contact"
+            variant="primary"
+            className="footer-cta-btn"
+          >
+            Book a free consultation <ArrowUpRight size={18} />
           </ButtonLink>
         </div>
       </section>
-      <footer className="bg-bz-navy-deep pb-28 pt-16 text-white md:pb-8">
+
+      {/* Main Footer */}
+      <footer className="site-footer">
         <div className="shell">
-          <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.45fr_3fr]">
-            <div>
+          {/* Top Grid: Brand + Link Groups + Newsletter */}
+          <div className="footer-top-grid">
+            {/* Brand Column */}
+            <div className="footer-brand-col">
               <Logo light />
-              <p className="mt-5 max-w-xs text-sm leading-7 text-white/58">
-                {siteConfig.tagline}
-              </p>
-              <p className="mt-8 max-w-xs text-sm text-white/45">
-                One operating truth across warehouse, stores, franchise and
-                books.
-              </p>
+              <p className="footer-brand-tagline">{siteConfig.tagline}</p>
+              <div className="footer-contact-info">
+                <a
+                  href={`mailto:${siteConfig.salesEmail}`}
+                  className="footer-contact-link"
+                >
+                  <Mail size={14} />
+                  <span>{siteConfig.salesEmail}</span>
+                </a>
+                <a
+                  href={`tel:${siteConfig.salesPhone}`}
+                  className="footer-contact-link"
+                >
+                  <Phone size={14} />
+                  <span>{siteConfig.salesPhone}</span>
+                </a>
+                <span className="footer-contact-link">
+                  <MapPin size={14} />
+                  <span>India</span>
+                </span>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-9 sm:grid-cols-3 lg:grid-cols-5">
+
+            {/* Sitemap Columns */}
+            <div className="footer-links-grid">
               {footerGroups.map((group) => (
                 <div key={group.title}>
-                  <h3 className="mb-4 text-xs font-bold uppercase tracking-[.15em] text-white/45">
-                    {group.title}
-                  </h3>
-                  <ul className="space-y-3">
+                  <h3 className="footer-group-title">{group.title}</h3>
+                  <ul className="footer-link-list">
                     {group.links.map((item) => (
                       <li key={item.href}>
-                        <Link
-                          className="text-sm text-white/72 transition hover:text-white"
-                          href={item.href}
-                        >
+                        <Link className="footer-link" href={item.href}>
                           {item.label}
                         </Link>
                       </li>
@@ -85,12 +106,48 @@ export function Footer() {
                 </div>
               ))}
             </div>
+
+            {/* Newsletter Column */}
+            <div className="footer-newsletter-col">
+              <h3 className="footer-group-title">Stay in the loop</h3>
+              <p className="footer-newsletter-desc">
+                Get product updates, best practices, and operator insights. No
+                spam.
+              </p>
+              <form
+                className="footer-newsletter-form"
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  className="footer-newsletter-input"
+                  aria-label="Email address for newsletter"
+                />
+                <button type="submit" className="footer-newsletter-btn">
+                  Sign Up
+                </button>
+              </form>
+            </div>
           </div>
-          <div className="flex flex-col gap-3 py-6 text-xs text-white/42 md:flex-row md:items-center md:justify-between">
+
+          {/* Bottom Bar */}
+          <div className="footer-bottom-bar">
             <p>
-              © {new Date().getFullYear()} {siteConfig.company}
+              © {new Date().getFullYear()} {siteConfig.company}. All rights
+              reserved.
             </p>
-            <p>Built in India for multi-entity retail operators.</p>
+            <div className="footer-bottom-links">
+              <Link href="/privacy" className="footer-bottom-link">
+                Privacy
+              </Link>
+              <Link href="/terms" className="footer-bottom-link">
+                Terms
+              </Link>
+            </div>
+            <p className="footer-built-in">
+              Built in India for multi-entity retail operators.
+            </p>
           </div>
         </div>
       </footer>
