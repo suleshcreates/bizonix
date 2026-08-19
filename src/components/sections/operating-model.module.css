@@ -1,0 +1,166 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 36px 0 26px;
+  background: radial-gradient(circle at 78% 38%, rgba(47, 107, 255, 0.08), transparent 31rem), linear-gradient(180deg, var(--bz-surface), var(--bz-surface-alt));
+}
+
+.section::before {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(47, 107, 255, 0.13) 0.6px, transparent 0.7px);
+  background-size: 17px 17px;
+  content: "";
+  mask-image: linear-gradient(transparent, #000 12%, #000 90%, transparent);
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.shell { position: relative; z-index: 1; width: min(1500px, calc(100% - 48px)); margin-inline: auto; }
+.header { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(440px, 0.85fr); align-items: end; gap: 72px; animation: headerReveal 700ms ease both; }
+.eyebrow { display: inline-flex; align-items: center; gap: 14px; color: var(--bz-blue); font-size: 11px; font-weight: 850; letter-spacing: 0.11em; text-transform: uppercase; }
+.eyebrow i { width: 25px; height: 1px; background: var(--bz-blue); }
+.header h2 { max-width: 770px; margin-top: 18px; color: var(--bz-navy); font-size: 3.75rem; font-weight: 820; line-height: 0.97; letter-spacing: -0.06em; }
+.header h2 em { background: linear-gradient(100deg, var(--bz-blue), var(--bz-teal)); background-clip: text; color: transparent; font-style: normal; -webkit-background-clip: text; }
+.header > p { max-width: 530px; margin: 0 0 9px; color: var(--bz-muted); font-size: 1.08rem; line-height: 1.65; }
+
+.layout { display: grid; grid-template-columns: 430px minmax(0, 1fr); gap: 30px; margin-top: 34px; }
+.principleRail { display: grid; align-content: center; gap: 10px; }
+.principle { --accent: var(--bz-blue); position: relative; display: grid; min-height: 180px; grid-template-columns: 28px 58px minmax(0, 1fr) 150px; align-items: center; gap: 10px; border-bottom: 1px solid var(--bz-border); animation: principleReveal 650ms ease both; animation-delay: var(--reveal-delay); }
+.principle[data-accent="teal"] { --accent: var(--bz-teal); }
+.principleMarker { position: relative; align-self: stretch; display: flex; flex-direction: column; align-items: center; padding-top: 18px; color: var(--accent); }
+.principleMarker strong { font-size: 1.14rem; font-weight: 850; }
+.principleMarker span { width: 5px; height: 5px; margin-top: 17px; border-radius: 50%; background: var(--accent); }
+.principleMarker i { width: 1px; flex: 1; margin-top: 4px; margin-bottom: 17px; background: linear-gradient(var(--accent), color-mix(in srgb, var(--accent) 20%, transparent)); }
+.principleIcon { display: grid; width: 58px; height: 58px; place-items: center; border-radius: 16px; background: color-mix(in srgb, var(--accent) 10%, white); color: var(--accent); }
+.principleCopy h3 { color: var(--bz-navy); font-size: 0.9rem; font-weight: 810; letter-spacing: -0.02em; }
+.principleCopy p { margin-top: 8px; color: var(--bz-muted); font-size: 0.72rem; line-height: 1.65; }
+.principleImage { position: relative; width: 150px; height: 130px; overflow: hidden; border-radius: 9px; background: var(--bz-surface-alt); }
+.principleImage img { object-fit: cover; transition: transform 450ms ease; }
+.principle:hover .principleImage img { transform: scale(1.035); }
+
+.journeyPanel { position: relative; display: flex; min-height: 640px; overflow: hidden; flex-direction: column; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 28px; background: radial-gradient(circle at 50% 42%, rgba(46, 196, 182, 0.12), transparent 27%), radial-gradient(circle at 90% 6%, rgba(47, 107, 255, 0.18), transparent 30%), var(--bz-navy-deep); box-shadow: 0 28px 70px rgba(11, 31, 58, 0.22); color: white; animation: panelReveal 750ms 180ms ease both; }
+.panelTexture { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px), radial-gradient(rgba(46, 196, 182, 0.28) 0.6px, transparent 0.8px); background-position: 0 0, 0 0, 78% 35%; background-size: 42px 42px, 42px 42px, 9px 9px; mask-image: linear-gradient(#000, transparent 86%); opacity: 0.38; }
+.journeyHead { position: relative; z-index: 4; display: flex; justify-content: space-between; gap: 30px; padding: 25px 35px 12px; }
+.journeyHead span { color: var(--bz-teal); font-size: 10px; font-weight: 850; letter-spacing: 0.13em; text-transform: uppercase; }
+.journeyHead h3 { margin-top: 7px; font-size: 1.42rem; font-weight: 760; letter-spacing: -0.035em; }
+.journeyHead > b { color: rgba(255, 255, 255, 0.48); font-size: 0.76rem; letter-spacing: 0.12em; }
+
+.journeyTrack { position: relative; z-index: 3; display: grid; height: 340px; flex: 0 0 340px; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: start; padding: 45px 22px 0; }
+.journeyPath { position: absolute; z-index: 0; top: 45px; right: 22px; left: 22px; width: calc(100% - 44px); height: 150px; overflow: visible; }
+.pathGlow, .pathLine { fill: none; stroke-linecap: round; }
+.pathGlow { stroke: var(--bz-teal); stroke-width: 9px; opacity: 0.09; filter: blur(4px); }
+.pathLine { stroke: url(#context-flow); stroke-width: 3px; stroke-dasharray: 1080; stroke-dashoffset: 1080; animation: drawPath 1.6s 700ms ease forwards; }
+.pathArrows path { fill: none; stroke: var(--bz-teal); stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round; }
+.travelParticle { fill: var(--bz-teal); stroke: white; stroke-width: 1.5; }
+.journeyStage { position: relative; z-index: 2; display: flex; min-width: 0; align-items: center; flex-direction: column; border: 0; background: transparent; padding: 0 7px; color: white; text-align: center; opacity: 0; transform: translateY(12px); animation: stageReveal 520ms var(--stage-delay) ease forwards; transition: opacity 250ms ease; }
+.stageVisual { position: relative; display: block; width: 112px; height: 112px; border: 2px solid var(--bz-blue); border-radius: 50%; background: var(--bz-navy); box-shadow: 0 0 0 6px rgba(47, 107, 255, 0.08), 0 14px 24px rgba(0, 0, 0, 0.24); transition: filter 250ms ease, transform 250ms ease, box-shadow 250ms ease; }
+.stageVisual > img { border-radius: 50%; object-fit: cover; }
+.stageVisual > i { position: absolute; right: -10px; bottom: -8px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--bz-blue); border-radius: 50%; background: rgba(7, 22, 40, 0.94); color: #dce7ff; box-shadow: 0 9px 20px rgba(0, 0, 0, 0.28); }
+.movementStage .stageVisual { width: 136px; height: 136px; margin-top: -12px; border-color: var(--bz-teal); box-shadow: 0 0 0 7px rgba(46, 196, 182, 0.13), 0 0 0 14px rgba(46, 196, 182, 0.05), 0 18px 32px rgba(0, 0, 0, 0.32); animation: movementPulse 3.4s ease-in-out infinite; }
+.movementStage .stageVisual > i { border-color: var(--bz-teal); color: var(--bz-teal); }
+.stageCopy { display: grid; justify-items: center; margin-top: 30px; }
+.stageCopy small { color: var(--bz-teal); font-size: 0.69rem; font-weight: 850; letter-spacing: 0.12em; text-transform: uppercase; }
+.stageCopy strong { max-width: 150px; margin-top: 7px; color: rgba(255, 255, 255, 0.86); font-size: 0.72rem; line-height: 1.45; }
+.stageCopy em { max-width: 158px; margin-top: 6px; color: rgba(255, 255, 255, 0.66); font-size: 0.62rem; font-style: normal; line-height: 1.45; }
+.stageCopy b { margin-top: 9px; border: 1px solid rgba(47, 107, 255, 0.2); border-radius: 6px; background: rgba(47, 107, 255, 0.13); padding: 5px 9px; color: rgba(255, 255, 255, 0.78); font-size: 0.58rem; font-weight: 550; white-space: nowrap; }
+.journeyTrack:has(.journeyStage:hover) .journeyStage:not(:hover) { opacity: 0.5 !important; }
+.journeyStage:hover .stageVisual { filter: brightness(1.12); transform: translateY(-4px); }
+
+.payload { position: relative; z-index: 5; width: min(570px, calc(100% - 90px)); margin: -10px auto 16px; border: 1px solid var(--bz-teal); border-radius: 12px; background: rgba(6, 27, 44, 0.88); padding: 12px 20px 15px; box-shadow: 0 15px 34px rgba(0, 0, 0, 0.22); animation: payloadReveal 650ms 1.5s ease both; transition: border-color 220ms ease, box-shadow 220ms ease; }
+.payloadConnector { position: absolute; bottom: 100%; left: 50%; width: 1px; height: 34px; border-left: 1px dashed var(--bz-teal); }
+.payloadConnector i { position: absolute; bottom: -4px; left: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--bz-teal); box-shadow: 0 0 0 5px rgba(46, 196, 182, 0.12); }
+.payload > strong { color: var(--bz-teal); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.payload > div { display: grid; grid-template-columns: 1.15fr 1.15fr 0.75fr 1fr; margin-top: 10px; }
+.payload > div > span { position: relative; display: grid; grid-template-columns: 18px 1fr; gap: 2px 6px; border-left: 1px solid rgba(255, 255, 255, 0.1); padding: 0 12px; }
+.payload > div > span:first-child { border-left: 0; padding-left: 0; }
+.payload svg { grid-row: 1 / 3; color: var(--bz-teal); }
+.payload small { color: rgba(255, 255, 255, 0.7); font-size: 0.56rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.payload b { color: white; font-size: 0.69rem; white-space: nowrap; }
+.journeyPanel:has(.movementStage:hover) .payload { border-color: white; box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.1), 0 17px 38px rgba(0, 0, 0, 0.26); }
+
+.statusBar { position: relative; z-index: 6; display: flex; min-height: 54px; align-items: center; justify-content: space-between; gap: 24px; margin-top: auto; border-top: 1px solid rgba(255, 255, 255, 0.1); background: rgba(3, 16, 32, 0.42); padding: 9px 24px; }
+.statusBar > span { display: inline-flex; align-items: center; gap: 10px; color: rgba(255, 255, 255, 0.72); font-size: 0.72rem; }
+.statusBar > span i { display: grid; width: 24px; height: 24px; place-items: center; border: 1px solid rgba(46, 196, 182, 0.42); border-radius: 50%; background: rgba(46, 196, 182, 0.12); color: var(--bz-teal); }
+.statusBar button { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(46, 196, 182, 0.52); border-radius: 7px; padding: 8px 13px; color: var(--bz-teal); font-size: 0.65rem; font-weight: 820; letter-spacing: 0.08em; text-transform: uppercase; }
+.paused .movementStage .stageVisual, .paused .pathLine { animation-play-state: paused; }
+
+.proofStrip { display: grid; min-height: 118px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 22px; overflow: hidden; border: 1px solid var(--bz-border); border-radius: 16px; background: rgba(255, 255, 255, 0.86); box-shadow: 0 16px 38px rgba(22, 61, 113, 0.07); }
+.proof { display: grid; grid-template-columns: 58px 1fr; align-items: center; gap: 16px; padding: 16px 28px; }
+.proof + .proof { border-left: 1px solid var(--bz-border); }
+.proof > i { display: grid; width: 58px; height: 58px; place-items: center; border-radius: 50%; background: var(--bz-blue-soft); color: var(--bz-blue); }
+.proof:nth-child(even) > i { background: var(--bz-teal-soft); color: var(--bz-teal); }
+.proof span { display: grid; gap: 5px; }
+.proof strong { color: var(--bz-navy); font-size: 0.76rem; }
+.proof small { color: var(--bz-muted); font-size: 0.67rem; line-height: 1.5; }
+
+@keyframes headerReveal { from { opacity: 0; transform: translateY(16px); } }
+@keyframes principleReveal { from { opacity: 0; transform: translateX(-12px); } }
+@keyframes panelReveal { from { opacity: 0; transform: translateY(18px); } }
+@keyframes stageReveal { to { opacity: 1; transform: none; } }
+@keyframes payloadReveal { from { opacity: 0; transform: translateY(10px); } }
+@keyframes drawPath { to { stroke-dashoffset: 0; } }
+@keyframes movementPulse { 50% { box-shadow: 0 0 0 9px rgba(46, 196, 182, 0.1), 0 0 0 17px rgba(46, 196, 182, 0.035), 0 20px 36px rgba(0, 0, 0, 0.34); } }
+
+@media (max-width: 1240px) {
+  .shell { width: min(1140px, calc(100% - 48px)); }
+  .header { grid-template-columns: 1.1fr 0.9fr; gap: 46px; }
+  .header h2 { font-size: 3.25rem; }
+  .layout { grid-template-columns: 350px minmax(0, 1fr); }
+  .principle { grid-template-columns: 24px 50px 1fr 104px; min-height: 150px; }
+  .principleIcon { width: 50px; height: 50px; }
+  .principleImage { width: 104px; height: 104px; }
+  .stageCopy strong { font-size: 0.66rem; }
+  .proof { padding-inline: 18px; }
+}
+
+@media (max-width: 980px) {
+  .section { padding-block: 64px 34px; }
+  .shell { width: min(820px, calc(100% - 40px)); }
+  .header { grid-template-columns: 1fr; gap: 22px; }
+  .header > p { max-width: 650px; }
+  .layout { grid-template-columns: 1fr; }
+  .principleRail { grid-template-columns: repeat(3, 1fr); }
+  .principle { min-height: 260px; grid-template-columns: 30px 52px 1fr; grid-template-rows: auto 112px; padding: 14px; border: 1px solid var(--bz-border); border-radius: 16px; }
+  .principleMarker { grid-row: 1; }
+  .principleImage { grid-row: 2; grid-column: 1 / -1; width: 100%; height: 112px; }
+  .journeyPanel { min-height: 540px; }
+  .proofStrip { grid-template-columns: 1fr 1fr; }
+  .proof:nth-child(3) { border-left: 0; border-top: 1px solid var(--bz-border); }
+  .proof:nth-child(4) { border-top: 1px solid var(--bz-border); }
+}
+
+@media (max-width: 700px) {
+  .section { padding-block: 52px 28px; }
+  .shell { width: min(100% - 28px, 520px); }
+  .header h2 { font-size: clamp(2.55rem, 12vw, 3.35rem); }
+  .header > p { font-size: 0.94rem; }
+  .principleRail { grid-template-columns: 1fr; }
+  .principle { min-height: 142px; grid-template-columns: 24px 50px 1fr 105px; grid-template-rows: 1fr; padding: 8px 0; border: 0; border-bottom: 1px solid var(--bz-border); border-radius: 0; }
+  .principleImage { grid-row: 1; grid-column: 4; width: 105px; height: 105px; }
+  .journeyPanel { border-radius: 22px; }
+  .journeyHead { padding: 22px 20px 12px; }
+  .journeyHead h3 { font-size: 1.16rem; }
+  .journeyTrack { display: grid; height: auto; grid-template-columns: 1fr; gap: 18px; padding: 20px; }
+  .journeyPath { display: none; }
+  .journeyStage { min-height: 108px; align-items: center; flex-direction: row; gap: 18px; padding: 0; text-align: left; }
+  .journeyStage:not(:last-child)::after { position: absolute; top: 82px; bottom: -26px; left: 40px; border-left: 2px solid rgba(46, 196, 182, 0.38); content: ""; }
+  .stageVisual, .movementStage .stageVisual { width: 82px; height: 82px; flex: 0 0 auto; margin: 0; }
+  .stageCopy { justify-items: start; margin-top: 0; }
+  .stageCopy strong, .stageCopy em { max-width: 250px; }
+  .movementStage .stageVisual { box-shadow: 0 0 0 6px rgba(46, 196, 182, 0.12); }
+  .payload { width: calc(100% - 40px); margin: 20px auto; }
+  .payloadConnector { display: none; }
+  .payload > div { grid-template-columns: 1fr 1fr; gap: 14px 0; }
+  .payload > div > span:nth-child(3) { border-left: 0; padding-left: 0; }
+  .statusBar { align-items: flex-start; flex-direction: column; }
+  .statusBar button { align-self: flex-end; }
+  .proofStrip { grid-template-columns: 1fr; }
+  .proof + .proof, .proof:nth-child(3), .proof:nth-child(4) { border-top: 1px solid var(--bz-border); border-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header, .principle, .journeyPanel, .journeyStage, .payload, .pathLine, .movementStage .stageVisual { animation: none; opacity: 1; transform: none; }
+  .travelParticle { display: none; }
+  .principleImage img, .stageVisual, .journeyStage { transition: none; }
+}

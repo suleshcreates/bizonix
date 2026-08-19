@@ -1,394 +1,365 @@
 "use client";
 
+import Image from "next/image";
 import {
-  ArrowRight,
+  ArrowUpRight,
   Barcode,
-  Building2,
-  Check,
-  Landmark,
-  PackageCheck,
-  ReceiptIndianRupee,
+  Calculator,
+  Eye,
+  LockKeyhole,
   RotateCcw,
-  ScanLine,
-  Store,
-  Warehouse,
+  ShieldCheck,
+  ShoppingCart,
+  Truck,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { spine } from "@/lib/content/home";
+import type { CSSProperties } from "react";
+import { useEffect, useState } from "react";
 import styles from "./platform-spine.module.css";
 
-const purchaseRows = [
-  ["PO-1042", "Meridian Textiles", "220", "Received"],
-  ["PO-1041", "Om Fabrics Co.", "85", "Received"],
-  ["PO-1040", "Vantage Traders", "150", "Pending"],
-] as const;
-
-const barcodeRows = [
-  ["0000012045", "Classic Oxford", "Central WH"],
-  ["0000012046", "Tailored Chino", "Branch 02"],
-  ["0000012047", "Essential Polo", "Branch 01"],
-] as const;
-
-const returnRows = [
-  ["RT-0231", "Linen Overshirt", "Restocked"],
-  ["RT-0230", "Tailored Chino", "Restocked"],
-] as const;
-
-const accountingRows = [
-  ["Sales invoice", "₹1,84,200", "Posted"],
-  ["Purchase bill", "₹92,500", "Posted"],
-] as const;
-
-const stageMeta = [
+const journey = [
   {
-    label: "Supplier receipt",
-    signal: "220 pieces received",
-    icon: PackageCheck,
-  },
-  { label: "Piece identity", signal: "220 barcodes created", icon: Barcode },
-  {
-    label: "Entity movement",
-    signal: "42 pieces transferred",
-    icon: Warehouse,
+    number: "01",
+    title: "Purchase / GRN",
+    body: "Goods received from suppliers and recorded as GRN.",
+    icon: ShoppingCart,
+    color: "#2f6bff",
+    x: "22%",
+    y: "47%",
+    lx: "-118px",
+    ly: "-160px",
   },
   {
-    label: "Channel sale",
-    signal: "₹1.84L recognised",
-    icon: ReceiptIndianRupee,
+    number: "02",
+    title: "Stock Transfer",
+    body: "Move stock between locations and warehouses efficiently.",
+    icon: Truck,
+    color: "#22bd73",
+    x: "45%",
+    y: "31%",
+    lx: "-170px",
+    ly: "-145px",
   },
-  { label: "Reverse movement", signal: "2 pieces restocked", icon: RotateCcw },
-  { label: "Financial truth", signal: "Ledger posted", icon: Landmark },
+  {
+    number: "03",
+    title: "Barcode",
+    body: "Generate and scan barcodes for accurate tracking and traceability.",
+    icon: Barcode,
+    color: "#9847ee",
+    x: "69%",
+    y: "35%",
+    lx: "-92px",
+    ly: "-155px",
+  },
+  {
+    number: "04",
+    title: "POS / Wholesale",
+    body: "Sell via POS or manage wholesale transactions seamlessly.",
+    icon: Calculator,
+    color: "#178ce2",
+    x: "86%",
+    y: "62%",
+    lx: "34px",
+    ly: "-120px",
+  },
+  {
+    number: "05",
+    title: "Returns",
+    body: "Handle product returns and reverse flow smoothly.",
+    icon: RotateCcw,
+    color: "#1dc5b9",
+    x: "68%",
+    y: "83%",
+    lx: "84px",
+    ly: "45px",
+  },
+  {
+    number: "06",
+    title: "Accounting",
+    body: "All transactions flow into accounting for real-time reconciliation.",
+    icon: Calculator,
+    color: "#ff922b",
+    x: "43%",
+    y: "83%",
+    lx: "-200px",
+    ly: "4px",
+  },
+] as const;
+
+const principles = [
+  {
+    title: "Same Piece Identity",
+    body: "Track the same item across every step",
+    icon: ShieldCheck,
+    color: "#2f6bff",
+  },
+  {
+    title: "Entity-Aware Movement",
+    body: "Every movement is linked to the right entity",
+    icon: Eye,
+    color: "#25bf82",
+  },
+  {
+    title: "Nothing is Re-entered",
+    body: "Data flows automatically without duplicate entry",
+    icon: LockKeyhole,
+    color: "#9a50ef",
+  },
+  {
+    title: "Real-time Visibility",
+    body: "Complete transparency at every step",
+    icon: ArrowUpRight,
+    color: "#f59a35",
+  },
 ] as const;
 
 export function PlatformSpine() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [entered, setEntered] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotion = () => setReducedMotion(media.matches);
-    updateMotion();
-    media.addEventListener("change", updateMotion);
-
-    const section = sectionRef.current;
-    if (!section || media.matches) {
-      setEntered(true);
-      return () => media.removeEventListener("change", updateMotion);
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setEntered(true);
-        observer.disconnect();
-      },
-      { threshold: 0.22 },
+    const timer = window.setInterval(
+      () => setActiveStep((current) => (current + 1) % journey.length),
+      2400,
     );
-    observer.observe(section);
-
-    return () => {
-      observer.disconnect();
-      media.removeEventListener("change", updateMotion);
-    };
+    return () => window.clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    if (!entered || paused || reducedMotion) return;
-    const timer = window.setInterval(() => {
-      setActiveStep((current) => (current + 1) % spine.length);
-    }, 1900);
-    return () => window.clearInterval(timer);
-  }, [entered, paused, reducedMotion]);
-
-  const current = stageMeta[activeStep];
-
   return (
-    <section
-      ref={sectionRef}
-      className={`${styles.section} ${entered ? styles.entered : ""}`}
-      aria-labelledby="operating-spine-title"
-    >
+    <section className={styles.section} aria-labelledby="operating-spine-title">
       <div className={styles.atmosphere} aria-hidden="true" />
       <div className={styles.shell}>
         <header className={styles.heading}>
           <div>
-            <span className="eyebrow">The operating spine</span>
-            <h2 id="operating-spine-title" className="h2 mt-5">
-              One movement. Six surfaces. Zero lost context.
-            </h2>
+            <h2 id="operating-spine-title">Operating Content Workflow</h2>
+            <p>End-to-end journey of your content &amp; inventory flow</p>
+            <span className={styles.headingRule} aria-hidden="true" />
           </div>
-          <p>
-            Follow one commercial event from supplier receipt to the books.
-            Every handoff keeps its entity, piece, value and tax context
-            attached.
-          </p>
+          <div className={styles.flowSummary}>
+            <span className={styles.summaryIcon}>
+              <ArrowUpRight size={24} />
+            </span>
+            <span>
+              <strong>Complete Flow</strong>
+              <small>
+                6 Key Steps <i /> One Seamless Journey
+              </small>
+            </span>
+          </div>
         </header>
 
-        <div
-          className={styles.theatre}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={() => setPaused(false)}
-        >
-          <div className={styles.theatreBar}>
-            <div className={styles.liveLabel}>
-              <span />
-              Operating context BX-240831
-            </div>
-            <div className={styles.nowPlaying} aria-live="polite">
-              <span>{String(activeStep + 1).padStart(2, "0")} / 06</span>
-              <current.icon size={16} aria-hidden="true" />
-              <strong>{current.signal}</strong>
-            </div>
-            <div className={styles.contextKeys} aria-label="Context retained">
-              <span>Entity</span>
-              <span>Barcode</span>
-              <span>Value</span>
-              <span>GST</span>
-            </div>
-          </div>
-
-          <div className={styles.stage}>
-            <div className={styles.rail} aria-hidden="true">
-              <span className={styles.railBase} />
-              <span
-                className={styles.railProgress}
-                style={{ width: `${(activeStep / (spine.length - 1)) * 100}%` }}
-              />
-              <span
-                className={styles.contextToken}
-                style={{ left: `${(activeStep / (spine.length - 1)) * 100}%` }}
+        <div className={styles.workflowStage}>
+          <svg
+            className={styles.flowMap}
+            viewBox="0 0 1440 560"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient
+                id="spine-segment-1"
+                gradientUnits="userSpaceOnUse"
+                x1="317"
+                y1="263"
+                x2="648"
+                y2="174"
               >
-                <ScanLine size={18} />
-              </span>
-            </div>
+                <stop offset="0" stopColor="#1f5cff" />
+                <stop offset=".62" stopColor="#177dff" />
+                <stop offset="1" stopColor="#20c978" />
+              </linearGradient>
+              <linearGradient
+                id="spine-segment-2"
+                gradientUnits="userSpaceOnUse"
+                x1="648"
+                y1="174"
+                x2="994"
+                y2="196"
+              >
+                <stop offset="0" stopColor="#20c978" />
+                <stop offset=".46" stopColor="#2ad3a5" />
+                <stop offset="1" stopColor="#a23df2" />
+              </linearGradient>
+              <linearGradient
+                id="spine-segment-3"
+                gradientUnits="userSpaceOnUse"
+                x1="994"
+                y1="196"
+                x2="1238"
+                y2="347"
+              >
+                <stop offset="0" stopColor="#a23df2" />
+                <stop offset=".48" stopColor="#8a43f5" />
+                <stop offset="1" stopColor="#138cf0" />
+              </linearGradient>
+              <linearGradient
+                id="spine-segment-4"
+                gradientUnits="userSpaceOnUse"
+                x1="1238"
+                y1="347"
+                x2="979"
+                y2="465"
+              >
+                <stop offset="0" stopColor="#138cf0" />
+                <stop offset=".56" stopColor="#178ff1" />
+                <stop offset="1" stopColor="#18cbb4" />
+              </linearGradient>
+              <linearGradient
+                id="spine-segment-5"
+                gradientUnits="userSpaceOnUse"
+                x1="979"
+                y1="465"
+                x2="620"
+                y2="465"
+              >
+                <stop offset="0" stopColor="#18cbb4" />
+                <stop offset=".52" stopColor="#28d29a" />
+                <stop offset="1" stopColor="#ff9226" />
+              </linearGradient>
+            </defs>
+            <g className={styles.ribbonGlow}>
+              <path
+                stroke="url(#spine-segment-1)"
+                d="M317 263 C405 188 552 132 648 174"
+              />
+              <path
+                stroke="url(#spine-segment-2)"
+                d="M648 174 C760 222 850 160 994 196"
+              />
+              <path
+                stroke="url(#spine-segment-3)"
+                d="M994 196 C1110 221 1200 282 1238 347"
+              />
+              <path
+                stroke="url(#spine-segment-4)"
+                d="M1238 347 C1262 412 1138 422 979 465"
+              />
+              <path
+                stroke="url(#spine-segment-5)"
+                d="M979 465 C850 428 760 510 620 465"
+              />
+            </g>
+            <g className={styles.ribbonSegments}>
+              <path
+                pathLength="1"
+                stroke="url(#spine-segment-1)"
+                d="M317 263 C405 188 552 132 648 174"
+              />
+              <path
+                pathLength="1"
+                stroke="url(#spine-segment-2)"
+                d="M648 174 C760 222 850 160 994 196"
+              />
+              <path
+                pathLength="1"
+                stroke="url(#spine-segment-3)"
+                d="M994 196 C1110 221 1200 282 1238 347"
+              />
+              <path
+                pathLength="1"
+                stroke="url(#spine-segment-4)"
+                d="M1238 347 C1262 412 1138 422 979 465"
+              />
+              <path
+                pathLength="1"
+                stroke="url(#spine-segment-5)"
+                d="M979 465 C850 428 760 510 620 465"
+              />
+            </g>
+            <path
+              className={styles.pathHighlight}
+              d="M317 256 C405 181 552 125 648 167 C760 215 850 153 994 189 C1110 214 1200 275 1238 340 C1262 405 1138 415 979 458 C850 421 760 503 620 458"
+            />
+            <path
+              className={styles.orbitPath}
+              d="M490 330 C490 260 592 220 720 220 C848 220 950 260 950 330 C950 400 848 440 720 440 C592 440 490 400 490 330Z"
+            />
+            <circle className={styles.orbitDot} cx="490" cy="330" r="4" />
+            <circle className={styles.orbitDot} cx="720" cy="220" r="4" />
+            <circle className={styles.orbitDot} cx="950" cy="330" r="4" />
+            <circle className={styles.orbitDot} cx="720" cy="440" r="4" />
+          </svg>
 
-            <div className={styles.steps}>
-              {spine.map(([title, body], index) => {
-                const Icon = stageMeta[index].icon;
-                const isActive = activeStep === index;
-                return (
-                  <button
-                    type="button"
-                    key={title}
-                    className={`${styles.step} ${isActive ? styles.active : ""}`}
-                    onMouseEnter={() => setActiveStep(index)}
-                    onFocus={() => setActiveStep(index)}
-                    onClick={() => setActiveStep(index)}
-                    aria-pressed={isActive}
-                    aria-label={`Stage ${index + 1}: ${title}. ${body}`}
-                  >
-                    <span className={styles.connector} aria-hidden="true" />
-                    <span className={styles.node}>
-                      <span>{String(index + 1).padStart(2, "0")}</span>
-                      <Icon size={15} />
-                    </span>
-                    <span className={styles.card}>
-                      <span className={styles.cardGlow} aria-hidden="true" />
-                      <span className={styles.cardTopline}>
-                        <span>{stageMeta[index].label}</span>
-                        <span className={styles.cardState}>
-                          <i /> Context held
-                        </span>
-                      </span>
-                      <ProductPanel step={index} />
-                      <span className={styles.cardCopy}>
-                        <strong>{title}</strong>
-                        <small>{body}</small>
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+          <div className={styles.supplier}>
+            <span className={styles.supplierMark} aria-hidden="true">
+              <svg viewBox="0 0 48 48" role="presentation">
+                <path d="M7 40V20h8v7l9-6v6l10-6v19H7Z" />
+                <path d="M10 20V8h6v12M23 23V11h6v12" />
+                <path
+                  className={styles.supplierWindows}
+                  d="M12 32h4v4h-4zM20 32h4v4h-4zM28 32h4v4h-4z"
+                />
+              </svg>
+            </span>
+            <strong>Suppliers</strong>
+            <small>Source of Goods</small>
           </div>
 
-          <footer className={styles.theatreFooter}>
-            <span>
-              <Check size={14} /> Same piece identity
+          <div className={styles.core}>
+            <span className={styles.coreRing} />
+            <span className={styles.coreBase} />
+            <span className={styles.coreDisc}>
+              <Image src="/brand/icon.svg" alt="" width={76} height={76} />
             </span>
-            <span>
-              <Check size={14} /> Entity-aware movement
-            </span>
-            <span>
-              <Check size={14} /> Books follow operations
-            </span>
-            <strong>Nothing is re-entered.</strong>
-          </footer>
+            <p>
+              <strong>Unified. Connected. Intelligent.</strong>
+              <span>One Flow. Complete Control.</span>
+            </p>
+          </div>
+
+          {journey.map((step, index) => {
+            const Icon = step.icon;
+            const vars = {
+              "--step-x": step.x,
+              "--step-y": step.y,
+              "--label-x": step.lx,
+              "--label-y": step.ly,
+              "--step-color": step.color,
+              "--mobile-order": index < 3 ? index + 1 : index + 2,
+            } as CSSProperties;
+            return (
+              <button
+                type="button"
+                key={step.number}
+                style={vars}
+                className={`${styles.step} ${activeStep === index ? styles.active : ""}`}
+                onMouseEnter={() => setActiveStep(index)}
+                onFocus={() => setActiveStep(index)}
+                onClick={() => setActiveStep(index)}
+                aria-pressed={activeStep === index}
+              >
+                <span className={styles.stepNode}>
+                  <Icon size={34} strokeWidth={1.8} />
+                </span>
+                <span className={styles.stepLabel}>
+                  <b>{step.number}</b>
+                  <strong>{step.title}</strong>
+                  <small>{step.body}</small>
+                  <i />
+                </span>
+              </button>
+            );
+          })}
         </div>
+
+        <footer className={styles.principles}>
+          {principles.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.title}
+                style={{ "--principle-color": item.color } as CSSProperties}
+              >
+                <span>
+                  <Icon size={27} />
+                </span>
+                <p>
+                  <strong>{item.title}</strong>
+                  <small>{item.body}</small>
+                </p>
+              </div>
+            );
+          })}
+        </footer>
       </div>
     </section>
-  );
-}
-
-function ProductPanel({ step }: { step: number }) {
-  const titles = [
-    "Purchase / GRN",
-    "Piece barcode register",
-    "Stock transfer",
-    "POS / Wholesale",
-    "Returns register",
-    "Accounting entries",
-  ];
-
-  return (
-    <span className={styles.productPanel}>
-      <span className={styles.browserBar}>
-        <span className={styles.browserDots}>
-          <i />
-          <i />
-          <i />
-        </span>
-        <strong>{titles[step]}</strong>
-        <small>Bizonix</small>
-      </span>
-      <span className={styles.panelBody}>
-        {step === 0 && (
-          <MiniTable
-            headers={["PO", "Supplier", "Qty", "Status"]}
-            rows={purchaseRows}
-            statusColumn={3}
-          />
-        )}
-        {step === 1 && (
-          <MiniTable
-            headers={["Barcode", "Product", "Location"]}
-            rows={barcodeRows}
-            monoColumn={0}
-          />
-        )}
-        {step === 2 && <TransferPanel />}
-        {step === 3 && <SalesPanel />}
-        {step === 4 && (
-          <MiniTable
-            headers={["Return", "Product", "Status"]}
-            rows={returnRows}
-            statusColumn={2}
-          />
-        )}
-        {step === 5 && (
-          <MiniTable
-            headers={["Entry", "Amount", "Status"]}
-            rows={accountingRows}
-            statusColumn={2}
-          />
-        )}
-      </span>
-    </span>
-  );
-}
-
-function MiniTable({
-  headers,
-  rows,
-  statusColumn,
-  monoColumn,
-}: {
-  headers: readonly string[];
-  rows: readonly (readonly string[])[];
-  statusColumn?: number;
-  monoColumn?: number;
-}) {
-  return (
-    <span className={styles.miniTable} role="table">
-      <span className={`${styles.tableRow} ${styles.tableHead}`} role="row">
-        {headers.map((header) => (
-          <span key={header}>{header}</span>
-        ))}
-      </span>
-      {rows.map((row) => (
-        <span className={styles.tableRow} role="row" key={row.join("-")}>
-          {row.map((cell, index) => (
-            <span
-              key={`${cell}-${index}`}
-              className={
-                index === statusColumn
-                  ? styles.status
-                  : index === monoColumn
-                    ? styles.mono
-                    : ""
-              }
-            >
-              {index === statusColumn && cell !== "Pending" && (
-                <Check size={9} />
-              )}
-              {cell}
-            </span>
-          ))}
-        </span>
-      ))}
-    </span>
-  );
-}
-
-function TransferPanel() {
-  return (
-    <span
-      className={styles.transfer}
-      role="img"
-      aria-label="42 pieces moving from Central Warehouse to Branch Store 2"
-    >
-      <span>
-        <Warehouse size={22} />
-        <small>Source</small>
-        <strong>Central WH</strong>
-      </span>
-      <span className={styles.transferArrow}>
-        <small>42 pieces</small>
-        <i />
-        <ArrowRight size={18} />
-      </span>
-      <span>
-        <Store size={22} />
-        <small>Destination</small>
-        <strong>Branch 02</strong>
-      </span>
-    </span>
-  );
-}
-
-function SalesPanel() {
-  return (
-    <span className={styles.salesPanel}>
-      <span className={styles.kpiRow}>
-        <span>
-          <small>Sales</small>
-          <strong>₹1.84L</strong>
-        </span>
-        <span>
-          <small>Orders</small>
-          <strong>96</strong>
-        </span>
-        <span>
-          <small>Avg ticket</small>
-          <strong>₹1,919</strong>
-        </span>
-      </span>
-      <span className={styles.sparkline}>
-        <span>
-          <Building2 size={12} /> Sales movement
-        </span>
-        <svg viewBox="0 0 260 62" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="spine-area" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#2f6bff" stopOpacity=".26" />
-              <stop offset="1" stopColor="#2f6bff" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M4 51L34 44L62 47L91 31L118 36L148 22L177 27L207 12L232 17L256 6L256 62L4 62Z"
-            fill="url(#spine-area)"
-          />
-          <path
-            d="M4 51L34 44L62 47L91 31L118 36L148 22L177 27L207 12L232 17L256 6"
-            className={styles.sparkLine}
-          />
-        </svg>
-      </span>
-    </span>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CapabilityPillars } from "@/components/sections/capability-pillars";
+import { FourPillarsRecordSection } from "@/components/sections/four-pillars-record";
 import { DayInLife } from "@/components/sections/day-in-life";
 import { IntegrationSurface } from "@/components/sections/integration-surface";
 import { OperatingModel } from "@/components/sections/operating-model";
@@ -29,7 +29,7 @@ export default function ProductPage() {
     <>
       <ProductHero />
       <OperatingModel />
-      <CapabilityPillars />
+      <FourPillarsRecordSection />
       <DayInLife />
       <SecurityTenancy />
       <IntegrationSurface />

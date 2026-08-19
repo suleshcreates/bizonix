@@ -1,43 +1,49 @@
-import { ArrowRight, Play } from "lucide-react";
-import { CompactOperatingEngine } from "@/components/sections/compact-operating-engine";
-import { ButtonLink } from "@/components/ui/button";
+"use client";
+
+import { LightfallBackground } from "@/components/sections/lightfall-background";
+import { HeroInsight } from "./product-hero-parts/hero-insight";
+import { HeroInsightConnector } from "./product-hero-parts/hero-insight-connector";
+import { ProductHeroCopy } from "./product-hero-parts/product-hero-copy";
+import { ProductHeroDashboard } from "./product-hero-parts/product-hero-dashboard";
+import styles from "./product-hero.module.css";
 
 export function ProductHero() {
   return (
-    <section className="oe-hero overflow-hidden">
-      <div className="oe-hero-halo oe-hero-halo-left" />
-      <div className="oe-hero-halo oe-hero-halo-right" />
-      <div className="shell oe-hero-shell">
-        <div className="oe-copy">
-          <div className="oe-kicker">
-            <span className="oe-kicker-mark" aria-hidden="true">
-              <i />
-              <i />
-              <i />
-            </span>
-            Built around the whole operating chain
+    <section className={`product-hero ${styles.heroSection}`}>
+      {/* Approved data-stream background — do not alter. */}
+      <LightfallBackground className="product-hero-lightfall" />
+
+      <div className={styles.shell}>
+        <ProductHeroCopy />
+
+        <div className={styles.stage}>
+          <div className={styles.stageGlow} aria-hidden="true" />
+
+          <HeroInsightConnector side="left" />
+          <HeroInsightConnector side="right" />
+
+          {/* role="img" keeps assistive tech from reading out every demo
+              figure in the panel; the label carries the meaning instead. */}
+          <div
+            className={styles.dashboard}
+            role="img"
+            aria-label="The Bizonix operations dashboard, showing revenue, order and stock KPIs, sales trend and branch comparison charts, an alerts centre, a live activity feed and inventory intelligence. All figures shown are illustrative."
+          >
+            <ProductHeroDashboard />
           </div>
-          <h1 className="oe-title">
-            Wholesale. Retail. Franchise.
-            <span>Finally in sync.</span>
-          </h1>
-          <p className="oe-lede">
-            One ERP that connects every piece, counter, transfer, partner, and
-            ledger—without flattening the way each entity actually works.
-          </p>
-          <div className="oe-actions">
-            <ButtonLink href="/contact">
-              See Bizonix on your workflow <ArrowRight size={17} />
-            </ButtonLink>
-            <a className="oe-demo-link" href="#operating-model">
-              <span>
-                <Play size={13} fill="currentColor" />
-              </span>
-              How the platform works
-            </a>
-          </div>
+
+          <HeroInsight side="left" />
+          <HeroInsight side="right" />
         </div>
-        <CompactOperatingEngine />
+
+        <p className={styles.footLabel}>
+          <i className={styles.footRule} aria-hidden="true" />
+          Engineered for high-throughput enterprise commerce
+          <i
+            className={`${styles.footRule} ${styles.footRuleEnd}`}
+            aria-hidden="true"
+          />
+        </p>
       </div>
     </section>
   );

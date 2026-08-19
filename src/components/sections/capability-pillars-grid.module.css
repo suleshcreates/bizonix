@@ -1,0 +1,897 @@
+/* ==========================================================================
+   Four pillars, one record.
+
+   Visual grammar for this section only: panoramic photography → data
+   convergence → a structured record → a transaction track. Deliberately
+   unlike the card grids and centred hubs used elsewhere on the Product page.
+   Brand tokens only; all record data is synthetic.
+   ========================================================================== */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(72px, 7vw, 112px) 0 clamp(72px, 6vw, 96px);
+  background: var(--bz-surface-alt);
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  width: min(1480px, calc(100% - 96px));
+  margin-inline: auto;
+}
+
+/* ============================================================ LAYER 1 header */
+.header {
+  max-width: 650px;
+  margin-bottom: clamp(36px, 4vw, 52px);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 16px;
+  color: var(--bz-blue);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  margin-right: 12px;
+  background-color: var(--bz-blue);
+}
+
+.title {
+  margin-bottom: 18px;
+  color: var(--bz-navy);
+  font-size: clamp(2.5rem, 4vw, 4.25rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.highlight {
+  background: linear-gradient(96deg, var(--bz-blue), var(--bz-teal));
+  background-clip: text;
+  color: var(--bz-blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.description {
+  max-width: 580px;
+  color: var(--bz-muted);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.55;
+}
+
+/* ========================================================= LAYER 2 panorama */
+.panorama {
+  --seam: 34px;
+  /* atan(seam / height) — keeps the seam decoration on the clip diagonal. */
+  --seam-angle: 7.45deg;
+  position: relative;
+  height: 260px;
+  border-radius: 26px;
+  overflow: hidden;
+  background: var(--bz-navy-deep);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 22px 48px -18px rgba(7, 22, 40, 0.45);
+}
+
+.panoramaRegions {
+  display: flex;
+  height: 100%;
+}
+
+/* Regions overlap by one seam width and are cut on the same diagonal, so the
+   four photographs interlock instead of butting together as tiles. */
+/* Each region owns exactly a quarter of the strip plus one seam of overlap, so
+   every clip diagonal lands precisely on a 25% boundary at the top edge. */
+.pillarRegion {
+  position: relative;
+  flex: none;
+  width: calc(25% + var(--seam));
+  margin-left: calc(var(--seam) * -1);
+  clip-path: polygon(
+    var(--seam) 0,
+    100% 0,
+    calc(100% - var(--seam)) 100%,
+    0 100%
+  );
+}
+
+.pillarRegion[data-position="first"] {
+  width: 25%;
+  margin-left: 0;
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--seam)) 100%, 0 100%);
+}
+
+.pillarRegion[data-position="last"] {
+  clip-path: polygon(var(--seam) 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.pillarBg {
+  object-fit: cover;
+  /* One grade across all four photographs. */
+  filter: saturate(0.76) contrast(1.05) brightness(0.95);
+}
+
+.pillarTint {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 22, 40, 0.06) 0%,
+      rgba(7, 22, 40, 0.5) 54%,
+      rgba(7, 22, 40, 0.88) 100%
+    ),
+    linear-gradient(180deg, rgba(11, 31, 58, 0.3), rgba(11, 31, 58, 0.3));
+}
+
+.panoramaGrade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      120% 80% at 50% 0%,
+      rgba(47, 107, 255, 0.16),
+      transparent 62%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(7, 22, 40, 0.42) 0%,
+      transparent 22%,
+      transparent 78%,
+      rgba(7, 22, 40, 0.42) 100%
+    );
+}
+
+.panoramaSeams {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.panoramaSeams i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.32),
+    rgba(255, 255, 255, 0.07)
+  );
+  transform: skewX(calc(var(--seam-angle) * -1));
+  transform-origin: top;
+}
+
+.pillarContent {
+  position: absolute;
+  right: 18px;
+  bottom: 20px;
+  left: 30px;
+  z-index: 2;
+}
+
+.pillarIndex {
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(197, 218, 255, 0.62);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.pillarName {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+}
+
+.pillarName svg {
+  color: #7fb2ff;
+}
+
+.pillarDesc {
+  margin-top: 7px;
+  color: rgba(226, 236, 255, 0.72);
+  font-size: 12.5px;
+  font-weight: 550;
+  line-height: 1.42;
+}
+
+/* ================================================== LAYER 3 record canvas */
+.canvas {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(30px, 3.4vw, 44px);
+  height: 348px;
+  padding: 22px 28px 24px;
+  line-height: 1.3;
+  border: 1px solid rgba(126, 167, 255, 0.14);
+  border-radius: 26px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      74% 116% at 68% 50%,
+      rgba(47, 107, 255, 0.16),
+      transparent 66%
+    ),
+    radial-gradient(
+      50% 90% at 4% 50%,
+      rgba(46, 196, 182, 0.09),
+      transparent 70%
+    ),
+    linear-gradient(160deg, #0a2038 0%, var(--bz-navy-deep) 62%);
+  box-shadow: 0 26px 60px -22px rgba(7, 22, 40, 0.55);
+}
+
+.canvasGrid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(126, 167, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 167, 255, 0.055) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(100% 76% at 50% 50%, #000 30%, transparent 78%);
+}
+
+.canvasHead {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.canvasTitle {
+  color: #fff;
+  font-size: clamp(1.35rem, 1.7vw, 1.6rem);
+  font-weight: 780;
+  letter-spacing: -0.03em;
+}
+
+.canvasNote {
+  margin-left: auto;
+  color: rgba(198, 216, 255, 0.5);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+}
+
+.canvasBody {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 196px minmax(0, 1fr) 336px;
+  grid-template-rows: minmax(0, 1fr);
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+  margin-top: 12px;
+}
+
+/* --------------------------------------------------------- stream sources */
+/* space-around centres each node in one of four equal bands, matching the
+   stream start points at 12.5 / 37.5 / 62.5 / 87.5% of the field. */
+.sourceList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  list-style: none;
+}
+
+.sourceNode {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sourceIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border: 1px solid rgba(126, 167, 255, 0.28);
+  border-radius: 10px;
+  background: rgba(15, 38, 70, 0.72);
+  color: #8fb6ff;
+}
+
+.sourceNode[data-accent="teal"] .sourceIcon {
+  border-color: rgba(46, 196, 182, 0.3);
+  color: #4fd3c4;
+}
+
+.sourceText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sourceText strong {
+  color: rgba(240, 246, 255, 0.94);
+  font-size: 12.5px;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}
+
+.sourceText small {
+  color: rgba(198, 216, 255, 0.46);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------- stream field */
+.streamField {
+  position: relative;
+  height: 100%;
+  /* Let the streams run under the record card so they visibly enter it. */
+  margin-right: -34px;
+}
+
+.streamSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Vertical variant takes over below 900px (see the stacked-layout block). */
+.streamSvgVertical {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.streamPath {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ------------------------------------------------------------ the record */
+.recordWrap {
+  position: relative;
+}
+
+.recordGlow {
+  position: absolute;
+  inset: -34px -26px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 42% 50%,
+    rgba(47, 107, 255, 0.3),
+    transparent 68%
+  );
+  filter: blur(18px);
+}
+
+.recordCard {
+  position: relative;
+  border: 1px solid rgba(126, 167, 255, 0.26);
+  border-radius: 16px;
+  background: linear-gradient(
+    158deg,
+    rgba(19, 46, 82, 0.94),
+    rgba(8, 25, 46, 0.92)
+  );
+  padding: 13px 15px 14px;
+  backdrop-filter: blur(14px);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.1),
+    0 20px 44px -16px rgba(3, 12, 26, 0.8);
+}
+
+.recordHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid rgba(126, 167, 255, 0.16);
+}
+
+.recordIcon {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 8px;
+  background: linear-gradient(140deg, var(--bz-blue), #1a3f9e);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(47, 107, 255, 0.4);
+}
+
+.recordLabel {
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.recordStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  padding: 3px 8px;
+  border: 1px solid rgba(46, 196, 182, 0.28);
+  border-radius: 999px;
+  background: rgba(46, 196, 182, 0.1);
+  color: #5fd8c8;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.recordStatus i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bz-teal);
+  box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.16);
+}
+
+.recordFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 11px;
+}
+
+.recordField {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 5px 7px;
+  border-radius: 7px;
+}
+
+.recordField:last-child {
+  grid-column: 1 / -1;
+}
+
+.recordField dt {
+  color: rgba(198, 216, 255, 0.5);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.recordField dd {
+  color: rgba(240, 246, 255, 0.95);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* Taken out of flow so the card — not card + caption — is what the grid
+   centres, keeping the convergence point on the card's midline. */
+.recordCaption {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  right: 0;
+  color: rgba(198, 216, 255, 0.54);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+/* ====================================================== LAYER 4 timeline */
+.timeline {
+  margin-top: clamp(38px, 4.2vw, 60px);
+}
+
+.timelineHead {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.timelineTitle {
+  color: var(--bz-navy);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.timelineNote {
+  color: var(--bz-muted);
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.track {
+  position: relative;
+}
+
+/* The rule and the particle share the node centre line: icon 34 + gap 12 +
+   node radius 5.5 = 51.5px from the top of the track. */
+/* Explicit width: an SVG is a replaced element, so left + right + auto width
+   falls back to its intrinsic size instead of stretching between the insets.
+   10%/80% puts the ends exactly on the first and last node centres. */
+.trackSvg {
+  position: absolute;
+  top: 48px;
+  left: 10%;
+  width: 80%;
+  height: 6px;
+  overflow: visible;
+}
+
+.trackSvgVertical {
+  display: none;
+}
+
+.events {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  list-style: none;
+}
+
+.event {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-inline: 8px;
+}
+
+.eventIcon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 12px;
+  border: 1px solid var(--bz-border);
+  border-radius: 11px;
+  background: var(--bz-surface);
+  color: var(--bz-blue);
+  box-shadow: 0 4px 12px rgba(11, 31, 58, 0.07);
+}
+
+.event[data-accent="teal"] .eventIcon {
+  color: #189e91;
+}
+
+.eventNode {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--bz-blue);
+  box-shadow:
+    0 0 0 4px var(--bz-surface-alt),
+    0 0 0 5.5px rgba(47, 107, 255, 0.28);
+}
+
+.event[data-accent="teal"] .eventNode {
+  background: var(--bz-teal);
+  box-shadow:
+    0 0 0 4px var(--bz-surface-alt),
+    0 0 0 5.5px rgba(46, 196, 182, 0.3);
+}
+
+.eventTitle {
+  margin-top: 18px;
+  color: var(--bz-navy);
+  font-size: 14px;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+}
+
+.eventContext {
+  margin-top: 5px;
+  color: var(--bz-muted);
+  font-size: 12.5px;
+  font-weight: 550;
+}
+
+.eventTime {
+  margin-top: 7px;
+  color: var(--bz-blue);
+  font-size: 11.5px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.event[data-accent="teal"] .eventTime {
+  color: #189e91;
+}
+
+/* ==================================================== responsive: tablet */
+@media (max-width: 1120px) {
+  .shell {
+    width: min(1480px, calc(100% - 64px));
+  }
+
+  .canvasBody {
+    grid-template-columns: 168px minmax(0, 1fr) 292px;
+  }
+
+  .panorama {
+    height: 228px;
+    --seam-angle: 8.48deg;
+  }
+}
+
+@media (max-width: 900px) {
+  .canvas {
+    height: auto;
+    padding: 22px 20px 26px;
+  }
+
+  .canvasHead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .canvasNote {
+    margin-left: 0;
+  }
+
+  /* Vertical convergence: pillars stack, then flow down into the record. */
+  .canvasBody {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    height: auto;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  /* Four columns keep each source above its own stream origin. */
+  .sourceList {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    height: auto;
+    padding: 0;
+  }
+
+  .sourceNode {
+    flex-direction: column;
+    gap: 7px;
+    text-align: center;
+  }
+
+  .sourceText small {
+    display: none;
+  }
+
+  .streamField {
+    height: 92px;
+    margin-right: 0;
+  }
+
+  .streamSvg {
+    display: none;
+  }
+
+  .streamSvgVertical {
+    display: block;
+  }
+
+  .recordWrap {
+    max-width: 420px;
+    margin-inline: auto;
+  }
+
+  /* Back into flow so the auto-height canvas reserves room for it. */
+  .recordCaption {
+    position: static;
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .events {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  /* Vertical track: the rule runs down through the icon centres (34px / 2). */
+  .trackSvg {
+    display: none;
+  }
+
+  /* Ends on the first and last icon centres: 14px row padding + 17px radius. */
+  .trackSvgVertical {
+    display: block;
+    position: absolute;
+    top: 31px;
+    left: 14px;
+    width: 6px;
+    height: calc(100% - 62px);
+    overflow: visible;
+  }
+
+  .event {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0 14px;
+    padding: 14px 0;
+    text-align: left;
+  }
+
+  .eventIcon {
+    grid-row: span 2;
+    margin-bottom: 0;
+  }
+
+  .eventNode {
+    display: none;
+  }
+
+  .eventTitle,
+  .eventContext {
+    margin-top: 0;
+  }
+
+  .eventContext {
+    grid-column: 2;
+  }
+
+  .eventTime {
+    grid-row: 1;
+    grid-column: 3;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  /* All four still fit in one strip — just tighter. */
+  .panorama {
+    --seam: 22px;
+    --seam-angle: 6.9deg;
+    height: 182px;
+  }
+
+  .pillarContent {
+    left: 20px;
+    right: 12px;
+    bottom: 16px;
+  }
+
+  .pillarIndex {
+    margin-bottom: 5px;
+    font-size: 10px;
+  }
+
+  .pillarName {
+    font-size: 13px;
+  }
+
+  .pillarDesc {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 620px) {
+  .shell {
+    width: min(1480px, calc(100% - 36px));
+  }
+
+  /* Below 620px the strip scrolls horizontally rather than shrinking further. */
+  .panorama {
+    --seam: 18px;
+    height: 168px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+  }
+
+  .panoramaRegions {
+    width: 260%;
+  }
+
+  .pillarRegion {
+    scroll-snap-align: start;
+  }
+
+  .panoramaSeams {
+    display: none;
+  }
+
+  /* Right-edge fade hints that the strip continues past the viewport. */
+  .panoramaGrade {
+    position: sticky;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 72%,
+      rgba(7, 22, 40, 0.72) 100%
+    );
+  }
+
+  .recordFields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .recordField:last-child {
+    grid-column: auto;
+  }
+
+  .timelineHead {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+/* ==================================================== motion (opt-in only) */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes bzRecordPulse {
+    0%,
+    62%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    78% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes bzFieldWrite {
+    0%,
+    16%,
+    100% {
+      background: transparent;
+      box-shadow: inset 0 0 0 1px transparent;
+    }
+    5% {
+      background: rgba(47, 107, 255, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(126, 167, 255, 0.28);
+    }
+  }
+
+  .recordGlow {
+    animation: bzRecordPulse 2s ease-in-out infinite;
+  }
+
+  /* Five fields share one 10s cycle, so a different field lights up as each
+     stream lands — the record visibly takes the write. */
+  .recordField {
+    animation: bzFieldWrite 10s linear infinite;
+    animation-delay: calc(var(--i) * 2s);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* SMIL cannot be stopped from CSS, so the particles are removed instead.
+     The paths, nodes and record stay fully visible and static. */
+  .streamParticles,
+  .trackParticle {
+    display: none;
+  }
+}
