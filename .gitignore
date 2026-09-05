@@ -41,3 +41,10 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# Hero QA measurement artifacts (debug screenshots + reports)
+.hero-qa/
+.audit/
+
+# Local logs and tooling output
+*.log

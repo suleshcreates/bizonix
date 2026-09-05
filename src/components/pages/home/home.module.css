@@ -1,0 +1,8344 @@
+/* Page styles. Section prefixes preserve CSS Module isolation. */
+
+/* SECTION: home-scroll-motion.module.css */
+.homeScrollMotion__progress {
+  position: fixed;
+  z-index: 80;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, #2f6bff 0%, #5a62f6 48%, #2ec4b6 100%);
+  box-shadow: 0 1px 12px rgb(47 107 255 / 28%);
+}
+
+.homeScrollMotion__progress::after {
+  position: absolute;
+  top: 50%;
+  right: -2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #2ec4b6;
+  box-shadow: 0 0 14px rgb(46 196 182 / 70%);
+  content: "";
+  transform: translateY(-50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homeScrollMotion__progress {
+    display: none;
+  }
+}
+
+/* SECTION: sections/challenges-section.module.css */
+/* ==========================================================================
+   Challenges / Problems Section (Radial Constellation & Mobile Fallback)
+   ========================================================================== */
+
+.challengesSection__section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(72px, 8vw, 112px) 0;
+  background-color: var(--bz-surface-alt);
+}
+
+.challengesSection__shell {
+  position: relative;
+  z-index: 2;
+  width: min(1280px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.challengesSection__heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  align-items: end;
+  gap: 48px;
+  margin-bottom: clamp(40px, 5vw, 56px);
+}
+
+.challengesSection__eyebrow {
+  display: inline-block;
+  color: var(--bz-blue);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.challengesSection__title {
+  color: var(--bz-navy);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.challengesSection__title em {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(100deg, var(--bz-blue), var(--bz-teal));
+  background-clip: text;
+  color: transparent;
+  font-style: normal;
+  -webkit-background-clip: text;
+}
+
+.challengesSection__subtitle {
+  color: var(--bz-muted);
+  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+  line-height: 1.65;
+  padding-bottom: 4px;
+}
+
+@media (max-width: 860px) {
+  .challengesSection__heading {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+}
+
+/* Handset intro. 20px gutters, and a headline sized to land on exactly two
+   lines from 360px up rather than to fill the width. */
+@media (max-width: 640px) {
+  .challengesSection__section {
+    padding: 60px 0;
+  }
+
+  .challengesSection__shell {
+    width: calc(100% - 40px);
+  }
+
+  .challengesSection__eyebrow {
+    margin-bottom: 14px;
+    /* Sized to hold "When disconnected tools stop scaling" on one line at
+       360px rather than orphaning the last word. */
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .challengesSection__title {
+    font-size: clamp(2rem, 8.2vw, 2.25rem);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  .challengesSection__subtitle {
+    padding-bottom: 0;
+    font-size: 0.9rem;
+    line-height: 1.62;
+  }
+}
+
+@media (max-width: 350px) {
+  .challengesSection__title {
+    font-size: 1.5rem;
+  }
+}
+
+/* ==========================================================================
+   Desktop Blueprint Canvas (Radial Layout)
+   ========================================================================== */
+
+.challengesSection__blueprint {
+  display: none; /* Default hidden, enabled on desktop */
+  position: relative;
+  width: 100%;
+  min-height: 880px;
+  background: var(--bz-surface);
+  border: 1px solid var(--bz-border);
+  border-radius: 28px;
+  box-shadow: 0 20px 50px -12px rgba(11, 31, 58, 0.06);
+  overflow: hidden;
+}
+
+@media (min-width: 960px) {
+  .challengesSection__blueprint {
+    display: block;
+  }
+}
+
+.challengesSection__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--bz-border);
+  background: rgba(245, 247, 251, 0.7);
+  color: var(--bz-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.challengesSection__topbarStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.challengesSection__statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--bz-blue);
+  box-shadow: 0 0 0 3px rgba(47, 107, 255, 0.15);
+}
+
+.challengesSection__statusDotWarning {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--bz-danger);
+  box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.15);
+}
+
+.challengesSection__topbarTitle {
+  color: var(--bz-navy);
+  font-size: 0.82rem;
+}
+
+/* Canvas Area */
+.challengesSection__canvasArea {
+  position: relative;
+  width: 100%;
+  height: 800px;
+}
+
+/* SVG Connector Lines */
+.challengesSection__orbitsSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.challengesSection__orbitPath {
+  stroke: rgba(47, 107, 255, 0.32);
+  stroke-width: 2px;
+  stroke-dasharray: 4 4;
+  fill: none;
+  transition: stroke-dashoffset 0.8s ease;
+}
+
+/* Center Hub */
+.challengesSection__centerHub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #153258 0%, #071628 85%);
+  border: 8px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 20px 48px rgba(7, 22, 40, 0.32),
+    0 0 0 1px rgba(47, 107, 255, 0.2),
+    0 0 0 18px rgba(47, 107, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  z-index: 3;
+}
+
+.challengesSection__hubEyebrow {
+  color: var(--bz-teal);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.challengesSection__hubTitle {
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* Symmetrical Points on Desktop Canvas */
+.challengesSection__radialPoint {
+  position: absolute;
+  width: 320px;
+  z-index: 2;
+  background: var(--bz-surface);
+  border: 1px solid var(--bz-border);
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: 0 10px 28px -6px rgba(11, 31, 58, 0.06);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.challengesSection__radialPoint:hover {
+  transform: translateY(-2px);
+  border-color: rgba(47, 107, 255, 0.35);
+  box-shadow: 0 16px 36px -8px rgba(47, 107, 255, 0.1);
+}
+
+/* Symmetrical Positioning */
+.challengesSection__point1 {
+  top: 36px;
+  left: 36px;
+}
+
+.challengesSection__point2 {
+  top: 36px;
+  right: 36px;
+}
+
+.challengesSection__point3 {
+  top: 300px;
+  left: 28px;
+}
+
+.challengesSection__point4 {
+  top: 300px;
+  right: 28px;
+}
+
+.challengesSection__point5 {
+  bottom: 36px;
+  left: 36px;
+}
+
+.challengesSection__point6 {
+  bottom: 36px;
+  right: 36px;
+}
+
+/* Header inside each point: Numbered Badge + Micro Tag */
+.challengesSection__pointHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.challengesSection__badgeNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bz-blue);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.challengesSection__microTag {
+  color: var(--bz-navy);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Visual Row: Soft-UI 3D Icon Badge + Optional Stat */
+.challengesSection__pointVisualRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.challengesSection__iconBadge {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #ffffff 0%, #edf3fc 100%);
+  border: 1px solid rgba(47, 107, 255, 0.2);
+  box-shadow:
+    0 8px 16px -4px rgba(11, 31, 58, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bz-blue);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.challengesSection__radialPoint:hover .challengesSection__iconBadge {
+  transform: scale(1.05);
+}
+
+.challengesSection__statPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background-color: var(--bz-surface-alt);
+  border: 1px solid var(--bz-border);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 750;
+  color: var(--bz-navy);
+}
+
+.challengesSection__statPillAlert {
+  background-color: #fff1f2;
+  border-color: rgba(214, 69, 69, 0.2);
+  color: var(--bz-danger);
+}
+
+/* Content block */
+.challengesSection__pointTitle {
+  color: var(--bz-navy);
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.challengesSection__pointDescription {
+  color: var(--bz-muted);
+  font-size: 0.86rem;
+  line-height: 1.52;
+}
+
+/* ==========================================================================
+   Handset flow topology (< 960px)
+
+   The desktop canvas says "six symptoms orbit one shared-context problem"
+   with geometry. A 390px column cannot hold a radial arrangement, so the
+   same sentence is rebuilt vertically: one continuous 1px path, six
+   editorial rows hanging off it (deliberately not cards), and a branch out
+   to the shared-context node between problems 03 and 04.
+
+   Every measurement below is keyed off two constants: the rail column, and
+   the spine that runs down its centre.
+   ========================================================================== */
+
+.challengesSection__flow {
+  --rail-w: 34px;
+  --spine-x: 17px;
+  --rail-ink: #d9e2ef;
+  --row-gap: 24px;
+  --beat: 110ms;
+  --lag: 0ms;
+
+  display: block;
+  max-width: 560px;
+  margin: 30px auto 0;
+}
+
+@media (min-width: 960px) {
+  .challengesSection__flow {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------ problem row */
+.challengesSection__flowItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  gap: 14px;
+  padding-bottom: var(--row-gap);
+}
+
+.challengesSection__flowItem[data-last="true"] {
+  padding-bottom: 0;
+}
+
+.challengesSection__flowRail {
+  position: relative;
+  display: block;
+}
+
+/* The path itself. Each row owns the segment beside it, so the line stays
+   continuous by construction rather than by measuring content heights. */
+.challengesSection__flowRail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  /* Into the row gap: a grid item stops at the content box, so without this
+     the path breaks between every problem. */
+  bottom: calc(-1 * var(--row-gap));
+  left: var(--spine-x);
+  width: 1px;
+  background: var(--rail-ink);
+}
+
+.challengesSection__flowItem[data-last="true"]
+  .challengesSection__flowRail::before {
+  display: none;
+}
+
+.challengesSection__flowNode {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: var(--rail-w);
+  height: var(--rail-w);
+  place-items: center;
+  border: 1px solid rgba(47, 107, 255, 0.16);
+  border-radius: 11px;
+  background: #eef4fd;
+  color: var(--bz-blue);
+}
+
+.challengesSection__flowBody {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.challengesSection__flowMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 9px;
+}
+
+.challengesSection__flowNumber {
+  color: var(--bz-blue);
+  font-size: 11.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.challengesSection__flowTag {
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.challengesSection__flowChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border: 1px solid var(--bz-border);
+  border-radius: 999px;
+  background: var(--bz-surface);
+  color: var(--bz-muted);
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+/* Soft coral, reserved for the readings that are actually a warning. */
+.challengesSection__flowChipAlert {
+  border-color: rgba(214, 69, 69, 0.2);
+  background: #fff5f5;
+  color: #c33b34;
+}
+
+.challengesSection__flowTitle {
+  margin-top: 7px;
+  color: var(--bz-navy);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.24;
+}
+
+.challengesSection__flowText {
+  margin-top: 5px;
+  color: var(--bz-muted);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+/* Pointer devices get a quiet activation. Nothing here is needed to read the
+   content, and touch never inherits a stuck hover state. */
+@media (hover: hover) {
+  .challengesSection__flowItem:hover .challengesSection__flowNode {
+    border-color: rgba(47, 107, 255, 0.4);
+    background: #e4ecff;
+  }
+
+  .challengesSection__flowItem:hover .challengesSection__flowRail::before {
+    background: rgba(47, 107, 255, 0.42);
+  }
+
+  .challengesSection__flowItem:hover .challengesSection__flowNumber {
+    color: var(--bz-blue-hover);
+  }
+}
+
+/* --------------------------------------------------------- shared context */
+.challengesSection__flowHub {
+  --branch-drop: 22px;
+  --branch-turn: 17px;
+  --ring-gap: 7px;
+
+  position: relative;
+  /* Exactly the drawn branch plus the ring offset, so the line meets the
+     ring rather than crossing it. */
+  padding-block: calc(
+    var(--branch-drop) + var(--branch-turn) + var(--ring-gap)
+  );
+}
+
+/* Four border-drawn segments make the branch. Borders rather than an SVG so
+   the elbows stay true at any column width; a stretched viewBox would skew
+   the corner radii. */
+.challengesSection__flowBranchDown,
+.challengesSection__flowBranchIn,
+.challengesSection__flowBranchOut,
+.challengesSection__flowBranchUp {
+  position: absolute;
+  display: block;
+  border: 0 solid var(--rail-ink);
+}
+
+/* Out of the spine: down, then across to the centre line of the node. */
+.challengesSection__flowBranchDown {
+  top: 0;
+  left: var(--spine-x);
+  right: 50%;
+  height: var(--branch-drop);
+  border-left-width: 1px;
+  border-bottom-width: 1px;
+  border-bottom-left-radius: 12px;
+}
+
+.challengesSection__flowBranchIn {
+  top: var(--branch-drop);
+  left: calc(50% - 12px);
+  width: 12px;
+  height: var(--branch-turn);
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-top-right-radius: 12px;
+}
+
+/* And back out of the node: down, across, then into problem 04. */
+.challengesSection__flowBranchOut {
+  bottom: var(--branch-drop);
+  left: calc(50% - 12px);
+  width: 12px;
+  height: var(--branch-turn);
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-bottom-right-radius: 12px;
+}
+
+.challengesSection__flowBranchUp {
+  bottom: 0;
+  left: var(--spine-x);
+  right: 50%;
+  height: var(--branch-drop);
+  border-left-width: 1px;
+  border-top-width: 1px;
+  border-top-left-radius: 12px;
+}
+
+.challengesSection__flowHubRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.challengesSection__flowHubSide {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  color: #8494a8;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.challengesSection__flowHubSideEnd {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.challengesSection__flowHubSide i {
+  width: 14px;
+  height: 1px;
+  flex: none;
+  background: var(--rail-ink);
+}
+
+.challengesSection__flowHubNode {
+  position: relative;
+  display: grid;
+  width: 148px;
+  height: 148px;
+  place-content: center;
+  padding-inline: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #153258 0%, #071628 85%);
+  box-shadow: 0 16px 34px -16px rgba(7, 22, 40, 0.6);
+  text-align: center;
+}
+
+/* The one ring. It also carries the only ambient motion in the section. */
+.challengesSection__flowHubNode::after {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--ring-gap));
+  border: 1px solid rgba(47, 107, 255, 0.2);
+  border-radius: 50%;
+}
+
+.challengesSection__flowHubEyebrow {
+  color: var(--bz-teal);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.challengesSection__flowHubTitle {
+  margin-top: 7px;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+}
+
+/* ---------------------------------------------------------------- reveal */
+/* One attribute sequences the whole topology: the path draws, the problem
+   beside it fades up, the branch reaches the hub, the hub arrives, the
+   branch returns, and the last three follow. */
+.challengesSection__flow[data-shown="false"]
+  .challengesSection__flowRail::before {
+  transform: scaleY(0);
+}
+
+.challengesSection__flow[data-shown="false"] .challengesSection__flowBody,
+.challengesSection__flow[data-shown="false"] .challengesSection__flowNode,
+.challengesSection__flow[data-shown="false"] .challengesSection__flowHubRow {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.challengesSection__flow[data-shown="false"] .challengesSection__flowBranchDown,
+.challengesSection__flow[data-shown="false"] .challengesSection__flowBranchIn,
+.challengesSection__flow[data-shown="false"] .challengesSection__flowBranchOut,
+.challengesSection__flow[data-shown="false"] .challengesSection__flowBranchUp {
+  clip-path: inset(0 0 100% 0);
+}
+
+/* The last three problems wait out the whole hub detour: the branch has to
+   reach the node, the node has to arrive, and the branch has to come back
+   before the path can continue. Counting articles skips the hub div. */
+.challengesSection__flow > article:nth-of-type(n + 4) {
+  --lag: 1050ms;
+}
+
+.challengesSection__flowRail::before {
+  transform-origin: top center;
+  transition:
+    transform 0.4s ease calc(var(--step) * var(--beat) + var(--lag)),
+    background-color 0.22s ease;
+}
+
+.challengesSection__flowNode,
+.challengesSection__flowBody {
+  transition:
+    opacity 0.5s ease calc(var(--step) * var(--beat) + var(--lag) + 90ms),
+    transform 0.5s ease calc(var(--step) * var(--beat) + var(--lag) + 90ms),
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.challengesSection__flowNumber {
+  transition: color 0.22s ease;
+}
+
+.challengesSection__flowBranchDown {
+  transition: clip-path 0.34s ease calc(var(--step) * var(--beat));
+}
+
+.challengesSection__flowBranchIn {
+  transition: clip-path 0.28s ease calc(var(--step) * var(--beat) + 230ms);
+}
+
+.challengesSection__flowHubRow {
+  transition:
+    opacity 0.45s ease calc(var(--step) * var(--beat) + 390ms),
+    transform 0.45s ease calc(var(--step) * var(--beat) + 390ms);
+}
+
+.challengesSection__flowBranchOut {
+  transition: clip-path 0.28s ease calc(var(--step) * var(--beat) + 690ms);
+}
+
+.challengesSection__flowBranchUp {
+  transition: clip-path 0.34s ease calc(var(--step) * var(--beat) + 870ms);
+}
+
+/* Ambient: a slow breath on the hub ring, and nothing else. The section is
+   designed to be correct when completely still. */
+@keyframes challengesSection__hubBreath {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+.challengesSection__flow[data-shown="true"]
+  .challengesSection__flowHubNode::after {
+  animation: challengesSection__hubBreath 5s ease-in-out 2s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .challengesSection__flowRail::before,
+  .challengesSection__flowNode,
+  .challengesSection__flowBody,
+  .challengesSection__flowNumber,
+  .challengesSection__flowHubRow,
+  .challengesSection__flowBranchDown,
+  .challengesSection__flowBranchIn,
+  .challengesSection__flowBranchOut,
+  .challengesSection__flowBranchUp {
+    transition: none;
+  }
+
+  .challengesSection__flowHubNode::after {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------- narrow meta line */
+@media (max-width: 380px) {
+  .challengesSection__flowMeta {
+    gap: 5px 7px;
+  }
+
+  .challengesSection__flowTag {
+    font-size: 9.5px;
+    letter-spacing: 0.03em;
+  }
+
+  .challengesSection__flowChip {
+    padding: 3px 7px;
+    font-size: 9.5px;
+  }
+}
+
+/* --------------------------------------------------------- small handsets */
+@media (max-width: 374px) {
+  .challengesSection__flow {
+    --rail-w: 30px;
+    --spine-x: 15px;
+  }
+
+  .challengesSection__flowItem {
+    gap: 12px;
+  }
+
+  .challengesSection__flowNode svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .challengesSection__flowTitle {
+    font-size: 16px;
+  }
+
+  .challengesSection__flowText {
+    font-size: 13px;
+  }
+
+  .challengesSection__flowHubNode {
+    width: 132px;
+    height: 132px;
+    padding-inline: 12px;
+  }
+
+  .challengesSection__flowHubTitle {
+    font-size: 15.5px;
+  }
+
+  .challengesSection__flowHubSide {
+    gap: 6px;
+    font-size: 8.5px;
+    letter-spacing: 0.04em;
+  }
+
+  .challengesSection__flowHubSide i {
+    width: 8px;
+  }
+}
+
+/* SECTION: sections/home-hero-parts/product-stage.module.css */
+/* ==========================================================================
+   Home hero — centered product stage.
+   Front-facing only: no rotate/skew/perspective on any element here (spec §5).
+   Layering (spec §32): the frozen background sits at z < 0; this stage lives
+   at z 1 inside .shell and creates no uncontrolled stacking contexts.
+   ========================================================================== */
+
+.productStage__stage {
+  display: block;
+  width: min(1240px, calc(100vw - 208px));
+  max-width: 100%;
+  margin-inline: auto;
+  margin-top: clamp(34px, 4.5vh, 58px);
+}
+
+/* Entrance layer (GSAP: opacity/scale/y) — never overlaps the breathe layer. */
+.productStage__enter {
+  will-change: transform, opacity;
+}
+
+/* Ambient breathing layer (GSAP: scale 1 → 1.006, 18–22s, linear yoyo). */
+.productStage__breathe {
+  will-change: transform;
+}
+
+/* Only the active screen and the one leaving are ever mounted. */
+.productStage__screens {
+  position: relative;
+  display: grid;
+}
+
+.productStage__screen {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------ state rail */
+.productStage__rail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(4px, 1vw, 8px);
+  margin-top: clamp(18px, 2.8vh, 28px);
+}
+
+.productStage__railWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(8px, 1.6vw, 12px);
+}
+
+.productStage__railBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 4px 11px;
+  border: 0;
+  background: none;
+  color: rgba(178, 200, 236, 0.52);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 730;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.productStage__railBtn:hover {
+  color: rgba(214, 228, 255, 0.85);
+}
+
+.productStage__railBtn[data-active="true"] {
+  color: #fff;
+}
+
+.productStage__railDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(178, 200, 236, 0.34);
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.productStage__railBtn[data-active="true"] .productStage__railDot {
+  background: var(--bz-teal);
+  box-shadow: 0 0 10px rgba(46, 196, 182, 0.8);
+  transform: scale(1.15);
+}
+
+/* Small active indicator under the editorial label. */
+.productStage__railBtn::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 2px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--bz-blue), var(--bz-teal));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.productStage__railBtn[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+.productStage__railBtn:focus-visible {
+  outline: 2px solid #8fb4ff;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Editorial separator between rail items. */
+.productStage__railSep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(178, 200, 236, 0.25);
+}
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 1180px) {
+  .productStage__stage {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .productStage__stage {
+    margin-top: 26px;
+  }
+
+  /* Four editorial labels cannot sit on one 390px line, and wrapping them
+     left an orphan on row two. On handsets the rail becomes a snap-scrolling
+     chip row: every state stays one tap away, in one line, with the active
+     chip carrying the fill instead of a hairline underline. */
+  .productStage__rail {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 20px;
+    margin-inline: -18px;
+    padding-inline: 18px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 16px,
+      #000 calc(100% - 16px),
+      transparent
+    );
+  }
+
+  .productStage__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .productStage__railWrap {
+    flex: none;
+    gap: 0;
+    scroll-snap-align: center;
+  }
+
+  .productStage__railSep {
+    display: none;
+  }
+
+  .productStage__railBtn {
+    gap: 7px;
+    padding: 9px 14px;
+    border: 1px solid rgba(159, 190, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(9, 26, 49, 0.5);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    transition:
+      color 0.25s ease,
+      background-color 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .productStage__railBtn[data-active="true"] {
+    border-color: rgba(46, 196, 182, 0.42);
+    background: rgba(46, 196, 182, 0.12);
+  }
+
+  /* The underline indicator is replaced by the chip fill above. */
+  .productStage__railBtn::after {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .productStage__railBtn,
+  .productStage__railBtn::after,
+  .productStage__railDot {
+    transition: none;
+  }
+}
+
+/* SECTION: sections/home-hero-parts/stock-console.module.css */
+/* ==========================================================================
+   Home hero — the Bizonix stock console, rebuilt as a real light application
+   surface rather than a screenshot. Every value is synthetic (see
+   src/lib/content/home/home-hero-console-data.ts). Brand tokens only.
+   ========================================================================== */
+
+.stockConsole__console {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: clamp(420px, 56vh, 540px);
+  overflow: hidden;
+  border-radius: 22px;
+  background: #ffffff;
+  color: var(--bz-navy);
+  font-feature-settings: "tnum" 1;
+  line-height: 1.3;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.7),
+    0 40px 80px -20px rgba(0, 0, 0, 0.5);
+}
+
+/* Light catch along the near edge */
+.stockConsole__console::before {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 22px;
+  background: linear-gradient(
+    105deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.05) 12%,
+    transparent 25%
+  );
+}
+
+/* ------------------------------------------------------------- chrome bar */
+.stockConsole__chrome {
+  display: flex;
+  height: 46px;
+  flex: none;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--bz-border);
+  background: var(--bz-surface);
+}
+
+.stockConsole__brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-right: 14px;
+  border-right: 1px solid var(--bz-border);
+}
+
+.stockConsole__brandMark {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 8px;
+  background: linear-gradient(140deg, var(--bz-blue), #1a3f9e);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  box-shadow: 0 2px 6px rgba(47, 107, 255, 0.34);
+}
+
+.stockConsole__brandText {
+  display: grid;
+  gap: 1px;
+}
+
+.stockConsole__brandText strong {
+  color: var(--bz-navy);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.stockConsole__brandText span {
+  color: var(--bz-muted);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stockConsole__chromeNav {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.stockConsole__chromeNav span {
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--bz-muted);
+  font-size: 11.5px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.stockConsole__chromeNavActive {
+  background: var(--bz-blue-soft);
+  color: var(--bz-blue) !important;
+  font-weight: 780 !important;
+}
+
+.stockConsole__chromeRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.stockConsole__chromeIconBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: #64748b;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+  cursor: pointer;
+}
+
+.stockConsole__chromeIconBtn:hover {
+  color: var(--bz-navy);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.stockConsole__bellBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 1px solid #ffffff;
+}
+
+.stockConsole__userAvatar {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2f6bff, #1d4ed8);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 2px 5px rgba(47, 107, 255, 0.3);
+}
+
+/* -------------------------------------------------------------- app body */
+.stockConsole__body {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+}
+
+.stockConsole__rail {
+  display: flex;
+  width: 54px;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 0;
+  border-right: 1px solid var(--bz-border);
+  background: var(--bz-surface);
+}
+
+.stockConsole__railItem {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 10px;
+  color: #93a5b8;
+}
+
+.stockConsole__railItemActive {
+  background: var(--bz-blue-soft);
+  color: var(--bz-blue);
+  box-shadow: inset 0 0 0 1px rgba(47, 107, 255, 0.16);
+}
+
+.stockConsole__railSpacer {
+  flex: 1;
+}
+
+.stockConsole__canvas {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px 0;
+}
+
+/* ------------------------------------------------------------------ kpis */
+.stockConsole__kpiRow {
+  display: grid;
+  flex: none;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.stockConsole__kpi {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 13px;
+  border: 1px solid var(--bz-border);
+  border-radius: 13px;
+  background: var(--bz-surface);
+  box-shadow: 0 1px 2px rgba(11, 31, 58, 0.04);
+}
+
+.stockConsole__kpiIcon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--bz-blue-soft);
+  color: var(--bz-blue);
+}
+
+.stockConsole__kpiIconTeal {
+  background: var(--bz-teal-soft);
+  color: #12806f;
+}
+
+.stockConsole__kpiIconNavy {
+  background: rgba(11, 31, 58, 0.06);
+  color: var(--bz-navy);
+}
+
+.stockConsole__kpiText {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.stockConsole__kpiLabel {
+  color: var(--bz-muted);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.stockConsole__kpiValue {
+  color: var(--bz-navy);
+  font-size: 19px;
+  font-weight: 820;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.stockConsole__kpiNote {
+  overflow: hidden;
+  color: var(--bz-muted);
+  font-size: 9.5px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- toolbar */
+.stockConsole__toolbar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.stockConsole__search {
+  display: inline-flex;
+  width: 244px;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  padding: 8px 11px;
+  border: 1px solid var(--bz-border);
+  border-radius: 10px;
+  background: var(--bz-surface);
+  color: #93a5b8;
+  font-size: 11.5px;
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+.stockConsole__search svg {
+  flex: none;
+}
+
+.stockConsole__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  border: 1px solid var(--bz-border);
+  border-radius: 10px;
+  background: var(--bz-surface);
+  color: var(--bz-navy);
+  font-size: 11.5px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.stockConsole__checkbox {
+  display: grid;
+  width: 13px;
+  height: 13px;
+  place-items: center;
+  border: 1.5px solid #c4d0de;
+  border-radius: 4px;
+  color: transparent;
+}
+
+.stockConsole__checkboxOn {
+  border-color: var(--bz-blue);
+  background: var(--bz-blue);
+  color: #fff;
+}
+
+.stockConsole__segmented {
+  display: inline-flex;
+  margin-left: auto;
+  padding: 3px;
+  border: 1px solid var(--bz-border);
+  border-radius: 10px;
+  background: var(--bz-surface);
+}
+
+.stockConsole__segmented span {
+  padding: 5px 12px;
+  border-radius: 7px;
+  color: var(--bz-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.stockConsole__segmentedActive {
+  background: var(--bz-navy);
+  color: #fff !important;
+}
+
+.stockConsole__ghostBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid var(--bz-border);
+  border-radius: 10px;
+  background: var(--bz-surface);
+  color: var(--bz-navy);
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ----------------------------------------------------------------- table */
+.stockConsole__tableWrap {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--bz-border);
+  border-bottom: 0;
+  border-radius: 13px 13px 0 0;
+  background: var(--bz-surface);
+}
+
+.stockConsole__row {
+  display: grid;
+  align-items: center;
+  grid-template-columns:
+    128px minmax(150px, 1fr) 66px 82px 78px 132px 128px
+    62px;
+  gap: 14px;
+  padding: 0 14px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.stockConsole__head {
+  flex: none;
+  height: 34px;
+  border-bottom: 1px solid var(--bz-border);
+  background: #fbfcfe;
+  color: var(--bz-muted);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.stockConsole__bodyRow {
+  position: relative;
+  height: 46px;
+  flex: none;
+  transition:
+    background-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.stockConsole__bodyRow::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: var(--bz-teal);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+/* The row Bizonix just saw scanned. */
+.stockConsole__bodyRow[data-scanned="true"] {
+  background: linear-gradient(90deg, rgba(46, 196, 182, 0.1), transparent 62%);
+}
+
+.stockConsole__bodyRow[data-scanned="true"]::before {
+  opacity: 1;
+}
+
+.stockConsole__cell {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stockConsole__numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.stockConsole__code {
+  color: var(--bz-navy);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.stockConsole__product {
+  display: grid;
+  gap: 2px;
+}
+
+.stockConsole__product strong {
+  overflow: hidden;
+  color: var(--bz-navy);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stockConsole__variant {
+  color: var(--bz-muted);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+}
+
+/* Quantity carries its own sell-through bar — the number and the movement
+   behind it belong together. */
+.stockConsole__qty {
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+}
+
+.stockConsole__qtyValue {
+  color: var(--bz-blue);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.stockConsole__qtyValueLow {
+  color: #c2410c;
+}
+
+.stockConsole__qtyBar {
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eef2f7;
+}
+
+.stockConsole__qtyFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--bz-blue), #6f9dff);
+}
+
+.stockConsole__qtyFillLow {
+  background: linear-gradient(90deg, #ea580c, #fb923c);
+}
+
+.stockConsole__money {
+  color: var(--bz-navy);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.stockConsole__moneyMuted {
+  color: var(--bz-muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------- barcode */
+.stockConsole__barcode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stockConsole__barcodeGlyph {
+  --bar: #17324f;
+  width: 40px;
+  height: 16px;
+  flex: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--bar) 0 1px,
+    transparent 1px 3px,
+    var(--bar) 3px 5px,
+    transparent 5px 6px,
+    var(--bar) 6px 7px,
+    transparent 7px 10px,
+    var(--bar) 10px 13px,
+    transparent 13px 14px
+  );
+  transition: filter 0.45s ease;
+}
+
+.stockConsole__bodyRow[data-scanned="true"] .stockConsole__barcodeGlyph {
+  --bar: #12806f;
+  filter: drop-shadow(0 0 5px rgba(46, 196, 182, 0.6));
+}
+
+.stockConsole__barcodeNumber {
+  overflow: hidden;
+  color: var(--bz-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: -0.03em;
+  text-overflow: ellipsis;
+}
+
+.stockConsole__location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--bz-navy);
+  font-size: 10.5px;
+  font-weight: 650;
+}
+
+.stockConsole__locationDot {
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--bz-blue);
+}
+
+.stockConsole__locationDotStore {
+  background: var(--bz-teal);
+}
+
+.stockConsole__updated {
+  color: var(--bz-muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* The table runs past the panel edge on purpose; this keeps the last visible
+   row from ending on a hard cut. */
+.stockConsole__tableFade {
+  position: absolute;
+  inset: auto 0 0;
+  height: 74px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff 78%);
+}
+
+/* ------------------------------------------------------------------ motion */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes stockConsole__livePulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(46, 196, 182, 0.5);
+    }
+    60% {
+      box-shadow: 0 0 0 5px rgba(46, 196, 182, 0);
+    }
+  }
+
+  @keyframes stockConsole__rowIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes stockConsole__qtyGrow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .stockConsole__liveDot {
+    animation: stockConsole__livePulse 2.4s ease-out infinite;
+  }
+
+  .stockConsole__bodyRow {
+    animation: stockConsole__rowIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.62s + var(--r) * 0.05s);
+  }
+
+  .stockConsole__qtyFill {
+    transform-origin: 0 50%;
+    animation: stockConsole__qtyGrow 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.85s + var(--r) * 0.05s);
+  }
+}
+
+/* --------------------------------------------------------------- compact */
+@media (max-width: 1180px) {
+  .stockConsole__console {
+    height: clamp(340px, 46vh, 432px);
+  }
+}
+
+/* Tablet width. The table is meant to run past the panel edge, but the
+   toolbar is not: below ~900px the view switcher was being sliced in half,
+   which reads as a rendering fault rather than a deliberate crop. */
+@media (min-width: 761px) and (max-width: 900px) {
+  .stockConsole__segmented,
+  .stockConsole__ghostBtn,
+  .stockConsole__filter:nth-child(n + 4) {
+    display: none;
+  }
+}
+
+/* On a handset the console stops pretending to be a 1440px desktop window.
+   The same surface keeps its chrome, rail and live scan highlight, but the
+   grid drops to the three columns an operator actually reads on a phone —
+   product, quantity and rate — so nothing truncates or runs off the edge. */
+@media (max-width: 760px) {
+  .stockConsole__console {
+    height: 372px;
+    border-radius: 18px;
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.7),
+      0 26px 54px -18px rgba(0, 0, 0, 0.55);
+  }
+
+  .stockConsole__console::before {
+    border-radius: 18px;
+  }
+
+  .stockConsole__chromeNav,
+  .stockConsole__brandText,
+  .stockConsole__segmented {
+    display: none;
+  }
+
+  .stockConsole__chrome {
+    height: 42px;
+    gap: 10px;
+    padding: 0 11px;
+  }
+
+  .stockConsole__brand {
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  .stockConsole__chromeRight {
+    gap: 4px;
+  }
+
+  .stockConsole__rail {
+    width: 42px;
+    gap: 2px;
+    padding: 9px 0;
+  }
+
+  .stockConsole__railItem {
+    width: 30px;
+    height: 30px;
+  }
+
+  .stockConsole__canvas {
+    gap: 9px;
+    padding: 10px 11px 0;
+  }
+
+  /* Two headline numbers, no supporting note: the note was the only string
+     in the console that had to be ellipsed. */
+  .stockConsole__kpiRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .stockConsole__kpi {
+    gap: 9px;
+    padding: 9px 10px;
+    border-radius: 11px;
+  }
+
+  .stockConsole__kpi:nth-child(n + 3) {
+    display: none;
+  }
+
+  .stockConsole__kpiIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+  }
+
+  .stockConsole__kpiValue {
+    font-size: 16px;
+  }
+
+  .stockConsole__kpiNote {
+    display: none;
+  }
+
+  /* Search is the only control worth a phone's width; the filter chips and
+     the export button belong to a desktop toolbar. */
+  .stockConsole__search {
+    width: 100%;
+    flex: 1;
+  }
+
+  .stockConsole__filter,
+  .stockConsole__ghostBtn {
+    display: none;
+  }
+
+  .stockConsole__row {
+    grid-template-columns: minmax(0, 1fr) 46px 62px;
+    gap: 10px;
+    padding: 0 11px;
+  }
+
+  /* Code, MRP, barcode, location and updated-at collapse away; the product
+     cell absorbs the line code so nothing is actually lost. */
+  .stockConsole__row > *:nth-child(1),
+  .stockConsole__row > *:nth-child(5),
+  .stockConsole__row > *:nth-child(6),
+  .stockConsole__row > *:nth-child(7),
+  .stockConsole__row > *:nth-child(8) {
+    display: none;
+  }
+
+  .stockConsole__bodyRow {
+    height: 44px;
+  }
+
+  .stockConsole__product strong {
+    font-size: 11px;
+  }
+
+  .stockConsole__variant {
+    font-size: 8.5px;
+  }
+
+  .stockConsole__tableFade {
+    height: 56px;
+  }
+}
+
+@media (max-width: 400px) {
+  .stockConsole__console {
+    height: 348px;
+  }
+
+  .stockConsole__kpiLabel {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .stockConsole__row {
+    grid-template-columns: minmax(0, 1fr) 42px 56px;
+    gap: 8px;
+  }
+
+  .stockConsole__kpiValue {
+    font-size: 15px;
+  }
+}
+
+/* SECTION: sections/home-hero.module.css */
+/* ==========================================================================
+   Home hero — "one operating truth".
+
+   Composition: the headline runs the full width of the stage, the reading
+   copy sits low-left, and the Bizonix stock console is a single oversized
+   object rotated in 3D that runs off the right edge of the viewport. Nothing
+   is boxed into a tidy pair of columns, and the light/dark balance comes from
+   one dominant bright product surface on a navy stage.
+
+   Everything here is hero-scoped; the sticky white header and the legacy
+   `.bz-home-hero` rules in globals.css are untouched.
+   ========================================================================== */
+
+.homeHero__heroSection {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: calc(100svh - var(--bz-header-h, 80px));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+  background:
+    radial-gradient(
+      120% 90% at 74% -12%,
+      rgba(47, 107, 255, 0.24),
+      transparent 56%
+    ),
+    linear-gradient(180deg, #04101f 0%, #071a31 46%, #05121f 100%);
+}
+
+/* ------------------------------------------------------------- backdrop */
+.homeHero__beams {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  overflow: hidden;
+}
+
+.homeHero__beams canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Film grain — a static turbulence tile nudged in steps so it reads as
+   moving emulsion rather than a texture pinned to the layout. */
+.homeHero__grain {
+  position: absolute;
+  z-index: -3;
+  inset: -120px;
+  pointer-events: none;
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+/* Readability scrim: keeps the copy legible wherever a beam lands. */
+.homeHero__scrim {
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      92deg,
+      rgba(4, 14, 28, 0.86) 0%,
+      rgba(4, 14, 28, 0.5) 38%,
+      rgba(4, 14, 28, 0.12) 62%,
+      rgba(4, 14, 28, 0.34) 100%
+    ),
+    linear-gradient(180deg, rgba(4, 14, 28, 0.52), transparent 24%);
+}
+
+/* A hairline horizon the console appears to stand on. */
+.homeHero__horizon {
+  position: absolute;
+  z-index: -2;
+  top: 64%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(159, 190, 255, 0.06) 12%,
+    rgba(159, 190, 255, 0.3) 44%,
+    rgba(159, 190, 255, 0.12) 82%,
+    transparent
+  );
+}
+
+/* Cool floor light thrown up under the console. */
+.homeHero__floorGlow {
+  position: absolute;
+  z-index: -2;
+  top: 22%;
+  right: -14%;
+  width: 62rem;
+  height: 46rem;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(47, 107, 255, 0.42),
+    rgba(46, 196, 182, 0.14) 44%,
+    transparent 70%
+  );
+  filter: blur(96px);
+}
+
+/* --------------------------------------------------------------- layout */
+/* Vertically staged hero: centered editorial copy above the product stage.
+   The stage itself is width-managed in product-stage.module.css. */
+.homeHero__shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(1360px, calc(100% - 48px));
+  margin-inline: auto;
+  padding-block: clamp(28px, 4vh, 52px) clamp(28px, 4vh, 52px);
+}
+
+/* Centered editorial column (spec §10): 1100px shell, then narrower
+   max-widths per element — headline 880px, description 680px, the rest
+   fit-content via the centered flex column. */
+.homeHero__heroContent {
+  display: flex;
+  width: 100%;
+  max-width: 1100px;
+  flex-direction: column;
+  align-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------------- copy */
+.homeHero__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.homeHero__intro {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.homeHero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 15px 6px 11px;
+  border: 1px solid rgba(159, 190, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(9, 26, 49, 0.55);
+  color: rgba(214, 228, 255, 0.86);
+  font-size: 10px;
+  font-weight: 780;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.07);
+}
+
+.homeHero__eyebrowDot {
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--bz-teal);
+  box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.18);
+}
+
+/* Vertical word rotator — the audiences Bizonix is actually built for.
+   One clipped window over a stacked track: only the word inside the window
+   can ever be visible, so no amount of animation drift can overlap two. */
+.homeHero__rotator {
+  display: inline-block;
+  height: 13px;
+  min-width: 12.4em;
+  overflow: hidden;
+  vertical-align: -2px;
+}
+
+.homeHero__rotatorTrack {
+  display: block;
+}
+
+.homeHero__rotatorItem {
+  display: block;
+  height: 13px;
+  color: #8fb4ff;
+  line-height: 13px;
+}
+
+/* Centered editorial headline (spec §09): 64–78px at desktop, 800–900
+   weight, 0.94–1.02 line-height, max 880–1000px, 2–3 lines. Line wrapping
+   is solved with width/spacing first — never by shrinking type. */
+.homeHero__title {
+  margin-top: clamp(14px, 1.8vh, 22px);
+  max-width: 1080px;
+  color: #fff;
+  font-size: clamp(3.5rem, 4.2vw, 4.25rem);
+  font-weight: 800;
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.homeHero__titleLine {
+  display: block;
+}
+
+.homeHero__accentDash {
+  width: 42px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--bz-teal);
+  box-shadow: 0 0 12px rgba(46, 196, 182, 0.7);
+  margin: clamp(16px, 2vh, 20px) auto clamp(10px, 1.4vh, 16px);
+}
+
+.homeHero__word {
+  display: inline-block;
+  will-change: transform, filter;
+}
+
+/* Iridescent blue → teal sweep on the payoff phrase. */
+.homeHero__accent {
+  background: linear-gradient(
+    100deg,
+    #6f9dff 0%,
+    #a9c8ff 26%,
+    #6fe6d6 48%,
+    #a9c8ff 70%,
+    #6f9dff 100%
+  );
+  background-size: 260% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 28px rgba(47, 107, 255, 0.42));
+}
+
+.homeHero__lede {
+  max-width: 680px;
+  color: rgba(214, 228, 255, 0.68);
+  font-size: clamp(0.94rem, 1.02vw, 1.06rem);
+  line-height: 1.62;
+}
+
+/* -------------------------------------------------------------- actions */
+.homeHero__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(18px, 2.6vh, 26px);
+}
+
+.homeHero__btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 0 24px;
+  border: 1px solid rgba(148, 180, 255, 0.55);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #4a80ff, var(--bz-blue) 55%, #245ce0);
+  color: #fff;
+  font-size: 0.94rem;
+  font-weight: 750;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.28),
+    0 12px 30px -10px rgba(47, 107, 255, 0.78);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.homeHero__btnPrimary:hover {
+  background: linear-gradient(
+    180deg,
+    #5b8bff,
+    #3a76ff 55%,
+    var(--bz-blue-hover)
+  );
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.34),
+    0 18px 38px -10px rgba(47, 107, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.homeHero__btnPrimary svg {
+  transition: transform 0.2s ease;
+}
+
+.homeHero__btnPrimary:hover svg {
+  transform: translateX(3px);
+}
+
+.homeHero__btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 0 22px;
+  border: 1px solid rgba(180, 205, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(10, 28, 52, 0.5);
+  color: rgba(240, 246, 255, 0.9);
+  font-size: 0.94rem;
+  font-weight: 720;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.homeHero__btnSecondary:hover {
+  border-color: rgba(180, 205, 255, 0.5);
+  background: rgba(18, 42, 74, 0.66);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* -------------------------------------------------------- short screens */
+@media (max-height: 860px) and (min-width: 1181px) {
+  .homeHero__lede {
+    font-size: 0.94rem;
+  }
+
+  .homeHero__btnPrimary,
+  .homeHero__btnSecondary {
+    min-height: 46px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 1181px) {
+  .homeHero__heroSection {
+    min-height: 0;
+  }
+
+  .homeHero__shell {
+    padding-block: 24px 26px;
+  }
+}
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 1180px) {
+  .homeHero__heroSection {
+    min-height: 0;
+  }
+
+  .homeHero__shell {
+    width: min(1040px, calc(100% - 40px));
+    padding-block: clamp(40px, 6vh, 64px) clamp(34px, 5vh, 56px);
+  }
+
+  .homeHero__title {
+    font-size: clamp(3rem, 4.6vw, 3.75rem);
+  }
+
+  .homeHero__lede {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 760px) {
+  /* The atmospheric layers are tuned for a wide stage; on a handset the
+     floor glow and grain sit off-canvas and only cost paint, so they are
+     re-centred behind the console instead of the right-hand third. */
+  .homeHero__heroSection {
+    min-height: 0;
+  }
+
+  .homeHero__floorGlow {
+    top: 34%;
+    right: 50%;
+    width: 34rem;
+    height: 26rem;
+    transform: translateX(50%);
+    filter: blur(72px);
+  }
+
+  .homeHero__horizon {
+    top: 58%;
+  }
+
+  .homeHero__scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(4, 14, 28, 0.72) 0%,
+      rgba(4, 14, 28, 0.34) 42%,
+      rgba(4, 14, 28, 0.16) 66%,
+      rgba(4, 14, 28, 0.6) 100%
+    );
+  }
+
+  .homeHero__shell {
+    width: min(560px, calc(100% - 36px));
+    padding-block: 34px 44px;
+  }
+
+  .homeHero__head {
+    max-width: none;
+  }
+
+  .homeHero__rotator {
+    min-width: 10.6em;
+  }
+
+  .homeHero__eyebrow {
+    padding: 6px 13px 6px 10px;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+  }
+
+  .homeHero__title {
+    margin-top: 18px;
+    font-size: clamp(2rem, 8.8vw, 2.35rem);
+    letter-spacing: -0.028em;
+    line-height: 1.08;
+  }
+
+  /* Two hand-set lines read as one ragged block on a narrow column; letting
+     the browser wrap the whole headline keeps the balance instead. */
+  .homeHero__titleLine {
+    display: inline;
+  }
+
+  .homeHero__accentDash {
+    width: 34px;
+    margin-block: 16px 14px;
+  }
+
+  .homeHero__lede {
+    max-width: 34ch;
+    color: rgba(214, 228, 255, 0.78);
+    font-size: 0.95rem;
+    line-height: 1.58;
+    text-wrap: pretty;
+  }
+
+  /* Thumb-reachable, full-bleed stack: one obvious primary, one quiet
+     secondary — not two equally weighted pills. */
+  .homeHero__actions {
+    width: 100%;
+    max-width: 340px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .homeHero__btnPrimary,
+  .homeHero__btnSecondary {
+    min-height: 52px;
+    width: 100%;
+    font-size: 0.97rem;
+  }
+
+  .homeHero__btnSecondary {
+    border-color: rgba(180, 205, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(226, 236, 255, 0.82);
+  }
+}
+
+/* ---------------------------------------------------------------- motion */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes homeHero__heroRise {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes homeHero__heroFade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes homeHero__wordIn {
+    from {
+      opacity: 0;
+      transform: translateY(0.42em);
+      filter: blur(9px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes homeHero__accentSweep {
+    from {
+      background-position: 190% 50%;
+    }
+    to {
+      background-position: -70% 50%;
+    }
+  }
+
+  @keyframes homeHero__horizonIn {
+    from {
+      opacity: 0;
+      transform: scaleX(0.4);
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes homeHero__grainDrift {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    20% {
+      transform: translate3d(-14px, 9px, 0);
+    }
+    40% {
+      transform: translate3d(9px, -13px, 0);
+    }
+    60% {
+      transform: translate3d(-11px, -7px, 0);
+    }
+    80% {
+      transform: translate3d(13px, 11px, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /* Four holds and a fifth stop on the duplicated first word, so the loop
+     back to 0 lands on an identical frame. */
+  @keyframes homeHero__rotateTrack {
+    0%,
+    18% {
+      transform: translateY(0);
+    }
+    25%,
+    43% {
+      transform: translateY(-13px);
+    }
+    50%,
+    68% {
+      transform: translateY(-26px);
+    }
+    75%,
+    93% {
+      transform: translateY(-39px);
+    }
+    100% {
+      transform: translateY(-52px);
+    }
+  }
+
+  .homeHero__grain {
+    animation: homeHero__grainDrift 7s steps(1, end) infinite;
+  }
+
+  .homeHero__eyebrow {
+    animation: homeHero__heroFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+  }
+
+  .homeHero__rotatorTrack {
+    animation: homeHero__rotateTrack 11.2s cubic-bezier(0.66, 0, 0.2, 1)
+      infinite;
+  }
+
+  .homeHero__word {
+    animation: homeHero__wordIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.16s + var(--d) * 0.062s);
+  }
+
+  .homeHero__accent {
+    animation:
+      homeHero__wordIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both,
+      homeHero__accentSweep 5.4s linear 1.4s infinite;
+    animation-delay: calc(0.16s + var(--d) * 0.062s), 1.4s;
+  }
+
+  .homeHero__lede {
+    animation: homeHero__heroRise 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+  }
+
+  .homeHero__actions {
+    animation: homeHero__heroRise 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+  }
+
+  .homeHero__horizon {
+    animation: homeHero__horizonIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+  }
+}
+
+/* SECTION: sections/module-showcase/module-showcase.module.css */
+.moduleShowcase__section {
+  position: relative;
+  overflow: hidden;
+  padding: 42px 0 30px;
+  background: linear-gradient(
+    180deg,
+    var(--bz-surface) 0%,
+    var(--bz-surface-alt) 100%
+  );
+}
+
+.moduleShowcase__backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 17% 43%,
+      rgba(47, 107, 255, 0.12),
+      transparent 31rem
+    ),
+    radial-gradient(
+      circle at 63% 27%,
+      rgba(46, 196, 182, 0.07),
+      transparent 26rem
+    ),
+    radial-gradient(
+      circle at 90% 65%,
+      rgba(98, 84, 255, 0.07),
+      transparent 27rem
+    );
+}
+.moduleShowcase__backdrop::after {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(47, 107, 255, 0.14) 0.65px,
+    transparent 0.7px
+  );
+  background-size: 18px 18px;
+  content: "";
+  mask-image: linear-gradient(transparent, #000 8%, #000 94%, transparent);
+  opacity: 0.32;
+}
+.moduleShowcase__shell {
+  position: relative;
+  z-index: 1;
+  width: min(1398px, calc(100% - 72px));
+  margin-inline: auto;
+}
+.moduleShowcase__composition {
+  display: grid;
+  grid-template-columns: minmax(480px, 540px) minmax(680px, 1fr);
+  gap: clamp(64px, 6.2vw, 94px);
+  align-items: start;
+}
+.moduleShowcase__storyColumn {
+  min-width: 0;
+}
+.moduleShowcase__header {
+  max-width: 560px;
+  text-align: left;
+}
+.moduleShowcase__eyebrow {
+  display: inline-flex;
+  min-height: 29px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(47, 107, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  padding: 5px 13px;
+  color: var(--bz-blue);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+.moduleShowcase__eyebrow i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bz-blue);
+  box-shadow: 0 0 8px rgba(47, 107, 255, 0.4);
+}
+.moduleShowcase__title {
+  margin-top: 25px;
+  color: var(--bz-navy);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+.moduleShowcase__title em {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(100deg, var(--bz-blue), var(--bz-teal));
+  background-clip: text;
+  color: transparent;
+  font-style: normal;
+  white-space: nowrap;
+  -webkit-background-clip: text;
+}
+.moduleShowcase__title em::after {
+  position: absolute;
+  right: 1%;
+  bottom: -10px;
+  left: 1%;
+  height: 7px;
+  border-top: 2px solid rgba(47, 107, 255, 0.82);
+  border-radius: 50%;
+  content: "";
+  transform: rotate(-0.8deg);
+}
+.moduleShowcase__header > p {
+  margin-top: 28px;
+  color: var(--bz-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.moduleShowcase__ctaGroup {
+  display: flex;
+  justify-content: center;
+  margin-top: 42px;
+}
+.moduleShowcase__primaryCta,
+.moduleShowcase__secondaryCta {
+  min-height: 46px;
+  padding-inline: 23px;
+}
+.moduleShowcase__primaryCta svg,
+.moduleShowcase__secondaryCta svg {
+  transition: transform 180ms ease;
+}
+.moduleShowcase__primaryCta:hover svg {
+  transform: translateX(4px);
+}
+
+.moduleShowcase__coreStage {
+  position: relative;
+  width: min(520px, 100%);
+  height: 500px;
+  margin-top: 40px;
+}
+.moduleShowcase__coreStage::before {
+  position: absolute;
+  top: 86px;
+  left: 50%;
+  width: 350px;
+  height: 270px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(47, 107, 255, 0.18),
+    rgba(47, 107, 255, 0.045) 52%,
+    transparent 72%
+  );
+  filter: blur(11px);
+  content: "";
+  transform: translateX(-50%);
+}
+.moduleShowcase__orbit {
+  position: absolute;
+  z-index: 1;
+  top: var(--orbit-center-y, 214px);
+  left: var(--orbit-center-x, 260px);
+  border: 1px solid rgba(47, 107, 255, 0.22);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.moduleShowcase__orbitOuter {
+  width: calc(var(--orbit-radius-x, 206px) * 2);
+  height: calc(var(--orbit-radius-y, 171px) * 2);
+  border-style: dashed;
+}
+.moduleShowcase__orbitMiddle {
+  width: calc(var(--orbit-radius-x, 206px) * 1.64);
+  height: calc(var(--orbit-radius-y, 171px) * 1.64);
+  border-color: rgba(46, 196, 182, 0.3);
+}
+.moduleShowcase__orbitInner {
+  width: calc(var(--orbit-radius-x, 206px) * 1.28);
+  height: calc(var(--orbit-radius-y, 171px) * 1.28);
+  border-color: rgba(47, 107, 255, 0.28);
+}
+.moduleShowcase__orbitAxis {
+  position: absolute;
+  z-index: 1;
+  top: var(--orbit-center-y, 214px);
+  left: calc(var(--orbit-center-x, 260px) - var(--orbit-radius-x, 206px));
+  width: calc(var(--orbit-radius-x, 206px) * 2);
+  border-top: 1px dashed rgba(47, 107, 255, 0.2);
+}
+.moduleShowcase__orbitNode {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: 92px;
+  color: var(--bz-navy);
+  text-align: center;
+}
+.moduleShowcase__orbitNode i {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(47, 107, 255, 0.18);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 11px 24px rgba(31, 72, 139, 0.11);
+  color: var(--bz-blue);
+}
+.moduleShowcase__orbitNode small {
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1.2;
+}
+.moduleShowcase__orbitNode:nth-of-type(5n + 1) i,
+.moduleShowcase__orbitNode:nth-of-type(5n + 3) i {
+  color: var(--bz-teal);
+  border-color: rgba(46, 196, 182, 0.28);
+}
+.moduleShowcase__coreContent {
+  position: absolute;
+  z-index: 4;
+  top: 118px;
+  left: calc(50% - 120px);
+  display: grid;
+  width: 240px;
+  justify-items: center;
+  text-align: center;
+}
+.moduleShowcase__coreLogo {
+  position: relative;
+  display: grid;
+  width: 118px;
+  height: 118px;
+  place-items: center;
+  border: 1px solid rgba(47, 107, 255, 0.14);
+  border-radius: 28px;
+  background: linear-gradient(145deg, #fff, var(--bz-blue-soft));
+  box-shadow:
+    0 18px 36px rgba(27, 70, 162, 0.17),
+    0 8px 0 rgba(120, 157, 239, 0.3);
+}
+.moduleShowcase__coreLogo img {
+  width: 78px;
+  height: 78px;
+}
+.moduleShowcase__coreCaption {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  margin-top: 22px;
+  text-align: center;
+}
+.moduleShowcase__coreCaption strong {
+  color: var(--bz-navy);
+  font-size: 1rem;
+}
+.moduleShowcase__coreCaption span {
+  color: var(--bz-blue);
+  font-size: 0.76rem;
+  font-weight: 780;
+}
+.moduleShowcase__coreCaption small {
+  color: var(--bz-muted);
+  font-size: 0.68rem;
+}
+
+.moduleShowcase__moduleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 52px clamp(46px, 4vw, 64px);
+  padding-top: 75px;
+}
+.moduleShowcase__card {
+  --accent: var(--bz-blue);
+  position: relative;
+  z-index: 2;
+  display: grid;
+  height: 204px;
+  min-width: 0;
+  grid-template-columns: 44% 56%;
+  border: 1px solid rgba(216, 225, 239, 0.96);
+  border-radius: 19px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 17px 39px rgba(21, 57, 111, 0.085);
+  transition: box-shadow 220ms ease;
+}
+.moduleShowcase__card:nth-child(even)::before {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: 100%;
+  width: clamp(46px, 4vw, 64px);
+  border-top: 1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+  content: "";
+}
+.moduleShowcase__card:nth-child(even)::after {
+  position: absolute;
+  z-index: 3;
+  top: calc(50% - 4px);
+  right: calc(100% + clamp(20px, 2vw, 28px));
+  width: 8px;
+  height: 8px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 42%, transparent);
+  content: "";
+}
+.moduleShowcase__card:hover {
+  box-shadow: 0 23px 46px rgba(21, 57, 111, 0.14);
+}
+.moduleShowcase__photo {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 18px 0 0 18px;
+  background: var(--bz-surface-alt);
+}
+.moduleShowcase__photo::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 72%,
+    rgba(255, 255, 255, 0.13)
+  );
+  content: "";
+}
+.moduleShowcase__photo img {
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+.moduleShowcase__card:hover .moduleShowcase__photo img,
+.moduleShowcase__card:focus-within .moduleShowcase__photo img {
+  transform: scale(1.028);
+}
+.moduleShowcase__panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 21px 18px 15px 20px;
+}
+.moduleShowcase__cardHeading {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.moduleShowcase__cardHeading span {
+  border-radius: 6px;
+  background: var(--accent);
+  padding: 5px 7px;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+.moduleShowcase__cardHeading h3 {
+  color: var(--bz-navy);
+  font-size: 0.98rem;
+  font-weight: 820;
+  letter-spacing: -0.025em;
+}
+.moduleShowcase__panel > p {
+  min-height: 50px;
+  margin-top: 12px;
+  color: var(--bz-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.moduleShowcase__metric {
+  display: flex;
+  min-height: 57px;
+  align-items: flex-end;
+  gap: 9px;
+  margin-top: auto;
+  border-top: 1px solid var(--bz-border);
+  padding-top: 10px;
+  color: var(--accent);
+}
+.moduleShowcase__metric > span:first-child {
+  display: grid;
+  gap: 3px;
+  margin-right: auto;
+}
+.moduleShowcase__metric small {
+  color: var(--bz-muted);
+  font-size: 0.6rem;
+  text-transform: capitalize;
+}
+.moduleShowcase__metric strong {
+  color: var(--accent);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+.moduleShowcase__metric b {
+  color: var(--bz-success);
+  font-size: 0.63rem;
+  white-space: nowrap;
+}
+.moduleShowcase__metric svg {
+  width: 48px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.moduleShowcase__people {
+  display: flex;
+  align-items: end;
+  gap: 3px;
+}
+.moduleShowcase__people i {
+  display: block;
+  width: 7px;
+  height: 15px;
+  border-radius: 7px 7px 3px 3px;
+  background: currentColor;
+}
+.moduleShowcase__people i:nth-child(2) {
+  height: 21px;
+}
+.moduleShowcase__exploreLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  border-top: 1px solid var(--bz-border);
+  padding-top: 12px;
+  color: var(--accent);
+  font-size: 0.69rem;
+  font-weight: 800;
+}
+.moduleShowcase__exploreLabel svg {
+  transition: transform 180ms ease;
+}
+.moduleShowcase__card:hover .moduleShowcase__exploreLabel svg,
+.moduleShowcase__card:focus-within .moduleShowcase__exploreLabel svg {
+  transform: translateX(4px);
+}
+.moduleShowcase__cardLink {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  border-radius: inherit;
+}
+.moduleShowcase__cardLink:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 72%, white);
+  outline-offset: 4px;
+}
+.moduleShowcase__srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.moduleShowcase__capabilityStrip {
+  display: grid;
+  min-height: 118px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  overflow: hidden;
+  margin-top: 54px;
+  border: 1px solid var(--bz-border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 17px 38px rgba(26, 60, 110, 0.075);
+}
+.moduleShowcase__capability,
+.moduleShowcase__capabilityFinal {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  align-items: center;
+  gap: 13px;
+  padding: 16px 18px;
+}
+.moduleShowcase__capability + .moduleShowcase__capability,
+.moduleShowcase__capabilityFinal {
+  border-left: 1px solid var(--bz-border);
+}
+.moduleShowcase__capability > i,
+.moduleShowcase__capabilityFinal > i {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bz-blue-soft);
+  color: var(--bz-blue);
+}
+.moduleShowcase__capability:nth-child(2) > i,
+.moduleShowcase__capability:nth-child(4) > i {
+  background: var(--bz-teal-soft);
+  color: var(--bz-teal);
+}
+.moduleShowcase__capability:nth-child(3) > i {
+  color: #8b5cf6;
+  background: #f1eafe;
+}
+.moduleShowcase__capabilityFinal > i {
+  color: var(--bz-blue);
+  background: #eef5ff;
+}
+.moduleShowcase__capability span,
+.moduleShowcase__capabilityFinal span {
+  display: grid;
+  gap: 5px;
+}
+.moduleShowcase__capability strong,
+.moduleShowcase__capabilityFinal strong {
+  color: var(--bz-navy);
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+.moduleShowcase__capability small,
+.moduleShowcase__capabilityFinal small {
+  color: var(--bz-muted);
+  font-size: 0.65rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 1280px) {
+  .moduleShowcase__shell {
+    width: min(1160px, calc(100% - 48px));
+  }
+  .moduleShowcase__composition {
+    grid-template-columns: 420px minmax(0, 1fr);
+    gap: 42px;
+  }
+  .moduleShowcase__title {
+    font-size: 2.7rem;
+  }
+  .moduleShowcase__coreStage {
+    width: 520px;
+    max-width: none;
+    transform: scale(0.8);
+    transform-origin: left top;
+    margin-bottom: -92px;
+  }
+  .moduleShowcase__moduleGrid {
+    gap: 38px 32px;
+    padding-top: 60px;
+  }
+  .moduleShowcase__card {
+    height: 194px;
+    grid-template-columns: 42% 58%;
+  }
+  .moduleShowcase__panel {
+    padding: 18px 14px;
+  }
+  .moduleShowcase__panel > p {
+    font-size: 0.75rem;
+  }
+  .moduleShowcase__card:nth-child(even)::before {
+    width: 32px;
+  }
+  .moduleShowcase__card:nth-child(even)::after {
+    right: calc(100% + 12px);
+  }
+  .moduleShowcase__capabilityStrip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .moduleShowcase__capabilityFinal {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--bz-border);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  .moduleShowcase__section {
+    padding-top: 64px;
+  }
+  .moduleShowcase__shell {
+    width: min(820px, calc(100% - 40px));
+  }
+  .moduleShowcase__composition {
+    grid-template-columns: 1fr;
+  }
+  .moduleShowcase__storyColumn {
+    position: static;
+  }
+  .moduleShowcase__header {
+    max-width: 590px;
+  }
+  .moduleShowcase__coreStage {
+    width: 520px;
+    margin: 28px auto -26px;
+    transform: none;
+  }
+  .moduleShowcase__moduleGrid {
+    gap: 28px;
+    padding-top: 0;
+  }
+  .moduleShowcase__card {
+    height: 205px;
+  }
+  .moduleShowcase__card:nth-child(even)::before,
+  .moduleShowcase__card:nth-child(even)::after {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .moduleShowcase__section {
+    padding: 52px 0 26px;
+  }
+  .moduleShowcase__shell {
+    width: min(100% - 36px, 560px);
+  }
+  .moduleShowcase__title {
+    margin-top: 20px;
+    font-size: clamp(2rem, 8.2vw, 2.25rem);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .moduleShowcase__title em {
+    white-space: normal;
+  }
+  /* The hand-set line breaks are tuned for a 560px column; on a handset they
+     leave two-word orphans, so the browser is left to balance the wrap. */
+  .moduleShowcase__title br,
+  .moduleShowcase__header > p br {
+    display: none;
+  }
+  .moduleShowcase__header > p {
+    margin-top: 18px;
+    font-size: 0.9rem;
+  }
+  .moduleShowcase__ctaGroup {
+    margin-top: 30px;
+  }
+  .moduleShowcase__primaryCta,
+  .moduleShowcase__secondaryCta {
+    min-height: 44px;
+    padding-inline: 16px;
+    font-size: 0.76rem;
+  }
+  /* The radial orbit needs roughly 520px of stage to keep nine labels
+     legible. Scaling that down to fit a handset produced 6px type, so on
+     mobile the constellation flattens into the same nodes laid out as a
+     grid around the core — identical parts, a layout the column can hold. */
+  .moduleShowcase__coreStage {
+    display: grid;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin: 26px 0 4px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px 8px;
+    transform: none;
+  }
+  .moduleShowcase__coreStage::before {
+    display: none;
+  }
+  .moduleShowcase__orbit,
+  .moduleShowcase__orbitAxis {
+    display: none;
+  }
+  /* Core first, then the nine modules that plug into it. */
+  .moduleShowcase__coreContent {
+    position: static;
+    z-index: 1;
+    order: -1;
+    width: auto;
+    grid-column: 1 / -1;
+    margin-bottom: 10px;
+  }
+  .moduleShowcase__coreLogo {
+    width: 96px;
+    height: 96px;
+    border-radius: 24px;
+  }
+  .moduleShowcase__coreLogo img {
+    width: 62px;
+    height: 62px;
+  }
+  .moduleShowcase__coreCaption {
+    margin-top: 16px;
+  }
+  .moduleShowcase__orbitNode {
+    position: static;
+    width: auto;
+    gap: 9px;
+    padding: 14px 6px 12px;
+    border: 1px solid rgba(47, 107, 255, 0.12);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 6px 18px rgba(31, 72, 139, 0.06);
+    transform: none;
+  }
+  .moduleShowcase__orbitNode i {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    box-shadow: 0 6px 14px rgba(31, 72, 139, 0.09);
+  }
+  .moduleShowcase__orbitNode small {
+    font-size: 10.5px;
+  }
+  .moduleShowcase__moduleGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .moduleShowcase__card {
+    height: 190px;
+    grid-template-columns: 42% 58%;
+  }
+  .moduleShowcase__panel {
+    padding: 16px 13px;
+  }
+  .moduleShowcase__cardHeading {
+    gap: 8px;
+  }
+  .moduleShowcase__cardHeading h3 {
+    font-size: 0.92rem;
+  }
+  .moduleShowcase__panel > p {
+    min-height: 43px;
+    margin-top: 9px;
+    font-size: 0.73rem;
+  }
+  .moduleShowcase__metric {
+    min-height: 49px;
+    padding-top: 8px;
+  }
+  .moduleShowcase__metric strong {
+    font-size: 0.92rem;
+  }
+  .moduleShowcase__capabilityStrip {
+    grid-template-columns: 1fr;
+    margin-top: 30px;
+  }
+  .moduleShowcase__capability + .moduleShowcase__capability,
+  .moduleShowcase__capabilityFinal {
+    grid-column: auto;
+    border-top: 1px solid var(--bz-border);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 410px) {
+  .moduleShowcase__ctaGroup {
+    flex-direction: column;
+  }
+  .moduleShowcase__primaryCta,
+  .moduleShowcase__secondaryCta {
+    width: 100%;
+  }
+  .moduleShowcase__card {
+    height: 184px;
+    grid-template-columns: 39% 61%;
+  }
+  .moduleShowcase__panel {
+    padding-inline: 11px;
+  }
+  .moduleShowcase__metric svg {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moduleShowcase__photo img,
+  .moduleShowcase__primaryCta svg,
+  .moduleShowcase__exploreLabel svg {
+    transition: none;
+  }
+}
+
+/* SECTION: sections/operating-core.module.css */
+/* =============================================================================
+   Three entities. One set of books.
+
+   The whole section runs on one number, `--p` (0 -> 1), written onto the
+   section element by use-core-scrub.ts. Every beat below is a window on that
+   value. `--p` DEFAULTS TO 1, so with JavaScript off, before hydration, or
+   under prefers-reduced-motion the section renders in its finished state and
+   nothing is gated on motion.
+
+     0.00 - 0.25   lanes establish (staggered per lane)
+     0.25 - 0.50   connectors draw
+     0.50 - 0.80   core assembles, lanes recede, tokens fly, one pulse
+     0.80 - 0.92   "One operating truth." reveals
+     0.92 - 1.00   settle before the stage unpins
+   ========================================================================== */
+
+.operatingCore__section {
+  --p: 1;
+
+  /* Beat windows. All unitless numbers, so they compose in calc() freely. */
+  --b1: clamp(0, calc(var(--p) / 0.25), 1);
+  --b2: clamp(0, calc((var(--p) - 0.25) / 0.25), 1);
+  --b3: clamp(0, calc((var(--p) - 0.5) / 0.18), 1);
+  --b3r: var(--b3); /* lane recede - split out so mobile can opt out */
+  --b3t: clamp(0, calc((var(--p) - 0.62) / 0.14), 1);
+  --b3p: clamp(0, calc((var(--p) - 0.78) / 0.1), 1);
+  --b4: clamp(0, calc((var(--p) - 0.8) / 0.12), 1);
+  --sp: clamp(0, calc(var(--p) / 0.72), 1); /* mobile spine draw */
+
+  --violet: #8b4cf6;
+
+  position: relative;
+  padding-block: clamp(76px, 8vw, 120px) clamp(80px, 8vw, 124px);
+  background:
+    radial-gradient(
+      circle at 50% 34%,
+      rgba(47, 107, 255, 0.07),
+      transparent 42%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #f7faff 62%, #ffffff 100%);
+}
+
+.operatingCore__section::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0.4;
+  background-image: radial-gradient(
+    rgba(47, 107, 255, 0.16) 0.65px,
+    transparent 0.7px
+  );
+  background-size: 17px 17px;
+  mask-image: linear-gradient(transparent, black 10%, black 86%, transparent);
+  pointer-events: none;
+}
+
+.operatingCore__shell {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+/* ---------------------------------------------------------------- header ---
+   Centre axis: the same axis the three lanes converge into. */
+
+.operatingCore__head {
+  max-width: 860px;
+  text-align: center;
+}
+
+.operatingCore__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  color: #41586f;
+  font-size: 11.5px;
+  font-weight: 850;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.operatingCore__eyebrow::before,
+.operatingCore__eyebrow::after {
+  width: 26px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--bz-teal));
+  content: "";
+}
+
+.operatingCore__eyebrow::after {
+  background: linear-gradient(90deg, var(--violet), transparent);
+}
+
+.operatingCore__title {
+  margin: 18px 0 0;
+  color: var(--bz-navy);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.operatingCore__lede {
+  max-width: 63ch;
+  margin: 20px auto 0;
+  color: #3d556f; /* 7.4:1 on white */
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
+  line-height: 1.68;
+  text-wrap: balance;
+}
+
+/* ----------------------------------------------------------------- stage ---
+   Default (mobile, short viewports, reduced motion) is normal flow. The pin is
+   added back by media query below, and its height is declared in CSS - never
+   injected on hydration - so this section contributes no layout shift. */
+
+.operatingCore__stageWrap {
+  position: relative;
+  height: auto;
+  margin-top: clamp(46px, 5vw, 68px);
+}
+
+.operatingCore__stage {
+  position: static;
+}
+
+.operatingCore__stageInner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vh, 20px);
+}
+
+.operatingCore__flow {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  min-height: 0;
+}
+
+/* ----------------------------------------------------------------- lanes ---
+   All three heads on one baseline. Depth is carried by the connector fan, not
+   by staggering the columns - the old zigzag communicated a sequence that does
+   not exist between three parallel entity types. */
+
+.operatingCore__lanes {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(14px, 1.6vw, 22px);
+}
+
+.operatingCore__lane {
+  --i: 0;
+  /* Per-lane progress through beat 1, offset ~120ms of natural scroll apart. */
+  --b1n: clamp(0, calc((var(--p) - var(--i) * 0.045) / 0.17), 1);
+  --f: clamp(0, calc(var(--b1n) / 0.55), 1); /* image field wipe */
+  --l: clamp(0, calc((var(--b1n) - 0.18) / 0.32), 1); /* label */
+  --t: clamp(0, calc((var(--b1n) - 0.28) / 0.47), 1); /* heading line mask */
+  --c: clamp(0, calc((var(--b1n) - 0.45) / 0.4), 1); /* body copy */
+  --k: clamp(0, calc((var(--b1n) - 0.55) / 0.45), 1); /* illustrative card */
+
+  position: relative;
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid var(--bz-border);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  padding: clamp(16px, 1.8vh, 22px) clamp(15px, 1.5vw, 20px)
+    clamp(15px, 1.6vh, 19px);
+  box-shadow: 0 10px 30px rgba(11, 31, 58, 0.045);
+
+  opacity: 1;
+  transform: none;
+  transition:
+    border-color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+/* Only an actively scrubbed section recedes its lanes. The server-rendered,
+   no-JavaScript and reduced-motion states stay at full contrast. */
+.operatingCore__section[data-motion="armed"] .operatingCore__lane {
+  opacity: calc(1 - 0.45 * var(--b3r));
+  transform: scale(calc(1 - 0.04 * var(--b3r)));
+}
+
+.operatingCore__lane[data-lane="wholesale"] {
+  --lane: var(--bz-blue);
+}
+.operatingCore__lane[data-lane="retail"] {
+  --lane: var(--bz-teal);
+}
+.operatingCore__lane[data-lane="franchise"] {
+  --lane: var(--violet);
+}
+
+.operatingCore__lane:hover,
+.operatingCore__lane:focus-visible {
+  border-color: color-mix(in srgb, var(--lane) 42%, var(--bz-border));
+  box-shadow: 0 18px 44px rgba(11, 31, 58, 0.1);
+}
+
+.operatingCore__lane:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--lane) 58%, #ffffff);
+  outline-offset: 3px;
+}
+
+/* Brand-toned texture, not documentary photography: greyscaled, hue-replaced
+   with the lane's accent, dropped to a quarter opacity, grained, and masked so
+   it never resolves into a photograph of a place. Beat 1 wipes it in. */
+
+.operatingCore__field {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  opacity: 0.28;
+  clip-path: inset(0 calc((1 - var(--f)) * 100%) 0 0);
+  pointer-events: none;
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.5) 46%,
+    transparent 78%
+  );
+}
+
+.operatingCore__field img {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.14) brightness(1.04);
+}
+
+.operatingCore__fieldTint {
+  position: absolute;
+  inset: 0;
+  background: var(--lane);
+  mix-blend-mode: color;
+}
+
+.operatingCore__fieldGrain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.operatingCore__laneNode {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--lane) 26%, transparent);
+  border-radius: 11px;
+  background: #fff;
+  color: var(--lane);
+  box-shadow: 0 4px 14px rgba(11, 31, 58, 0.07);
+  opacity: var(--l);
+  transform: translateY(calc((1 - var(--l)) * 8px));
+}
+
+.operatingCore__laneLabel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 13px;
+  color: var(--bz-navy); /* 14.7:1 - the lane hue is carried by the dot */
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  opacity: var(--l);
+  transform: translateY(calc((1 - var(--l)) * 8px));
+}
+
+.operatingCore__laneLabel::before {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lane);
+  content: "";
+}
+
+.operatingCore__laneTitle {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  margin: 9px 0 0;
+  color: var(--bz-navy);
+  font-size: clamp(1.06rem, 1.35vw, 1.28rem);
+  font-weight: 730;
+  line-height: 1.22;
+  letter-spacing: -0.028em;
+}
+
+.operatingCore__laneTitle span {
+  display: block;
+  transform: translateY(calc((1 - var(--t)) * 108%));
+}
+
+.operatingCore__laneCopy {
+  position: relative;
+  z-index: 1;
+  margin: 9px 0 0;
+  color: var(--bz-muted); /* 5.4:1 */
+  font-size: 13.5px;
+  line-height: 1.6;
+  opacity: var(--c);
+  transform: translateY(calc((1 - var(--c)) * 10px));
+}
+
+.operatingCore__laneCardWrap {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: clamp(14px, 1.8vh, 20px);
+  opacity: var(--k);
+  transform: translateY(calc((1 - var(--k)) * 24px))
+    scale(calc(0.985 + 0.015 * var(--k)));
+}
+
+/* ----------------------------------------------------- illustrative cards ---
+   Every figure derives from the figure above it, and every card is
+   permanently labelled. Nothing here implies live customer data. */
+
+.operatingCore__laneCard {
+  border: 1px solid var(--bz-border);
+  border-radius: 15px;
+  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  padding: 13px 14px 12px;
+  box-shadow: 0 6px 18px rgba(11, 31, 58, 0.05);
+}
+
+.operatingCore__cardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--bz-border);
+}
+
+.operatingCore__cardTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--bz-navy);
+  font-size: 11.5px;
+  font-weight: 820;
+  letter-spacing: 0.01em;
+}
+
+.operatingCore__cardTitle svg {
+  color: var(--lane);
+}
+
+.operatingCore__sampleChip {
+  border: 1px solid var(--bz-border);
+  border-radius: 999px;
+  background: var(--bz-surface-alt);
+  padding: 2px 8px;
+  color: #5b6b7c; /* 5.4:1 - not the 2.9:1 grey used elsewhere on the site */
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.operatingCore__cardDoc {
+  margin-left: auto;
+  color: var(--bz-muted);
+  font-size: 10px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.operatingCore__cardFoot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 11px;
+  padding-top: 9px;
+  border-top: 1px solid var(--bz-border);
+  color: var(--bz-muted);
+  font-size: 11px;
+  font-weight: 620;
+  line-height: 1.4;
+}
+
+.operatingCore__cardFoot svg {
+  flex: 0 0 auto;
+  color: var(--bz-success);
+}
+
+/* Network allocation */
+
+.operatingCore__kpiRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 11px;
+}
+
+.operatingCore__kpiRow span {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.operatingCore__kpiRow small {
+  color: var(--bz-muted);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.operatingCore__kpiRow b {
+  color: var(--bz-navy);
+  font-size: 19px;
+  font-weight: 780;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.operatingCore__splitList {
+  display: grid;
+  gap: 9px;
+  margin: 12px 0 0;
+}
+
+.operatingCore__split {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+
+.operatingCore__split dt {
+  color: var(--bz-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.operatingCore__split dd {
+  margin: 0;
+  color: var(--bz-navy);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.operatingCore__split dd b {
+  font-weight: 850;
+}
+
+.operatingCore__splitTrack {
+  display: block;
+  overflow: hidden;
+  grid-column: 1 / -1;
+  height: 5px;
+  border-radius: 999px;
+  background: #eef2f8;
+}
+
+.operatingCore__splitFill {
+  --fill-delay: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--lane),
+    color-mix(in srgb, var(--lane) 55%, #ffffff)
+  );
+  /* Fills once, to its real value, when the card lands. Never loops. */
+  transform: scaleX(
+    calc(var(--v) * clamp(0, calc((var(--k) - var(--fill-delay)) / 0.7), 1))
+  );
+  transform-origin: left center;
+}
+
+/* Counter sale */
+
+.operatingCore__lineItems {
+  display: grid;
+  gap: 7px;
+  margin: 11px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.operatingCore__lineItems li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--bz-navy);
+  font-size: 12px;
+  font-weight: 640;
+}
+
+.operatingCore__lineItems b {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.operatingCore__taxRows {
+  display: grid;
+  gap: 5px;
+  margin: 11px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed var(--bz-border);
+}
+
+.operatingCore__taxRows > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.operatingCore__taxRows dt {
+  color: var(--bz-muted);
+  font-size: 11px;
+  font-weight: 640;
+}
+
+.operatingCore__taxRows dd {
+  margin: 0;
+  color: var(--bz-navy);
+  font-size: 11px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.operatingCore__taxTotal {
+  margin-top: 3px;
+  padding-top: 7px;
+  border-top: 1px solid var(--bz-border);
+}
+
+.operatingCore__taxTotal dt {
+  color: var(--bz-navy);
+  font-weight: 820;
+  font-size: 11.5px;
+}
+
+.operatingCore__taxTotal dd {
+  font-size: 14px;
+  font-weight: 850;
+}
+
+/* Replenishment */
+
+.operatingCore__orderHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 11px;
+}
+
+.operatingCore__orderHead span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.operatingCore__orderHead small {
+  overflow: hidden;
+  color: var(--bz-muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.operatingCore__orderHead b {
+  color: var(--bz-navy);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.operatingCore__orderState {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--bz-teal-soft);
+  padding: 3px 10px;
+  color: #17877c; /* 4.7:1 on teal-soft */
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+}
+
+.operatingCore__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 13px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.operatingCore__steps li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--bz-muted);
+  font-size: 10px;
+  font-weight: 780;
+}
+
+.operatingCore__steps li i {
+  display: inline-flex;
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bz-border);
+  border-radius: 50%;
+  background: #fff;
+  color: #fff;
+}
+
+.operatingCore__steps li[data-done="yes"] {
+  color: var(--bz-navy);
+}
+
+.operatingCore__steps li[data-done="yes"] i {
+  border-color: transparent;
+  background: var(--bz-success);
+}
+
+/* ------------------------------------------------------------ connectors ---
+   One SVG, three paths, drawn by scroll. `pathLength="1"` normalises them so a
+   single dashoffset expression draws all three. Direction is legible with zero
+   motion: the stroke tapers toward the core and each path ends in an arrowhead
+   pointing into it. */
+
+.operatingCore__band {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  aspect-ratio: 1200 / 180;
+}
+
+.operatingCore__diagram {
+  position: absolute;
+  inset: 0;
+  overflow: visible; /* paths never clip at the band edge */
+  width: 100%;
+  height: 100%;
+}
+
+.operatingCore__connector {
+  /* Per-path lead-in inside beat 2, so they draw in sequence rather than
+     together. `--d` is this path's own 0 -> 1 draw progress. */
+  --lead: 0;
+  --d: clamp(0, calc((var(--b2) - var(--lead)) / 0.86), 1);
+  transition: opacity 260ms ease;
+}
+
+.operatingCore__connector[data-lane="wholesale"] {
+  --lane: var(--bz-blue);
+  --tlead: 0;
+}
+.operatingCore__connector[data-lane="retail"] {
+  --lane: var(--bz-teal);
+  --tlead: 0.08;
+}
+.operatingCore__connector[data-lane="franchise"] {
+  --lane: var(--violet);
+  --tlead: 0.16;
+}
+
+.operatingCore__connectorHalo,
+.operatingCore__connectorLine {
+  fill: none;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--d));
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.operatingCore__connectorHalo {
+  color: var(--lane);
+  stroke-width: 9;
+  filter: blur(3px);
+}
+
+.operatingCore__connectorLine {
+  stroke: var(--lane);
+  stroke-width: 2.2;
+  opacity: 0.9;
+  transition:
+    stroke-width 240ms ease,
+    opacity 240ms ease;
+}
+
+.operatingCore__waypoint {
+  --at: 0.5;
+  --w: clamp(0, calc((var(--d) - var(--at)) / 0.05), 1);
+}
+
+.operatingCore__waypointBase {
+  fill: #ffffff;
+  stroke: var(--lane);
+  stroke-width: 1.4;
+  opacity: calc(0.2 + 0.6 * var(--w));
+  vector-effect: non-scaling-stroke;
+}
+
+.operatingCore__waypointLit {
+  fill: var(--lane);
+  opacity: var(--w);
+  transform: scale(calc(0.45 + 0.55 * var(--w)));
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.operatingCore__connectorHead {
+  fill: var(--lane);
+  /* Visible at rest so the direction of flow reads statically, then resolves
+     to full as the stroke lands. */
+  opacity: calc(0.22 + 0.78 * clamp(0, calc((var(--d) - 0.9) / 0.1), 1));
+}
+
+/* Document tokens. Pure enhancement, and gated: if the browser cannot follow a
+   motion path they simply never render. The id on each pill is the id printed
+   on that lane's illustrative card. */
+
+.operatingCore__token {
+  display: none;
+}
+
+@supports (offset-path: path("M 0 0 L 1 1")) {
+  .operatingCore__token {
+    --tp: clamp(0, calc((var(--b3t) - var(--tlead)) / 0.76), 1);
+    --tin: clamp(0, calc(var(--tp) / 0.14), 1);
+    --tout: clamp(0, calc((var(--tp) - 0.86) / 0.14), 1);
+    display: block;
+    offset-distance: calc(var(--tp) * 100%);
+    offset-rotate: 0deg;
+    opacity: calc(var(--tin) * (1 - var(--tout)));
+    transform-box: view-box;
+    transform-origin: 0 0;
+  }
+
+  .operatingCore__connector[data-lane="wholesale"] .operatingCore__token {
+    offset-path: path(
+      "M200 4 C200 84 348 100 520 122 C556 128 562 142 568 166"
+    );
+  }
+  .operatingCore__connector[data-lane="retail"] .operatingCore__token {
+    offset-path: path("M600 4 C600 70 600 112 600 166");
+  }
+  .operatingCore__connector[data-lane="franchise"] .operatingCore__token {
+    offset-path: path(
+      "M1000 4 C1000 84 852 100 680 122 C644 128 638 142 632 166"
+    );
+  }
+}
+
+.operatingCore__token rect {
+  fill: #ffffff;
+  stroke: var(--lane);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 3px 8px rgba(11, 31, 58, 0.14));
+}
+
+.operatingCore__token text {
+  fill: var(--bz-navy);
+  font-family: var(--font-jakarta), sans-serif;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* Hovering or focusing a lane isolates its path - this is what teaches the
+   diagram. Hovering the core re-lights all three. */
+
+.operatingCore__flow:has(.operatingCore__lane[data-lane="wholesale"]:hover)
+  .operatingCore__connector:not([data-lane="wholesale"]),
+.operatingCore__flow:has(
+    .operatingCore__lane[data-lane="wholesale"]:focus-visible
+  )
+  .operatingCore__connector:not([data-lane="wholesale"]),
+.operatingCore__flow:has(.operatingCore__lane[data-lane="retail"]:hover)
+  .operatingCore__connector:not([data-lane="retail"]),
+.operatingCore__flow:has(.operatingCore__lane[data-lane="retail"]:focus-visible)
+  .operatingCore__connector:not([data-lane="retail"]),
+.operatingCore__flow:has(.operatingCore__lane[data-lane="franchise"]:hover)
+  .operatingCore__connector:not([data-lane="franchise"]),
+.operatingCore__flow:has(
+    .operatingCore__lane[data-lane="franchise"]:focus-visible
+  )
+  .operatingCore__connector:not([data-lane="franchise"]) {
+  opacity: 0.15;
+}
+
+.operatingCore__flow:has(.operatingCore__lane[data-lane="wholesale"]:hover)
+  .operatingCore__connector[data-lane="wholesale"]
+  .operatingCore__connectorLine,
+.operatingCore__flow:has(
+    .operatingCore__lane[data-lane="wholesale"]:focus-visible
+  )
+  .operatingCore__connector[data-lane="wholesale"]
+  .operatingCore__connectorLine,
+.operatingCore__flow:has(.operatingCore__lane[data-lane="retail"]:hover)
+  .operatingCore__connector[data-lane="retail"]
+  .operatingCore__connectorLine,
+.operatingCore__flow:has(.operatingCore__lane[data-lane="retail"]:focus-visible)
+  .operatingCore__connector[data-lane="retail"]
+  .operatingCore__connectorLine,
+.operatingCore__flow:has(.operatingCore__lane[data-lane="franchise"]:hover)
+  .operatingCore__connector[data-lane="franchise"]
+  .operatingCore__connectorLine,
+.operatingCore__flow:has(
+    .operatingCore__lane[data-lane="franchise"]:focus-visible
+  )
+  .operatingCore__connector[data-lane="franchise"]
+  .operatingCore__connectorLine,
+.operatingCore__flow:has(.operatingCore__core:hover)
+  .operatingCore__connectorLine {
+  stroke-width: 3.4;
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------- core node ---
+   Flat and brand-native. Concentric rings that draw outward, the logo mark,
+   and one pulse when the documents land. No pedestal, no perpetual orbit. */
+
+.operatingCore__core {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  margin-top: calc(-1 * clamp(8px, 1.2vh, 16px));
+}
+
+.operatingCore__coreNode {
+  position: relative;
+  display: grid;
+  width: clamp(84px, 9vh, 104px);
+  height: clamp(84px, 9vh, 104px);
+  place-items: center;
+}
+
+.operatingCore__coreRing {
+  --r: 0;
+  --rp: clamp(0, calc((var(--b3) - var(--r) * 0.12) / 0.5), 1);
+  position: absolute;
+  width: calc(46% + var(--r) * 27%);
+  height: calc(46% + var(--r) * 27%);
+  border: 1px solid
+    color-mix(in srgb, var(--bz-blue) calc(52% - var(--r) * 13%), transparent);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.94),
+    rgba(255, 255, 255, 0) 72%
+  );
+  opacity: var(--rp);
+  transform: scale(calc(0.55 + 0.45 * var(--rp)));
+}
+
+.operatingCore__coreRing:first-of-type {
+  background: #ffffff;
+  box-shadow: 0 8px 26px rgba(24, 66, 137, 0.14);
+}
+
+.operatingCore__corePulse {
+  position: absolute;
+  width: 46%;
+  height: 46%;
+  border: 1.5px solid var(--bz-blue);
+  border-radius: 50%;
+  /* Fires once, on arrival. Zero at both ends, so the idle state is still. */
+  opacity: calc((1 - var(--b3p)) * 0.5 * clamp(0, calc(var(--b3p) / 0.08), 1));
+  transform: scale(calc(1 + var(--b3p) * 2.6));
+}
+
+.operatingCore__coreMark {
+  --m: clamp(0, calc((var(--b3) - 0.25) / 0.45), 1);
+  position: relative;
+  z-index: 1;
+  width: clamp(34px, 3.6vh, 42px);
+  height: auto;
+  opacity: var(--m);
+  transform: scale(calc(0.62 + 0.38 * var(--m)))
+    rotate(calc((1 - var(--m)) * -8deg));
+}
+
+.operatingCore__coreLabel {
+  color: #5b6b7c;
+  font-size: 9.5px;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: calc(0.35 + 0.65 * var(--b3));
+}
+
+/* -------------------------------------------------------- truth statement ---
+   The ownable line, promoted from the smallest text in the section to the
+   thing the whole sequence resolves into. */
+
+.operatingCore__truth {
+  overflow: hidden;
+  margin: 0;
+  padding-block: 2px 4px;
+  color: var(--bz-navy); /* 14.7:1 */
+  font-size: clamp(1.9rem, 3.2vw, 2.85rem);
+  font-weight: 760;
+  letter-spacing: -0.048em;
+  line-height: 1.12;
+  text-align: center;
+}
+
+.operatingCore__truth span {
+  display: inline-block;
+  opacity: var(--b4);
+  transform: translateY(calc((1 - var(--b4)) * 104%));
+}
+
+/* -------------------------------------------------------- the four cards ---
+   Beat 4. These live after the pinned stage in normal flow - four cards at a
+   readable size do not fit inside one pinned viewport alongside the lanes - so
+   they are revealed by their own observer and scale outward from the centre,
+   which keeps them reading as emitted from the pulse. */
+
+.operatingCore__outcome {
+  margin-top: clamp(48px, 5.5vw, 76px);
+}
+
+.operatingCore__cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.3vw, 18px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.operatingCore__card {
+  --i: 0;
+  --dx: 0px;
+  border: 1px solid var(--bz-border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px 19px 21px;
+  box-shadow: 0 8px 24px rgba(11, 31, 58, 0.04);
+  opacity: 1;
+  transform: none;
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.operatingCore__card:nth-child(1) {
+  --dx: -20px;
+}
+.operatingCore__card:nth-child(2) {
+  --dx: -7px;
+}
+.operatingCore__card:nth-child(3) {
+  --dx: 7px;
+}
+.operatingCore__card:nth-child(4) {
+  --dx: 20px;
+}
+
+.operatingCore__card::before {
+  display: block;
+  width: 26px;
+  height: 3px;
+  margin-bottom: 14px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--bz-blue), var(--bz-teal));
+  content: "";
+}
+
+.operatingCore__card:hover {
+  border-color: rgba(47, 107, 255, 0.28);
+  box-shadow: 0 18px 44px rgba(24, 66, 137, 0.09);
+}
+
+.operatingCore__card h3 {
+  margin: 0;
+  color: var(--bz-navy);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+.operatingCore__card p {
+  margin: 8px 0 0;
+  color: var(--bz-muted); /* 5.4:1 */
+  font-size: 13px;
+  line-height: 1.62;
+}
+
+.operatingCore__ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: clamp(30px, 3.4vw, 44px);
+}
+
+/* Default (no attribute) is the finished state, so the cards and the CTA are
+   never gated on JavaScript. `out` is only ever set on nodes still below the
+   fold at hydration. */
+
+.operatingCore__outcome[data-reveal="out"] .operatingCore__card,
+.operatingCore__outcome[data-reveal="out"] .operatingCore__ctaRow {
+  opacity: 0;
+  transform: translate(var(--dx), 26px) scale(0.965);
+}
+
+.operatingCore__outcome[data-reveal="in"] .operatingCore__card,
+.operatingCore__outcome[data-reveal="in"] .operatingCore__ctaRow {
+  transition:
+    opacity 620ms ease calc(var(--i) * 80ms),
+    transform 720ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 80ms),
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.operatingCore__outcome .operatingCore__ctaRow {
+  --i: 4;
+  --dx: 0px;
+}
+
+/* ----------------------------------------------------------- mobile spine ---
+   Same metaphor, different geometry: one vertical spine threaded down through
+   the stacked lanes and into the core, drawn as the reader descends. It is a
+   single empty span - every word and number in this section still exists
+   exactly once in the DOM. */
+
+.operatingCore__spine {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ pin ---
+   Added back only where there is room for it. Everything above is the
+   unpinned, normal-flow layout. */
+
+@media (min-width: 901px) and (min-height: 760px) {
+  .operatingCore__stageWrap {
+    height: calc(230svh - 80px);
+  }
+
+  .operatingCore__stage {
+    position: sticky;
+    top: 80px;
+    display: flex;
+    height: calc(100svh - 80px);
+    overflow: hidden;
+    align-items: center;
+  }
+
+  .operatingCore__stageInner {
+    max-height: 100%;
+  }
+}
+
+/* ------------------------------------------------------------- breakpoints */
+
+@media (max-width: 1080px) {
+  .operatingCore__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  /* No pin, no parallax, no scrubbed reveals - the lanes render finished and
+     only the spine responds to scroll. That keeps a mid-range Android doing
+     one compositor-only transform instead of nine. */
+  .operatingCore__section {
+    --b1: 1;
+    --b2: 1;
+    --b3: 1;
+    --b3r: 0;
+    --b3t: 1;
+    --b3p: 1;
+    --b4: 1;
+  }
+
+  .operatingCore__lane {
+    --b1n: 1;
+  }
+
+  .operatingCore__band {
+    display: none;
+  }
+
+  .operatingCore__flow {
+    display: block;
+  }
+
+  .operatingCore__lanes {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+  }
+
+  .operatingCore__lane {
+    padding-top: 34px;
+  }
+
+  .operatingCore__laneNode {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .operatingCore__laneCardWrap {
+    padding-top: 16px;
+  }
+
+  .operatingCore__spine {
+    position: absolute;
+    z-index: 0;
+    top: 4px;
+    bottom: 10px;
+    left: 50%;
+    display: block;
+    width: 2px;
+    margin-left: -1px;
+    border-radius: 2px;
+    background: linear-gradient(
+      180deg,
+      var(--bz-blue),
+      var(--bz-teal) 50%,
+      var(--violet)
+    );
+    opacity: 0.55;
+    transform: scaleY(var(--sp));
+    transform-origin: top center;
+  }
+
+  .operatingCore__core {
+    margin-top: 34px;
+  }
+
+  .operatingCore__truth {
+    margin-top: 26px;
+  }
+}
+
+@media (max-width: 620px) {
+  .operatingCore__shell {
+    width: min(1180px, calc(100% - 32px));
+  }
+
+  .operatingCore__eyebrow {
+    gap: 6px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .operatingCore__eyebrow::before,
+  .operatingCore__eyebrow::after {
+    width: 14px;
+  }
+
+  .operatingCore__title {
+    font-size: clamp(2rem, 8.2vw, 2.25rem);
+  }
+
+  .operatingCore__lede {
+    font-size: 0.98rem;
+  }
+
+  .operatingCore__lane {
+    border-radius: 20px;
+  }
+
+  .operatingCore__laneTitle {
+    font-size: 1.12rem;
+  }
+
+  .operatingCore__cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .operatingCore__truth {
+    font-size: clamp(1.75rem, 8.4vw, 2.2rem);
+  }
+
+  .operatingCore__ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* At 380px the illustrative cards have to stay readable rather than shrink, so
+   the densest rows relax into a taller, larger-type layout. */
+@media (max-width: 420px) {
+  .operatingCore__cardHead {
+    row-gap: 6px;
+  }
+
+  .operatingCore__cardDoc {
+    margin-left: 0;
+  }
+
+  .operatingCore__kpiRow b {
+    font-size: 21px;
+  }
+
+  .operatingCore__split dt,
+  .operatingCore__split dd,
+  .operatingCore__lineItems li,
+  .operatingCore__taxRows dt,
+  .operatingCore__taxRows dd {
+    font-size: 12.5px;
+  }
+
+  .operatingCore__taxTotal dt {
+    font-size: 12.5px;
+  }
+
+  .operatingCore__taxTotal dd {
+    font-size: 15px;
+  }
+
+  .operatingCore__steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .operatingCore__steps li {
+    font-size: 12px;
+  }
+
+  .operatingCore__orderHead b {
+    font-size: 18px;
+  }
+}
+
+/* --------------------------------------------------------- reduced motion ---
+   No pin, no scrubbed drawing, no token flight, no pulse. Every beat variable
+   is already 1 by default because `--p` is never written, so the section is
+   simply itself, finished and fully legible. */
+
+@media (prefers-reduced-motion: reduce) {
+  .operatingCore__stageWrap {
+    height: auto;
+  }
+
+  .operatingCore__stage {
+    position: static;
+    display: block;
+    height: auto;
+    overflow: visible;
+  }
+
+  .operatingCore__section {
+    --b3r: 0;
+  }
+
+  .operatingCore__spine {
+    transform: none;
+  }
+
+  .operatingCore__token {
+    display: none;
+  }
+
+  .operatingCore__section *,
+  .operatingCore__section *::before,
+  .operatingCore__section *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* SECTION: sections/operating-ecosystem.module.css */
+.operatingEcosystem__section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(88px, 8vw, 126px) 0 clamp(76px, 7vw, 108px);
+  background:
+    radial-gradient(
+      circle at 50% 58%,
+      rgba(47, 107, 255, 0.09),
+      transparent 30%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+}
+
+.operatingEcosystem__section::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0.48;
+  background-image: radial-gradient(
+    rgba(47, 107, 255, 0.18) 0.65px,
+    transparent 0.7px
+  );
+  background-size: 16px 16px;
+  mask-image: linear-gradient(transparent, black 12%, black 88%, transparent);
+  pointer-events: none;
+}
+
+.operatingEcosystem__shell {
+  position: relative;
+  z-index: 1;
+  width: min(1540px, calc(100% - 96px));
+  margin-inline: auto;
+}
+
+.operatingEcosystem__header {
+  max-width: 900px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.operatingEcosystem__eyebrow {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(47, 107, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 5px 14px;
+  color: var(--bz-navy);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.operatingEcosystem__eyebrow i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bz-blue);
+  box-shadow: 0 0 10px rgba(47, 107, 255, 0.55);
+}
+
+.operatingEcosystem__eyebrow b {
+  color: var(--bz-blue);
+}
+
+.operatingEcosystem__title {
+  margin-top: 20px;
+  color: var(--bz-navy);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.operatingEcosystem__title em {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(100deg, var(--bz-blue), var(--bz-teal));
+  background-clip: text;
+  color: transparent;
+  font-style: normal;
+  white-space: nowrap;
+  -webkit-background-clip: text;
+}
+
+.operatingEcosystem__title em::after {
+  position: absolute;
+  right: 1%;
+  bottom: -4px;
+  left: 1%;
+  height: 5px;
+  border-top: 2.5px solid rgba(47, 107, 255, 0.7);
+  border-radius: 50%;
+  content: "";
+  transform: rotate(-0.6deg);
+}
+
+.operatingEcosystem__header p {
+  max-width: 620px;
+  margin: 16px auto 0;
+  color: #4d6480;
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+.operatingEcosystem__ecosystem {
+  position: relative;
+  width: 100%;
+  min-height: 770px;
+  aspect-ratio: 1440 / 770;
+  margin-top: 48px;
+}
+
+.operatingEcosystem__connectors {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.operatingEcosystem__connectorGlow use {
+  fill: none;
+  stroke-width: 9;
+  opacity: 0.12;
+  filter: blur(6px);
+}
+
+.operatingEcosystem__wholesaleFlow,
+.operatingEcosystem__retailFlow,
+.operatingEcosystem__franchiseFlow {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.operatingEcosystem__wholesaleFlow {
+  stroke: url(#wholesale-flow);
+}
+
+.operatingEcosystem__retailFlow {
+  stroke: url(#retail-flow);
+  opacity: 0.95;
+}
+
+.operatingEcosystem__franchiseFlow {
+  stroke: url(#franchise-flow);
+}
+
+.operatingEcosystem__convergenceNode {
+  fill: #ffffff;
+  stroke: #2ec4b6;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px rgba(46, 196, 182, 0.7));
+}
+
+.operatingEcosystem__movingParticles circle {
+  stroke: white;
+  stroke-width: 1.25;
+}
+
+.operatingEcosystem__blueParticle {
+  fill: var(--bz-blue);
+}
+
+.operatingEcosystem__tealParticle {
+  fill: var(--bz-teal);
+}
+
+.operatingEcosystem__purpleParticle {
+  fill: #8b4cf6;
+}
+
+.operatingEcosystem__environment {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  height: 250px;
+  grid-template-columns: minmax(210px, 0.58fr) minmax(175px, 0.42fr);
+  align-items: center;
+}
+
+.operatingEcosystem__wholesale {
+  top: 0;
+  left: 0;
+  width: 31.5%;
+}
+
+.operatingEcosystem__retail {
+  top: 12px;
+  left: 36%;
+  width: 28%;
+  grid-template-columns: minmax(190px, 0.53fr) minmax(185px, 0.47fr);
+}
+
+.operatingEcosystem__franchise {
+  top: 0;
+  right: 0;
+  width: 31.5%;
+  grid-template-columns: minmax(210px, 0.56fr) minmax(180px, 0.44fr);
+}
+
+.operatingEcosystem__environmentImage {
+  position: relative;
+  width: min(100%, 285px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  opacity: 0.9;
+  filter: saturate(0.82) contrast(0.98);
+  mask-image: radial-gradient(
+    circle,
+    black 61%,
+    rgba(0, 0, 0, 0.9) 72%,
+    transparent 100%
+  );
+}
+
+.operatingEcosystem__retail .operatingEcosystem__environmentImage {
+  width: min(100%, 250px);
+}
+
+.operatingEcosystem__environmentImage::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    transparent 55%,
+    rgba(255, 255, 255, 0.5)
+  );
+  pointer-events: none;
+}
+
+.operatingEcosystem__environmentImage img {
+  object-fit: cover;
+}
+
+.operatingEcosystem__wholesale .operatingEcosystem__environmentImage img {
+  object-position: 48% center;
+}
+
+.operatingEcosystem__retail .operatingEcosystem__environmentImage img {
+  object-position: 54% center;
+}
+
+.operatingEcosystem__franchise .operatingEcosystem__environmentImage img {
+  object-position: 48% center;
+}
+
+.operatingEcosystem__environmentCopy {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  padding-left: 14px;
+}
+
+.operatingEcosystem__environmentCopy > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--bz-blue);
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.operatingEcosystem__environmentCopy > span i {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bz-blue-soft);
+  font-size: 13px;
+  font-style: normal;
+}
+
+.operatingEcosystem__retail .operatingEcosystem__environmentCopy > span {
+  color: #0aa999;
+}
+
+.operatingEcosystem__retail .operatingEcosystem__environmentCopy > span i {
+  background: var(--bz-teal-soft);
+}
+
+.operatingEcosystem__franchise .operatingEcosystem__environmentCopy > span {
+  color: #8751e8;
+}
+
+.operatingEcosystem__franchise .operatingEcosystem__environmentCopy > span i {
+  background: #f0eaff;
+}
+
+.operatingEcosystem__environmentCopy h3 {
+  margin-top: 11px;
+  color: var(--bz-navy);
+  font-size: clamp(1.45rem, 1.8vw, 1.85rem);
+  font-weight: 760;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.operatingEcosystem__environmentCopy p {
+  margin-top: 10px;
+  color: #536a86;
+  font-size: clamp(0.76rem, 0.78vw, 0.84rem);
+  line-height: 1.48;
+}
+
+.operatingEcosystem__environmentNode {
+  position: absolute;
+  z-index: 4;
+  display: grid;
+  width: 84px;
+  height: 84px;
+  place-items: center;
+  border: 1px solid rgba(47, 107, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--bz-blue);
+  box-shadow:
+    0 0 0 12px rgba(47, 107, 255, 0.06),
+    0 18px 38px rgba(17, 52, 105, 0.16);
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.operatingEcosystem__wholesale .operatingEcosystem__environmentNode {
+  top: 134px;
+  left: 164px;
+}
+
+.operatingEcosystem__retail .operatingEcosystem__environmentNode {
+  top: 135px;
+  left: 142px;
+  border-color: rgba(46, 196, 182, 0.3);
+  color: #08aa99;
+  box-shadow:
+    0 0 0 12px rgba(46, 196, 182, 0.07),
+    0 18px 38px rgba(17, 89, 84, 0.13);
+}
+
+.operatingEcosystem__franchise .operatingEcosystem__environmentNode {
+  top: 134px;
+  left: 162px;
+  border-color: rgba(135, 81, 232, 0.26);
+  color: #8751e8;
+  box-shadow:
+    0 0 0 12px rgba(135, 81, 232, 0.07),
+    0 18px 38px rgba(90, 48, 155, 0.14);
+}
+
+.operatingEcosystem__environment:hover .operatingEcosystem__environmentNode {
+  transform: translateY(-5px) scale(1.03);
+}
+
+.operatingEcosystem__fragment {
+  position: absolute;
+  z-index: 6;
+  width: clamp(320px, 24.5vw, 380px);
+  border: 1px solid rgba(210, 222, 240, 0.96);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  box-shadow:
+    0 24px 52px rgba(21, 57, 111, 0.14),
+    inset 0 1px rgba(255, 255, 255, 0.9);
+  color: var(--bz-navy);
+  backdrop-filter: blur(14px);
+  animation: operatingEcosystem__fragmentFloat 5.5s ease-in-out infinite;
+}
+
+.operatingEcosystem__allocationFragment {
+  top: 255px;
+  left: 2.5%;
+}
+
+.operatingEcosystem__counterFragment {
+  top: 270px;
+  left: 50%;
+  width: clamp(345px, 26vw, 400px);
+  transform: translateX(-50%);
+  animation-name: operatingEcosystem__fragmentFloatCentered;
+  animation-delay: -1.8s;
+}
+
+.operatingEcosystem__replenishmentFragment {
+  top: 255px;
+  right: 2.5%;
+  animation-delay: -3s;
+}
+
+.operatingEcosystem__fragment header {
+  display: flex;
+  min-height: 25px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--bz-navy);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.operatingEcosystem__fragment header span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.operatingEcosystem__fragment header svg {
+  color: var(--bz-blue);
+}
+
+.operatingEcosystem__fragment header > b {
+  color: var(--bz-blue);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+.operatingEcosystem__fragment footer {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 7px;
+  margin-top: 17px;
+  border-radius: 9px;
+  background: var(--bz-teal-soft);
+  padding: 9px 12px;
+  color: #078f81;
+  font-size: 10px;
+  font-weight: 760;
+}
+
+.operatingEcosystem__kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.operatingEcosystem__kpis > span {
+  border: 1px solid var(--bz-border);
+  border-radius: 12px;
+  background: #f8faff;
+  padding: 13px;
+}
+
+.operatingEcosystem__kpis small,
+.operatingEcosystem__orderTitle small {
+  display: block;
+  color: #718398;
+  font-size: 10px;
+}
+
+.operatingEcosystem__kpis b,
+.operatingEcosystem__orderTitle b {
+  display: block;
+  margin-top: 5px;
+  font-size: 19px;
+}
+
+.operatingEcosystem__metric {
+  margin-top: 15px;
+}
+
+.operatingEcosystem__metric > span {
+  display: flex;
+  justify-content: space-between;
+  color: #5d7189;
+  font-size: 10px;
+}
+
+.operatingEcosystem__metric > span b {
+  color: var(--bz-navy);
+}
+
+.operatingEcosystem__metric > i {
+  display: block;
+  height: 6px;
+  margin-top: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--bz-blue-soft);
+}
+
+.operatingEcosystem__metric > i em {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--bz-blue), var(--bz-teal));
+}
+
+.operatingEcosystem__posBody {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+  border: 1px solid var(--bz-border);
+  border-radius: 13px;
+  padding: 11px;
+}
+
+.operatingEcosystem__posSignal {
+  display: grid;
+  width: 44px;
+  height: 53px;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--bz-blue-soft);
+  color: var(--bz-blue);
+}
+
+.operatingEcosystem__lineItems {
+  display: grid;
+  gap: 10px;
+  color: #415a77;
+  font-size: 11px;
+}
+
+.operatingEcosystem__lineItems span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.operatingEcosystem__lineItems b {
+  color: var(--bz-navy);
+  font-size: 11px;
+}
+
+.operatingEcosystem__totalLine {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 16px;
+  color: #718398;
+  font-size: 10px;
+}
+
+.operatingEcosystem__totalLine b {
+  color: var(--bz-navy);
+  font-size: 22px;
+}
+
+.operatingEcosystem__orderTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  border: 1px solid var(--bz-border);
+  border-radius: 12px;
+  background: #f8faff;
+  padding: 13px;
+}
+
+.operatingEcosystem__orderTitle em {
+  border-radius: 999px;
+  background: var(--bz-teal-soft);
+  padding: 7px 11px;
+  color: #078f81;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 760;
+}
+
+.operatingEcosystem__orderSteps {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  align-items: start;
+  gap: 7px;
+  margin-top: 19px;
+  color: #718398;
+  font-size: 9px;
+}
+
+.operatingEcosystem__orderSteps span {
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+}
+
+.operatingEcosystem__orderSteps span i {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border: 1px solid #cad5e3;
+  border-radius: 50%;
+  background: white;
+  font-style: normal;
+}
+
+.operatingEcosystem__orderSteps span:nth-child(-n + 3) i {
+  border-color: var(--bz-teal);
+  background: var(--bz-teal-soft);
+  color: #078f81;
+}
+
+.operatingEcosystem__orderSteps > b {
+  height: 1px;
+  margin-top: 12px;
+  background: #b9e8e3;
+}
+
+.operatingEcosystem__core {
+  position: absolute;
+  z-index: 5;
+  top: 540px;
+  left: 50%;
+  width: 470px;
+  height: 225px;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.operatingEcosystem__coreGlow {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 320px;
+  height: 132px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(47, 107, 255, 0.24),
+    transparent 68%
+  );
+  filter: blur(12px);
+  transform: translateX(-50%);
+}
+
+.operatingEcosystem__coreOrbit,
+.operatingEcosystem__coreOrbitTwo,
+.operatingEcosystem__coreOrbitThree {
+  position: absolute;
+  left: 50%;
+  border: 1px solid rgba(47, 107, 255, 0.3);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.operatingEcosystem__coreOrbit {
+  top: 20px;
+  width: 380px;
+  height: 124px;
+}
+
+.operatingEcosystem__coreOrbitTwo {
+  top: 35px;
+  width: 300px;
+  height: 94px;
+  border-color: rgba(46, 196, 182, 0.42);
+}
+
+.operatingEcosystem__coreOrbitThree {
+  top: 49px;
+  width: 220px;
+  height: 66px;
+  border-style: dashed;
+  border-color: rgba(135, 81, 232, 0.32);
+}
+
+.operatingEcosystem__coreLogoWrap {
+  position: absolute;
+  z-index: 3;
+  top: 38px;
+  left: 50%;
+  display: grid;
+  width: 88px;
+  height: 88px;
+  place-items: center;
+  border: 1px solid rgba(47, 107, 255, 0.22);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 14px 30px rgba(33, 100, 220, 0.14),
+    0 0 0 10px rgba(255, 255, 255, 0.56);
+  transform: translateX(-50%);
+}
+
+.operatingEcosystem__coreLogo {
+  width: 58px;
+  height: 58px;
+}
+
+.operatingEcosystem__coreCopy {
+  position: absolute;
+  top: 151px;
+  right: 0;
+  left: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.operatingEcosystem__coreCopy strong {
+  color: var(--bz-navy);
+  font-size: 19px;
+  letter-spacing: -0.035em;
+}
+
+.operatingEcosystem__coreCopy span {
+  color: var(--bz-blue);
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.operatingEcosystem__coreCopy small {
+  color: var(--bz-muted);
+  font-size: 11px;
+}
+
+@keyframes operatingEcosystem__fragmentFloat {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes operatingEcosystem__fragmentFloatCentered {
+  50% {
+    transform: translate(-50%, -4px);
+  }
+}
+
+@keyframes operatingEcosystem__orbitPulse {
+  50% {
+    opacity: 0.6;
+    transform: translateX(-50%) scale(1.035);
+  }
+}
+
+@keyframes operatingEcosystem__spin {
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+@media (min-width: 1251px) {
+  .operatingEcosystem__section {
+    padding: 72px 0 28px;
+  }
+
+  .operatingEcosystem__shell {
+    width: min(1440px, calc(100% - 96px));
+  }
+
+  .operatingEcosystem__header {
+    max-width: 760px;
+  }
+
+  .operatingEcosystem__title {
+    margin-top: 14px;
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .operatingEcosystem__header p {
+    max-width: 540px;
+    margin-top: 10px;
+    font-size: 0.84rem;
+  }
+
+  .operatingEcosystem__ecosystem {
+    min-height: 760px;
+    aspect-ratio: 1440 / 760;
+    margin-top: -10px;
+  }
+
+  .operatingEcosystem__environment {
+    z-index: auto;
+    width: 480px;
+    height: 200px;
+    grid-template-columns: 190px minmax(0, 1fr);
+  }
+
+  .operatingEcosystem__wholesale {
+    top: 0;
+    left: 0;
+  }
+
+  .operatingEcosystem__retail {
+    top: 42px;
+    left: 504px;
+    width: 440px;
+    grid-template-columns: 176px minmax(0, 1fr);
+  }
+
+  .operatingEcosystem__franchise {
+    top: 0;
+    right: 0;
+    width: 440px;
+    grid-template-columns: 194px minmax(0, 1fr);
+  }
+
+  .operatingEcosystem__environmentImage {
+    z-index: 1;
+    width: 190px;
+    border: 1px solid rgba(47, 107, 255, 0.08);
+    box-shadow: 0 20px 44px rgba(20, 53, 99, 0.1);
+  }
+
+  .operatingEcosystem__retail .operatingEcosystem__environmentImage {
+    width: 176px;
+  }
+
+  .operatingEcosystem__environmentCopy {
+    z-index: 5;
+    width: 246px;
+    padding-left: 30px;
+  }
+
+  .operatingEcosystem__environmentCopy > span {
+    font-size: 12px;
+  }
+
+  .operatingEcosystem__environmentCopy h3 {
+    font-size: 1.55rem;
+  }
+
+  .operatingEcosystem__environmentCopy p {
+    font-size: 0.8rem;
+  }
+
+  .operatingEcosystem__environmentNode {
+    z-index: 6;
+    width: 78px;
+    height: 78px;
+  }
+
+  .operatingEcosystem__wholesale .operatingEcosystem__environmentNode,
+  .operatingEcosystem__franchise .operatingEcosystem__environmentNode,
+  .operatingEcosystem__retail .operatingEcosystem__environmentNode {
+    top: 57px;
+    left: 112px;
+  }
+
+  .operatingEcosystem__franchise .operatingEcosystem__environmentNode {
+    left: 116px;
+  }
+
+  .operatingEcosystem__fragment {
+    z-index: 7;
+    width: 320px;
+    border-radius: 20px;
+    padding: 16px;
+  }
+
+  .operatingEcosystem__allocationFragment {
+    top: 237px;
+    left: 3.125%;
+  }
+
+  .operatingEcosystem__counterFragment {
+    top: 270px;
+    width: 324px;
+    padding: 14px;
+  }
+
+  .operatingEcosystem__replenishmentFragment {
+    top: 249px;
+    right: 3.125%;
+  }
+
+  .operatingEcosystem__counterFragment .operatingEcosystem__posBody {
+    margin-top: 10px;
+    padding: 8px;
+  }
+
+  .operatingEcosystem__counterFragment .operatingEcosystem__posSignal {
+    width: 40px;
+    height: 44px;
+  }
+
+  .operatingEcosystem__counterFragment .operatingEcosystem__lineItems {
+    gap: 7px;
+  }
+
+  .operatingEcosystem__counterFragment .operatingEcosystem__totalLine {
+    margin-top: 9px;
+  }
+
+  .operatingEcosystem__counterFragment footer {
+    min-height: 32px;
+    margin-top: 10px;
+  }
+
+  .operatingEcosystem__fragment footer {
+    min-height: 34px;
+    margin-top: 13px;
+    padding: 8px 10px;
+  }
+
+  .operatingEcosystem__kpis {
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .operatingEcosystem__kpis > span {
+    padding: 11px;
+  }
+
+  .operatingEcosystem__kpis b,
+  .operatingEcosystem__orderTitle b {
+    font-size: 17px;
+  }
+
+  .operatingEcosystem__metric {
+    margin-top: 12px;
+  }
+
+  .operatingEcosystem__posBody,
+  .operatingEcosystem__orderTitle {
+    margin-top: 12px;
+  }
+
+  .operatingEcosystem__totalLine {
+    margin-top: 12px;
+  }
+
+  .operatingEcosystem__orderSteps {
+    margin-top: 15px;
+  }
+
+  .operatingEcosystem__core {
+    z-index: 6;
+    top: 540px;
+    width: 520px;
+    height: 225px;
+  }
+
+  .operatingEcosystem__coreGlow {
+    top: 4px;
+    width: 390px;
+    height: 138px;
+  }
+
+  .operatingEcosystem__coreOrbit {
+    top: 15px;
+    width: 460px;
+    height: 132px;
+  }
+
+  .operatingEcosystem__coreOrbitTwo {
+    top: 31px;
+    width: 360px;
+    height: 100px;
+  }
+
+  .operatingEcosystem__coreOrbitThree {
+    top: 46px;
+    width: 270px;
+    height: 72px;
+  }
+
+  .operatingEcosystem__coreLogoWrap {
+    top: 37px;
+  }
+
+  .operatingEcosystem__coreCopy {
+    top: 151px;
+  }
+}
+
+@media (max-width: 1250px) {
+  .operatingEcosystem__shell {
+    width: min(1180px, calc(100% - 56px));
+  }
+
+  .operatingEcosystem__ecosystem {
+    min-height: 680px;
+  }
+
+  .operatingEcosystem__environment {
+    height: 225px;
+    grid-template-columns: minmax(180px, 0.55fr) minmax(150px, 0.45fr);
+  }
+
+  .operatingEcosystem__environmentCopy h3 {
+    font-size: 1.45rem;
+  }
+
+  .operatingEcosystem__environmentCopy p {
+    font-size: 0.76rem;
+  }
+
+  .operatingEcosystem__environmentNode {
+    width: 72px;
+    height: 72px;
+  }
+
+  .operatingEcosystem__wholesale .operatingEcosystem__environmentNode,
+  .operatingEcosystem__franchise .operatingEcosystem__environmentNode {
+    top: 125px;
+    left: 145px;
+  }
+
+  .operatingEcosystem__retail .operatingEcosystem__environmentNode {
+    top: 127px;
+    left: 123px;
+  }
+
+  .operatingEcosystem__fragment {
+    width: 315px;
+  }
+
+  .operatingEcosystem__counterFragment {
+    width: 335px;
+    top: 270px;
+  }
+
+  .operatingEcosystem__core {
+    top: 480px;
+    transform: translateX(-50%) scale(0.9);
+  }
+}
+
+@media (max-width: 980px) {
+  .operatingEcosystem__shell {
+    width: min(920px, calc(100% - 36px));
+  }
+
+  .operatingEcosystem__title {
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .operatingEcosystem__environmentCopy > span {
+    font-size: 10px;
+  }
+
+  .operatingEcosystem__environmentCopy > span i {
+    width: 23px;
+    height: 23px;
+    font-size: 10px;
+  }
+
+  .operatingEcosystem__fragment {
+    width: 280px;
+    padding: 15px;
+  }
+
+  .operatingEcosystem__counterFragment {
+    width: 300px;
+  }
+}
+
+/* ==========================================================================
+   Handset composition (< 761px)
+
+   The desktop canvas is a spatial network: three environments placed around a
+   shared core with a flow diagram wiring them together. A phone column cannot
+   hold two dimensions, so the network is retold vertically — one rail, three
+   entity blocks hanging off it, and the core as the rail's terminus.
+
+   The three entities are one component. Only `--tone` changes.
+   ========================================================================== */
+
+.operatingEcosystem__flow {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .operatingEcosystem__section {
+    padding: 68px 0 64px;
+  }
+
+  .operatingEcosystem__shell {
+    width: min(100% - 40px, 580px);
+  }
+
+  /* The desktop network is not adapted, it is replaced. */
+  .operatingEcosystem__ecosystem {
+    display: none;
+  }
+
+  /* ------------------------------------------------------------- intro */
+  .operatingEcosystem__header {
+    max-width: none;
+    text-align: left;
+  }
+
+  .operatingEcosystem__header p {
+    margin-inline: 0;
+    max-width: 40ch;
+  }
+
+  .operatingEcosystem__eyebrow {
+    min-height: 27px;
+    gap: 8px;
+    padding: 4px 12px;
+    font-size: 8.5px;
+    letter-spacing: 0.11em;
+  }
+
+  .operatingEcosystem__titleUnit {
+    white-space: nowrap;
+  }
+
+  .operatingEcosystem__title {
+    margin-top: 16px;
+    font-size: clamp(2rem, 8.2vw, 2.25rem);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  .operatingEcosystem__title br {
+    display: block;
+  }
+
+  .operatingEcosystem__title em {
+    white-space: nowrap;
+  }
+
+  .operatingEcosystem__header p {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* --------------------------------------------------------------- flow */
+  .operatingEcosystem__flow {
+    --rail-w: 30px;
+    --spine-x: 15px;
+    --rail-ink: #dce4f0;
+    --entity-gap: 40px;
+
+    position: relative;
+    display: block;
+    margin: 40px 0 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+  }
+
+  .operatingEcosystem__flowEntity {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    gap: 14px;
+    padding-bottom: var(--entity-gap);
+  }
+
+  .operatingEcosystem__flowRail,
+  .operatingEcosystem__flowCoreRail {
+    position: relative;
+    display: block;
+  }
+
+  /* Each block owns the rail segment beside it, so the connector is
+     continuous by construction rather than by measuring content heights. */
+  .operatingEcosystem__flowRail::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: calc(-1 * var(--entity-gap));
+    left: var(--spine-x);
+    width: 1px;
+    background: var(--rail-ink);
+    transform-origin: top center;
+  }
+
+  .operatingEcosystem__flowNode {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 13px;
+    height: 13px;
+    margin: 2px 0 0 calc(var(--spine-x) - 6.5px);
+    border: 3px solid var(--tone-soft);
+    border-radius: 50%;
+    background: var(--tone);
+    transition: box-shadow 0.24s ease;
+  }
+
+  .operatingEcosystem__flowBody {
+    min-width: 0;
+  }
+
+  .operatingEcosystem__flowLabel {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    margin: 0;
+    color: var(--tone);
+    font-size: 10.5px;
+    font-weight: 850;
+    letter-spacing: 0.09em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .operatingEcosystem__flowLabel b {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.6;
+  }
+
+  /* The image is the entity's visual anchor, held at the same 96px circle
+     for all three so they read as instances of one component. */
+  .operatingEcosystem__flowLede {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-items: center;
+    gap: 15px;
+    margin-top: 14px;
+  }
+
+  .operatingEcosystem__flowImage {
+    position: relative;
+    display: block;
+    width: 96px;
+    height: 96px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--bz-surface-alt);
+    box-shadow: 0 0 0 1px rgba(11, 31, 58, 0.06);
+  }
+
+  .operatingEcosystem__flowImage img {
+    object-fit: cover;
+  }
+
+  .operatingEcosystem__flowTitle {
+    margin: 0;
+    color: var(--bz-navy);
+    font-size: 1.32rem;
+    font-weight: 800;
+    letter-spacing: -0.032em;
+    line-height: 1.16;
+  }
+
+  .operatingEcosystem__flowText {
+    margin: 14px 0 0;
+    color: #4d6480;
+    font-size: 0.88rem;
+    line-height: 1.58;
+  }
+
+  /* The one bordered surface per entity. The desktop version floats on the
+     canvas; here it sits in the column and holds still. */
+  .operatingEcosystem__flowProof {
+    position: relative;
+    z-index: auto;
+    width: 100%;
+    margin-top: 16px;
+    padding: 15px 16px 14px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 10px 24px -16px rgba(21, 57, 111, 0.5);
+    backdrop-filter: none;
+    animation: none;
+  }
+
+  .operatingEcosystem__flowProof header {
+    margin-bottom: 2px;
+  }
+
+  .operatingEcosystem__flowProof .operatingEcosystem__kpis {
+    gap: 9px;
+    margin-top: 11px;
+  }
+
+  .operatingEcosystem__flowProof .operatingEcosystem__kpis > span {
+    padding: 9px 10px;
+    border-radius: 10px;
+  }
+
+  .operatingEcosystem__flowProof .operatingEcosystem__kpis b,
+  .operatingEcosystem__flowProof .operatingEcosystem__orderTitle b {
+    margin-top: 3px;
+    font-size: 16px;
+  }
+
+  .operatingEcosystem__flowProof .operatingEcosystem__metric {
+    margin-top: 11px;
+  }
+
+  .operatingEcosystem__flowProof .operatingEcosystem__posBody,
+  .operatingEcosystem__flowProof .operatingEcosystem__orderTitle {
+    margin-top: 11px;
+    padding: 10px;
+  }
+
+  .operatingEcosystem__flowProof .operatingEcosystem__totalLine {
+    margin-top: 11px;
+  }
+
+  .operatingEcosystem__flowProof .operatingEcosystem__orderSteps {
+    margin-top: 13px;
+  }
+
+  .operatingEcosystem__flowProof .operatingEcosystem__posSignal {
+    height: 46px;
+  }
+
+  .operatingEcosystem__flowProof footer {
+    min-height: 30px;
+    margin-top: 11px;
+    padding: 7px 10px;
+  }
+
+  /* Pointer devices get a quiet emphasis. Nothing is needed to read it. */
+  .operatingEcosystem__flowEntity[data-active="true"]
+    .operatingEcosystem__flowNode {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 18%, transparent);
+  }
+
+  .operatingEcosystem__flowEntity[data-active="true"]
+    .operatingEcosystem__flowRail::before {
+    background: color-mix(in srgb, var(--tone) 42%, var(--rail-ink));
+  }
+
+  .operatingEcosystem__flowEntity[data-active="true"]
+    .operatingEcosystem__flowProof {
+    box-shadow: 0 14px 30px -16px rgba(21, 57, 111, 0.6);
+  }
+
+  /* ------------------------------------------------------ operating core */
+  .operatingEcosystem__flowCore {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  /* The last segment carries the accent: the three entities resolve into the
+     system rather than continuing past it. */
+  .operatingEcosystem__flowCoreRail::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--entity-gap));
+    height: var(--entity-gap);
+    left: var(--spine-x);
+    width: 1px;
+    background: linear-gradient(180deg, var(--rail-ink), var(--bz-blue));
+    transform-origin: top center;
+  }
+
+  .operatingEcosystem__flowCoreNode {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: var(--rail-w);
+    height: var(--rail-w);
+    place-items: center;
+    border-radius: 10px;
+    background: radial-gradient(circle at 34% 28%, #16375f 0%, #071628 88%);
+    box-shadow: 0 8px 18px -9px rgba(7, 22, 40, 0.75);
+  }
+
+  /* Tinted, not bordered: the core reads as the layer under the three
+     entities rather than a fourth item in the list. */
+  .operatingEcosystem__flowCorePanel {
+    min-width: 0;
+    padding: 15px 17px 16px;
+    border-radius: 16px;
+    background: linear-gradient(140deg, #eef3fc 0%, #e9f4f7 100%);
+  }
+
+  .operatingEcosystem__flowCoreTitle {
+    display: block;
+    color: var(--bz-navy);
+    font-size: 1rem;
+    font-weight: 850;
+    letter-spacing: -0.022em;
+  }
+
+  .operatingEcosystem__flowCoreLine {
+    display: block;
+    margin-top: 7px;
+    color: var(--bz-blue);
+    font-size: 0.82rem;
+    font-weight: 750;
+  }
+
+  .operatingEcosystem__flowCoreNote {
+    display: block;
+    margin-top: 4px;
+    color: #5d7290;
+    font-size: 0.78rem;
+  }
+
+  /* ------------------------------------------------------------ ambient */
+  /* One signal running the length of the rail, and nothing else. A
+     background sweep rather than a moving box, so it scales with however
+     tall the flow ends up being; opaque nodes mask it as it passes. */
+  .operatingEcosystem__flowSignal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--spine-x);
+    width: 1px;
+    background-image: linear-gradient(
+      180deg,
+      transparent,
+      rgba(47, 107, 255, 0.7) 50%,
+      transparent
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 110px;
+    background-position: 0 -110px;
+    pointer-events: none;
+  }
+
+  .operatingEcosystem__flow[data-shown="true"] .operatingEcosystem__flowSignal {
+    animation: operatingEcosystem__flowSignalTravel 8s linear 2.2s infinite;
+  }
+
+  @keyframes operatingEcosystem__flowSignalTravel {
+    from {
+      background-position: 0 -8%;
+    }
+    to {
+      background-position: 0 108%;
+    }
+  }
+
+  /* ------------------------------------------------------------- reveal */
+  /* Per block: the connector reaches it, the entity rises, the proof
+     follows. Each block owns its own observer, so the sequence plays as the
+     reader scrolls rather than all at once above the fold. */
+  .operatingEcosystem__flowEntity[data-shown="false"]
+    .operatingEcosystem__flowRail::before,
+  .operatingEcosystem__flowCore[data-shown="false"]
+    .operatingEcosystem__flowCoreRail::before {
+    transform: scaleY(0);
+  }
+
+  .operatingEcosystem__flowEntity[data-shown="false"]
+    .operatingEcosystem__flowNode,
+  .operatingEcosystem__flowEntity[data-shown="false"]
+    .operatingEcosystem__flowBody,
+  .operatingEcosystem__flowEntity[data-shown="false"]
+    .operatingEcosystem__flowProof,
+  .operatingEcosystem__flowCore[data-shown="false"]
+    .operatingEcosystem__flowCoreNode,
+  .operatingEcosystem__flowCore[data-shown="false"]
+    .operatingEcosystem__flowCorePanel {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .operatingEcosystem__flowRail::before,
+  .operatingEcosystem__flowCoreRail::before {
+    transition:
+      transform 0.44s ease,
+      background-color 0.24s ease;
+  }
+
+  .operatingEcosystem__flowNode,
+  .operatingEcosystem__flowBody,
+  .operatingEcosystem__flowCoreNode {
+    transition:
+      opacity 0.5s ease 160ms,
+      transform 0.5s ease 160ms,
+      box-shadow 0.24s ease;
+  }
+
+  .operatingEcosystem__flowProof,
+  .operatingEcosystem__flowCorePanel {
+    transition:
+      opacity 0.5s ease 340ms,
+      transform 0.5s ease 340ms,
+      box-shadow 0.24s ease;
+  }
+
+  /* ------------------------------------------------------ small handsets */
+  /* The headline holds three lines down to 360px; below that "Operations 10x
+     Faster" needs one step down rather than breaking into four. */
+  @media (max-width: 350px) {
+    .operatingEcosystem__title {
+      font-size: 1.85rem;
+      letter-spacing: -0.042em;
+    }
+
+    .operatingEcosystem__header p {
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+  }
+
+  @media (max-width: 374px) {
+    .operatingEcosystem__flow {
+      --rail-w: 28px;
+      --spine-x: 14px;
+      --entity-gap: 34px;
+    }
+
+    .operatingEcosystem__flowEntity,
+    .operatingEcosystem__flowCore {
+      gap: 12px;
+    }
+
+    .operatingEcosystem__flowLede {
+      grid-template-columns: 78px minmax(0, 1fr);
+      gap: 13px;
+      margin-top: 12px;
+    }
+
+    .operatingEcosystem__flowImage {
+      width: 78px;
+      height: 78px;
+    }
+
+    .operatingEcosystem__flowTitle {
+      font-size: 1.2rem;
+    }
+
+    .operatingEcosystem__flowText {
+      margin-top: 12px;
+      font-size: 0.85rem;
+    }
+
+    .operatingEcosystem__flowProof {
+      padding: 14px 13px 13px;
+    }
+
+    .operatingEcosystem__flowCorePanel {
+      padding: 14px 14px 15px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .operatingEcosystem__movingParticles,
+  .operatingEcosystem__fragment,
+  .operatingEcosystem__coreOrbit,
+  .operatingEcosystem__coreOrbitThree {
+    animation: none;
+  }
+
+  .operatingEcosystem__environment:hover .operatingEcosystem__environmentNode {
+    transform: none;
+  }
+
+  .operatingEcosystem__flowRail::before,
+  .operatingEcosystem__flowCoreRail::before,
+  .operatingEcosystem__flowNode,
+  .operatingEcosystem__flowBody,
+  .operatingEcosystem__flowProof,
+  .operatingEcosystem__flowCoreNode,
+  .operatingEcosystem__flowCorePanel {
+    transition: none;
+  }
+
+  .operatingEcosystem__flowSignal {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* SECTION: sections/platform-spine.module.css */
+.platformSpine__section {
+  --ink: #091b3d;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(38px, 4vw, 62px) 0 clamp(38px, 4vw, 58px);
+  background: linear-gradient(180deg, #fbfcff, #f5f8ff 58%, #f8fbff);
+  color: var(--ink);
+}
+
+.platformSpine__atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 18% 35%,
+      rgba(60, 131, 255, 0.08),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 80% 38%,
+      rgba(157, 77, 237, 0.08),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 65% 72%,
+      rgba(43, 202, 181, 0.075),
+      transparent 25rem
+    );
+}
+
+.platformSpine__atmosphere::after {
+  position: absolute;
+  right: -4%;
+  bottom: -25%;
+  left: -4%;
+  height: 55%;
+  opacity: 0.22;
+  background-image: radial-gradient(
+    rgba(47, 107, 255, 0.35) 0.7px,
+    transparent 0.8px
+  );
+  background-size: 11px 11px;
+  mask-image: linear-gradient(transparent, #000);
+  content: "";
+  transform: perspective(500px) rotateX(58deg);
+  transform-origin: bottom;
+}
+
+.platformSpine__shell {
+  position: relative;
+  z-index: 1;
+  width: min(1440px, calc(100% - 48px));
+  margin: auto;
+}
+
+.platformSpine__heading {
+  display: flex;
+  min-height: 88px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+  padding-inline: 4px;
+}
+
+.platformSpine__heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.platformSpine__heading p {
+  margin: 8px 0 0;
+  color: #53627d;
+  font-size: clamp(0.94rem, 1.1vw, 1.08rem);
+}
+
+.platformSpine__headingRule {
+  display: block;
+  width: 40px;
+  height: 3px;
+  margin-top: 13px;
+  border-radius: 999px;
+  background: #386ef3;
+  box-shadow: 24px 0 rgba(56, 110, 243, 0.18);
+}
+
+.platformSpine__flowSummary {
+  display: flex;
+  min-width: 330px;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  border: 1px solid rgba(220, 227, 243, 0.9);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow:
+    0 14px 34px rgba(32, 59, 106, 0.08),
+    inset 0 1px #fff;
+}
+
+.platformSpine__summaryIcon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #eef4ff, #dde6ff);
+  color: #386ef3;
+}
+
+.platformSpine__flowSummary strong,
+.platformSpine__flowSummary small {
+  display: block;
+}
+
+.platformSpine__flowSummary strong {
+  font-size: 0.9rem;
+}
+
+.platformSpine__flowSummary small {
+  margin-top: 5px;
+  color: #465674;
+  font-size: 0.73rem;
+}
+
+.platformSpine__flowSummary i {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 0 8px 2px;
+  border-radius: 50%;
+  background: #22c59a;
+}
+
+.platformSpine__workflowStage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 560;
+  margin-top: 4px;
+}
+
+.platformSpine__flowMap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.platformSpine__ribbonGlow path,
+.platformSpine__ribbonSegments path,
+.platformSpine__pathHighlight,
+.platformSpine__orbitPath {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.platformSpine__ribbonGlow {
+  opacity: 0.52;
+  filter: blur(13px);
+}
+
+.platformSpine__ribbonGlow path {
+  stroke-width: 52;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 120ms linear;
+}
+
+.platformSpine__ribbonSegments path {
+  stroke-width: 29;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 5px 8px rgba(47, 84, 179, 0.18));
+  transition: stroke-dashoffset 120ms linear;
+}
+
+.platformSpine__pathHighlight {
+  stroke: rgba(255, 255, 255, 0.56);
+  stroke-width: 1.7;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 120ms linear;
+}
+
+.platformSpine__orbitPath {
+  stroke: rgba(69, 123, 224, 0.3);
+  stroke-width: 1.1;
+  stroke-dasharray: 4 6;
+}
+
+.platformSpine__orbitDot {
+  fill: #3380ee;
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.platformSpine__supplier {
+  position: absolute;
+  left: 1.2%;
+  top: 63%;
+  z-index: 3;
+  display: grid;
+  width: 166px;
+  height: 116px;
+  place-content: center;
+  border: 1px solid rgba(221, 228, 243, 0.9);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fbfdff, #edf2ff);
+  box-shadow:
+    0 10px 0 #dce5fb,
+    0 20px 34px rgba(47, 79, 137, 0.15),
+    inset 0 1px #fff;
+  text-align: center;
+}
+
+.platformSpine__supplier::before {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  z-index: 0;
+  width: 118px;
+  height: 78px;
+  border: 1px solid rgba(177, 196, 235, 0.34);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 7px 0 #e3eafb;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.platformSpine__supplier::after {
+  position: absolute;
+  right: -42px;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  clip-path: polygon(0 0, 100% 50%, 0 100%, 25% 50%);
+  background: #3776f5;
+  content: "";
+  filter: drop-shadow(0 4px 6px rgba(47, 107, 255, 0.24));
+}
+
+.platformSpine__supplier span,
+.platformSpine__supplier strong,
+.platformSpine__supplier small {
+  position: relative;
+  z-index: 1;
+}
+
+.platformSpine__supplier span {
+  color: #3971e9;
+}
+
+.platformSpine__supplierMark {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  margin: 0 auto 1px;
+  place-items: center;
+  filter: drop-shadow(0 6px 8px rgba(47, 107, 255, 0.2));
+}
+
+.platformSpine__supplierMark svg {
+  width: 38px;
+  height: 38px;
+  overflow: visible;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.6;
+}
+
+.platformSpine__supplierMark .platformSpine__supplierWindows {
+  fill: #fff;
+  stroke: none;
+}
+
+.platformSpine__supplier strong {
+  margin-top: 4px;
+  font-size: 0.76rem;
+}
+
+.platformSpine__supplier small {
+  margin-top: 2px;
+  color: #66748c;
+  font-size: 0.62rem;
+}
+
+.platformSpine__core {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  z-index: 3;
+  width: 280px;
+  height: 170px;
+  opacity: 0;
+  transform: translate(-50%, -45%);
+  animation: platformSpine__core-arrive 0.75s 0.45s
+    cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.platformSpine__core::before {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: 360px;
+  height: 210px;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(219, 231, 255, 0.56),
+    transparent 70%
+  );
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.platformSpine__coreRing {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  z-index: 1;
+  width: 270px;
+  height: 138px;
+  border: 1px solid rgba(111, 151, 226, 0.26);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fff, #edf3ff);
+  box-shadow:
+    0 9px 0 #d8e2fa,
+    0 24px 48px rgba(49, 86, 168, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.86);
+  transform: translate(-50%, -50%);
+}
+
+.platformSpine__coreBase {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  z-index: 2;
+  width: 205px;
+  height: 100px;
+  border: 1px solid rgba(167, 190, 235, 0.45);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #f3f7ff, #e2ebff);
+  box-shadow:
+    0 9px 0 #ccd9f7,
+    0 20px 27px rgba(43, 74, 151, 0.14),
+    inset 0 1px #fff;
+  transform: translate(-50%, -50%);
+}
+
+.platformSpine__coreDisc {
+  position: absolute;
+  left: 50%;
+  top: 29%;
+  z-index: 3;
+  display: block;
+  width: 116px;
+  height: 70px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 9px 0 #bfcff3,
+    0 17px 24px rgba(38, 77, 170, 0.2),
+    inset 0 1px #fff;
+  transform: translate(-50%, -50%);
+}
+
+.platformSpine__coreDisc img {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  width: 46px;
+  height: 46px;
+  filter: drop-shadow(0 8px 8px rgba(31, 73, 169, 0.22));
+  transform: translateX(-50%);
+}
+
+.platformSpine__core p {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  z-index: 4;
+  width: 250px;
+  margin: 0;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.platformSpine__core p strong,
+.platformSpine__core p span {
+  display: block;
+}
+
+.platformSpine__core p strong {
+  font-size: 0.88rem;
+  line-height: 1.15;
+}
+
+.platformSpine__core p span {
+  margin-top: 5px;
+  color: #334462;
+  font-size: 0.74rem;
+  line-height: 1.2;
+}
+
+.platformSpine__step {
+  --step-color: #2f6bff;
+  position: absolute;
+  left: var(--step-x);
+  top: var(--step-y);
+  z-index: 5;
+  width: 70px;
+  height: 70px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.85);
+  animation: platformSpine__node-arrive 0.48s cubic-bezier(0.2, 0.9, 0.25, 1.25)
+    forwards;
+}
+
+.platformSpine__step:nth-of-type(2) {
+  animation-delay: 0.12s;
+}
+.platformSpine__step:nth-of-type(3) {
+  animation-delay: 0.22s;
+}
+.platformSpine__step:nth-of-type(4) {
+  animation-delay: 0.32s;
+}
+.platformSpine__step:nth-of-type(5) {
+  animation-delay: 0.42s;
+}
+.platformSpine__step:nth-of-type(6) {
+  animation-delay: 0.52s;
+}
+.platformSpine__step:nth-of-type(7) {
+  animation-delay: 0.62s;
+}
+
+.platformSpine__stepNode {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  display: grid;
+  width: 70px;
+  height: 70px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--step-color) 30%, white);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 0 9px color-mix(in srgb, var(--step-color) 13%, transparent),
+    0 0 30px 12px color-mix(in srgb, var(--step-color) 28%, transparent),
+    0 13px 25px color-mix(in srgb, var(--step-color) 25%, transparent),
+    inset 0 -6px 0 color-mix(in srgb, var(--step-color) 8%, white);
+  color: var(--step-color);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.platformSpine__stepNode::before {
+  position: absolute;
+  inset: -17px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--step-color) 29%, transparent),
+    transparent 68%
+  );
+  content: "";
+  filter: blur(8px);
+}
+
+.platformSpine__stepNode::after {
+  position: absolute;
+  left: 50%;
+  bottom: -11px;
+  width: 9px;
+  height: 9px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--step-color);
+  content: "";
+  box-shadow: 0 2px 7px color-mix(in srgb, var(--step-color) 45%, transparent);
+  transform: translateX(-50%);
+}
+
+.platformSpine__active .platformSpine__stepNode,
+.platformSpine__step:hover .platformSpine__stepNode {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow:
+    0 0 0 11px color-mix(in srgb, var(--step-color) 17%, transparent),
+    0 0 36px 14px color-mix(in srgb, var(--step-color) 32%, transparent),
+    0 18px 32px color-mix(in srgb, var(--step-color) 30%, transparent),
+    inset 0 -7px 0 color-mix(in srgb, var(--step-color) 12%, white);
+}
+
+.platformSpine__stepLabel {
+  position: absolute;
+  left: var(--label-x);
+  top: var(--label-y);
+  display: grid;
+  width: 205px;
+  text-align: left;
+}
+
+.platformSpine__stepLabel b {
+  color: var(--step-color);
+  font-size: clamp(1.35rem, 1.7vw, 1.72rem);
+  font-weight: 850;
+  line-height: 1;
+}
+
+.platformSpine__stepLabel strong {
+  margin-top: 7px;
+  color: var(--ink);
+  font-size: clamp(0.94rem, 1.1vw, 1.12rem);
+  line-height: 1.2;
+}
+
+.platformSpine__stepLabel small {
+  max-width: 185px;
+  margin-top: 6px;
+  color: #465674;
+  font-size: clamp(0.7rem, 0.82vw, 0.83rem);
+  line-height: 1.48;
+}
+
+.platformSpine__stepLabel i {
+  width: 25px;
+  height: 2px;
+  margin-top: 8px;
+  border-radius: 99px;
+  background: var(--step-color);
+}
+
+.platformSpine__principles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1240px;
+  margin: 34px auto 0;
+  overflow: hidden;
+  border: 1px solid rgba(219, 227, 243, 0.95);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 38px rgba(35, 65, 117, 0.1);
+  opacity: 0;
+  transform: translateY(14px);
+  animation: platformSpine__strip-arrive 0.65s 0.8s ease forwards;
+}
+
+.platformSpine__principles > div {
+  --principle-color: #2f6bff;
+  position: relative;
+  display: flex;
+  min-height: 88px;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 23px;
+}
+
+.platformSpine__principles > div:not(:last-child)::after {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  bottom: 20px;
+  width: 1px;
+  background: #e2e8f2;
+  content: "";
+}
+
+.platformSpine__principles > div > span {
+  display: grid;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--principle-color) 12%, white);
+  color: var(--principle-color);
+}
+
+.platformSpine__principles p {
+  margin: 0;
+}
+
+.platformSpine__principles strong,
+.platformSpine__principles small {
+  display: block;
+}
+
+.platformSpine__principles strong {
+  color: var(--ink);
+  font-size: 0.77rem;
+}
+
+.platformSpine__principles small {
+  max-width: 175px;
+  margin-top: 4px;
+  color: #596982;
+  font-size: 0.66rem;
+  line-height: 1.4;
+}
+
+@keyframes platformSpine__node-arrive {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes platformSpine__core-arrive {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes platformSpine__strip-arrive {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Handset composition (< 1101px)
+
+   The desktop canvas is a system seen from above: a curved ribbon, a supplier
+   origin, six accent-lit nodes and a 3D core. None of that survives a 360px
+   column, so below the map's breakpoint the whole stage is dropped and the
+   same six steps are recomposed as one vertical story.
+
+   Two rules carry the composition: everything sits on one rail, and there is
+   exactly one accent.
+   ========================================================================== */
+
+.platformSpine__eyebrow {
+  display: none;
+}
+
+/* "Workflow" is wrapped so the handset heading can accent it. Above the
+   handset breakpoint the wrapper must leave no trace on the approved
+   desktop heading. */
+.platformSpine__heading h2 em {
+  display: inline-block;
+  background: linear-gradient(94deg, var(--bz-blue) 12%, #21b6c9 92%);
+  background-clip: text;
+  color: transparent;
+  font-style: normal;
+  -webkit-background-clip: text;
+}
+
+.platformSpine__flow {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .platformSpine__section {
+    padding-block: 72px;
+  }
+
+  /* The desktop stage is not adapted, it is replaced. */
+  .platformSpine__workflowStage {
+    display: none;
+  }
+
+  /* ------------------------------------------------------------- intro */
+  .platformSpine__eyebrow {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: var(--bz-blue);
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  /* "The Operating" stays navy; only the payoff word carries the accent, and
+     it takes the second line so the heading reads as two deliberate lines. */
+  .platformSpine__heading h2 em {
+    display: block;
+    width: fit-content;
+    background: linear-gradient(94deg, var(--bz-blue) 12%, #21b6c9 92%);
+    background-clip: text;
+    color: transparent;
+    font-style: normal;
+    -webkit-background-clip: text;
+  }
+
+  /* The summary is information, not a second card: one quiet line under the
+     supporting copy. */
+  .platformSpine__flowSummary {
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2px;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .platformSpine__summaryIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: #e9f0ff;
+  }
+
+  .platformSpine__summaryIcon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .platformSpine__flowSummary strong {
+    color: var(--ink);
+    font-size: 0.82rem;
+  }
+
+  .platformSpine__flowSummary small {
+    margin-top: 3px;
+    color: #6b7c93;
+    font-size: 0.75rem;
+  }
+
+  .platformSpine__flowSummary i {
+    width: 3px;
+    height: 3px;
+    margin: 0 7px 2px;
+    background: #b9c5d8;
+  }
+
+  /* -------------------------------------------------------------- flow */
+  .platformSpine__flow {
+    --rail-w: 30px;
+    --spine-x: 15px;
+    --rail-ink: #dde5f0;
+    --row-gap: 16px;
+    --beat: 110ms;
+    --lag: 0ms;
+
+    position: relative;
+    display: block;
+    max-width: 620px;
+    margin: 34px auto 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .platformSpine__flowStep {
+    position: relative;
+    padding-bottom: var(--row-gap);
+  }
+
+  .platformSpine__flowStep:last-child {
+    padding-bottom: 0;
+  }
+
+  /* The row is one tap target, but nothing about it looks like a button:
+     the content has to read the same whether or not anyone touches it. */
+  .platformSpine__flowTrigger {
+    display: grid;
+    width: 100%;
+    grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    gap: 16px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .platformSpine__flowRail {
+    position: relative;
+    display: block;
+  }
+
+  /* Each row owns the rail segment beside it, so the line is continuous by
+     construction instead of by measuring content heights. */
+  .platformSpine__flowRail::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: calc(-1 * var(--row-gap));
+    left: var(--spine-x);
+    width: 1px;
+    background: var(--rail-ink);
+    transform-origin: top center;
+  }
+
+  .platformSpine__flowStep:last-child .platformSpine__flowRail::before {
+    display: none;
+  }
+
+  /* The number is the node: it is what the line runs through. */
+  .platformSpine__flowNumber {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: var(--rail-w);
+    height: var(--rail-w);
+    place-items: center;
+    border: 1px solid rgba(47, 107, 255, 0.18);
+    border-radius: 50%;
+    background: #ffffff;
+    color: var(--bz-blue);
+    font-size: 11.5px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+    transition:
+      background-color 0.22s ease,
+      border-color 0.22s ease,
+      color 0.22s ease;
+  }
+
+  /* Where the flow starts. The only filled node in the section. */
+  .platformSpine__flowStep[data-first="true"] .platformSpine__flowNumber {
+    border-color: var(--bz-blue);
+    background: var(--bz-blue);
+    color: #ffffff;
+  }
+
+  .platformSpine__flowMain {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 13px;
+    padding-bottom: var(--row-gap);
+    /* The divider sits midway through the gap, so the rhythm above and below
+       it is even. */
+    border-bottom: 1px solid #e9eef7;
+  }
+
+  .platformSpine__flowStep:last-child .platformSpine__flowMain {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .platformSpine__flowIcon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 1px solid rgba(47, 107, 255, 0.14);
+    border-radius: 11px;
+    background: #eef4fd;
+    color: var(--bz-blue);
+    transition:
+      background-color 0.22s ease,
+      border-color 0.22s ease;
+  }
+
+  .platformSpine__flowCopy {
+    display: block;
+    min-width: 0;
+    padding-top: 2px;
+  }
+
+  .platformSpine__flowTitle {
+    display: block;
+    color: var(--ink);
+    font-size: 16.5px;
+    font-weight: 800;
+    letter-spacing: -0.024em;
+    line-height: 1.24;
+  }
+
+  .platformSpine__flowBody {
+    display: block;
+    margin-top: 5px;
+    color: #5c6c85;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  /* Tapping a step emphasises its node, icon and rail segment. Nothing
+     opens, nothing collapses. */
+  .platformSpine__flowStep[data-active="true"] .platformSpine__flowNumber {
+    border-color: var(--bz-blue);
+    background: var(--bz-blue);
+    color: #ffffff;
+  }
+
+  .platformSpine__flowStep[data-active="true"] .platformSpine__flowIcon {
+    border-color: rgba(47, 107, 255, 0.38);
+    background: #e2ecff;
+  }
+
+  .platformSpine__flowStep[data-active="true"]
+    .platformSpine__flowRail::before {
+    background: rgba(47, 107, 255, 0.4);
+  }
+
+  .platformSpine__flowTrigger:focus-visible {
+    outline: 2px solid var(--bz-blue);
+    outline-offset: 6px;
+    border-radius: 12px;
+  }
+
+  /* ---------------------------------------------------- operating core */
+  .platformSpine__flowCore {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    gap: 16px;
+    padding-block: 24px var(--row-gap);
+  }
+
+  .platformSpine__flowCoreRail {
+    position: relative;
+    display: block;
+  }
+
+  /* The rail runs straight through the core: the accent segment is the only
+     place the line is not neutral, which is what makes the pass-through
+     read as the flow entering the system. */
+  .platformSpine__flowCoreRail::before,
+  .platformSpine__flowCoreRail::after {
+    content: "";
+    position: absolute;
+    left: var(--spine-x);
+    width: 1px;
+    background: linear-gradient(180deg, var(--bz-blue), #21b6c9);
+    transform-origin: top center;
+  }
+
+  .platformSpine__flowCoreRail::before {
+    top: -24px;
+    height: 24px;
+  }
+
+  .platformSpine__flowCoreRail::after {
+    top: var(--rail-w);
+    bottom: calc(-1 * var(--row-gap));
+  }
+
+  .platformSpine__flowCoreMark {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: var(--rail-w);
+    height: var(--rail-w);
+    place-items: center;
+    border-radius: 10px;
+    background: radial-gradient(circle at 34% 28%, #16375f 0%, #071628 88%);
+    box-shadow: 0 8px 18px -9px rgba(7, 22, 40, 0.75);
+  }
+
+  .platformSpine__flowCoreMark img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .platformSpine__flowCorePanel {
+    min-width: 0;
+    padding: 16px 18px 17px;
+    border: 1px solid rgba(47, 107, 255, 0.16);
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 10px 26px -16px rgba(35, 65, 117, 0.4);
+  }
+
+  .platformSpine__flowCoreLabel {
+    display: block;
+    color: var(--bz-blue);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .platformSpine__flowCoreTitle {
+    display: block;
+    margin-top: 9px;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.022em;
+    line-height: 1.3;
+  }
+
+  .platformSpine__flowCoreNote {
+    display: block;
+    margin-top: 6px;
+    color: #6b7c93;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ------------------------------------------------------------ ambient */
+  /* One signal running the length of the line, and nothing else. It is a
+     background sweep rather than a moving box so it scales with however
+     tall the flow ends up being, and opaque nodes mask it as it passes. */
+  .platformSpine__flowSignal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--spine-x);
+    width: 1px;
+    background-image: linear-gradient(
+      180deg,
+      transparent,
+      rgba(47, 107, 255, 0.75) 50%,
+      transparent
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 84px;
+    background-position: 0 -84px;
+    pointer-events: none;
+  }
+
+  .platformSpine__section[data-flow-shown="true"] .platformSpine__flowSignal {
+    animation: platformSpine__flowSignalTravel 6.5s linear 2.4s infinite;
+  }
+
+  @keyframes platformSpine__flowSignalTravel {
+    from {
+      background-position: 0 -10%;
+    }
+    to {
+      background-position: 0 110%;
+    }
+  }
+
+  /* ------------------------------------------------------------- reveal */
+  /* One attribute sequences the story: the rail draws, the step beside it
+     rises, the core takes the middle, then the rest of the flow follows. */
+  .platformSpine__flowStep,
+  .platformSpine__flowCore {
+    --delay: calc(var(--step) * var(--beat) + var(--lag));
+  }
+
+  .platformSpine__flow > li:nth-child(n + 6) {
+    --lag: 620ms;
+  }
+
+  .platformSpine__section[data-flow-shown="false"]
+    .platformSpine__flowRail::before,
+  .platformSpine__section[data-flow-shown="false"]
+    .platformSpine__flowCoreRail::before,
+  .platformSpine__section[data-flow-shown="false"]
+    .platformSpine__flowCoreRail::after {
+    transform: scaleY(0);
+  }
+
+  .platformSpine__section[data-flow-shown="false"] .platformSpine__flowMain,
+  .platformSpine__section[data-flow-shown="false"] .platformSpine__flowNumber,
+  .platformSpine__section[data-flow-shown="false"] .platformSpine__flowCoreMark,
+  .platformSpine__section[data-flow-shown="false"]
+    .platformSpine__flowCorePanel {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .platformSpine__flowRail::before,
+  .platformSpine__flowCoreRail::before {
+    transition:
+      transform 0.4s ease var(--delay),
+      background-color 0.22s ease;
+  }
+
+  .platformSpine__flowCoreRail::after {
+    transition: transform 0.4s ease calc(var(--delay) + 420ms);
+  }
+
+  .platformSpine__flowNumber,
+  .platformSpine__flowMain,
+  .platformSpine__flowCoreMark,
+  .platformSpine__flowCorePanel {
+    transition:
+      opacity 0.48s ease calc(var(--delay) + 90ms),
+      transform 0.48s ease calc(var(--delay) + 90ms),
+      background-color 0.22s ease,
+      border-color 0.22s ease,
+      color 0.22s ease;
+  }
+
+  .platformSpine__flowCorePanel {
+    transition-delay: calc(var(--delay) + 200ms);
+  }
+
+  /* --------------------------------------------------------- principles */
+  /* Supporting information, so: two by two, one accent, no dividers, no
+     shadow ramp. The desktop strip keeps its four accents. */
+  .platformSpine__principles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 34px;
+    border-radius: 18px;
+    box-shadow: 0 10px 26px -18px rgba(35, 65, 117, 0.4);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: none;
+    transition:
+      opacity 0.5s ease 1.5s,
+      transform 0.5s ease 1.5s;
+  }
+
+  .platformSpine__section[data-flow-shown="true"] .platformSpine__principles {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Side-by-side icon and copy left ~100px for the text, which broke every
+     title across two lines. Stacking the icon gives the copy the full cell. */
+  .platformSpine__principles > div {
+    min-height: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 17px 15px 18px;
+  }
+
+  .platformSpine__principles > div:not(:last-child)::after {
+    display: none;
+  }
+
+  .platformSpine__principles > div:nth-child(-n + 2) {
+    border-bottom: 1px solid #eaeff7;
+  }
+
+  .platformSpine__principles > div:nth-child(odd) {
+    border-right: 1px solid #eaeff7;
+  }
+
+  /* The desktop strip's four accents are set inline, so the handset grid
+     overrides the resolved property rather than the custom property. */
+  .platformSpine__principles > div > span {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: #eef4fd;
+    color: var(--bz-blue);
+  }
+
+  .platformSpine__principles > div > span svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .platformSpine__principles strong {
+    font-size: 0.86rem;
+    line-height: 1.25;
+  }
+
+  .platformSpine__principles small {
+    max-width: none;
+    margin-top: 5px;
+    font-size: 0.75rem;
+    line-height: 1.42;
+  }
+}
+
+/* --------------------------------------------------------------- handset */
+@media (max-width: 700px) {
+  .platformSpine__section {
+    padding-block: 60px;
+  }
+
+  .platformSpine__shell {
+    width: min(100% - 40px, 560px);
+  }
+
+  .platformSpine__heading {
+    min-height: 0;
+    flex-direction: column;
+    gap: 16px;
+    padding-inline: 0;
+  }
+
+  .platformSpine__heading h2 {
+    font-size: clamp(2rem, 8.2vw, 2.25rem);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  .platformSpine__heading p {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .platformSpine__headingRule {
+    margin-top: 16px;
+  }
+
+  .platformSpine__flow {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 374px) {
+  .platformSpine__flow {
+    --rail-w: 28px;
+    --spine-x: 14px;
+    --row-gap: 22px;
+  }
+
+  .platformSpine__flowTrigger,
+  .platformSpine__flowCore {
+    gap: 12px;
+  }
+
+  .platformSpine__flowMain {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 11px;
+  }
+
+  .platformSpine__flowIcon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+
+  .platformSpine__flowIcon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .platformSpine__flowTitle {
+    font-size: 15.5px;
+  }
+
+  .platformSpine__flowBody {
+    font-size: 13px;
+  }
+
+  .platformSpine__flowCorePanel {
+    padding: 14px 15px 15px;
+  }
+
+  .platformSpine__flowCoreTitle {
+    font-size: 14.5px;
+  }
+
+  .platformSpine__flowCoreNote {
+    margin-top: 5px;
+    font-size: 12.5px;
+  }
+
+  .platformSpine__flowCoreLabel {
+    font-size: 9.5px;
+    letter-spacing: 0.11em;
+  }
+
+  .platformSpine__principles > div {
+    padding: 14px 12px;
+  }
+
+  .platformSpine__principles strong {
+    font-size: 0.8rem;
+  }
+
+  .platformSpine__principles small {
+    font-size: 0.72rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .platformSpine__step,
+  .platformSpine__core,
+  .platformSpine__principles {
+    animation: none;
+    transition: none;
+    opacity: 1;
+  }
+  .platformSpine__ribbonGlow path,
+  .platformSpine__ribbonSegments path,
+  .platformSpine__pathHighlight {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .platformSpine__step {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  @media (max-width: 1100px) {
+    .platformSpine__step {
+      transform: none;
+    }
+
+    .platformSpine__flowRail::before,
+    .platformSpine__flowCoreRail::before,
+    .platformSpine__flowCoreRail::after,
+    .platformSpine__flowNumber,
+    .platformSpine__flowMain,
+    .platformSpine__flowCoreMark,
+    .platformSpine__flowCorePanel,
+    .platformSpine__principles {
+      transition: none;
+    }
+
+    .platformSpine__flowSignal {
+      animation: none;
+      opacity: 0;
+    }
+  }
+}
+
+/* SECTION: sections/home-hero-parts/console-screens.module.css */
+/* ==========================================================================
+   Home hero product stage — Billing / Transfers / Finance screens.
+   They reuse the StockConsole chrome + shell classes (stock-console.module.css)
+   and add only their own canvas bodies. Every value is approved demo data
+   (features/gst-invoice.ts, features/stock-transfer.ts, home-hero-console-data.ts).
+   ========================================================================== */
+
+/* ------------------------------------------------------------ party header */
+.consoleScreens__partyRow {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 14px;
+  border: 1px solid var(--bz-border);
+  border-radius: 13px;
+  background: var(--bz-surface);
+}
+
+.consoleScreens__partyId {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.consoleScreens__partyName {
+  color: var(--bz-navy);
+  font-size: 12.5px;
+  font-weight: 760;
+  letter-spacing: -0.01em;
+}
+
+.consoleScreens__partyMeta {
+  color: var(--bz-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.consoleScreens__partyChips {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.consoleScreens__partyChip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--bz-blue-soft);
+  color: var(--bz-blue);
+  font-size: 9.5px;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.consoleScreens__partyChipTeal {
+  background: var(--bz-teal-soft);
+  color: #12806f;
+}
+
+/* -------------------------------------------------------------- doc table */
+.consoleScreens__docRow {
+  composes: stockConsole__row;
+  grid-template-columns: 52px minmax(150px, 1fr) 46px 78px 92px;
+  gap: 12px;
+}
+
+.consoleScreens__docHead {
+  composes: stockConsole__head;
+  height: 32px;
+}
+
+.consoleScreens__docBodyRow {
+  composes: stockConsole__bodyRow;
+  height: 44px;
+}
+
+.consoleScreens__docHsn {
+  composes: stockConsole__code;
+}
+
+.consoleScreens__docItem {
+  composes: stockConsole__product;
+}
+
+.consoleScreens__docMoney {
+  composes: stockConsole__money;
+}
+
+.consoleScreens__docMoneyMuted {
+  composes: stockConsole__moneyMuted;
+}
+
+.consoleScreens__docTableWrap {
+  composes: stockConsole__tableWrap;
+  border-bottom: 1px solid var(--bz-border);
+  border-radius: 13px;
+}
+
+/* ------------------------------------------------------------- doc totals */
+.consoleScreens__totals {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: auto;
+  padding: 12px 16px;
+  border: 1px solid var(--bz-border);
+  border-radius: 13px;
+  background: var(--bz-surface);
+  min-width: 240px;
+}
+
+.consoleScreens__totalLine {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 26px;
+  color: var(--bz-muted);
+  font-size: 10.5px;
+  font-weight: 650;
+}
+
+.consoleScreens__totalLineValue {
+  color: var(--bz-navy);
+  font-size: 11.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.consoleScreens__totalLineGrand {
+  padding-top: 6px;
+  border-top: 1px dashed var(--bz-border);
+}
+
+.consoleScreens__totalLineGrand span {
+  color: var(--bz-blue);
+  font-size: 15px;
+  font-weight: 820;
+  letter-spacing: -0.02em;
+}
+
+.consoleScreens__docSplit {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  gap: 12px;
+}
+
+.consoleScreens__docLines {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+/* -------------------------------------------------------- transfer tracker */
+.consoleScreens__transferHead {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1px solid var(--bz-border);
+  border-radius: 13px;
+  background: var(--bz-surface);
+}
+
+.consoleScreens__transferRef {
+  color: var(--bz-navy);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.consoleScreens__transferRoute {
+  margin-left: auto;
+  color: var(--bz-muted);
+  font-size: 10.5px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.consoleScreens__transferRoute strong {
+  color: var(--bz-navy);
+  font-weight: 730;
+}
+
+.consoleScreens__tracker {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 18px 18px 22px;
+  border: 1px solid var(--bz-border);
+  border-radius: 13px;
+  background: var(--bz-surface);
+}
+
+.consoleScreens__checkpoint {
+  position: relative;
+  display: grid;
+  flex: 1;
+  justify-items: center;
+  gap: 9px;
+}
+
+/* Connector between checkpoints. */
+.consoleScreens__checkpoint::before {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: calc(-50% + 14px);
+  width: calc(100% - 28px);
+  height: 2px;
+  background: #e3eaf3;
+}
+
+.consoleScreens__checkpoint:first-child::before {
+  display: none;
+}
+
+.consoleScreens__checkpointDone::before {
+  background: linear-gradient(90deg, var(--bz-teal), #9adcd2);
+}
+
+.consoleScreens__checkpointNode {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 50%;
+  background: #eef2f7;
+  color: transparent;
+}
+
+.consoleScreens__checkpointDone .consoleScreens__checkpointNode {
+  background: var(--bz-teal);
+  color: #fff;
+}
+
+.consoleScreens__checkpointCurrent .consoleScreens__checkpointNode {
+  background: var(--bz-blue);
+  box-shadow: 0 0 0 4px var(--bz-blue-soft);
+}
+
+.consoleScreens__checkpointFuture .consoleScreens__checkpointNode {
+  background: #fff;
+  border: 1.5px dashed #c4d0de;
+}
+
+.consoleScreens__checkpointLabel {
+  color: var(--bz-navy);
+  font-size: 10px;
+  font-weight: 730;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+
+.consoleScreens__checkpointFuture .consoleScreens__checkpointLabel {
+  color: var(--bz-muted);
+  font-weight: 620;
+}
+
+.consoleScreens__checkpointActor {
+  color: var(--bz-muted);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------- stock moves */
+.consoleScreens__moveCards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.consoleScreens__moveCard {
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid var(--bz-border);
+  border-radius: 13px;
+  background: var(--bz-surface);
+}
+
+.consoleScreens__moveHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--bz-muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.consoleScreens__moveHead strong {
+  color: var(--bz-navy);
+  font-size: 11px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.consoleScreens__moveNumbers {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.consoleScreens__moveBefore {
+  color: var(--bz-muted);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-decoration: line-through;
+  text-decoration-color: rgba(100, 116, 139, 0.55);
+}
+
+.consoleScreens__moveAfter {
+  color: var(--bz-navy);
+  font-size: 17px;
+  font-weight: 820;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.consoleScreens__moveAfterTeal {
+  color: #0f766e;
+}
+
+.consoleScreens__moveDelta {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--bz-blue-soft);
+  color: var(--bz-blue);
+  font-size: 9.5px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.consoleScreens__moveDeltaTeal {
+  background: var(--bz-teal-soft);
+  color: #0f766e;
+}
+
+/* ------------------------------------------------------------- finance led */
+.consoleScreens__ledgerRow {
+  composes: stockConsole__row;
+  grid-template-columns: 86px minmax(170px, 1fr) 100px 74px;
+  gap: 12px;
+}
+
+.consoleScreens__ledgerHead {
+  composes: stockConsole__head;
+  height: 32px;
+}
+
+.consoleScreens__ledgerBodyRow {
+  composes: stockConsole__bodyRow;
+  height: 52px;
+}
+
+.consoleScreens__ledgerTime {
+  composes: stockConsole__code;
+}
+
+.consoleScreens__ledgerDetail {
+  composes: stockConsole__product;
+}
+
+.consoleScreens__ledgerAmount {
+  composes: stockConsole__money;
+}
+
+.consoleScreens__statusPill {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--bz-teal-soft);
+  color: #0f766e;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.consoleScreens__statusPillBlue {
+  background: var(--bz-blue-soft);
+  color: var(--bz-blue);
+}
+
+/* ---------------------------------------------------------------- motion */
+@media (prefers-reduced-motion: no-preference) {
+  .consoleScreens__docBodyRow,
+  .consoleScreens__ledgerBodyRow {
+    animation: consoleScreens__rowInLocal 0.6s cubic-bezier(0.16, 1, 0.3, 1)
+      both;
+    animation-delay: calc(0.62s + var(--r) * 0.05s);
+  }
+
+  @keyframes consoleScreens__rowInLocal {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .consoleScreens__checkpointNode {
+    animation: consoleScreens__nodeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.66s + var(--r) * 0.07s);
+  }
+
+  @keyframes consoleScreens__nodeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* -------------------------------------------------------------- responsive */
+@media (max-width: 760px) {
+  .consoleScreens__partyRow {
+    gap: 10px;
+  }
+
+  .consoleScreens__partyChips {
+    display: none;
+  }
+
+  .consoleScreens__docRow {
+    grid-template-columns: 44px minmax(110px, 1fr) 40px 66px;
+  }
+
+  .consoleScreens__docRateHide {
+    display: none;
+  }
+
+  .consoleScreens__totals {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .consoleScreens__docSplit {
+    flex-direction: column;
+  }
+
+  .consoleScreens__tracker {
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  .consoleScreens__checkpoint {
+    flex: none;
+    min-width: 96px;
+  }
+
+  .consoleScreens__moveCards {
+    grid-template-columns: 1fr;
+  }
+
+  .consoleScreens__ledgerRow {
+    grid-template-columns: 64px minmax(120px, 1fr) 88px;
+  }
+
+  .consoleScreens__statusPill {
+    display: none;
+  }
+}
+
+/* MOBILE MODULE HUB — dedicated handset composition */
+.moduleShowcase__mobileHub {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .moduleShowcase__section {
+    padding: 50px 0 36px;
+    background: linear-gradient(180deg, #f9fbff 0%, #f3f8ff 100%);
+  }
+
+  .moduleShowcase__backdrop,
+  .moduleShowcase__desktop {
+    display: none;
+  }
+
+  .moduleShowcase__shell {
+    width: min(calc(100% - 40px), 560px);
+  }
+
+  .moduleShowcase__mobileHub {
+    display: block;
+  }
+
+  .moduleShowcase__mobileHeader {
+    text-align: left;
+  }
+
+  .moduleShowcase__mobileHeader .moduleShowcase__eyebrow {
+    min-height: 28px;
+    padding: 4px 12px;
+    background: rgba(47, 107, 255, 0.07);
+    box-shadow: none;
+  }
+
+  .moduleShowcase__mobileTitle {
+    margin-top: 16px;
+    color: var(--bz-navy);
+    font-size: clamp(1.65rem, 7.2vw, 2.3rem);
+    font-weight: 830;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+
+  .moduleShowcase__mobileTitle em {
+    background: linear-gradient(100deg, var(--bz-blue), var(--bz-teal));
+    background-clip: text;
+    color: transparent;
+    font-style: normal;
+    white-space: nowrap;
+    -webkit-background-clip: text;
+  }
+
+  .moduleShowcase__mobileHeader > p {
+    max-width: 34rem;
+    margin-top: 15px;
+    color: var(--bz-muted);
+    font-size: 0.96rem;
+    line-height: 1.5;
+  }
+
+  .moduleShowcase__mobileNav {
+    display: grid;
+    margin-top: 25px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .moduleShowcase__mobileNavItem {
+    display: flex;
+    min-width: 0;
+    min-height: 78px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 7px;
+    border: 1px solid rgba(47, 107, 255, 0.12);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.88);
+    color: var(--bz-navy);
+    font-size: 0.72rem;
+    font-weight: 780;
+    line-height: 1.08;
+    text-align: center;
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .moduleShowcase__mobileNavIcon {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--bz-blue-soft);
+    color: var(--bz-blue);
+  }
+
+  .moduleShowcase__mobileNavItem:focus-visible {
+    outline: 3px solid rgba(47, 107, 255, 0.32);
+    outline-offset: 2px;
+  }
+
+  .moduleShowcase__mobileStories {
+    display: grid;
+    gap: 14px;
+    margin-top: 32px;
+  }
+
+  .moduleShowcase__mobileCard {
+    --accent: var(--bz-blue);
+    position: relative;
+    display: grid;
+    height: 164px;
+    min-width: 0;
+    grid-template-columns: 43% 57%;
+    overflow: hidden;
+    border: 1px solid rgba(205, 217, 235, 0.92);
+    border-radius: 19px;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 10px 28px rgba(25, 67, 126, 0.08);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .moduleShowcase__mobilePhoto {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    background: var(--bz-surface-alt);
+  }
+
+  .moduleShowcase__mobilePhoto img {
+    object-fit: cover;
+    transition: transform 240ms ease;
+  }
+
+  .moduleShowcase__mobilePanel {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: 13px 12px 11px 14px;
+  }
+
+  .moduleShowcase__mobileHeading {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .moduleShowcase__mobileHeading > span {
+    border-radius: 7px;
+    background: var(--accent);
+    padding: 5px 6px;
+    color: #fff;
+    font-size: 0.66rem;
+    font-weight: 850;
+    line-height: 1;
+  }
+
+  .moduleShowcase__mobileHeading h3 {
+    min-width: 0;
+    color: var(--bz-navy);
+    font-size: 1rem;
+    font-weight: 820;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  .moduleShowcase__mobileHeading svg {
+    color: var(--bz-blue);
+    transition: transform 180ms ease;
+  }
+
+  .moduleShowcase__mobilePanel > p {
+    display: -webkit-box;
+    overflow: hidden;
+    margin-top: 9px;
+    color: var(--bz-muted);
+    font-size: 0.75rem;
+    line-height: 1.35;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .moduleShowcase__mobilePanel .moduleShowcase__metric {
+    min-height: 45px;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+
+  .moduleShowcase__mobilePanel .moduleShowcase__metric small {
+    font-size: 0.59rem;
+  }
+
+  .moduleShowcase__mobilePanel .moduleShowcase__metric strong {
+    font-size: 0.98rem;
+  }
+
+  .moduleShowcase__mobilePanel .moduleShowcase__metric svg {
+    width: 36px;
+    height: 22px;
+  }
+
+  .moduleShowcase__mobilePanel .moduleShowcase__exploreLabel {
+    padding-top: 9px;
+    font-size: 0.66rem;
+  }
+
+  .moduleShowcase__mobileCard:focus-within {
+    border-color: color-mix(in srgb, var(--accent) 42%, white);
+    box-shadow: 0 14px 30px rgba(25, 67, 126, 0.13);
+    transform: translateY(-2px);
+  }
+
+  .moduleShowcase__mobileCard:focus-within .moduleShowcase__mobileHeading svg {
+    transform: translateX(3px);
+  }
+
+  .moduleShowcase__mobileCta {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  .moduleShowcase__mobileCta .moduleShowcase__ctaGroup {
+    margin-top: 0;
+  }
+
+  .moduleShowcase__mobileCta .moduleShowcase__primaryCta {
+    width: auto;
+    min-height: 46px;
+    padding-inline: 21px;
+  }
+}
+
+@media (hover: hover) and (max-width: 700px) {
+  .moduleShowcase__mobileNavItem:hover {
+    border-color: rgba(47, 107, 255, 0.34);
+    background: #fff;
+    transform: translateY(-1px);
+  }
+
+  .moduleShowcase__mobileCard:hover {
+    border-color: color-mix(in srgb, var(--accent) 42%, white);
+    box-shadow: 0 14px 30px rgba(25, 67, 126, 0.13);
+    transform: translateY(-2px);
+  }
+
+  .moduleShowcase__mobileCard:hover .moduleShowcase__mobileHeading svg {
+    transform: translateX(3px);
+  }
+
+  .moduleShowcase__mobileCard:hover .moduleShowcase__mobilePhoto img {
+    transform: scale(1.025);
+  }
+}
+
+@media (max-width: 350px) {
+  .moduleShowcase__shell {
+    width: calc(100% - 32px);
+  }
+
+  .moduleShowcase__mobileTitle {
+    font-size: 1.55rem;
+  }
+
+  .moduleShowcase__mobileNav {
+    gap: 8px;
+  }
+
+  .moduleShowcase__mobileNavItem {
+    min-height: 74px;
+    border-radius: 14px;
+    font-size: 0.66rem;
+  }
+
+  .moduleShowcase__mobileNavIcon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .moduleShowcase__mobileCard {
+    height: 158px;
+    grid-template-columns: 41% 59%;
+  }
+
+  .moduleShowcase__mobilePanel {
+    padding-inline: 11px 10px;
+  }
+
+  .moduleShowcase__mobileHeading {
+    gap: 6px;
+  }
+
+  .moduleShowcase__mobileHeading h3 {
+    font-size: 0.92rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moduleShowcase__mobileNavItem,
+  .moduleShowcase__mobileCard,
+  .moduleShowcase__mobilePhoto img,
+  .moduleShowcase__mobileHeading svg {
+    transition: none;
+  }
+}

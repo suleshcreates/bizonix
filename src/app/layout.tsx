@@ -16,13 +16,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: { default: "Bizonix ERP", template: "%s | Bizonix" },
   description: siteConfig.description,
-  icons: { icon: "/brand/icon.svg" },
+  icons: { icon: "/images/shared/brand/icon.svg" },
   openGraph: {
     type: "website",
     siteName: "Bizonix",
     title: "Bizonix ERP",
     description: siteConfig.description,
-    images: [{ url: "/og-image.svg", width: 1200, height: 630 }],
+    images: [{ url: "/images/shared/social/og-image.svg", width: 1200, height: 630 }],
   },
 };
 
@@ -31,7 +31,7 @@ const organizationSchema = {
   "@type": "Organization",
   name: siteConfig.company,
   url: siteConfig.url,
-  logo: `${siteConfig.url}/brand/logo.svg`,
+  logo: `${siteConfig.url}/images/shared/brand/logo.svg`,
   brand: { "@type": "Brand", name: siteConfig.name },
 };
 
@@ -39,7 +39,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={jakarta.variable}>
+    <html lang="en" className={jakarta.variable} data-scroll-behavior="smooth">
       <body>
         <a
           className="sr-only focus:not-sr-only fixed left-4 top-4 z-[100] bg-white px-4 py-2"

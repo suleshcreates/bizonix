@@ -1,0 +1,32 @@
+export const outcomeVisualRegistry = {
+  "piece-identity": { icon: "barcode", steps: ["Piece", "Barcode", "Traceable"] },
+  "location-aware": { icon: "pin", steps: ["Stock", "Location", "Available"] },
+  "movement-trace": { icon: "route", steps: ["Transfer", "Movement", "History"] },
+  "purchase-receiving": { icon: "receipt", steps: ["Purchase", "GRN", "Received"] },
+  "supplier-context": { icon: "building", steps: ["Supplier", "Purchase", "Position"] },
+  "return-continuity": { icon: "undo", steps: ["Receipt", "Return", "Adjusted"] },
+  "payment-flow": { icon: "file", steps: ["Bill", "Payment", "Posted"] },
+  "counter-session": { icon: "monitor", steps: ["Counter", "Session", "Closed"] },
+  "return-record": { icon: "undo", steps: ["Sale", "Return", "Restocked"] },
+  "order-fulfillment": { icon: "package", steps: ["Order", "Carton", "Fulfilled"] },
+  "shared-stock": { icon: "boxes", steps: ["Stock", "Commitment", "Visible"] },
+  "credit-context": { icon: "credit", steps: ["Bill", "Receipt", "Outstanding"] },
+  "outlet-control": { icon: "store", steps: ["Outlet", "Scope", "Independent"] },
+  "entity-transfer": { icon: "transfer", steps: ["Source", "Transit", "Destination"] },
+  "hq-allocation": { icon: "network", steps: ["Outlet", "Record", "Network"] },
+  "catalog-order": { icon: "shopping", steps: ["Catalogue", "Storefront", "Order"] },
+  "inventory-connection": { icon: "refresh", steps: ["Stock", "Channel", "Available"] },
+  "storefront-sync": { icon: "workflow", steps: ["Order", "Fulfilment", "Books"] },
+  "data-signal": { icon: "chart", steps: ["Operation", "Data", "View"] },
+  "decision-state": { icon: "list", steps: ["Total", "Detail", "Source"] },
+  "consolidated-view": { icon: "dashboard", steps: ["Entity", "Group", "Consolidated"] },
+  "user-role-entity": { icon: "user", steps: ["User", "Role", "Entity"] },
+  "permission-scope": { icon: "shield", steps: ["Permission", "Scope", "Allowed"] },
+  "audit-trace": { icon: "audit", steps: ["Action", "Person", "Record"] },
+  "document-posted": { icon: "file", steps: ["Document", "Posted", "In books"] },
+  "traceable-number": { icon: "search", steps: ["Source", "Journal", "Ledger"] },
+  "entity-consolidation": { icon: "building", steps: ["Entities", "Books", "Consolidated"] },
+} as const;
+
+export type OutcomeVisualVariant = keyof typeof outcomeVisualRegistry;
+

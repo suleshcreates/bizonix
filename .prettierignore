@@ -1,0 +1,7 @@
+node_modules/
+.next/
+.audit/
+.hero-qa/
+references/
+pnpm-lock.yaml
+*.tsbuildinfo

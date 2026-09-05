@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { FourPillarsRecordSection } from "@/components/sections/four-pillars-record";
-import { DayInLife } from "@/components/sections/day-in-life";
-import { IntegrationSurface } from "@/components/sections/integration-surface";
-import { OperatingModel } from "@/components/sections/operating-model";
-import { ProductCTA } from "@/components/sections/product-cta";
-import { ProductHero } from "@/components/sections/product-hero";
-import { SecurityTenancy } from "@/components/sections/security-tenancy";
+import { FourPillarsRecordSection } from "@/components/pages/product/sections/four-pillars-record";
+import { DayInLife } from "@/components/pages/product/sections/day-in-life";
+import { IntegrationSurface } from "@/components/pages/product/sections/integration-surface";
+import { OperatingModel } from "@/components/pages/product/sections/operating-model";
+import { ProductHero } from "@/components/pages/product/sections/product-hero";
+import { SecurityTenancy } from "@/components/pages/product/sections/security-tenancy";
 import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Platform",
@@ -33,7 +32,6 @@ export default function ProductPage() {
       <DayInLife />
       <SecurityTenancy />
       <IntegrationSurface />
-      <ProductCTA />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

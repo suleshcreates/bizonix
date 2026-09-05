@@ -12,17 +12,20 @@ export function Logo({
     <Link
       href="/"
       aria-label="Bizonix home"
-      className="inline-flex items-center gap-3"
+      className="inline-flex items-center gap-2 lg:gap-3"
     >
       <Image
-        src="/brand/icon.svg"
+        src="/images/shared/brand/icon.svg"
         alt=""
         width={compact ? 36 : 42}
         height={compact ? 36 : 42}
+        className={
+          compact ? "size-9" : "size-[34px] lg:size-[42px]"
+        }
         priority
       />
       <span
-        className={`text-xl font-extrabold tracking-[-.04em] ${light ? "text-white" : "text-bz-navy"}`}
+        className={`text-lg font-extrabold tracking-[-.04em] lg:text-xl ${light ? "text-white" : "text-bz-navy"}`}
       >
         Bizonix
       </span>

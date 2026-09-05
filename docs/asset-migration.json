@@ -1,0 +1,282 @@
+[
+  {
+    "old": "/about/about-hero.webp",
+    "next": "/images/about/hero/about-hero.webp"
+  },
+  {
+    "old": "/about/our-story.webp",
+    "next": "/images/about/story/our-story.webp"
+  },
+  {
+    "old": "/about/values/operational-depth.webp",
+    "next": "/images/about/values/operational-depth.webp"
+  },
+  {
+    "old": "/about/values/partner-success.webp",
+    "next": "/images/about/values/partner-success.webp"
+  },
+  {
+    "old": "/about/values/reliability.webp",
+    "next": "/images/about/values/reliability.webp"
+  },
+  {
+    "old": "/brand/footer-team.jpg",
+    "next": "/images/shared/brand/footer-team.jpg"
+  },
+  {
+    "old": "/brand/icon.svg",
+    "next": "/images/shared/brand/icon.svg"
+  },
+  {
+    "old": "/brand/logo.svg",
+    "next": "/images/shared/brand/logo.svg"
+  },
+  {
+    "old": "/images/solutions/app/barcodes.png",
+    "next": "/images/shared/product-screens/barcodes.png"
+  },
+  {
+    "old": "/images/solutions/app/orders.png",
+    "next": "/images/shared/product-screens/orders.png"
+  },
+  {
+    "old": "/images/solutions/app/purchases.png",
+    "next": "/images/shared/product-screens/purchases.png"
+  },
+  {
+    "old": "/images/solutions/app/series-ledger.png",
+    "next": "/images/shared/product-screens/series-ledger.png"
+  },
+  {
+    "old": "/images/solutions/app/stock-list.png",
+    "next": "/images/shared/product-screens/stock-list.png"
+  },
+  {
+    "old": "/images/solutions/modules-warehouse-hero-v2.png",
+    "next": "/images/modules/hero/modules-warehouse-hero-v2.png"
+  },
+  {
+    "old": "/images/solutions/solutions-hero.webp",
+    "next": "/images/modules/hero/solutions-hero.webp"
+  },
+  {
+    "old": "/industries/apparel-footwear.webp",
+    "next": "/images/industries/overview/apparel-footwear.webp"
+  },
+  {
+    "old": "/industries/apparel-operations.webp",
+    "next": "/images/industries/overview/apparel-operations.webp"
+  },
+  {
+    "old": "/industries/franchise-networks.webp",
+    "next": "/images/industries/overview/franchise-networks.webp"
+  },
+  {
+    "old": "/industries/franchise-operations.webp",
+    "next": "/images/industries/overview/franchise-operations.webp"
+  },
+  {
+    "old": "/industries/imitation-jewellery.webp",
+    "next": "/images/industries/overview/imitation-jewellery.webp"
+  },
+  {
+    "old": "/industries/jewellery-operations.webp",
+    "next": "/images/industries/overview/jewellery-operations.webp"
+  },
+  {
+    "old": "/industries/pains/apparel-detail.webp",
+    "next": "/images/industries/pains/apparel-detail.webp"
+  },
+  {
+    "old": "/industries/pains/franchise-detail.webp",
+    "next": "/images/industries/pains/franchise-detail.webp"
+  },
+  {
+    "old": "/industries/pains/jewellery-detail.webp",
+    "next": "/images/industries/pains/jewellery-detail.webp"
+  },
+  {
+    "old": "/industries/proof/customer-story.webp",
+    "next": "/images/industries/proof/customer-story.webp"
+  },
+  {
+    "old": "/og-image.svg",
+    "next": "/images/shared/social/og-image.svg"
+  },
+  {
+    "old": "/product/day-counter-sale.webp",
+    "next": "/images/product/day-in-life/day-counter-sale.webp"
+  },
+  {
+    "old": "/product/day-franchise-transfer.webp",
+    "next": "/images/product/day-in-life/day-franchise-transfer.webp"
+  },
+  {
+    "old": "/product/day-month-end-books.webp",
+    "next": "/images/product/day-in-life/day-month-end-books.webp"
+  },
+  {
+    "old": "/product/day-morning-stock.webp",
+    "next": "/images/product/day-in-life/day-morning-stock.webp"
+  },
+  {
+    "old": "/product/desktop.ini",
+    "next": "/images/product/desktop.ini"
+  },
+  {
+    "old": "/product/ecosystem/franchise.png",
+    "next": "/images/product/ecosystem/franchise.png"
+  },
+  {
+    "old": "/product/ecosystem/retail-pos.png",
+    "next": "/images/product/ecosystem/retail-pos.png"
+  },
+  {
+    "old": "/product/ecosystem/wholesale.png",
+    "next": "/images/product/ecosystem/wholesale.png"
+  },
+  {
+    "old": "/product/journey-books.webp",
+    "next": "/images/product/operating-model/journey-books.webp"
+  },
+  {
+    "old": "/product/journey-master.webp",
+    "next": "/images/product/operating-model/journey-master.webp"
+  },
+  {
+    "old": "/product/journey-movement.webp",
+    "next": "/images/product/operating-model/journey-movement.webp"
+  },
+  {
+    "old": "/product/journey-sale.webp",
+    "next": "/images/product/operating-model/journey-sale.webp"
+  },
+  {
+    "old": "/product/journey-stock.webp",
+    "next": "/images/product/operating-model/journey-stock.webp"
+  },
+  {
+    "old": "/product/modules/accounting.jpg",
+    "next": "/images/modules/overview/accounting.jpg"
+  },
+  {
+    "old": "/product/modules/analytics.jpg",
+    "next": "/images/modules/overview/analytics.jpg"
+  },
+  {
+    "old": "/product/modules/editorial/accounting-v2.webp",
+    "next": "/images/modules/overview/editorial/accounting-v2.webp"
+  },
+  {
+    "old": "/product/modules/editorial/analytics-v2.webp",
+    "next": "/images/modules/overview/editorial/analytics-v2.webp"
+  },
+  {
+    "old": "/product/modules/editorial/franchise-v2.webp",
+    "next": "/images/modules/overview/editorial/franchise-v2.webp"
+  },
+  {
+    "old": "/product/modules/editorial/inventory-v2.webp",
+    "next": "/images/modules/overview/editorial/inventory-v2.webp"
+  },
+  {
+    "old": "/product/modules/editorial/sales-pos-v2.webp",
+    "next": "/images/modules/overview/editorial/sales-pos-v2.webp"
+  },
+  {
+    "old": "/product/modules/editorial/wholesale-v2.webp",
+    "next": "/images/modules/overview/editorial/wholesale-v2.webp"
+  },
+  {
+    "old": "/product/modules/franchise.jpg",
+    "next": "/images/modules/overview/franchise.jpg"
+  },
+  {
+    "old": "/product/modules/inventory.jpg",
+    "next": "/images/modules/overview/inventory.jpg"
+  },
+  {
+    "old": "/product/modules/platform-stack.png",
+    "next": "/images/modules/overview/platform-stack.png"
+  },
+  {
+    "old": "/product/modules/sales-pos.jpg",
+    "next": "/images/modules/overview/sales-pos.jpg"
+  },
+  {
+    "old": "/product/modules/wholesale.jpg",
+    "next": "/images/modules/overview/wholesale.jpg"
+  },
+  {
+    "old": "/product/network-consolidated-oversight.webp",
+    "next": "/images/product/network/network-consolidated-oversight.webp"
+  },
+  {
+    "old": "/product/network-scoped-responsibility.webp",
+    "next": "/images/product/network/network-scoped-responsibility.webp"
+  },
+  {
+    "old": "/product/network-shared-foundation.webp",
+    "next": "/images/product/network/network-shared-foundation.webp"
+  },
+  {
+    "old": "/product/personas/franchise.png",
+    "next": "/images/product/personas/franchise.png"
+  },
+  {
+    "old": "/product/personas/retail-pos.png",
+    "next": "/images/product/personas/retail-pos.png"
+  },
+  {
+    "old": "/product/personas/wholesale-hq.png",
+    "next": "/images/product/personas/wholesale-hq.png"
+  },
+  {
+    "old": "/product/pillars/commerce.jpg",
+    "next": "/images/product/pillars/commerce.jpg"
+  },
+  {
+    "old": "/product/pillars/finance.jpg",
+    "next": "/images/product/pillars/finance.jpg"
+  },
+  {
+    "old": "/product/pillars/inventory.jpg",
+    "next": "/images/product/pillars/inventory.jpg"
+  },
+  {
+    "old": "/product/pillars/network.jpg",
+    "next": "/images/product/pillars/network.jpg"
+  },
+  {
+    "old": "/product/pillars/pillar-commerce.jpg",
+    "next": "/images/product/pillars/pillar-commerce.jpg"
+  },
+  {
+    "old": "/product/pillars/pillar-finance.jpg",
+    "next": "/images/product/pillars/pillar-finance.jpg"
+  },
+  {
+    "old": "/product/pillars/pillar-inventory.jpg",
+    "next": "/images/product/pillars/pillar-inventory.jpg"
+  },
+  {
+    "old": "/product/pillars/pillar-network.jpg",
+    "next": "/images/product/pillars/pillar-network.jpg"
+  },
+  {
+    "old": "/product/product-hero.png",
+    "next": "/images/product/hero/product-hero.png"
+  },
+  {
+    "old": "/product/security/security-franchise-v2.png",
+    "next": "/images/product/security/security-franchise-v2.png"
+  },
+  {
+    "old": "/product/security/security-retail-v2.png",
+    "next": "/images/product/security/security-retail-v2.png"
+  },
+  {
+    "old": "/product/security/security-warehouse-v2.png",
+    "next": "/images/product/security/security-warehouse-v2.png"
+  }
+]

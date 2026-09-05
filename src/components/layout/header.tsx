@@ -5,9 +5,10 @@ import {
   Boxes,
   Calculator,
   ChevronDown,
-  ExternalLink,
+  Barcode,
   Gem,
   LayoutGrid,
+  MessageCircle,
   Menu,
   Network,
   PackageOpen,
@@ -22,6 +23,8 @@ import { useEffect, useState } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import {
   industryLinks,
+  featureLinks,
+  hasWhatsApp,
   primaryNav,
   siteConfig,
   solutionLinks,
@@ -62,12 +65,30 @@ const industryMenuCopy = {
   },
 } as const;
 
+const featureMenuCopy = {
+  Barcode: { description: "Unique piece identity.", icon: Barcode },
+  "Billing Counters": {
+    description: "Sessions and cash controls.",
+    icon: Store,
+  },
+  "GST Compliance": {
+    description: "Tax-ready operational flow.",
+    icon: Calculator,
+  },
+  "Series Pricing": {
+    description: "Purchase and selling discipline.",
+    icon: PackageOpen,
+  },
+  "Stock Transfer": { description: "HQ to branch movement.", icon: Warehouse },
+} as const;
+
 const megaMenuCopy: Record<
-  "solutions" | "industries",
+  "solutions" | "industries" | "features",
   Record<string, { description: string; icon: LucideIcon }>
 > = {
   solutions: solutionMenuCopy,
   industries: industryMenuCopy,
+  features: featureMenuCopy,
 };
 
 function DesktopMegaMenu({
@@ -79,7 +100,7 @@ function DesktopMegaMenu({
   label: string;
   href: string;
   links: readonly { label: string; href: string }[];
-  type: "solutions" | "industries";
+  type: "solutions" | "industries" | "features";
 }) {
   const copy = megaMenuCopy[type];
 
@@ -102,12 +123,16 @@ function DesktopMegaMenu({
               <p className="text-[10px] font-extrabold uppercase tracking-[.16em] text-bz-blue">
                 {type === "solutions"
                   ? "Operate end to end"
-                  : "Built for your model"}
+                  : type === "industries"
+                    ? "Built for your model"
+                    : "Cross-cutting capabilities"}
               </p>
               <p className="mt-1 text-sm font-bold text-bz-navy">
                 {type === "solutions"
                   ? "One ERP across every operating layer"
-                  : "Purpose-fit control for complex retail networks"}
+                  : type === "industries"
+                    ? "Purpose-fit control for complex retail networks"
+                    : "The details that keep work precise"}
               </p>
             </div>
             <Link
@@ -118,8 +143,20 @@ function DesktopMegaMenu({
             </Link>
           </div>
 
-          <div className="grid grid-cols-[1fr_1fr_240px] gap-2 p-3">
-            <div className="col-span-2 grid grid-cols-2 gap-1">
+          <div
+            className={
+              type === "features"
+                ? "p-3"
+                : "grid grid-cols-[1fr_1fr_240px] gap-2 p-3"
+            }
+          >
+            <div
+              className={
+                type === "features"
+                  ? "grid grid-cols-2 gap-1"
+                  : "col-span-2 grid grid-cols-2 gap-1"
+              }
+            >
               {links.slice(1).map((item) => {
                 const itemCopy = copy[item.label];
                 const Icon = itemCopy.icon;
@@ -145,27 +182,29 @@ function DesktopMegaMenu({
               })}
             </div>
 
-            <Link
-              href="/product"
-              className="group/feature relative overflow-hidden rounded-2xl bg-bz-navy p-5 text-white"
-            >
-              <span className="flex size-10 items-center justify-center rounded-xl bg-white/10 text-bz-teal">
-                {type === "solutions" ? (
-                  <LayoutGrid size={19} />
-                ) : (
-                  <PackageOpen size={19} />
-                )}
-              </span>
-              <p className="mt-8 text-[10px] font-bold uppercase tracking-[.14em] text-bz-teal">
-                The Bizonix model
-              </p>
-              <p className="mt-2 text-sm font-bold leading-5">
-                Shared context with clear entity boundaries.
-              </p>
-              <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold text-white/75 transition-colors group-hover/feature:text-white">
-                Explore the platform <ArrowRight size={14} />
-              </span>
-            </Link>
+            {type !== "features" && (
+              <Link
+                href="/product"
+                className="group/feature relative overflow-hidden rounded-2xl bg-bz-navy p-5 text-white"
+              >
+                <span className="flex size-10 items-center justify-center rounded-xl bg-white/10 text-bz-teal">
+                  {type === "solutions" ? (
+                    <LayoutGrid size={19} />
+                  ) : (
+                    <PackageOpen size={19} />
+                  )}
+                </span>
+                <p className="mt-8 text-[10px] font-bold uppercase tracking-[.14em] text-bz-teal">
+                  The Bizonix model
+                </p>
+                <p className="mt-2 text-sm font-bold leading-5">
+                  Shared context with clear entity boundaries.
+                </p>
+                <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold text-white/75 transition-colors group-hover/feature:text-white">
+                  Explore the platform <ArrowRight size={14} />
+                </span>
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -190,7 +229,7 @@ export function Header() {
   }, [open]);
   return (
     <header
-      className={`sticky top-0 z-50 h-20 border-b transition ${scrolled ? "border-bz-border/80 bg-white/90 shadow-nav backdrop-blur-xl" : "border-transparent bg-white"}`}
+      className={`sticky top-0 z-50 h-16 border-b transition lg:h-20 ${scrolled ? "border-bz-border/80 bg-white/90 shadow-nav backdrop-blur-xl" : "border-transparent bg-white"}`}
     >
       <div className="shell flex h-full items-center justify-between">
         <Logo />
@@ -212,6 +251,14 @@ export function Header() {
                 links={industryLinks}
                 type="industries"
               />
+            ) : "menu" in item && item.menu === "features" ? (
+              <DesktopMegaMenu
+                key={item.href}
+                label={item.label}
+                href={item.href}
+                links={featureLinks}
+                type="features"
+              />
             ) : (
               <Link
                 key={item.href}
@@ -223,26 +270,14 @@ export function Header() {
             ),
           )}
         </nav>
-        <div className="hidden items-center gap-1 lg:flex">
-          <Link
-            className="rounded-full px-3 py-2 text-sm font-semibold hover:bg-bz-surface-alt"
-            href={siteConfig.loginUrl}
-          >
-            Login
-          </Link>
-          <Link
-            className="rounded-full px-3 py-2 text-sm font-semibold hover:bg-bz-surface-alt"
-            href={siteConfig.brochureUrl}
-          >
-            Brochure
-          </Link>
-          <ButtonLink href="/contact" className="ml-2 min-h-11 px-5">
+        <div className="hidden items-center lg:flex">
+          <ButtonLink href="/contact" className="min-h-11 px-5">
             Book a demo
           </ButtonLink>
         </div>
         <button
           type="button"
-          className="rounded-xl p-2 lg:hidden"
+          className="-mr-2 inline-flex size-11 items-center justify-center rounded-xl text-bz-navy transition active:bg-bz-surface-alt lg:hidden"
           aria-label="Open navigation"
           aria-expanded={open}
           onClick={() => setOpen(true)}
@@ -251,18 +286,21 @@ export function Header() {
         </button>
       </div>
       {open && (
-        <div className="fixed inset-0 z-[60] overflow-y-auto bg-white lg:hidden">
-          <div className="shell flex h-20 items-center justify-between">
+        <div className="fixed inset-0 z-[60] overflow-y-auto overscroll-contain bg-white lg:hidden">
+          <div className="shell flex h-16 items-center justify-between lg:h-20">
             <Logo />
             <button
-              className="rounded-xl p-2"
+              className="-mr-2 inline-flex size-11 items-center justify-center rounded-xl text-bz-navy transition active:bg-bz-surface-alt"
               aria-label="Close navigation"
               onClick={() => setOpen(false)}
             >
               <X />
             </button>
           </div>
-          <nav className="shell pb-28 pt-6" aria-label="Mobile primary">
+          <nav
+            className="shell pb-[calc(40px+env(safe-area-inset-bottom))] pt-4"
+            aria-label="Mobile primary"
+          >
             <Link
               onClick={() => setOpen(false)}
               className="block border-b border-bz-border py-4 text-lg font-bold"
@@ -274,6 +312,12 @@ export function Header() {
               title="Solutions"
               href="/modules"
               links={solutionLinks}
+              close={() => setOpen(false)}
+            />
+            <MobileGroup
+              title="Features"
+              href="/features"
+              links={featureLinks}
               close={() => setOpen(false)}
             />
             <MobileGroup
@@ -294,11 +338,18 @@ export function Header() {
                   {item.label}
                 </Link>
               ))}
-            <div className="mt-8 grid gap-3">
-              <ButtonLink href="/contact">Book a demo</ButtonLink>
-              <ButtonLink href={siteConfig.loginUrl} variant="secondary">
-                Login <ExternalLink size={16} />
+            <div className="mt-7 grid gap-3">
+              <ButtonLink href="/contact" className="min-h-13 w-full">
+                Book a demo <ArrowRight size={16} />
               </ButtonLink>
+              {hasWhatsApp && (
+                <a
+                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-bz-border bg-white text-sm font-bold text-bz-navy transition active:bg-bz-surface-alt"
+                  href={siteConfig.whatsappUrl}
+                >
+                  <MessageCircle size={16} /> Chat on WhatsApp
+                </a>
+              )}
             </div>
           </nav>
         </div>
@@ -319,16 +370,16 @@ function MobileGroup({
   close: () => void;
 }) {
   return (
-    <details className="border-b border-bz-border">
-      <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-bold">
+    <details className="group border-b border-bz-border">
+      <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-bold [&::-webkit-details-marker]:hidden">
         {title}
-        <ChevronDown />
+        <ChevronDown className="text-bz-muted transition-transform duration-200 group-open:rotate-180" />
       </summary>
       <div className="pb-4 pl-4">
         <Link
           href={href}
           onClick={close}
-          className="block py-2 font-semibold text-bz-blue"
+          className="block py-2.5 font-semibold text-bz-blue"
         >
           View all
         </Link>
@@ -337,7 +388,7 @@ function MobileGroup({
             href={item.href}
             onClick={close}
             key={item.href}
-            className="block py-2 text-bz-muted"
+            className="block py-2.5 text-bz-muted"
           >
             {item.label}
           </Link>

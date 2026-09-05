@@ -1,0 +1,162 @@
+[
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-cta.tsx",
+    "missingClass": "moduleShowcase__ctaWrap"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-cta.tsx",
+    "missingClass": "moduleShowcase__cta"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-node.tsx",
+    "missingClass": "moduleShowcase__node"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-node.tsx",
+    "missingClass": "moduleShowcase__nodeSkin"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-node.tsx",
+    "missingClass": "moduleShowcase__nodeIcon"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-node.tsx",
+    "missingClass": "moduleShowcase__nodeText"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-node.tsx",
+    "missingClass": "moduleShowcase__nodeNumber"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-node.tsx",
+    "missingClass": "moduleShowcase__nodeTitle"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-orbit.tsx",
+    "missingClass": "moduleShowcase__connectors"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-orbit.tsx",
+    "missingClass": "moduleShowcase__guide"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-orbit.tsx",
+    "missingClass": "moduleShowcase__slot"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/module-orbit.tsx",
+    "missingClass": "moduleShowcase__counter"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/operating-core.tsx",
+    "missingClass": "moduleShowcase__core"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/operating-core.tsx",
+    "missingClass": "moduleShowcase__coreGlow"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/operating-core.tsx",
+    "missingClass": "moduleShowcase__coreName"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/operating-core.tsx",
+    "missingClass": "moduleShowcase__coreTraits"
+  },
+  {
+    "file": "src/components/pages/home/sections/module-showcase/parts/operating-core.tsx",
+    "missingClass": "moduleShowcase__coreTruth"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/module-node.tsx",
+    "missingClass": "modulesHero__nodeOrbitSlot"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/module-node.tsx",
+    "missingClass": "modulesHero__node"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/module-node.tsx",
+    "missingClass": "modulesHero__nodeIcon"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/module-node.tsx",
+    "missingClass": "modulesHero__nodeTitle"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/modules-constellation.tsx",
+    "missingClass": "modulesHero__constellation"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/modules-constellation.tsx",
+    "missingClass": "modulesHero__constellationGrid"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/modules-constellation.tsx",
+    "missingClass": "modulesHero__rotatingSystem"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/modules-constellation.tsx",
+    "missingClass": "modulesHero__zone"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/modules-constellation.tsx",
+    "missingClass": "modulesHero__srOnly"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/orbit-layer.tsx",
+    "missingClass": "modulesHero__orbits"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/orbit-layer.tsx",
+    "missingClass": "modulesHero__ringInner"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/orbit-layer.tsx",
+    "missingClass": "modulesHero__ringMain"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/orbit-layer.tsx",
+    "missingClass": "modulesHero__ringOuter"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/orbit-layer.tsx",
+    "missingClass": "modulesHero__connector"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/platform-core.tsx",
+    "missingClass": "modulesHero__core"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/platform-core.tsx",
+    "missingClass": "modulesHero__coreHalo"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/platform-core.tsx",
+    "missingClass": "modulesHero__coreRing"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/platform-core.tsx",
+    "missingClass": "modulesHero__coreSurface"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/platform-core.tsx",
+    "missingClass": "modulesHero__coreMark"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/proof-strip.tsx",
+    "missingClass": "modulesHero__proofItem"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/proof-strip.tsx",
+    "missingClass": "modulesHero__proofIcon"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/signal-layer.tsx",
+    "missingClass": "modulesHero__signals"
+  },
+  {
+    "file": "src/components/pages/modules/modules-hero-parts/signal-layer.tsx",
+    "missingClass": "modulesHero__signal"
+  }
+]

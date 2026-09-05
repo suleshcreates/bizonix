@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { AudienceSection } from "@/components/sections/audience-section";
-import { CaseStudyTeaser } from "@/components/sections/case-study-teaser";
-import { ChallengesSection } from "@/components/sections/challenges-section";
-import { ComplianceBand } from "@/components/sections/compliance-band";
-import { FAQSection } from "@/components/sections/faq-section";
-import { FinalCTA } from "@/components/sections/final-cta";
-import { HomeHero } from "@/components/sections/home-hero";
-import { IndustryBand } from "@/components/sections/industry-band";
-import { PlatformSpine } from "@/components/sections/platform-spine";
-import { SolutionsGrid } from "@/components/sections/solutions-grid";
+import { HomeScrollMotion } from "@/components/pages/home/home-scroll-motion";
+import { AudienceSection } from "@/components/pages/home/sections/audience-section";
+import { CaseStudyTeaser } from "@/components/pages/home/sections/case-study-teaser";
+import { ChallengesSection } from "@/components/pages/home/sections/challenges-section";
+import { ComplianceBand } from "@/components/pages/home/sections/compliance-band";
+import { FAQSection } from "@/components/pages/home/sections/faq-section";
+import { FinalCTA } from "@/components/pages/home/sections/final-cta";
+import { HomeHero } from "@/components/pages/home/sections/home-hero";
+import { IndustryBand } from "@/components/pages/home/sections/industry-band";
+import { PlatformSpine } from "@/components/pages/home/sections/platform-spine";
+import { ModuleShowcase } from "@/components/pages/home/sections/module-showcase/module-showcase";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -34,11 +35,12 @@ const softwareSchema = {
 export default function Home() {
   return (
     <>
+      <HomeScrollMotion />
       <HomeHero />
       <AudienceSection />
       <ChallengesSection />
       <PlatformSpine />
-      <SolutionsGrid />
+      <ModuleShowcase />
       <IndustryBand />
       <CaseStudyTeaser />
       <ComplianceBand />

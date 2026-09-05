@@ -1,0 +1,290 @@
+{
+  "files": [
+    {
+      "previous": "src/components/pages/about/about.module.css",
+      "current": "src/components/pages/about/about.module.css",
+      "prefix": "about__"
+    },
+    {
+      "previous": "src/components/pages/contact/contact.module.css",
+      "current": "src/components/pages/contact/contact.module.css",
+      "prefix": "contact__"
+    },
+    {
+      "previous": "src/components/pages/features/features.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "features__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/counter-sessions.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "counterSessions__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/feature-atoms.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "featureAtoms__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/features-cta.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "featuresCta__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/features-hero-parts/callouts.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "callouts__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/features-hero-parts/hero-background.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "heroBackground__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/features-hero-parts/hero-copy.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "heroCopy__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/features-hero-parts/instruments.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "instruments__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/features-hero-parts/screen.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "screen__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/features-hero-parts/wires.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "wires__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/features-hero.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "featuresHero__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/gst-compliance.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "gstCompliance__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/series-pricing.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "seriesPricing__"
+    },
+    {
+      "previous": "src/components/pages/features/sections/stock-transfer.module.css",
+      "current": "src/components/pages/features/features.module.css",
+      "prefix": "stockTransfer__"
+    },
+    {
+      "previous": "src/components/pages/home/home-scroll-motion.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "homeScrollMotion__"
+    },
+    {
+      "previous": "src/components/pages/home/sections/challenges-section.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "challengesSection__"
+    },
+    {
+      "previous": "src/components/pages/home/sections/home-hero-parts/console-screens.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "consoleScreens__"
+    },
+    {
+      "previous": "src/components/pages/home/sections/home-hero-parts/product-stage.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "productStage__"
+    },
+    {
+      "previous": "src/components/pages/home/sections/home-hero-parts/stock-console.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "stockConsole__"
+    },
+    {
+      "previous": "src/components/pages/home/sections/home-hero.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "homeHero__"
+    },
+    {
+      "previous": "src/components/pages/home/sections/module-showcase/module-showcase.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "moduleShowcase__"
+    },
+    {
+      "previous": "src/components/pages/home/sections/operating-core.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "operatingCore__"
+    },
+    {
+      "previous": "src/components/pages/home/sections/operating-ecosystem.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "operatingEcosystem__"
+    },
+    {
+      "previous": "src/components/pages/home/sections/platform-spine.module.css",
+      "current": "src/components/pages/home/home.module.css",
+      "prefix": "platformSpine__"
+    },
+    {
+      "previous": "src/components/pages/industries/industry-detail-page.module.css",
+      "current": "src/components/pages/industries/industries.module.css",
+      "prefix": "industryDetailPage__"
+    },
+    {
+      "previous": "src/components/pages/industries/sections/how-bizonix-fits.module.css",
+      "current": "src/components/pages/industries/industries.module.css",
+      "prefix": "howBizonixFits__"
+    },
+    {
+      "previous": "src/components/pages/industries/sections/industries-hero.module.css",
+      "current": "src/components/pages/industries/industries.module.css",
+      "prefix": "industriesHero__"
+    },
+    {
+      "previous": "src/components/pages/industries/sections/industry-pain-section.module.css",
+      "current": "src/components/pages/industries/industries.module.css",
+      "prefix": "industryPainSection__"
+    },
+    {
+      "previous": "src/components/pages/industries/sections/industry-pressure-section.module.css",
+      "current": "src/components/pages/industries/industries.module.css",
+      "prefix": "industryPressureSection__"
+    },
+    {
+      "previous": "src/components/pages/industries/sections/industry-workflow-section.module.css",
+      "current": "src/components/pages/industries/industries.module.css",
+      "prefix": "industryWorkflowSection__"
+    },
+    {
+      "previous": "src/components/pages/industries/sections/proof-section.module.css",
+      "current": "src/components/pages/industries/industries.module.css",
+      "prefix": "proofSection__"
+    },
+    {
+      "previous": "src/components/pages/modules/module-page/module-page.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "modulePage__"
+    },
+    {
+      "previous": "src/components/pages/modules/module-page/parts/hero-screens/screens.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "screens__"
+    },
+    {
+      "previous": "src/components/pages/modules/module-page/parts/outcome-parts/outcomes.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "outcomes__"
+    },
+    {
+      "previous": "src/components/pages/modules/module-page/parts/problem-parts/problems.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "problems__"
+    },
+    {
+      "previous": "src/components/pages/modules/modules-cta.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "modulesCta__"
+    },
+    {
+      "previous": "src/components/pages/modules/modules-deck-parts/filter-rail.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "filterRail__"
+    },
+    {
+      "previous": "src/components/pages/modules/modules-deck-parts/module-card.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "moduleCard__"
+    },
+    {
+      "previous": "src/components/pages/modules/modules-deck-parts/module-visuals.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "moduleVisuals__"
+    },
+    {
+      "previous": "src/components/pages/modules/modules-deck.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "modulesDeck__"
+    },
+    {
+      "previous": "src/components/pages/modules/modules-hero-parts/product-marquee.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "productMarquee__"
+    },
+    {
+      "previous": "src/components/pages/modules/modules-hero.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "modulesHero__"
+    },
+    {
+      "previous": "src/components/pages/modules/modules-index.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "modulesIndex__"
+    },
+    {
+      "previous": "src/components/pages/modules/record-consequences.module.css",
+      "current": "src/components/pages/modules/modules.module.css",
+      "prefix": "recordConsequences__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/capability-pillars-grid.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "capabilityPillarsGrid__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/day-in-system.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "dayInSystem__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/final-system-map.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "finalSystemMap__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/four-pillars-record.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "fourPillarsRecord__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/integration-surface.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "integrationSurface__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/operating-model.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "operatingModel__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/product-hero-parts/product-hero-dashboard.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "productHeroDashboard__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/product-hero-showcase.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "productHeroShowcase__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/product-hero.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "productHero__"
+    },
+    {
+      "previous": "src/components/pages/product/sections/security-tenancy.module.css",
+      "current": "src/components/pages/product/product.module.css",
+      "prefix": "securityTenancy__"
+    }
+  ],
+  "removedUnreferencedStyles": [
+    "src/components/pages/features/deep/deep-sections.module.css",
+    "src/components/pages/features/feature-rail.module.css",
+    "src/components/pages/features/features-index.module.css",
+    "src/components/pages/features/sections/barcode-identity.module.css"
+  ]
+}

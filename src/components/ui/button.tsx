@@ -7,6 +7,10 @@ const styles = {
   secondary:
     "border border-bz-border bg-white text-bz-navy hover:border-bz-blue hover:text-bz-blue",
   ghost: "text-bz-navy hover:bg-bz-surface-alt",
+  // Quiet action on a navy surface. The `secondary` variant paints a white
+  // pill, which disappears entirely when placed on the dark CTA panel.
+  onDark:
+    "border border-white/20 bg-white/5 text-white hover:border-white/40 hover:bg-white/10",
   light: "bg-white text-bz-navy hover:bg-bz-blue-soft",
 } as const;
 

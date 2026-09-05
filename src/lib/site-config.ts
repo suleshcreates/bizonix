@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Bizonix",
-  tagline: "Business and Operation Smarter Together",
+  tagline: "Business and Operations, Smarter Together",
   company: "Fibonce Tech Solutions Pvt. Ltd.",
   description:
     "An enterprise ERP built for Indian brands running wholesale, retail, and franchise operations together.",
@@ -17,13 +17,19 @@ export const siteConfig = {
   calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL || "",
 } as const;
 
+const isPublicValue = (value: string) =>
+  Boolean(value) && !/(?:_TBD|placeholder|\.example(?:\/|$))/i.test(value);
+
+/** Prevent development placeholders from becoming visible, clickable contact details. */
+export const hasSalesEmail = isPublicValue(siteConfig.salesEmail);
+export const hasSalesPhone = isPublicValue(siteConfig.salesPhone);
+export const hasWhatsApp = isPublicValue(siteConfig.whatsappUrl);
+
 export const primaryNav = [
   { label: "Product", href: "/product" },
   { label: "Solutions", href: "/modules", menu: "solutions" },
+  { label: "Features", href: "/features", menu: "features" },
   { label: "Industries", href: "/industries", menu: "industries" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Customers", href: "/customers" },
-  { label: "Resources", href: "/resources" },
   { label: "About", href: "/about" },
 ] as const;
 
@@ -43,4 +49,13 @@ export const industryLinks = [
     href: "/industries/imitation-jewellery",
   },
   { label: "Franchise Networks", href: "/industries/franchise-networks" },
+] as const;
+
+export const featureLinks = [
+  { label: "All features", href: "/features" },
+  { label: "Barcode", href: "/features/barcode" },
+  { label: "Billing Counters", href: "/features/billing-counters" },
+  { label: "GST Compliance", href: "/features/gst-compliance" },
+  { label: "Series Pricing", href: "/features/series-pricing" },
+  { label: "Stock Transfer", href: "/features/stock-transfer" },
 ] as const;

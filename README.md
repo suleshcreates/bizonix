@@ -1,26 +1,37 @@
 # Bizonix marketing website
 
-Phase 1 of 3 for the Bizonix ERP product website. This phase contains the brand shell, Home, Product, Contact, legal stubs, SEO shell and demo-request API. Module, feature, industry, pricing, customer, resource and company pages are intentionally deferred to Phase 2/3.
+Next.js App Router site with Home, Product, Features, Modules, Industries, About, Contact, legal pages and a demo-request API. Detail routes use typed content and reusable templates.
 
-## Run locally
+## Development
 
-```bash
-pnpm install
+```sh
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3000`. Run commands from this directory.
 
-## Production check
+## Project guide
 
-```bash
-pnpm lint
-pnpm build
+- [Directory structure and conventions](docs/project-structure.md)
+- [Images by consuming section](docs/image-inventory.md)
+- [Unused component candidates](docs/unused-code.md)
+- [Content gaps](docs/content-gaps.md)
+
+Page styles live in `src/components/pages/<page>/<page>.module.css`. Images live in `public/images/`, grouped by page and section. Shared branding and product screenshots live in `public/images/shared/`. Design references belong in `references/`.
+
+## Verification and production
+
+```sh
+pnpm audit:project:write
+pnpm check
 pnpm start
 ```
 
+The audit refreshes the inventories. `check` validates structure, lint, types and the production build. Review the remaining release checks in the structure guide before deployment.
+
 ## Demo-request email
 
-The contact API uses [Resend](https://resend.com). Copy `.env.example` to `.env.local`, add a verified Resend key, recipient and sender identity, and replace every `TBD`/placeholder value. With no transport configured, the form fails gracefully and directs the visitor to WhatsApp.
+The API uses Resend. Configure variables expected by `src/app/api/demo-request/route.ts` with a verified sender, recipient and transport key. Store secrets in `.env.local` or the hosting environment. Without transport, the form directs visitors to the alternative contact channel.
 
-Basic abuse protection is included: a honeypot and one accepted request per forwarded IP per minute. For multi-instance production hosting, replace the in-memory limiter with a shared store.
+Abuse protection includes a honeypot and in-memory per-IP rate limiting. Use a shared store for multi-instance hosting.

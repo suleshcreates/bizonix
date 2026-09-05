@@ -1,142 +1,207 @@
-"use client";
-
-import { ArrowUpRight, Mail, Phone, MapPin } from "lucide-react";
+import {
+  ArrowUp,
+  ArrowUpRight,
+  ChevronRight,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ButtonLink } from "@/components/ui/button";
-import { industryLinks, siteConfig, solutionLinks } from "@/lib/site-config";
+import {
+  hasSalesEmail,
+  hasSalesPhone,
+  industryLinks,
+  siteConfig,
+} from "@/lib/site-config";
+import { moduleFilters } from "@/lib/content/modules/modules-index";
+import { FooterSubscribe } from "./footer-parts/footer-subscribe";
 import { Logo } from "./logo";
 
-const footerGroups = [
+/*
+ * Routes that exist today. Anything not listed renders as a "Soon" label
+ * instead of a link — the footer previously shipped eight links to 404s.
+ * When a page ships, add its path here and it becomes a link again.
+ */
+const LIVE_ROUTES = new Set([
+  "/product",
+  "/modules",
+  "/industries",
+  "/about",
+  "/contact",
+  "/privacy",
+  "/terms",
+  ...industryLinks.map((link) => link.href),
+]);
+
+type FooterLink = { label: string; href: string };
+
+const footerGroups: { title: string; links: readonly FooterLink[] }[] = [
   {
-    title: "Product",
+    title: "Platform",
     links: [
-      { label: "Platform", href: "/product" },
-      { label: "Features", href: "/features" },
+      { label: "How it works", href: "/product" },
+      { label: "All solutions", href: "/modules" },
       { label: "Pricing", href: "/pricing" },
       { label: "Customers", href: "/customers" },
     ],
   },
-  { title: "Solutions", links: solutionLinks.slice(1) },
-  { title: "Industries", links: industryLinks.slice(1) },
+  {
+    /* Built from the module index's own filters, so every entry lands on a
+       real, pre-filtered view instead of a module page that does not exist. */
+    title: "By function",
+    links: moduleFilters
+      .filter((filter) => filter.id !== "all")
+      .map((filter) => ({
+        label: filter.label,
+        href: `/modules?filter=${filter.id}`,
+      })),
+  },
+  {
+    title: "Industries",
+    links: industryLinks.map((link) => ({ ...link })),
+  },
   {
     title: "Company",
     links: [
       { label: "About", href: "/about" },
-      { label: "Resources", href: "/resources" },
       { label: "Contact", href: "/contact" },
+      { label: "Resources", href: "/resources" },
     ],
   },
-] as const;
+];
+
+function isLive(href: string) {
+  return LIVE_ROUTES.has(href.split("?")[0]);
+}
+
+function FooterCta() {
+  return (
+    <section className="footer-cta-banner" aria-labelledby="footer-cta-title">
+      <Image
+        src="/images/shared/brand/footer-team.jpg"
+        alt=""
+        fill
+        className="footer-cta-bg-img"
+        sizes="100vw"
+      />
+      <span className="footer-cta-overlay" aria-hidden="true" />
+      <span className="footer-cta-glow" aria-hidden="true" />
+      <span className="footer-cta-grid" aria-hidden="true" />
+
+      <div className="shell footer-cta-content">
+        <p className="footer-cta-eyebrow">
+          <span aria-hidden="true" />
+          One platform, every entity
+        </p>
+        <h2 id="footer-cta-title">
+          Ready to run your brand on
+          <span>one operating truth?</span>
+        </h2>
+        <p className="footer-cta-lede">
+          Thirty minutes, your numbers, no obligation. We will walk your
+          warehouse, stores and partners through a single record.
+        </p>
+        <div className="footer-cta-actions">
+          <Link
+            className="footer-cta-primary"
+            href="/contact?utm_source=footer-cta"
+          >
+            Book a free consultation
+            <ArrowUpRight size={17} aria-hidden="true" />
+          </Link>
+          <Link className="footer-cta-ghost" href="/product">
+            See the platform
+            <ChevronRight size={16} aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <>
-      {/* CTA Banner with Team Photo */}
-      <section className="footer-cta-banner">
-        <div className="footer-cta-overlay" />
-        <Image
-          src="/brand/footer-team.jpg"
-          alt="The Bizonix team"
-          fill
-          className="footer-cta-bg-img"
-          sizes="100vw"
-        />
-        <div className="shell footer-cta-content">
-          <h2>
-            Ready to run your brand on
-            <br />
-            <span>one operating truth?</span>
-          </h2>
-          <ButtonLink
-            href="/contact"
-            variant="primary"
-            className="footer-cta-btn"
-          >
-            Book a free consultation <ArrowUpRight size={18} />
-          </ButtonLink>
-        </div>
-      </section>
+      <FooterCta />
 
-      {/* Main Footer */}
       <footer className="site-footer">
+        <span className="footer-topline" aria-hidden="true" />
+
         <div className="shell">
-          {/* Top Grid: Brand + Link Groups + Newsletter */}
           <div className="footer-top-grid">
-            {/* Brand Column */}
             <div className="footer-brand-col">
               <Logo light />
               <p className="footer-brand-tagline">{siteConfig.tagline}</p>
-              <div className="footer-contact-info">
-                <a
-                  href={`mailto:${siteConfig.salesEmail}`}
-                  className="footer-contact-link"
-                >
-                  <Mail size={14} />
-                  <span>{siteConfig.salesEmail}</span>
-                </a>
-                <a
-                  href={`tel:${siteConfig.salesPhone}`}
-                  className="footer-contact-link"
-                >
-                  <Phone size={14} />
-                  <span>{siteConfig.salesPhone}</span>
-                </a>
-                <span className="footer-contact-link">
-                  <MapPin size={14} />
-                  <span>India</span>
-                </span>
-              </div>
+
+              <ul className="footer-contact-info">
+                {hasSalesEmail && (
+                  <li>
+                    <a
+                      href={`mailto:${siteConfig.salesEmail}`}
+                      className="footer-contact-link"
+                    >
+                      <Mail size={14} aria-hidden="true" />
+                      <span>{siteConfig.salesEmail}</span>
+                    </a>
+                  </li>
+                )}
+                {hasSalesPhone && (
+                  <li>
+                    <a
+                      href={`tel:${siteConfig.salesPhone}`}
+                      className="footer-contact-link"
+                    >
+                      <Phone size={14} aria-hidden="true" />
+                      <span>{siteConfig.salesPhone}</span>
+                    </a>
+                  </li>
+                )}
+                <li>
+                  <span className="footer-contact-link" data-static="true">
+                    <MapPin size={14} aria-hidden="true" />
+                    <span>India</span>
+                  </span>
+                </li>
+              </ul>
             </div>
 
-            {/* Sitemap Columns */}
-            <div className="footer-links-grid">
+            <nav className="footer-links-grid" aria-label="Footer">
               {footerGroups.map((group) => (
                 <div key={group.title}>
                   <h3 className="footer-group-title">{group.title}</h3>
                   <ul className="footer-link-list">
-                    {group.links.map((item) => (
-                      <li key={item.href}>
-                        <Link className="footer-link" href={item.href}>
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
+                    {group.links
+                      .filter((item) => isLive(item.href))
+                      .map((item) => (
+                        <li key={item.href}>
+                          <Link className="footer-link" href={item.href}>
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
                   </ul>
                 </div>
               ))}
-            </div>
+            </nav>
 
-            {/* Newsletter Column */}
-            <div className="footer-newsletter-col">
-              <h3 className="footer-group-title">Stay in the loop</h3>
-              <p className="footer-newsletter-desc">
-                Get product updates, best practices, and operator insights. No
-                spam.
+            <div className="footer-action-col">
+              <h3 className="footer-group-title">Talk to an operator</h3>
+              <p className="footer-action-desc">
+                Tell us where to send the invite and we will tailor the session
+                to how your business actually runs.
               </p>
-              <form
-                className="footer-newsletter-form"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="footer-newsletter-input"
-                  aria-label="Email address for newsletter"
-                />
-                <button type="submit" className="footer-newsletter-btn">
-                  Sign Up
-                </button>
-              </form>
+              <FooterSubscribe />
             </div>
           </div>
 
-          {/* Bottom Bar */}
           <div className="footer-bottom-bar">
-            <p>
-              © {new Date().getFullYear()} {siteConfig.company}. All rights
-              reserved.
+            <p className="footer-copy">
+              © {year} {siteConfig.company} All rights reserved.
             </p>
+
             <div className="footer-bottom-links">
               <Link href="/privacy" className="footer-bottom-link">
                 Privacy
@@ -144,12 +209,21 @@ export function Footer() {
               <Link href="/terms" className="footer-bottom-link">
                 Terms
               </Link>
+              <span className="footer-built-in">
+                Built in India for multi-entity retail operators.
+              </span>
             </div>
-            <p className="footer-built-in">
-              Built in India for multi-entity retail operators.
-            </p>
+
+            <a href="#main" className="footer-to-top">
+              <span>Back to top</span>
+              <ArrowUp size={14} aria-hidden="true" />
+            </a>
           </div>
         </div>
+
+        <span className="footer-watermark" aria-hidden="true">
+          Bizonix
+        </span>
       </footer>
     </>
   );
