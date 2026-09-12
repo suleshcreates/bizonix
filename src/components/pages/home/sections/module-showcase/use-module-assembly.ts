@@ -8,8 +8,10 @@ import type { OrbitSolution } from "./orbit-geometry";
 import { connectorEndpoints, orbitPosition } from "./orbit-geometry";
 import { validateOrbitGeometry } from "./orbit-validation";
 
-gsap.registerPlugin(ScrollTrigger, CustomEase);
-CustomEase.create("bzArrive", "0.22, 1, 0.36, 1");
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, CustomEase);
+  CustomEase.create("bzArrive", "0.22, 1, 0.36, 1");
+}
 
 /** Radial + pinned mode activates on comfortable desktop viewports. */
 export const RADIAL_QUERY = "(min-width: 1024px) and (min-height: 620px)";

@@ -37,8 +37,9 @@ export const ecommerceModule: ModuleData = {
   },
 
   problemSection: {
+    presentation: "visual-stories",
     eyebrow: "Before Ecommerce",
-    title: "Where the storefront drifts away from the shop.",
+    title: "Where online stock drifts apart.",
     intro:
       "Three failures that make an online channel a second business to run rather than a second counter.",
     problems: [
@@ -47,7 +48,7 @@ export const ecommerceModule: ModuleData = {
         number: "01",
         title: "The catalogue exists twice",
         description:
-          "Products are maintained once for the shop floor and again for the website, so a price change or a new design has to be made in two places and is inevitably made in one.",
+          "Shop and website catalogues drift whenever one copy changes.",
         quote: "The site is still selling last season's price.",
         visual: "duplicate-catalogue",
       },
@@ -56,7 +57,7 @@ export const ecommerceModule: ModuleData = {
         number: "02",
         title: "Online stock is a copy that goes stale",
         description:
-          "Availability is pushed to the storefront on a schedule while the counter keeps selling. Between two syncs, the website is confidently selling something that has already gone.",
+          "Scheduled stock copies oversell pieces already sold at the counter.",
         quote: "An order is confirmed for a piece that sold an hour ago.",
         visual: "stale-availability",
       },
@@ -65,7 +66,7 @@ export const ecommerceModule: ModuleData = {
         number: "03",
         title: "Online orders arrive as an import job",
         description:
-          "Web orders are downloaded and re-entered so they can be fulfilled and accounted for, which makes the online channel a separate operation with its own backlog.",
+          "Web orders are re-entered before fulfilment and accounting.",
         quote: "Web orders are processed in a batch, once a day.",
         visual: "batched-orders",
       },
@@ -163,7 +164,6 @@ export const ecommerceModule: ModuleData = {
   },
 
   workflow: {
-    variant: "step-cards",
     title: "From catalogue to delivered order",
     intro:
       "The online channel reuses the operating path the rest of the business is already on.",

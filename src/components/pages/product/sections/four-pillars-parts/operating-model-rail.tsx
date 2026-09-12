@@ -20,10 +20,13 @@ function OperatingModelItem({
   return (
     <li className={styles.fourPillarsRecord__modelItem} data-accent={pillar.accent}>
       <span className={styles.fourPillarsRecord__modelIndex}>{pillar.index}</span>
-      <h4 className={styles.fourPillarsRecord__modelItemTitle}>
+      {/* h3, not h4: these four pillars are the first subheadings under the
+          section's h2, so an h4 skipped a level in the page outline. Styling
+          is by class, so the level change is invisible. */}
+      <h3 className={styles.fourPillarsRecord__modelItemTitle}>
         <Icon size={16} strokeWidth={2.1} aria-hidden="true" />
         {pillar.name}
-      </h4>
+      </h3>
       <p className={styles.fourPillarsRecord__modelItemDesc}>{pillar.modelDescription}</p>
     </li>
   );

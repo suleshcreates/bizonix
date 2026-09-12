@@ -37,8 +37,9 @@ export const franchiseModule: ModuleData = {
   },
 
   problemSection: {
+    presentation: "visual-stories",
     eyebrow: "Before Franchise",
-    title: "What head office cannot see across its own network.",
+    title: "Where networks lose visibility.",
     intro:
       "Three failures that reduce a network of outlets to a summary assembled at the end of the month.",
     problems: [
@@ -47,7 +48,7 @@ export const franchiseModule: ModuleData = {
         number: "01",
         title: "Outlets operate off-system",
         description:
-          "A partner bills on whatever they already have, and the brand receives a summary at the end of the month. What sold, at what price, and what is still on the shelf are all reconstructions.",
+          "Head office reconstructs outlet sales from month-end summaries.",
         quote: "The network's stock position is a WhatsApp thread.",
         visual: "off-system-outlet",
       },
@@ -56,7 +57,7 @@ export const franchiseModule: ModuleData = {
         number: "02",
         title: "Transfers sit in limbo",
         description:
-          "Goods leave the warehouse and arrive at the outlet, but the two events are recorded — if at all — in separate places. Between dispatch and receipt the stock belongs to nobody.",
+          "Dispatch and receipt live apart, leaving stock between owners.",
         quote: "Sent 48. Received 44. No document holds both numbers.",
         visual: "transfer-limbo",
       },
@@ -65,7 +66,7 @@ export const franchiseModule: ModuleData = {
         number: "03",
         title: "Visibility and control get confused",
         description:
-          "Giving head office a view usually means giving it the ability to act inside the outlet, so brands either over-share access or under-share information. Neither is what anyone wanted.",
+          "Visibility often grants too much control or too little information.",
         quote: "Either everyone is an admin, or nobody can see anything.",
         visual: "access-overreach",
       },
@@ -165,7 +166,6 @@ export const franchiseModule: ModuleData = {
   },
 
   workflow: {
-    variant: "entity-lanes",
     title: "How the network operates",
     intro:
       "Two entities, one movement. The lane shows which side of the network is holding the record at each step.",

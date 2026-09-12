@@ -12,11 +12,11 @@ export function ProductHeroCopy() {
 
       <h1 className={styles.productHero__title}>
         <span className={styles.productHero__titleLine}>
-          Build and Run Multi-Entity
+          Run Multi-Entity
         </span>{" "}
         <span className={styles.productHero__titleLine}>
           Operations{" "}
-          <span className={styles.productHero__titleHighlight}>10x Faster</span>
+          <span className={styles.productHero__titleHighlight}>Together</span>
         </span>
       </h1>
 

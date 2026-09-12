@@ -1,8 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { StickyCTA } from "@/components/layout/sticky-cta";
+import { JsonLd } from "@/components/seo/json-ld";
+import { SITE_ORIGIN, seoIdentity } from "@/lib/seo/config";
+import { organizationSchema, websiteSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -12,34 +15,41 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+/**
+ * Site-wide metadata defaults.
+ *
+ * Only what genuinely belongs to every page lives here. Titles, descriptions,
+ * canonicals, robots policies and social cards are built per route by
+ * `pageMetadata` — Next replaces nested metadata objects rather than merging
+ * them, so a partial default at this level is silently dropped by any page
+ * that declares its own.
+ *
+ * `metadataBase` is what lets relative URLs elsewhere resolve to absolute ones,
+ * and the `opengraph-image.tsx` beside this file supplies the default social
+ * image for the whole site.
+ */
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: { default: "Bizonix ERP", template: "%s | Bizonix" },
-  description: siteConfig.description,
-  icons: { icon: "/images/shared/brand/icon.svg" },
-  openGraph: {
-    type: "website",
-    siteName: "Bizonix",
-    title: "Bizonix ERP",
-    description: siteConfig.description,
-    images: [{ url: "/images/shared/social/og-image.svg", width: 1200, height: 630 }],
+  metadataBase: new URL(SITE_ORIGIN),
+  title: {
+    default: seoIdentity.defaultTitle,
+    template: seoIdentity.titleTemplate,
   },
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  publisher: siteConfig.company,
+  formatDetection: { telephone: false, address: false, email: false },
 };
 
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: siteConfig.company,
-  url: siteConfig.url,
-  logo: `${siteConfig.url}/images/shared/brand/logo.svg`,
-  brand: { "@type": "Brand", name: siteConfig.name },
+export const viewport: Viewport = {
+  themeColor: "#0b1f3a",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={jakarta.variable} data-scroll-behavior="smooth">
+    <html lang="en-IN" className={jakarta.variable} data-scroll-behavior="smooth">
       <body>
         <a
           className="sr-only focus:not-sr-only fixed left-4 top-4 z-[100] bg-white px-4 py-2"
@@ -51,12 +61,9 @@ export default function RootLayout({
         <main id="main">{children}</main>
         <Footer />
         <StickyCTA />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
+        {/* Publisher and site identity, declared once for the whole site;
+            pages add only the schema that describes their own content. */}
+        <JsonLd schema={[organizationSchema(), websiteSchema()]} />
       </body>
     </html>
   );

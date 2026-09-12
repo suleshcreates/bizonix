@@ -37,8 +37,9 @@ export const securityModule: ModuleData = {
   },
 
   problemSection: {
+    presentation: "visual-stories",
     eyebrow: "Before Security",
-    title: "Where access stops having a shape.",
+    title: "Where access loses its boundaries.",
     intro:
       "Three failures that turn permission into a social arrangement instead of a property of the system.",
     problems: [
@@ -47,7 +48,7 @@ export const securityModule: ModuleData = {
         number: "01",
         title: "Everyone ends up an administrator",
         description:
-          "Access is easier to grant than to shape, so permissions widen until the fastest way to get work done is to give another person full rights. The control that remains is social, not systemic.",
+          "Permissions widen until full access becomes the easiest option.",
         quote: "Four people can delete anything, and all of them need to.",
         visual: "permission-creep",
       },
@@ -56,7 +57,7 @@ export const securityModule: ModuleData = {
         number: "02",
         title: "Sharing a system means sharing the business",
         description:
-          "Without an entity boundary, letting a franchise partner onto the platform means letting them see stock, pricing and performance that is not theirs.",
+          "One login can expose stock, pricing and performance across entities.",
         quote: "A partner logs in and can read the outlet next door.",
         visual: "absent-boundary",
       },
@@ -65,7 +66,7 @@ export const securityModule: ModuleData = {
         number: "03",
         title: "Nobody can say who did it",
         description:
-          "A price was changed, a quantity was adjusted, a bill was cancelled — and the record shows the change without showing the person or the context behind it.",
+          "A changed record cannot identify the person or context behind it.",
         quote: "The number moved and the explanation is a guess.",
         visual: "unattributed-change",
       },
@@ -160,7 +161,6 @@ export const securityModule: ModuleData = {
   },
 
   workflow: {
-    variant: "step-cards",
     title: "How access is decided",
     intro:
       "Four decisions, in order. Each one narrows the last, which is why the result is predictable.",

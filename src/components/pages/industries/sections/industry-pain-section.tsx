@@ -8,7 +8,9 @@ import { IndustryPainHeader } from "./industry-pain-parts/industry-pain-header";
 import { IndustryPainRow } from "./industry-pain-parts/industry-pain-row";
 
 export function IndustryPainSection() {
-  const [activeIndustryId, setActiveIndustryId] = useState<IndustryId | null>(null);
+  const [activeIndustryId, setActiveIndustryId] = useState<IndustryId | null>(
+    null,
+  );
 
   useEffect(() => {
     function closeOnEscape(event: KeyboardEvent) {
@@ -20,8 +22,14 @@ export function IndustryPainSection() {
   }, []);
 
   return (
-    <section className={styles.industryPainSection__section} aria-labelledby="industry-pain-title">
-      <div className={styles.industryPainSection__atmosphere} aria-hidden="true" />
+    <section
+      className={styles.industryPainSection__section}
+      aria-labelledby="industry-pain-title"
+    >
+      <div
+        className={styles.industryPainSection__atmosphere}
+        aria-hidden="true"
+      />
       <div className={styles.industryPainSection__shell}>
         <IndustryPainHeader />
         <div className={styles.industryPainSection__rows}>
@@ -32,7 +40,9 @@ export function IndustryPainSection() {
               index={index}
               isOpen={activeIndustryId === item.id}
               onToggle={() =>
-                setActiveIndustryId((current) => current === item.id ? null : item.id)
+                setActiveIndustryId((current) =>
+                  current === item.id ? null : item.id,
+                )
               }
             />
           ))}

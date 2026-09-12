@@ -112,54 +112,84 @@ export const streamGeometryVertical: {
   { id: "finance", d: "M700 0 C700 66 400 56 400 128", color: "#37cbbd", begin: "-6s" },
 ];
 
+/**
+ * The one record the whole section is about. Declared once so the convergence
+ * panel, the record card and the journey below it cannot drift apart — the
+ * point of the section is that they are all the same record.
+ */
+export const recordIdentifier = "SKU-4021";
+
 export const recordFields: { label: string; value: string }[] = [
-  { label: "Product", value: "SKU-4021" },
+  { label: "Product", value: recordIdentifier },
   { label: "Entity", value: "Retail Division" },
   { label: "Location", value: "North Warehouse" },
   { label: "Channel", value: "Store 04" },
   { label: "Ledger", value: "Books" },
 ];
 
+/**
+ * The five states `recordIdentifier` passes through in one day.
+ *
+ * `state` is the record's own status after the step, not a sixth event: the
+ * section exists to show one record changing state rather than five separate
+ * things happening. `number` is authored rather than derived from the index so
+ * the data reads the way it renders.
+ *
+ * `accent` is legacy: the live journey draws one continuous blue-to-cyan run
+ * rather than colouring steps individually.
+ */
 export const timelineEvents: {
   id: string;
+  number: string;
   title: string;
   context: string;
   time: string;
+  state: string;
   accent: "blue" | "teal";
 }[] = [
   {
     id: "grn",
+    number: "01",
     title: "GRN created",
     context: "North Warehouse",
     time: "09:14 AM",
+    state: "Created",
     accent: "blue",
   },
   {
     id: "allocated",
+    number: "02",
     title: "Stock allocated",
     context: "Retail Store 04",
     time: "09:15 AM",
+    state: "Allocated",
     accent: "teal",
   },
   {
     id: "transferred",
+    number: "03",
     title: "Stock transferred",
     context: "North → Store 04",
     time: "09:42 AM",
+    state: "In transit",
     accent: "blue",
   },
   {
     id: "sale",
+    number: "04",
     title: "Sale completed",
     context: "Store 04",
     time: "11:08 AM",
+    state: "Completed",
     accent: "teal",
   },
   {
     id: "ledger",
+    number: "05",
     title: "Ledger updated",
     context: "Books",
     time: "11:09 AM",
+    state: "Posted",
     accent: "blue",
   },
 ];

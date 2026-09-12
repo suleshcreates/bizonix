@@ -1,10 +1,9 @@
-import { Quote } from "lucide-react";
 import type { ModuleProblem } from "@/lib/content/modules/module-pages/types";
 import { ProblemVisual } from "./problem-visual";
 import styles from "@/components/pages/modules/modules.module.css";
 
 /**
- * One problem column: number, title, description, diagram, operator line.
+ * One visual story: number, title, diagram and one concise support line.
  *
  * The column renders in its finished state on the server, so a page without
  * JavaScript — or one asking for reduced motion — is complete rather than
@@ -28,14 +27,9 @@ export function ModuleProblemItem({
       data-problem={problem.id}
     >
       <p className={styles.problems__number}>{problem.number}</p>
-      <span className={styles.problems__numberRule} aria-hidden="true" />
       <h3 className={styles.problems__itemTitle}>{problem.title}</h3>
       <p className={styles.problems__description}>{problem.description}</p>
       <ProblemVisual visual={problem.visual} />
-      <p className={styles.problems__quote}>
-        <Quote size={13} className={styles.problems__quoteMark} aria-hidden="true" />
-        {problem.quote}
-      </p>
     </article>
   );
 }

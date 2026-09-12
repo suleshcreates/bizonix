@@ -17,7 +17,7 @@ export function IndustryPressureRow({
   return (
     <Link
       href={item.href}
-      className={`${styles.industryPressureSection__row} ${styles["industryPressureSection__" + (item.accent)]}`}
+      className={`${styles.industryPressureSection__row} ${styles["industryPressureSection__" + item.accent]}`}
       aria-label={`${item.name}: ${item.response}`}
       style={{ "--row-index": index } as React.CSSProperties}
     >

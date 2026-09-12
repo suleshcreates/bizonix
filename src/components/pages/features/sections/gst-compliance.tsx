@@ -43,7 +43,9 @@ export function GstCompliance() {
             <header className={styles.gstCompliance__invoiceHead}>
               <div>
                 <p className={styles.gstCompliance__invoiceType}>Tax invoice</p>
-                <p className={styles.gstCompliance__invoiceNo}>BZX / 25-26 / 01184</p>
+                <p className={styles.gstCompliance__invoiceNo}>
+                  BZX / 25-26 / 01184
+                </p>
               </div>
               <p className={styles.gstCompliance__invoiceDate}>24 Aug 2026</p>
             </header>
@@ -53,18 +55,26 @@ export function GstCompliance() {
                 <span>Billed to</span>
                 <strong>{invoiceParty.name}</strong>
               </div>
-              <div className={styles.gstCompliance__partyRow} data-verified="true">
+              <div
+                className={styles.gstCompliance__partyRow}
+                data-verified="true"
+              >
                 <span>GSTIN</span>
                 <strong>
                   {invoiceParty.gstin}
-                  <BadgeCheck className={styles.gstCompliance__verified} size={14} />
+                  <BadgeCheck
+                    className={styles.gstCompliance__verified}
+                    size={14}
+                  />
                 </strong>
               </div>
               <div className={styles.gstCompliance__partyRow}>
                 <span>Place of supply</span>
                 <strong>{invoiceParty.place}</strong>
               </div>
-              <p className={styles.gstCompliance__supplyFlag}>{invoiceParty.supply}</p>
+              <p className={styles.gstCompliance__supplyFlag}>
+                {invoiceParty.supply}
+              </p>
             </div>
 
             <table className={styles.gstCompliance__lines}>
@@ -124,7 +134,13 @@ export function GstCompliance() {
             tone={feature.tone}
           />
           <h2 id="feature-gst-title">
-            The invoice is a by-product, not a monthly project.
+            <span className={styles.featuresHeading__blue}>The invoice is</span>{" "}
+            <span className={styles.featuresHeading__violet}>
+              a by-product,
+            </span>{" "}
+            <span className={styles.featuresHeading__teal}>
+              not a monthly project.
+            </span>
           </h2>
           <p className={styles.gstCompliance__why}>
             Month-end pain is almost always a capture problem: the tax data was
@@ -137,8 +153,12 @@ export function GstCompliance() {
           <ul className={styles.gstCompliance__captures}>
             {gstCaptures.map((capture, index) => (
               <li key={capture.label} style={{ "--i": index } as CSSProperties}>
-                <p className={styles.gstCompliance__captureLabel}>{capture.label}</p>
-                <p className={styles.gstCompliance__captureBody}>{capture.body}</p>
+                <p className={styles.gstCompliance__captureLabel}>
+                  {capture.label}
+                </p>
+                <p className={styles.gstCompliance__captureBody}>
+                  {capture.body}
+                </p>
               </li>
             ))}
           </ul>

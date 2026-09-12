@@ -10,9 +10,6 @@ export function IntegrationHeader() {
       <h2 className={styles.integrationSurface__headline}>
         Connected where the workflow is{" "}
         <span className={styles.integrationSurface__highlightReal}>real.</span>
-        <br />
-        Honest where it is{" "}
-        <span className={styles.integrationSurface__highlightNext}>next.</span>
       </h2>
       <p className={styles.integrationSurface__supportingCopy}>
         Bizonix integrates with the channels businesses already use—and opens up

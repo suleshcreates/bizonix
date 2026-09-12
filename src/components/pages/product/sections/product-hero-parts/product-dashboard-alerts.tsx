@@ -11,7 +11,7 @@ export function ProductDashboardAlerts() {
         <span className={styles.productHeroDashboard__cardIcon} aria-hidden="true">
           <TriangleAlert size={12} strokeWidth={2.3} />
         </span>
-        <h3>Alerts &amp; action center</h3>
+        <p>Alerts &amp; action center</p>
         <span className={styles.productHeroDashboard__alertsCount}>{critical} critical</span>
       </header>
 

@@ -39,7 +39,6 @@ export const heroCta = {
   secondary: { id: "book" as const, label: "I know what Bizonix does" },
   skip: "Already familiar? Skip to the calendar",
 } as const;
-
 export const trackToggle = {
   label: "Choose how you would like to start",
   options: [

@@ -57,6 +57,9 @@ function validateProblemSection(
   fail: (message: string) => void,
 ) {
   const section = data.problemSection;
+  if (section.presentation !== "visual-stories") {
+    fail("problem section must use the universal visual-stories presentation");
+  }
 
   for (const [field, value] of [
     ["problemSection.eyebrow", section.eyebrow],
@@ -231,11 +234,12 @@ function validateModule(
   if (steps < MIN_WORKFLOW_STEPS || steps > MAX_WORKFLOW_STEPS) {
     fail(`workflow must have ${MIN_WORKFLOW_STEPS}–${MAX_WORKFLOW_STEPS} steps, has ${steps}`);
   }
-  if (data.workflow.variant === "entity-lanes") {
-    const missing = data.workflow.steps.filter((step) => !step.lane);
-    if (missing.length > 0) {
-      fail("entity-lanes workflow requires a lane on every step");
-    }
+  /* Lanes are all-or-nothing: the workflow lays every step out on the same
+     rows, so a lane on some steps and not others would break the alignment
+     and read as missing data rather than as a deliberate absence. */
+  const laned = data.workflow.steps.filter((step) => step.lane).length;
+  if (laned > 0 && laned < data.workflow.steps.length) {
+    fail("a workflow with lanes needs a lane on every step");
   }
 
   /* ---------------------------------------------------------- screenshots */
@@ -312,7 +316,13 @@ function validateModule(
 
   if (!data.proof) warn("no approved customer proof — proof section omitted");
   if (!data.video) warn("no walkthrough recording — video section omitted");
-  if (!data.verticalRelevance) warn("no vertical relevance content");
+  if (
+    !data.verticalRelevance.apparel ||
+    !data.verticalRelevance.jewellery ||
+    !data.verticalRelevance.franchise
+  ) {
+    fail("context section requires apparel, jewellery and franchise content");
+  }
 }
 
 /** Detects the same copy being reused across two different modules. */

@@ -68,8 +68,9 @@ export const salesPosModule: ModuleData = {
   },
 
   problemSection: {
+    presentation: "visual-stories",
     eyebrow: "Before Sales & POS",
-    title: "What a counter cannot close at the end of a day.",
+    title: "Where counter days stop closing.",
     intro:
       "Three failures that put the day's work back on somebody's desk long after the customer has left.",
     problems: [
@@ -78,7 +79,7 @@ export const salesPosModule: ModuleData = {
         number: "01",
         title: "The sale is typed twice",
         description:
-          "The counter bills in one system and someone re-keys the day into stock and accounts afterwards. The second entry is where the errors live, and it always happens after the customer has left.",
+          "Counter sales are re-keyed into stock and accounts after the day.",
         quote: "Yesterday's sales get entered tomorrow, from a printout.",
         visual: "duplicate-entry",
       },
@@ -87,7 +88,7 @@ export const salesPosModule: ModuleData = {
         number: "02",
         title: "Nobody can close a counter",
         description:
-          "Bills exist but shifts do not. Cash is counted against a rough idea of the day rather than against what a specific counter actually took, so a shortfall has no boundary to sit inside.",
+          "Without shift boundaries, a cash difference has nowhere to belong.",
         quote: "The drawer is short and the day is the only suspect.",
         visual: "session-boundary",
       },
@@ -96,7 +97,7 @@ export const salesPosModule: ModuleData = {
         number: "03",
         title: "Returns break the record",
         description:
-          "A piece comes back without anything tying it to the bill that sent it out, so the return is processed as a fresh quantity and the original sale keeps looking complete.",
+          "A returned piece no longer points to the bill that sold it.",
         quote: "Two records for one piece, and stock believes both.",
         visual: "return-orphan",
       },
@@ -198,7 +199,6 @@ export const salesPosModule: ModuleData = {
   },
 
   workflow: {
-    variant: "timeline",
     title: "A sale, end to end",
     intro:
       "Five steps at the counter, and the record the system is holding after each one.",

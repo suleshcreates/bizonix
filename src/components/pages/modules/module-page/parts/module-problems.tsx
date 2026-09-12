@@ -4,7 +4,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCallback, useEffect, useRef } from "react";
 import type { ProblemSectionData } from "@/lib/content/modules/module-pages/types";
-import { ConsequenceBand } from "./problem-parts/consequence-band";
 import { ModuleProblemGrid } from "./problem-parts/problem-grid";
 import { ModuleProblemHeader } from "./problem-parts/problem-header";
 import styles from "@/components/pages/modules/modules.module.css";
@@ -172,11 +171,12 @@ export function ModuleProblems({ data }: { data: ProblemSectionData }) {
       data-head="revealed"
       data-consequence="revealed"
       data-motion="off"
+      data-presentation={data.presentation}
     >
       <div className={styles.problems__shell}>
         <ModuleProblemHeader data={data} headingId="module-problems-title" />
         <ModuleProblemGrid problems={data.problems} registerItem={registerItem} />
-        <ConsequenceBand consequence={data.consequence} />
+
       </div>
     </section>
   );

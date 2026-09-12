@@ -11,6 +11,7 @@ import type {
   ModuleScreenshot,
 } from "@/lib/content/modules/module-pages/types";
 import { getProductScreen } from "@/lib/content/modules/module-pages/product-screens";
+import { ModuleHeading } from "./module-heading";
 import styles from "@/components/pages/modules/modules.module.css";
 
 /**
@@ -36,7 +37,9 @@ function ShotFrame({
 }) {
   if (shot.state === "pending") {
     return (
-      <div className={`${styles.modulePage__shotViewport} ${styles.modulePage__pending}`}>
+      <div
+        className={`${styles.modulePage__shotViewport} ${styles.modulePage__pending}`}
+      >
         <span className={styles.modulePage__pendingBadge}>
           <CircleSlash2 size={12} aria-hidden="true" />
           Content pending
@@ -155,18 +158,27 @@ export function ModuleGallery({
      screens are still pending, so a tab strip of placeholders would be noise. */
   if (gallery.variant === "stacked") {
     return (
-      <section className={styles.modulePage__gallery} aria-labelledby="module-gallery">
+      <section
+        className={styles.modulePage__gallery}
+        aria-labelledby="module-gallery"
+      >
         <div className={styles.modulePage__shell}>
           <GalleryHeader gallery={gallery} />
           <div className={styles.modulePage__stack}>
             {shots.map((shot) => (
-              <article key={shot.id} className={styles.modulePage__stackRow} data-reveal>
+              <article
+                key={shot.id}
+                className={styles.modulePage__stackRow}
+                data-reveal
+              >
                 <figure className={styles.modulePage__shotStage}>
                   <ShotFrame shot={shot} moduleSlug={moduleSlug} />
                   {shot.state === "captured" ? <ScrollHint /> : null}
                 </figure>
                 <div className={styles.modulePage__stackCopy}>
-                  <p className={styles.modulePage__shotContext}>{shot.context}</p>
+                  <p className={styles.modulePage__shotContext}>
+                    {shot.context}
+                  </p>
                   <h3>{shot.title}</h3>
                   <p>{shot.description}</p>
                   <p
@@ -198,7 +210,10 @@ export function ModuleGallery({
   }
 
   return (
-    <section className={styles.modulePage__gallery} aria-labelledby="module-gallery">
+    <section
+      className={styles.modulePage__gallery}
+      aria-labelledby="module-gallery"
+    >
       <div className={styles.modulePage__shell}>
         <GalleryHeader gallery={gallery} />
 
@@ -216,7 +231,10 @@ export function ModuleGallery({
                 initial={reduced ? false : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduced ? undefined : { opacity: 0, y: -8 }}
-                transition={{ duration: reduced ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: reduced ? 0 : 0.32,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
               >
                 <ShotFrame shot={active} moduleSlug={moduleSlug} />
                 {active.state === "captured" ? <ScrollHint /> : null}
@@ -252,7 +270,10 @@ export function ModuleGallery({
                     });
                   }}
                   onKeyDown={(event) => {
-                    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") {
+                    if (
+                      event.key !== "ArrowRight" &&
+                      event.key !== "ArrowLeft"
+                    ) {
                       return;
                     }
                     event.preventDefault();
@@ -301,9 +322,11 @@ function GalleryHeader({ gallery }: { gallery: Gallery }) {
         <span className={styles.modulePage__eyebrowDot} aria-hidden="true" />
         Product evidence
       </p>
-      <h2 id="module-gallery" data-reveal>
-        {gallery.title}
-      </h2>
+      <ModuleHeading
+        id="module-gallery"
+        text={gallery.title}
+        accent="runs on"
+      />
       <p data-reveal>{gallery.intro}</p>
     </header>
   );

@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { useId, useState } from "react";
 import { trackModuleEvent } from "@/lib/analytics";
 import type { ModuleFaqItem } from "@/lib/content/modules/module-pages/types";
+import { ModuleHeading } from "./module-heading";
 import styles from "@/components/pages/modules/modules.module.css";
 
 /**
@@ -33,12 +34,17 @@ export function ModuleFaq({
         <div className={styles.modulePage__faqLayout}>
           <header className={styles.modulePage__sectionHead}>
             <p className={styles.modulePage__eyebrow} data-reveal>
-              <span className={styles.modulePage__eyebrowDot} aria-hidden="true" />
+              <span
+                className={styles.modulePage__eyebrowDot}
+                aria-hidden="true"
+              />
               Questions
             </p>
-            <h2 id="module-faq" data-reveal>
-              About {moduleTitle}
-            </h2>
+            <ModuleHeading
+              id="module-faq"
+              text={"About " + moduleTitle}
+              accent={moduleTitle}
+            />
             <p data-reveal>
               The things operators ask before a demo. If yours is not here, it
               is a good first question to bring to one.
@@ -72,7 +78,10 @@ export function ModuleFaq({
                       }}
                     >
                       <span>{item.question}</span>
-                      <span className={styles.modulePage__faqIcon} aria-hidden="true">
+                      <span
+                        className={styles.modulePage__faqIcon}
+                        aria-hidden="true"
+                      >
                         <Plus size={15} />
                       </span>
                     </button>

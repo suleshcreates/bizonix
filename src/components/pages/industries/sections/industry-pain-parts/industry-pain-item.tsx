@@ -1,6 +1,12 @@
 import styles from "@/components/pages/industries/industries.module.css";
 
-export function IndustryPainItem({ text, index }: { text: string; index: number }) {
+export function IndustryPainItem({
+  text,
+  index,
+}: {
+  text: string;
+  index: number;
+}) {
   return (
     <li
       className={styles.industryPainSection__painItem}

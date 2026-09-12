@@ -1,0 +1,417 @@
+.desktopRoot {
+  position: relative;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.chevron {
+  transition: transform 180ms ease;
+}
+
+.chevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   Desktop mega-menu.
+
+   One object, split 40 / 60. The dark left column says why the platform is one
+   system; the light right column says where to go. That division is the menu's
+   identity, so it is a grid on the panel itself rather than two cards sitting
+   next to each other — there is one border, one radius and one shadow for the
+   whole thing, and the dark panel's corners come from the container clipping
+   rather than from a radius of its own.
+
+   The navigation is typography. No module icons, no tiles, no per-item borders
+   or shadows: a hover tint and a chevron that was not there a moment ago are
+   the entire interaction vocabulary.
+   ========================================================================== */
+
+.desktopAnchor {
+  position: fixed;
+  z-index: 70;
+  top: calc(var(--bz-header-h) - 2px);
+  left: 50%;
+  width: min(960px, calc(100vw - 32px));
+  padding-top: 12px;
+  translate: -50% 0;
+  transform-origin: top center;
+}
+
+.desktopMenu {
+  overflow: hidden;
+  border: 1px solid var(--bz-border);
+  border-radius: 22px;
+  background: var(--bz-surface);
+  box-shadow:
+    0 24px 60px rgba(11, 31, 58, 0.16),
+    0 6px 18px rgba(11, 31, 58, 0.05);
+}
+
+.menuBody {
+  display: grid;
+  align-items: stretch;
+  grid-template-columns: 40fr 60fr;
+}
+
+/* ------------------------------------------------------------ dark 40% */
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px 32px 28px;
+  background: var(--bz-navy);
+  /* The site's technical field, at the opacity it uses on dark heroes and no
+     more. It should register as surface, never as pattern. */
+  background-image:
+    linear-gradient(rgba(47, 107, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47, 107, 255, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.eyebrow {
+  display: block;
+  color: #7dadff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.introTitle {
+  margin: 20px 0 0;
+  color: #f6f9ff;
+  font-size: 31px;
+  font-weight: 780;
+  letter-spacing: -0.032em;
+  line-height: 1.04;
+}
+
+.introBody {
+  margin: 16px 0 0;
+  color: rgba(214, 228, 250, 0.72);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.introLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 22px;
+  color: #9dc0ff;
+  font-size: 12.5px;
+  font-weight: 740;
+  outline: none;
+  transition: color 180ms ease;
+}
+
+.introLink:hover,
+.introLink:focus-visible {
+  color: #ffffff;
+}
+
+.introLink:focus-visible {
+  border-radius: 5px;
+  outline: 2px solid #7dadff;
+  outline-offset: 4px;
+}
+
+.introLink svg {
+  transition: transform 180ms ease;
+}
+
+.introLink:hover svg,
+.introLink:focus-visible svg {
+  transform: translateX(3px);
+}
+
+/* The panel's one piece of ornament: a short accent rule under the content,
+   pushed to the bottom by the auto margin so the column always closes on it. */
+.introRule {
+  width: 46px;
+  height: 2px;
+  margin-top: 26px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--bz-blue), var(--bz-teal));
+}
+
+/* ----------------------------------------------------------- light 60% */
+
+.nav {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.groups {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  align-content: start;
+  gap: 22px;
+  grid-template-columns: repeat(var(--menu-cols, 3), minmax(0, 1fr));
+  padding: 28px 24px 20px;
+}
+
+.group {
+  min-width: 0;
+}
+
+.groupLabel {
+  display: block;
+  color: #71839e;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Short rule under each group label, matching the accent in the dark panel at
+   a fraction of its weight. */
+.groupLabel::after {
+  display: block;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  margin-top: 8px;
+  background: var(--bz-blue);
+  content: "";
+  opacity: 0.45;
+}
+
+.groupLinks {
+  display: grid;
+  gap: 2px;
+  margin-top: 12px;
+}
+
+.menuItem {
+  display: grid;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 9px 10px;
+  border-radius: 9px;
+  margin-left: -10px;
+  color: var(--bz-navy);
+  outline: none;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.menuItem:hover,
+.menuItem:focus-visible {
+  background: color-mix(in srgb, var(--bz-blue-soft) 62%, white);
+  color: var(--bz-blue-hover);
+}
+
+.menuItem:focus-visible {
+  outline: 2px solid var(--bz-blue);
+  outline-offset: -2px;
+}
+
+.menuItemText {
+  display: block;
+  min-width: 0;
+}
+
+.menuItem strong,
+.menuItem small {
+  display: block;
+}
+
+.menuItem strong {
+  font-size: 15px;
+  font-weight: 720;
+  letter-spacing: -0.014em;
+  line-height: 1.25;
+}
+
+.menuItem small {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 3px;
+  color: var(--bz-muted);
+  font-size: 12px;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* An affordance, not decoration: nothing is there until the row is pointed at
+   or focused, and then it arrives 3px to the right of where it started. */
+.menuItemChevron {
+  color: var(--bz-blue);
+  opacity: 0;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+  transform: translateX(-3px);
+}
+
+.menuItem:hover .menuItemChevron,
+.menuItem:focus-visible .menuItemChevron {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* The one global link out of the menu, and the only one that names the whole
+   directory. Sits at the foot of the light column, not across the panel. */
+.menuFooter {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 24px;
+  border-top: 1px solid var(--bz-border);
+  background: color-mix(in srgb, var(--bz-surface-alt) 55%, white);
+  color: var(--bz-blue);
+  font-size: 12.5px;
+  font-weight: 740;
+  outline: none;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.menuFooter:hover,
+.menuFooter:focus-visible {
+  background: var(--bz-blue-soft);
+  color: var(--bz-blue-hover);
+}
+
+.menuFooter:focus-visible {
+  outline: 2px solid var(--bz-blue);
+  outline-offset: -2px;
+}
+
+.menuFooter svg {
+  transition: transform 180ms ease;
+}
+
+.menuFooter:hover svg,
+.menuFooter:focus-visible svg {
+  transform: translateX(3px);
+}
+
+/* ============================================================ mobile sheet */
+
+.mobileGroup {
+  border-bottom: 1px solid var(--bz-border);
+}
+
+.mobileTrigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border: 0;
+  background: transparent;
+  color: var(--bz-navy);
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 750;
+  text-align: left;
+}
+
+.mobileTrigger[data-active="true"] {
+  color: var(--bz-blue);
+}
+
+.mobileChevron {
+  width: 21px;
+  height: 21px;
+  color: var(--bz-muted);
+  transition: transform 180ms ease;
+}
+
+.mobileChevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+.mobilePanel {
+  overflow: hidden;
+}
+
+.mobileItems {
+  display: grid;
+  gap: 1px;
+  padding: 0 0 14px 12px;
+}
+
+.mobileItem {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 9px;
+  color: var(--bz-navy);
+  outline: none;
+  transition: background-color 160ms ease;
+}
+
+.mobileItem:hover,
+.mobileItem:focus-visible,
+.mobileItem:active {
+  background: var(--bz-blue-soft);
+}
+
+.mobileItem strong,
+.mobileItem small {
+  display: block;
+}
+
+.mobileItem strong {
+  font-size: 13px;
+  font-weight: 720;
+  line-height: 1.25;
+}
+
+.mobileItem small {
+  display: -webkit-box;
+  overflow: hidden;
+  max-width: 300px;
+  margin-top: 2px;
+  color: var(--bz-muted);
+  font-size: 10px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.mobileFooter {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 6px 10px 0;
+  padding: 8px 0 2px;
+  color: var(--bz-blue);
+  font-size: 11px;
+  font-weight: 760;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron,
+  .introLink,
+  .introLink svg,
+  .menuItem,
+  .menuItemChevron,
+  .menuFooter,
+  .menuFooter svg,
+  .mobileChevron,
+  .mobileItem {
+    transition: none;
+  }
+}

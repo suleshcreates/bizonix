@@ -66,6 +66,14 @@ export type ModuleScreen = Base &
         shape: "register";
         columns: readonly string[];
         rows: readonly ScreenRow[];
+        /**
+         * Which two cells the narrow preview keeps, as `[main, detail]` indexes
+         * into `cells`. A phone has room for one text column, one figure and
+         * the status pill, and which cells those are is a content decision: a
+         * stock register keeps the item and the quantity, an access log keeps
+         * the action and the time. The status pill is always kept.
+         */
+        compact: readonly [number, number];
       }
     | {
         shape: "ledger";
@@ -136,6 +144,7 @@ export const moduleScreens: Record<ModuleSlug, ModuleScreen> = {
       { label: "Below reorder", value: "12", note: "across 4 outlets", tone: "warn" },
     ],
     columns: ["SKU", "Item", "Location", "Qty", "Status"],
+    compact: [1, 3],
     rows: [
       {
         id: "r1",
@@ -402,6 +411,7 @@ export const moduleScreens: Record<ModuleSlug, ModuleScreen> = {
       { label: "Policy", value: "Enforced", note: "entity boundaries", tone: "ok" },
     ],
     columns: ["Time", "User", "Action", "Entity", "Status"],
+    compact: [2, 0],
     rows: [
       {
         id: "s1",

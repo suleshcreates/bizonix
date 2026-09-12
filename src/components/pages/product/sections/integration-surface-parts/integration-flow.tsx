@@ -127,12 +127,30 @@ export function IntegrationFlow() {
           aria-hidden="true"
         >
           <defs>
-            <linearGradient id="flowGradBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+            {/* userSpaceOnUse, not the default objectBoundingBox: the
+                customers connector is a straight horizontal line (height 0),
+                which causes an objectBoundingBox gradient to collapse into
+                zero height and fail to paint. */}
+            <linearGradient
+              id="flowGradBlue"
+              gradientUnits="userSpaceOnUse"
+              x1="200"
+              y1="160"
+              x2="316"
+              y2="160"
+            >
               <stop offset="0%" stopColor="#2f6bff" stopOpacity="0.35" />
               <stop offset="100%" stopColor="#2f6bff" stopOpacity="0.9" />
             </linearGradient>
 
-            <linearGradient id="flowGradTeal" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient
+              id="flowGradTeal"
+              gradientUnits="userSpaceOnUse"
+              x1="404"
+              y1="160"
+              x2="514"
+              y2="160"
+            >
               <stop offset="0%" stopColor="#2ec4b6" stopOpacity="0.9" />
               <stop offset="100%" stopColor="#2ec4b6" stopOpacity="0.35" />
             </linearGradient>

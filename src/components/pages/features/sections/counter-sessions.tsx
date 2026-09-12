@@ -322,7 +322,15 @@ export function CounterSessions() {
               tone={feature.tone}
             />
             <h2 id="feature-counters-title">
-              A counter that opens, closes and answers for its cash.
+              <span className={styles.featuresHeading__blue}>
+                A counter that
+              </span>{" "}
+              <span className={styles.featuresHeading__violet}>
+                opens, closes
+              </span>{" "}
+              <span className={styles.featuresHeading__teal}>
+                and answers for its cash.
+              </span>
             </h2>
           </div>
           <p className={styles.counterSessions__why}>
@@ -406,7 +414,9 @@ export function CounterSessions() {
                         <i aria-hidden="true">{index + 1}</i>
                       )}
                     </span>
-                    <span className={styles.counterSessions__markerLabel}>{item.label}</span>
+                    <span className={styles.counterSessions__markerLabel}>
+                      {item.label}
+                    </span>
                   </button>
                 </li>
               ))}
@@ -416,7 +426,9 @@ export function CounterSessions() {
               <span className={styles.counterSessions__stageCount}>
                 {view.stage + 1}/{sessionStages.length}
               </span>
-              <span className={styles.counterSessions__stageCompact}>{current.label} —</span>
+              <span className={styles.counterSessions__stageCompact}>
+                {current.label} —
+              </span>
               {current.note}
             </p>
           </div>
@@ -427,12 +439,19 @@ export function CounterSessions() {
               className={styles.counterSessions__panel}
               aria-label="Counters on the floor"
             >
-              <p className={styles.counterSessions__panelHead}>Counters on the floor</p>
+              <p className={styles.counterSessions__panelHead}>
+                Counters on the floor
+              </p>
               <div className={styles.counterSessions__panelBody}>
-                <ul className={styles.counterSessions__lanes} aria-live="polite">
+                <ul
+                  className={styles.counterSessions__lanes}
+                  aria-live="polite"
+                >
                   {view.lanes.map((lane) => (
                     <li key={lane.counter} data-tone={lane.tone}>
-                      <span className={styles.counterSessions__laneName}>{lane.counter}</span>
+                      <span className={styles.counterSessions__laneName}>
+                        {lane.counter}
+                      </span>
                       <span className={styles.counterSessions__laneOperator}>
                         {lane.operator}
                       </span>
@@ -529,7 +548,10 @@ export function CounterSessions() {
                   {view.expected === null ? null : <b>{inr(view.expected)}</b>}
                 </p>
 
-                <div className={styles.counterSessions__row} data-filled={view.counted !== null}>
+                <div
+                  className={styles.counterSessions__row}
+                  data-filled={view.counted !== null}
+                >
                   <dt>Counted at handover</dt>
                   <dd>{view.counted === null ? "—" : inr(view.counted)}</dd>
                 </div>
@@ -544,7 +566,10 @@ export function CounterSessions() {
                 </div>
               </dl>
 
-              <p className={styles.counterSessions__verdict} data-tone={view.verdict.tone}>
+              <p
+                className={styles.counterSessions__verdict}
+                data-tone={view.verdict.tone}
+              >
                 {view.verdict.tone === "ok" ? (
                   <Check size={14} aria-hidden="true" />
                 ) : null}

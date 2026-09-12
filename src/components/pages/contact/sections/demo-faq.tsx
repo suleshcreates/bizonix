@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import { Plus } from "lucide-react";
+import { ArrowUpRight, Plus } from "lucide-react";
 import { demoFaq } from "@/lib/content/contact/contact-content";
 import { track } from "@/lib/analytics";
 import { useReveal } from "./motion";
@@ -21,12 +21,23 @@ export function DemoFaq() {
       data-reveal
       data-revealed={revealed ? "true" : undefined}
     >
-      <h2 id="faq-title" className={styles.contact__faqTitle}>
-        Before you go: questions we always get
-      </h2>
-      <p className={styles.contact__faqLede}>
-        These cover most of what people ask before a first session.
-      </p>
+      <div className={styles.contact__faqIntro}>
+        <p className={styles.studioLightEyebrow}>THE STRAIGHT ANSWERS</p>
+        <h2 id="faq-title" className={styles.contact__faqTitle}>
+          Questions worth asking <em>before the demo.</em>
+        </h2>
+        <p className={styles.contact__faqLede}>
+          Clear answers about fit, rollout and what happens after the first conversation.
+        </p>
+        <div className={styles.contact__faqSignal} aria-hidden="true">
+          <span>{String(demoFaq.length).padStart(2, "0")}</span>
+          <div>
+            <strong>Direct answers</strong>
+            <small>No sales-script detours.</small>
+          </div>
+          <ArrowUpRight size={17} />
+        </div>
+      </div>
       <ul className={styles.contact__faqList}>
         {demoFaq.map((item, index) => {
           const open = openId === item.id;
@@ -51,7 +62,8 @@ export function DemoFaq() {
                     if (next) track("contact_faq_opened", { question: item.id });
                   }}
                 >
-                  <span>{item.question}</span>
+                  <span className={styles.contact__faqNumber}>{String(index + 1).padStart(2, "0")}</span>
+                  <span className={styles.contact__faqQuestion}>{item.question}</span>
                   <Plus className={styles.contact__faqIcon} size={19} aria-hidden="true" />
                 </button>
               </h3>

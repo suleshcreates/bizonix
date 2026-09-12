@@ -1,4 +1,5 @@
 export const siteConfig = {
+  pricingEnabled: false,
   name: "Bizonix",
   tagline: "Business and Operations, Smarter Together",
   company: "Fibonce Tech Solutions Pvt. Ltd.",
@@ -24,7 +25,9 @@ const isPublicValue = (value: string) =>
 export const hasSalesEmail = isPublicValue(siteConfig.salesEmail);
 export const hasSalesPhone = isPublicValue(siteConfig.salesPhone);
 export const hasWhatsApp = isPublicValue(siteConfig.whatsappUrl);
-
+/* Order follows the buyer's path: what it is, what it does, how it does it,
+   who it is for, what it costs, who builds it. Pricing sits after Industries
+   and before About — the last product question before the company one. */
 export const primaryNav = [
   { label: "Product", href: "/product" },
   { label: "Solutions", href: "/modules", menu: "solutions" },
@@ -36,9 +39,14 @@ export const primaryNav = [
 export const solutionLinks = [
   { label: "All solutions", href: "/modules" },
   { label: "Inventory", href: "/modules/inventory" },
+  { label: "Procurement", href: "/modules/procurement" },
+  { label: "Sales & POS", href: "/modules/sales-pos" },
   { label: "Wholesale", href: "/modules/wholesale" },
   { label: "Franchise", href: "/modules/franchise" },
   { label: "Accounting", href: "/modules/accounting" },
+  { label: "Ecommerce", href: "/modules/ecommerce" },
+  { label: "Analytics", href: "/modules/analytics" },
+  { label: "Security", href: "/modules/security" },
 ] as const;
 
 export const industryLinks = [

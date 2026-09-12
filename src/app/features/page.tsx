@@ -1,37 +1,31 @@
 import type { Metadata } from "next";
 import { FeaturesIndex } from "@/components/pages/features/features-index";
 import { featureSummaries } from "@/lib/content/features/features";
+import { JsonLd } from "@/components/seo/json-ld";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { getRoute } from "@/lib/seo/routes";
+import { breadcrumbSchema, itemListSchema } from "@/lib/seo/schema";
 
-export const metadata: Metadata = {
-  title: "Features",
-  description:
-    "The five cross-cutting details behind Bizonix ERP: piece barcodes, billing counter sessions, GST capture, series pricing and stock transfer visibility.",
-  openGraph: {
-    title: "The small things that make the big numbers true",
-    description:
-      "Piece identity, counter control, tax truth, price discipline and movement visibility — the capabilities that run underneath every Bizonix module.",
-  },
-};
-
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  name: "Bizonix ERP features",
-  itemListElement: featureSummaries.map((feature, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    name: `${feature.title} — ${feature.discipline}`,
-    url: `/features#${feature.id}`,
-  })),
-};
+export const metadata: Metadata = pageMetadata("/features");
 
 export default function FeaturesPage() {
   return (
     <>
       <FeaturesIndex />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      <JsonLd
+        schema={[
+          /* Each entry points at the feature's own page rather than an on-page
+             fragment, so the list leads somewhere separately indexable. */
+          itemListSchema({
+            name: "Bizonix ERP features",
+            items: featureSummaries.map((feature) => ({
+              name: `${feature.title} — ${feature.discipline}`,
+              path: `/features/${feature.id}`,
+              description: getRoute(`/features/${feature.id}`).description,
+            })),
+          }),
+          breadcrumbSchema("/features"),
+        ]}
       />
     </>
   );

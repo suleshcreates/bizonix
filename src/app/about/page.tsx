@@ -4,12 +4,11 @@ import { MissionSection } from "@/components/pages/about/sections/mission-sectio
 import { OriginSection } from "@/components/pages/about/sections/origin-section";
 import { PrinciplesSection } from "@/components/pages/about/sections/principles-section";
 import { ValuesSection } from "@/components/pages/about/sections/values-section";
+import { JsonLd } from "@/components/seo/json-ld";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 
-export const metadata: Metadata = {
-  title: "About Fibonce",
-  description:
-    "Fibonce Tech Solutions builds Bizonix — an ERP for Indian brands running wholesale, retail and franchise together. Our mission, values and product principles.",
-};
+export const metadata: Metadata = pageMetadata("/about");
 
 /**
  * /about is a scroll narrative rather than a stack of blocks: hero, mission,
@@ -24,6 +23,7 @@ export default function AboutPage() {
       <OriginSection />
       <ValuesSection />
       <PrinciplesSection />
+      <JsonLd schema={breadcrumbSchema("/about")} />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import type { ProblemSectionData } from "@/lib/content/modules/module-pages/types";
+import { ModuleHeading } from "../module-heading";
 import styles from "@/components/pages/modules/modules.module.css";
 
 /**
@@ -16,21 +17,27 @@ export function ModuleProblemHeader({
   return (
     <header className={styles.problems__head}>
       <p
-        className={`${styles.problems__eyebrow} ${styles.problems__headItem}`}
+        className={[styles.problems__eyebrow, styles.problems__headItem].join(
+          " ",
+        )}
         style={{ "--s": 0 } as React.CSSProperties}
       >
         <span className={styles.problems__eyebrowDot} aria-hidden="true" />
         {data.eyebrow}
       </p>
-      <h2
+      <ModuleHeading
         id={headingId}
-        className={`${styles.problems__title} ${styles.problems__headItem}`}
+        text={data.title}
+        className={[styles.problems__title, styles.problems__headItem].join(
+          " ",
+        )}
         style={{ "--s": 1 } as React.CSSProperties}
-      >
-        {data.title}
-      </h2>
+        reveal={false}
+      />
       <p
-        className={`${styles.problems__intro} ${styles.problems__headItem}`}
+        className={[styles.problems__intro, styles.problems__headItem].join(
+          " ",
+        )}
         style={{ "--s": 2 } as React.CSSProperties}
       >
         {data.intro}

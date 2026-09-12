@@ -12,7 +12,7 @@ export function ProductDashboardProducts() {
         <span className={styles.productHeroDashboard__cardIcon} aria-hidden="true">
           <Gem size={12} strokeWidth={2.3} />
         </span>
-        <h3>Product performance</h3>
+        <p>Product performance</p>
         <small>by units sold</small>
       </header>
 

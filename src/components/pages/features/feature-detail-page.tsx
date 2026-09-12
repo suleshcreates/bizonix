@@ -28,8 +28,10 @@ const detail = {
 
 export function FeatureDetailPage({ slug }: { slug: keyof typeof detail }) {
   const data = detail[slug];
+  /* A div, not a <main>: the root layout already owns this page's single
+     <main id="main"> landmark, and nesting a second one is invalid. */
   return (
-    <main className="bg-white text-bz-navy">
+    <div className="bg-white text-bz-navy">
       <FeaturesHero initialFeature={slug} />
       <WhyItMattersSection slug={slug} />
       <HowItWorksSection slug={slug} />
@@ -66,6 +68,6 @@ export function FeatureDetailPage({ slug }: { slug: keyof typeof detail }) {
           Book a demo <Check size={17} />
         </Link>
       </section>
-    </main>
+    </div>
   );
 }

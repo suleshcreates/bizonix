@@ -12,7 +12,8 @@ const AUTO_DELAY = 3000;
 const MANUAL_DELAY = 5000;
 
 export function IndustryWorkflowSection() {
-  const [activeIndustryId, setActiveIndustryId] = useState<IndustryId>("apparel");
+  const [activeIndustryId, setActiveIndustryId] =
+    useState<IndustryId>("apparel");
   const [activeStageIndex, setActiveStageIndex] = useState(0);
   const [nextDelay, setNextDelay] = useState(AUTO_DELAY);
   const [timerVersion, setTimerVersion] = useState(0);
@@ -34,7 +35,14 @@ export function IndustryWorkflowSection() {
       setNextDelay(AUTO_DELAY);
     }, nextDelay);
     return () => window.clearTimeout(timer);
-  }, [activeStageIndex, activeIndustryId, nextDelay, reduceMotion, timerVersion, workflow.stages.length]);
+  }, [
+    activeStageIndex,
+    activeIndustryId,
+    nextDelay,
+    reduceMotion,
+    timerVersion,
+    workflow.stages.length,
+  ]);
 
   function selectIndustry(id: IndustryId) {
     setActiveIndustryId(id);
@@ -50,15 +58,32 @@ export function IndustryWorkflowSection() {
   }
 
   return (
-    <section className={styles.industryWorkflowSection__section} aria-labelledby="industry-workflow-title">
+    <section
+      className={styles.industryWorkflowSection__section}
+      aria-labelledby="industry-workflow-title"
+    >
       <div className={styles.industryWorkflowSection__shell}>
         <header className={styles.industryWorkflowSection__header}>
-          <p className={styles.industryWorkflowSection__eyebrow}>04 — Workflow</p>
-          <h2 id="industry-workflow-title">Industry <span>day-in-life.</span></h2>
-          <p>See how work flows across the day — from the first action to the final business update.</p>
+          <p className={styles.industryWorkflowSection__eyebrow}>
+            04 — Workflow
+          </p>
+          <h2 id="industry-workflow-title">
+            Industry <span>day-in-life.</span>
+          </h2>
+          <p>
+            See how work flows across the day — from the first action to the
+            final business update.
+          </p>
         </header>
-        <IndustrySelector activeId={activeIndustryId} onSelect={selectIndustry} />
-        <WorkflowCanvas stages={workflow.stages} activeIndex={activeStageIndex} onSelect={selectStage} />
+        <IndustrySelector
+          activeId={activeIndustryId}
+          onSelect={selectIndustry}
+        />
+        <WorkflowCanvas
+          stages={workflow.stages}
+          activeIndex={activeStageIndex}
+          onSelect={selectStage}
+        />
         <WorkflowSummary labels={workflow.stages.map((stage) => stage.title)} />
       </div>
     </section>

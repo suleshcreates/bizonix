@@ -2387,6 +2387,43 @@
   display: block;
 }
 
+/* The two headline variants. `wide` is the panorama wording, `narrow` the
+   phone wording; exactly one is in the box tree at any width. */
+.industriesHero__wide,
+.industriesHero__narrow {
+  font-style: normal;
+}
+
+.industriesHero__narrow {
+  display: none;
+}
+
+.industriesHero__srOnly {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The stage exists only so the phone layout has something to round and clip.
+   `display: contents` means it generates no box on wide viewports, so the
+   scenes, overlay and labels still resolve against the landscape exactly as
+   they did before it was added. */
+.industriesHero__stage {
+  display: contents;
+}
+
+/* Card controls. Present in the markup at every width, in the box tree only
+   below the mobile breakpoint. */
+.industriesHero__controls {
+  display: none;
+}
+
 /* ---------------------------------------------------------------- ZONE B */
 
 .industriesHero__landscape {
@@ -2715,6 +2752,19 @@
   }
 }
 
+/* The phone entrance. A shorter rise than the panorama's 16px, because here
+   the parts arrive one after another rather than as one block. */
+@keyframes industriesHero__riseInSm {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes industriesHero__fadeIn {
   from {
     opacity: 0;
@@ -2803,92 +2853,313 @@
   }
 }
 
-/* Mobile keeps the same seamless language, stacked vertically:
-   each photograph is opaque and the next one fades in over it. */
+/* --------------------------------------------------------------- MOBILE
+
+   The panorama does not survive a phone: three photographs stacked at 300px
+   each pushed the industries 800px down the page, and the capability list was
+   simply hidden. Below this width the same markup becomes one editorial
+   column — eyebrow, two-line headline, one supporting sentence, a 2x2
+   capability grid — over a single rounded industry card with its own next
+   control and position indicator. No call to action: the header already
+   carries one, and the hero's job here is orientation.
+   ---------------------------------------------------------------------- */
+
 @media (max-width: 760px) {
   .industriesHero__hero {
+    --shell: calc(100% - 44px);
     --editorial-h: auto;
     min-height: 0;
+    padding-bottom: 34px;
   }
   .industriesHero__editorial {
     height: auto;
   }
+  /* Eyebrow, headline, sentence, then the capability tiles — the reading
+     order, one beat apart. The block no longer rises as a single unit. */
   .industriesHero__editorialInner {
-    padding-block: 40px 30px;
+    padding-block: 28px 0;
+    animation: none;
   }
-  .industriesHero__eyebrow {
-    margin-bottom: 16px;
-    font-size: 11px;
+  .industriesHero__eyebrow,
+  .industriesHero__title,
+  .industriesHero__summary,
+  .industriesHero__benefits li {
+    animation: industriesHero__riseInSm 560ms cubic-bezier(0.22, 1, 0.36, 1)
+      both;
   }
   .industriesHero__title {
-    font-size: clamp(2.15rem, 9.2vw, 2.6rem);
-    letter-spacing: -0.03em;
+    animation-delay: 70ms;
   }
   .industriesHero__summary {
-    max-width: 460px;
-    font-size: 15px;
+    animation-delay: 140ms;
   }
+  .industriesHero__benefits li {
+    animation-delay: calc(210ms + var(--i, 0) * 55ms);
+  }
+  .industriesHero__landscape {
+    animation-delay: 400ms;
+  }
+
+  .industriesHero__eyebrow {
+    margin-bottom: 14px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+
+  /* ~34px at 390px. The tracking is held well short of the desktop -0.035em:
+     at this size that much negative tracking closes the word gaps. */
+  /* The measure is left to break the line. Forcing "Built for how / your
+     business operates." needs the second line to fit 346px, which this face
+     only manages at 30px — below the size this headline is meant to hold. */
+  .industriesHero__title {
+    max-width: none;
+    font-size: clamp(29px, 8.7vw, 36px);
+    letter-spacing: -0.024em;
+    line-height: 1.06;
+    text-wrap: pretty;
+    word-spacing: 0.02em;
+  }
+  .industriesHero__wide {
+    display: none;
+  }
+  .industriesHero__narrow {
+    display: inline;
+  }
+
+  .industriesHero__summary {
+    max-width: 40ch;
+    margin-top: 13px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  /* One sentence per line is a desktop luxury; here the clauses run on. */
+  .industriesHero__summary span {
+    display: inline;
+  }
+
+  /* The capability grid. Four tiles, two columns, always — the labels are
+     short enough to hold at 320px, and the grid is the compact counterweight
+     to the headline. */
+  .industriesHero__benefits {
+    display: grid;
+    width: auto;
+    margin-top: 24px;
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .industriesHero__benefits li {
+    display: grid;
+    min-height: 82px;
+    align-content: start;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid rgba(11, 31, 58, 0.09);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 1px 2px rgba(11, 31, 58, 0.04);
+    color: #24384f;
+    font-size: 13.5px;
+    font-weight: 650;
+    letter-spacing: -0.012em;
+    line-height: 1.28;
+  }
+  .industriesHero__benefits li:last-child {
+    border-bottom: 1px solid rgba(11, 31, 58, 0.09);
+  }
+  .industriesHero__benefits svg {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+  }
+
+  /* ------------------------------------------------------- industry card */
 
   .industriesHero__landscape {
     min-height: 0;
+    margin-top: 26px;
     mask-image: none;
   }
-  .industriesHero__scenes {
+
+  .industriesHero__stage {
     position: relative;
-    inset: auto;
-    height: 792px;
+    display: block;
+    overflow: hidden;
+    width: var(--shell);
+    height: clamp(322px, 91vw, 372px);
+    border-radius: 22px;
+    margin-inline: auto;
+    background: #0b1f3a;
+    box-shadow: 0 18px 40px -22px rgba(11, 31, 58, 0.45);
   }
+
+  /* Everything inside the card fills the card. */
+  .industriesHero__scenes,
+  .industriesHero__overlay {
+    position: absolute;
+    inset: 0;
+    height: auto;
+  }
+
+  /* One industry at a time, cross-fading rather than cutting. */
   .industriesHero__scene {
-    inset-block: auto;
-    left: 0 !important;
-    width: 100% !important;
-    height: 300px;
-    --zoom: 1.08;
-    --zoom-origin: center bottom;
+    position: absolute;
+    inset: 0 !important;
+    width: auto !important;
+    height: auto;
+    opacity: 0;
+    transition: opacity 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    --zoom: 1.04;
+    --zoom-origin: center center;
   }
-  .industriesHero__apparel {
-    top: 0;
+  .industriesHero__scene[data-on="true"] {
+    opacity: 1;
   }
-  .industriesHero__jewellery {
-    top: 246px;
-  }
-  .industriesHero__franchise {
-    top: 492px;
-  }
+  /* The stacked layout's seams and offsets have no meaning in one frame. */
   .industriesHero__jewellery .industriesHero__sceneImage,
   .industriesHero__franchise .industriesHero__sceneImage {
-    mask-image: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.06) 3%,
-      rgba(0, 0, 0, 0.33) 7%,
-      rgba(0, 0, 0, 0.77) 12%,
-      rgba(0, 0, 0, 0.985) 16%,
-      #000 18%,
-      #000 100%
-    );
+    mask-image: none;
   }
   .industriesHero__apparel .industriesHero__image {
-    object-position: 30% 58%;
+    object-position: 34% 56%;
   }
   .industriesHero__jewellery .industriesHero__image {
     object-position: 46% 54%;
   }
   .industriesHero__franchise .industriesHero__image {
-    object-position: 88% 56%;
+    object-position: 76% 54%;
   }
 
+  /* Enough grade to read type over a photograph, and no more. */
+  .industriesHero__unify,
+  .industriesHero__skyfall {
+    display: none;
+  }
   .industriesHero__lightfall {
     background: linear-gradient(
       180deg,
-      transparent 52%,
-      rgba(4, 11, 22, 0.5) 78%,
-      rgba(3, 9, 18, 0.88) 100%
+      transparent 34%,
+      rgba(4, 11, 22, 0.34) 62%,
+      rgba(3, 9, 18, 0.82) 100%
     );
   }
+
   .industriesHero__labels {
-    gap: 14px;
-    padding-bottom: 30px;
+    position: absolute;
+    inset: auto 0 0;
+    display: block;
+    width: auto;
+    padding: 0 18px 18px;
+  }
+  .industriesHero__label {
+    display: none;
+    animation: none;
+  }
+  .industriesHero__label[data-on="true"] {
+    display: block;
+  }
+  .industriesHero__labelLink {
+    max-width: none;
+  }
+  .industriesHero__labelNumber {
+    display: block;
+    margin: 0 0 6px;
+    font-size: 11px;
+  }
+  .industriesHero__labelName {
+    display: block;
+    font-size: 22px;
+    letter-spacing: -0.026em;
+  }
+  .industriesHero__labelText {
+    display: block;
+    max-width: 30ch;
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.42;
+  }
+
+  /* ------------------------------------------------------- card controls */
+
+  .industriesHero__controls {
+    display: flex;
+    width: var(--shell);
+    align-items: center;
+    justify-content: space-between;
+    margin: 12px auto 0;
+  }
+
+  .industriesHero__dots {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .industriesHero__dots button {
+    display: block;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .industriesHero__dots button::before {
+    display: block;
+    width: 100%;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(11, 31, 58, 0.16);
+    content: "";
+    transition: background 260ms ease;
+  }
+  .industriesHero__dots button[data-on="true"]::before {
+    background: #2869f7;
+  }
+
+  .industriesHero__next {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(11, 31, 58, 0.12);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(11, 31, 58, 0.07);
+    color: #12365f;
+    cursor: pointer;
+    transition:
+      border-color 220ms ease,
+      color 220ms ease;
+  }
+  .industriesHero__next:active {
+    border-color: rgba(40, 105, 247, 0.5);
+    color: #2869f7;
+  }
+}
+
+/* The narrowest phones give up millimetres of padding and type, never the
+   two-column capability grid. */
+@media (max-width: 374px) {
+  .industriesHero__hero {
+    --shell: calc(100% - 36px);
+  }
+  .industriesHero__benefits {
+    gap: 8px;
+  }
+  .industriesHero__benefits li {
+    min-height: 78px;
+    padding: 12px;
+    font-size: 12.5px;
+  }
+  .industriesHero__labelName {
+    font-size: 20px;
+  }
+  .industriesHero__labelText {
+    font-size: 13px;
   }
 }
 
@@ -2896,8 +3167,15 @@
   .industriesHero__editorialInner,
   .industriesHero__landscape,
   .industriesHero__label,
-  .industriesHero__image {
+  .industriesHero__image,
+  .industriesHero__eyebrow,
+  .industriesHero__title,
+  .industriesHero__summary,
+  .industriesHero__benefits li {
     animation: none;
+  }
+  .industriesHero__scene {
+    transition: none;
   }
   .industriesHero__image {
     transition: none;
@@ -5683,4 +5961,882 @@
   .proofSection__evidenceItem {
     transition: none;
   }
+}
+/* Industries index heading system — hero intentionally excluded. */
+.industryPainSection__header h2,
+.howBizonixFits__title,
+.industryWorkflowSection__header h2,
+.proofSection__headline {
+  color: #0b1f3a;
+  font-size: clamp(32px, 3.15vw, 44px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.industryPainSection__header h2 span,
+.howBizonixFits__title span,
+.industryWorkflowSection__header h2 span,
+.proofSection__headlineAccent {
+  background: none;
+  color: #2f6bff;
+  -webkit-text-fill-color: currentcolor;
+}
+
+@media (forced-colors: active) {
+  .industryPainSection__header h2 span,
+  .howBizonixFits__title span,
+  .industryWorkflowSection__header h2 span,
+  .proofSection__headlineAccent {
+    color: CanvasText;
+  }
+}
+/* Industry detail heading system — hero intentionally excluded. */
+.industryDetailPage__variantsHead h2,
+.industryDetailPage__pressureIntro h2,
+.industryDetailPage__fitHead h2,
+.industryDetailPage__dayHead h2,
+.industryDetailPage__ctaInner h2 {
+  font-size: clamp(32px, 3.15vw, 44px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.industryDetailPage__proofCopy h2 {
+  font-size: clamp(32px, 3.15vw, 44px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* =========================================================================
+   INDUSTRY HERO — the reusable deep-page hero
+
+   One layout, driven entirely by props. Two columns: copy on the left,
+   photograph on the right with three cards floating over it and a blurred
+   colour wash reaching out from behind its top-right corner.
+
+   The cards are positioned against the figure, not the column, so they stay
+   inside the photograph at every width instead of drifting off its edge — and
+   the figure is what carries the radius and the shadow, so the cards can sit
+   above both without needing their own.
+   ========================================================================= */
+
+.industryHero {
+  position: relative;
+  padding-block: clamp(28px, 4vw, 52px) clamp(56px, 7vw, 96px);
+}
+
+.industryHero__crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: clamp(24px, 3vw, 40px);
+  color: var(--body);
+  font-size: 12.5px;
+}
+
+.industryHero__crumbs a {
+  color: var(--body);
+  transition: color 180ms var(--ease);
+}
+
+.industryHero__crumbs a:hover {
+  color: var(--blue);
+}
+
+.industryHero__crumbs svg {
+  color: var(--line);
+}
+
+.industryHero__crumbs [aria-current="page"] {
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.industryHero__grid {
+  display: grid;
+  align-items: center;
+  gap: clamp(36px, 4.4vw, 68px);
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1fr);
+}
+
+/* ------------------------------------------------------------ copy column */
+
+.industryHero__copy {
+  min-width: 0;
+}
+
+.industryHero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 18px;
+  color: var(--blue);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.industryHero__eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.18);
+}
+
+.industryHero__headline {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(34px, 4vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.038em;
+  line-height: 1.04;
+}
+
+/* Each line is its own block so the entrance can stagger down the headline
+   rather than fading the whole heading at once. */
+.industryHero__headlineLine {
+  display: block;
+}
+
+.industryHero__accent {
+  font-style: normal;
+}
+
+.industryHero__accent[data-accent="blue"] {
+  color: var(--blue);
+}
+
+.industryHero__accent[data-accent="teal"] {
+  color: var(--teal);
+}
+
+.industryHero__subhead {
+  max-width: 52ch;
+  margin: 22px 0 0;
+  color: var(--body);
+  font-size: clamp(15px, 1.1vw, 16.5px);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.industryHero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+/* ------------------------------------------------------------- trust stats */
+
+.industryHero__stats {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0;
+  margin: 34px 0 0;
+}
+
+.industryHero__stats > div {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 11px;
+  padding-inline: clamp(12px, 1.4vw, 20px);
+}
+
+.industryHero__stats > div:first-child {
+  padding-left: 0;
+}
+
+/* Hairline rules between the three, never around them. */
+.industryHero__stats > div + div {
+  border-left: 1px solid var(--line);
+}
+
+.industryHero__statIcon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: rgba(47, 107, 255, 0.08);
+  color: var(--blue);
+}
+
+.industryHero__stats dt {
+  color: var(--body);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  /* The label is two short words at most and reads badly broken; a long value
+     underneath it is the part that should wrap. */
+  white-space: nowrap;
+}
+
+.industryHero__stats dd {
+  margin: 3px 0 0;
+  color: var(--navy);
+  font-size: 13.5px;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}
+
+/* ----------------------------------------------------------- media column */
+
+.industryHero__media {
+  position: relative;
+  isolation: isolate;
+}
+
+/* The decorative wash. It reaches out from behind the photograph's top-right
+   corner and is the only thing on this page that moves with the scroll. */
+.industryHero__wash {
+  position: absolute;
+  z-index: 0;
+  top: -12%;
+  right: -12%;
+  width: 68%;
+  height: 66%;
+  border-radius: 42% 58% 52% 48% / 46% 44% 56% 54%;
+  background: linear-gradient(
+    135deg,
+    rgba(47, 107, 255, 0.34),
+    rgba(46, 196, 182, 0.24)
+  );
+  filter: blur(34px);
+  pointer-events: none;
+}
+
+.industryHero__bgLabel {
+  position: absolute;
+  z-index: 0;
+  top: -24px;
+  right: 2px;
+  color: var(--body);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  opacity: 0.72;
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+.industryHero__figure {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 4 / 3.3;
+  border-radius: 26px;
+  margin: 0;
+  box-shadow: 0 30px 70px rgba(11, 31, 58, 0.16);
+}
+
+.industryHero__image {
+  object-fit: cover;
+}
+
+/* ------------------------------------------------------- floating cards
+
+   Anchored to the figure's box, inset far enough that a card's own width can
+   never carry it past the photograph's rounded corner. */
+.industryHero__slotTopLeft,
+.industryHero__slotTopRight,
+.industryHero__slotBottomRight {
+  position: absolute;
+  z-index: 2;
+  max-width: calc(100% - 32px);
+}
+
+.industryHero__slotTopLeft {
+  top: 5%;
+  left: 4%;
+}
+
+.industryHero__slotTopRight {
+  top: 5%;
+  right: 4%;
+}
+
+.industryHero__slotBottomRight {
+  right: 4%;
+  bottom: 5%;
+}
+
+.industryHero__detailCard,
+.industryHero__statsCard {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 14px 34px rgba(11, 31, 58, 0.16);
+  backdrop-filter: blur(8px);
+}
+
+.industryHero__detailCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+}
+
+.industryHero__cardIcon {
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: rgba(47, 107, 255, 0.1);
+  color: var(--blue);
+}
+
+.industryHero__detailBody {
+  min-width: 0;
+}
+
+.industryHero__detailBody strong {
+  display: block;
+  color: var(--navy);
+  font-size: 12.5px;
+  font-weight: 740;
+  letter-spacing: -0.01em;
+}
+
+.industryHero__detailBody small {
+  display: block;
+  margin-top: 2px;
+  color: var(--body);
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
+.industryHero__statusPill {
+  flex: none;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.industryHero__statusPill[data-tone="positive"] {
+  background: rgba(27, 158, 122, 0.12);
+  color: #16805f;
+}
+
+.industryHero__statusPill[data-tone="neutral"] {
+  background: rgba(47, 107, 255, 0.1);
+  color: var(--blue-dark);
+}
+
+.industryHero__statusPill[data-tone="attention"] {
+  background: rgba(217, 131, 36, 0.14);
+  color: var(--warn);
+}
+
+/* Stats card: three rows, divided by hairlines, no borders per row. */
+.industryHero__statsCard {
+  width: 244px;
+  padding: 4px 12px;
+}
+
+.industryHero__statRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-block: 9px;
+}
+
+.industryHero__statRow + .industryHero__statRow {
+  border-top: 1px solid var(--line);
+}
+
+.industryHero__statText {
+  min-width: 0;
+  flex: 1;
+}
+
+.industryHero__statText small {
+  display: block;
+  color: var(--body);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.industryHero__statText strong {
+  display: block;
+  margin-top: 1px;
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 780;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.industryHero__trend {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 6px;
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-weight: 800;
+}
+
+.industryHero__trend[data-direction="up"] {
+  background: rgba(27, 158, 122, 0.12);
+  color: #16805f;
+}
+
+.industryHero__trend[data-direction="down"] {
+  background: rgba(214, 69, 69, 0.12);
+  color: #b93a3a;
+}
+
+/* Dark banner, bottom right. */
+.industryHero__banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(9, 24, 44, 0.82);
+  box-shadow: 0 14px 34px rgba(4, 13, 26, 0.32);
+  backdrop-filter: blur(10px);
+}
+
+.industryHero__bannerIcon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: rgba(125, 173, 255, 0.16);
+  color: #9dc0ff;
+}
+
+.industryHero__bannerText strong {
+  display: block;
+  color: #f6f9ff;
+  font-size: 12.5px;
+  font-weight: 740;
+  letter-spacing: -0.01em;
+}
+
+.industryHero__bannerText small {
+  display: block;
+  margin-top: 2px;
+  color: rgba(214, 228, 250, 0.7);
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
+.industryHero__bannerArrow {
+  flex: none;
+  color: rgba(214, 228, 250, 0.72);
+}
+
+/* --------------------------------------------------------------- trust bar */
+
+.industryHero__trustBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+  padding-top: clamp(28px, 3.4vw, 44px);
+  border-top: 1px solid var(--line);
+  margin-top: clamp(40px, 5vw, 72px);
+}
+
+.industryHero__trustLabel {
+  color: var(--body);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.industryHero__trustLogos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 34px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.industryHero__trustLogos li {
+  color: var(--body);
+  filter: grayscale(1);
+  opacity: 0.62;
+  transition: opacity 200ms var(--ease);
+}
+
+.industryHero__trustLogos li:hover {
+  opacity: 0.9;
+}
+
+.industryHero__trustLogos strong {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 780;
+  letter-spacing: -0.015em;
+}
+
+.industryHero__trustLogos small {
+  display: block;
+  margin-top: 1px;
+  font-size: 10.5px;
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@media (max-width: 1080px) {
+  .industryHero__grid {
+    gap: clamp(32px, 5vw, 44px);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .industryHero__figure {
+    aspect-ratio: 16 / 11;
+  }
+
+  /* Room for the background label, which has the strip above the photograph
+     to itself on a wide screen and shares it with the stats row once the
+     columns stack. */
+  .industryHero__media {
+    margin-top: 30px;
+  }
+
+  .industryHero__subhead {
+    max-width: 62ch;
+  }
+}
+
+@media (max-width: 767px) {
+  .industryHero__headline {
+    font-size: clamp(29px, 8.4vw, 38px);
+    letter-spacing: -0.032em;
+  }
+
+  .industryHero__figure {
+    aspect-ratio: 4 / 3.4;
+    border-radius: 20px;
+  }
+
+  /* The cards shrink and tuck in rather than hanging off the photograph. Each
+     one is capped against the figure's width, so nothing can overflow it. */
+  .industryHero__slotTopLeft,
+  .industryHero__slotTopRight,
+  .industryHero__slotBottomRight {
+    max-width: calc(100% - 20px);
+  }
+
+  .industryHero__slotTopLeft {
+    top: 3%;
+    left: 3%;
+  }
+
+  .industryHero__slotTopRight {
+    top: auto;
+    right: 3%;
+    bottom: 3%;
+  }
+
+  /* Two cards cannot share the bottom edge at this width; the banner steps up
+     and the stats card takes the corner. */
+  .industryHero__slotBottomRight {
+    right: 3%;
+    bottom: calc(3% + 92px);
+  }
+
+  .industryHero__statsCard {
+    width: 206px;
+    padding: 2px 10px;
+  }
+
+  .industryHero__statRow {
+    padding-block: 7px;
+  }
+
+  .industryHero__detailCard,
+  .industryHero__banner {
+    padding: 9px 11px;
+  }
+
+  .industryHero__bgLabel {
+    font-size: 9px;
+  }
+
+  /* The stats row scrolls rather than wrapping into a ragged block. */
+  .industryHero__stats {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .industryHero__stats::-webkit-scrollbar {
+    display: none;
+  }
+
+  .industryHero__stats > div {
+    flex: none;
+  }
+
+  .industryHero__stats dd {
+    white-space: nowrap;
+  }
+
+  .industryHero__stats > div {
+    min-width: auto;
+  }
+}
+
+/* Reduced motion.
+   
+   Three layers, because each covers a gap the others cannot. The component
+   builds its Framer variants at `duration: 0`; the GSAP context is never
+   created, so nothing is bound to the scroll; and the rules below force the
+   finished state from the very first paint — Framer's `useReducedMotion`
+   resolves after mount, which would otherwise leave one frame at opacity 0 for
+   exactly the reader who asked not to see movement.
+   
+   `!important` is doing real work here: it is what lets a stylesheet win
+   against the inline styles an animation library writes. */
+@media (prefers-reduced-motion: reduce) {
+  .industryHero__crumbs a,
+  .industryHero__trustLogos li {
+    transition: none;
+  }
+
+  .industryHero__eyebrow,
+  .industryHero__headlineLine,
+  .industryHero__subhead,
+  .industryHero__actions,
+  .industryHero__stats,
+  .industryHero__figure,
+  .industryHero__slotTopLeft,
+  .industryHero__slotTopRight,
+  .industryHero__slotBottomRight,
+  .industryHero__trustBar {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Industry detail: connected, scroll-driven module journey. */
+.industryDetailPage__page > section {
+  scroll-margin-top: calc(var(--bz-header-h) + 20px);
+}
+.industryDetailPage__fit {
+  background: linear-gradient(180deg, white, var(--tint));
+}
+.industryDetailPage__fitHead h2 {
+  max-width: 27ch;
+  letter-spacing: -0.025em;
+}
+.fitJourney {
+  margin-top: 40px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 18px 54px -32px rgba(11, 31, 58, 0.2);
+}
+.fitJourneyHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.fitJourneyHeader > span:last-child {
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+}
+.fitProgress {
+  height: 3px;
+  margin: 18px 0 24px;
+  overflow: hidden;
+  background: var(--line);
+  border-radius: 4px;
+}
+.fitProgress > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--teal));
+  transform-origin: left;
+}
+.fitCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.fitCard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: white;
+  transition:
+    background 220ms,
+    border-color 220ms,
+    box-shadow 220ms;
+}
+.fitCard[data-active="true"] {
+  border-color: color-mix(in srgb, var(--fit-accent) 50%, var(--line));
+  background: color-mix(in srgb, var(--fit-accent) 5%, white);
+  box-shadow: inset 0 3px 0 var(--fit-accent);
+}
+.fitSelect {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  padding: 22px 18px 16px;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: var(--navy);
+  border-radius: 15px;
+  cursor: pointer;
+}
+.fitCardTop {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  color: var(--fit-accent);
+}
+.fitCardTop > span {
+  color: var(--body);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.fitSelect strong {
+  font-size: 16px;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+}
+.fitCardBody {
+  margin-top: 9px;
+  color: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.fitModuleLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 18px;
+  padding: 15px 0;
+  border-top: 1px solid var(--line);
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 700;
+}
+.fitSelect:focus-visible,
+.fitModuleLink:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+.fitHint {
+  margin: 20px 0 0;
+  color: var(--body);
+  font-size: 11px;
+  line-height: 1.5;
+}
+@media (max-width: 767px) {
+  .fitJourney {
+    margin-top: 28px;
+    padding: 16px;
+    border-radius: 20px;
+  }
+  .fitCards {
+    grid-template-columns: 1fr;
+  }
+  .fitSelect {
+    padding: 18px 16px 12px;
+  }
+  .fitCardTop {
+    margin-bottom: 12px;
+  }
+  .fitModuleLink {
+    padding-block: 12px;
+    margin-inline: 16px;
+  }
+  .fitJourneyHeader {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fitCard {
+    transition: none;
+  }
+  .fitCards > li {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Interactive operating day: the image stays visible while rows are explored. */
+.industryDetailPage__dayGrid { position: relative; }
+.industryDetailPage__dayPanel { position: sticky; top: 112px; }
+.industryDetailPage__stepper { gap: 12px; }
+.industryDetailPage__step {
+  min-height: 112px;
+  padding-block: 18px;
+  align-content: start;
+}
+.industryDetailPage__stepperSpine { top: 36px; bottom: 76px; }
+.industryDetailPage__step[data-state="active"] { background: rgba(47,107,255,0.045); }
+@media (max-width: 1080px) {
+  .industryDetailPage__dayPanel {
+    order: -1;
+    top: 80px;
+    z-index: 3;
+    width: 100%;
+    height: 36svh;
+    min-height: 220px;
+    max-height: 380px;
+    aspect-ratio: auto;
+  }
+  .industryDetailPage__dayGrid { gap: 24px; }
+  .industryDetailPage__step { min-height: 124px; }
+  .industryDetailPage__stepperSpine { bottom: 88px; }
+  .industryDetailPage__dayCaption { padding: 18px; }
+  .industryDetailPage__dayCaption > strong { font-size: 23px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .industryDetailPage__stepperFill, .industryDetailPage__stepMarker { transition: none; }
+  .industryDetailPage__dayImage { animation: none; }
 }

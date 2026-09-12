@@ -215,9 +215,9 @@ export function FAQSection() {
             ) : (
               <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
                 <HelpCircle className="mx-auto text-slate-300 mb-3" size={32} />
-                <h4 className="font-bold text-sm text-slate-700">
+                <p className="font-bold text-sm text-slate-700">
                   No questions found
-                </h4>
+                </p>
                 <p className="text-xs text-slate-400 mt-1">
                   Try searching for other keywords or reset filters.
                 </p>
@@ -258,7 +258,7 @@ function WorkflowBanner({ className = "" }: { className?: string }) {
           <HelpCircle size={18} />
         </span>
         <div>
-          <h4 className="text-sm font-bold">Have a specific workflow?</h4>
+          <h3 className="text-sm font-bold">Have a specific workflow?</h3>
           <p className="mt-2 text-xs leading-relaxed text-slate-400">
             Every brand has distinct warehouse flows, master rules, and partner
             dynamics. Let&apos;s map Bizonix to yours.

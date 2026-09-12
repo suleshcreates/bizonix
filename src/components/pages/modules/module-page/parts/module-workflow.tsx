@@ -3,38 +3,37 @@
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CircleDot } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import type { ModuleWorkflowData } from "@/lib/content/modules/module-pages/types";
+import { ModuleHeading } from "./module-heading";
 import styles from "@/components/pages/modules/modules.module.css";
 
 /**
- * The operating story, as one component with five presentations.
+ * The operating story, as one section on every module page.
  *
- * `variant` only chooses a layout modifier — the step model, the spine and the
- * scroll choreography are shared, so a new presentation is a class rather than
- * a second component. One ScrollTrigger drives the whole section: it scrubs a
- * `--progress` custom property on the spine and marks steps active as the
- * front of the line reaches them. Nothing else on the page animates these
- * nodes, so GSAP and Framer Motion never contend for the same properties.
+ * There is a single presentation, not a variant per module: wide viewports get
+ * one horizontal timeline that spans the content column, narrow ones get one
+ * vertical timeline. Both are the same DOM — a flat list of steps where each
+ * step owns the segment of line that leaves it — so the orientation is a
+ * media query rather than a second markup tree. Nothing here branches on a
+ * module; the nine differ only in `workflow` data.
  *
- * `entity-lanes` keeps the steps in operating sequence and labels the lane on
- * each one — a network flow crosses back and forth between head office and the
- * outlet, and reordering the steps into columns would misrepresent it.
+ * Layout notes that the CSS depends on:
+ *  - the rail is built from per-step segments, so the line always terminates
+ *    exactly on the last node whatever the step count is;
+ *  - on desktop the step is a row-subgrid of the track, which is what keeps
+ *    titles, descriptions and record pills on shared baselines across columns
+ *    even when one description runs a line longer.
+ *
+ * Motion is authored here rather than left to the page's global reveal batch,
+ * because the order matters: the line has to arrive at a node before that node
+ * lights up. After the entrance the section is static apart from one signal
+ * travelling the path, which pauses whenever the section is off screen.
  */
-
-const variantClass: Record<ModuleWorkflowData["variant"], string> = {
-  timeline: styles.modulePage__stepsTimeline,
-  "operational-flow": styles.modulePage__stepsFlow,
-  "step-cards": styles.modulePage__stepsCards,
-  "entity-lanes": styles.modulePage__stepsLanes,
-  "data-to-report": styles.modulePage__stepsReport,
-};
 
 export function ModuleWorkflow({ workflow }: { workflow: ModuleWorkflowData }) {
   const sectionRef = useRef<HTMLElement>(null);
-  const spineRef = useRef<HTMLSpanElement>(null);
-  const [reached, setReached] = useState(0);
+  const trackRef = useRef<HTMLOListElement>(null);
 
   const reducedMotion = useReducedMotion();
   const steps = workflow.steps;
@@ -42,34 +41,97 @@ export function ModuleWorkflow({ workflow }: { workflow: ModuleWorkflowData }) {
 
   useEffect(() => {
     const section = sectionRef.current;
-    const spine = spineRef.current;
-    if (!section || !spine) return;
+    const track = trackRef.current;
+    if (!section || !track) return;
 
-    /* Reduced motion: no scrub and no partial states. Everything renders in
-       its finished form, which is the accessible resting state anyway. */
-    if (reducedMotion) {
-      spine.style.setProperty("--progress", "100%");
-      return;
-    }
+    /* Reduced motion: the CSS resting state is already the finished state, so
+       there is nothing to set up and nothing to loop. */
+    if (reducedMotion) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const trigger = ScrollTrigger.create({
-      trigger: section,
-      start: "top 70%",
-      end: "bottom 80%",
-      scrub: 0.6,
-      onUpdate: (self) => {
-        spine.style.setProperty(
-          "--progress",
-          `${(self.progress * 100).toFixed(2)}%`,
-        );
-        setReached(Math.min(stepCount, Math.ceil(self.progress * stepCount)));
-      },
-    });
+    const context = gsap.context(() => {
+      const items = gsap.utils.toArray<HTMLElement>("[data-wf-step]");
+      const nodes = gsap.utils.toArray<HTMLElement>("[data-wf-node]");
+      const fills = gsap.utils.toArray<HTMLElement>("[data-wf-fill]");
+      const signals = gsap.utils.toArray<HTMLElement>("[data-wf-signal]");
+      const copy = items.map((item) =>
+        gsap.utils.toArray<HTMLElement>("[data-wf-copy]", item),
+      );
 
-    return () => trigger.kill();
-  }, [stepCount, reducedMotion]);
+      gsap.set(nodes, { opacity: 0, scale: 0.86 });
+      gsap.set(copy.flat(), { opacity: 0, y: 12 });
+      gsap.set(fills, { "--fill": "0%" });
+
+      /* Entrance: node, its copy, then the segment that carries the eye to the
+         next node. Steps overlap so five of them read as one gesture. */
+      const enter = gsap.timeline({
+        paused: true,
+        defaults: { ease: "power2.out" },
+      });
+
+      items.forEach((_, index) => {
+        const at = index * 0.24;
+        enter.to(nodes[index], { opacity: 1, scale: 1, duration: 0.34 }, at);
+        enter.to(
+          copy[index],
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.05 },
+          at + 0.06,
+        );
+        if (fills[index]) {
+          enter.to(
+            fills[index],
+            { "--fill": "100%", duration: 0.32, ease: "none" },
+            at + 0.12,
+          );
+        }
+      });
+
+      /* The one recurring motion: a single signal walking the whole path, then
+         a long pause. It is created paused and only ever runs while the
+         section is on screen. */
+      const loop = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 2.6 });
+      signals.forEach((signal, index) => {
+        const at = index * 0.56;
+        loop.set(signal, { opacity: 1 }, at);
+        loop.fromTo(
+          signal,
+          { "--t": 0 },
+          { "--t": 1, duration: 0.56, ease: "none" },
+          at,
+        );
+        loop.set(signal, { opacity: 0 }, at + 0.56);
+      });
+
+      let onScreen = false;
+      let entered = false;
+
+      enter.eventCallback("onComplete", () => {
+        entered = true;
+        if (onScreen) loop.play();
+      });
+
+      ScrollTrigger.create({
+        trigger: track,
+        start: "top 84%",
+        once: true,
+        onEnter: () => enter.play(),
+      });
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top bottom",
+        end: "bottom top",
+        onToggle: (self) => {
+          onScreen = self.isActive;
+          if (!onScreen) loop.pause();
+          else if (entered) loop.play();
+        },
+      });
+    }, section);
+
+    return () => context.revert();
+  }, [reducedMotion, stepCount]);
 
   return (
     <section
@@ -82,48 +144,69 @@ export function ModuleWorkflow({ workflow }: { workflow: ModuleWorkflowData }) {
       <div className={styles.modulePage__shell}>
         <header className={styles.modulePage__sectionHead}>
           <p className={styles.modulePage__eyebrow} data-reveal>
-            <span className={styles.modulePage__eyebrowDot} aria-hidden="true" />
+            <span
+              className={styles.modulePage__eyebrowDot}
+              aria-hidden="true"
+            />
             Workflow
           </p>
-          <h2 id="module-workflow" data-reveal>
-            {workflow.title}
-          </h2>
+          <ModuleHeading id="module-workflow" text={workflow.title} />
           <p data-reveal>{workflow.intro}</p>
         </header>
 
         <ol
-          className={`${styles.modulePage__steps} ${variantClass[workflow.variant]}`}
+          ref={trackRef}
+          className={styles.modulePage__steps}
+          data-steps={stepCount}
           style={{ "--step-count": stepCount } as React.CSSProperties}
         >
-          <span ref={spineRef} className={styles.modulePage__spine} aria-hidden="true" />
-
           {steps.map((step, index) => (
             <li
               key={step.id}
               className={styles.modulePage__step}
-              data-active={reducedMotion || index < reached}
-              data-reveal
+              style={{ "--i": index } as React.CSSProperties}
+              data-wf-step
             >
-              <span className={styles.modulePage__stepNode} aria-hidden="true">
-                {step.index}
-              </span>
-              <div className={styles.modulePage__stepBody}>
-                {step.lane ? (
-                  <p className={styles.modulePage__stepLane}>
-                    <i aria-hidden="true" />
-                    {step.lane}
-                  </p>
+              <span className={styles.modulePage__stepRail} aria-hidden="true">
+                <span className={styles.modulePage__stepNode} data-wf-node>
+                  {step.index}
+                </span>
+                {index < stepCount - 1 ? (
+                  <span className={styles.modulePage__connector}>
+                    <span
+                      className={styles.modulePage__connectorFill}
+                      data-wf-fill
+                    />
+                    <span
+                      className={styles.modulePage__connectorSignal}
+                      data-wf-signal
+                    />
+                  </span>
                 ) : null}
-                <h3>
-                  <span className={styles.modulePage__srOnly}>{`Step ${step.index}: `}</span>
-                  {step.title}
-                </h3>
-                <p>{step.body}</p>
-                <p className={styles.modulePage__stepRecord}>
-                  <CircleDot size={13} aria-hidden="true" />
-                  {step.record}
+              </span>
+
+              {step.lane ? (
+                <p className={styles.modulePage__stepLane} data-wf-copy>
+                  <i aria-hidden="true" />
+                  {step.lane}
                 </p>
-              </div>
+              ) : null}
+
+              <h3 className={styles.modulePage__stepTitle} data-wf-copy>
+                <span
+                  className={styles.modulePage__srOnly}
+                >{`Step ${step.index}: `}</span>
+                {step.title}
+              </h3>
+
+              <p className={styles.modulePage__stepText} data-wf-copy>
+                {step.body}
+              </p>
+
+              <p className={styles.modulePage__stepRecord} data-wf-copy>
+                <i aria-hidden="true" />
+                {step.record}
+              </p>
             </li>
           ))}
         </ol>

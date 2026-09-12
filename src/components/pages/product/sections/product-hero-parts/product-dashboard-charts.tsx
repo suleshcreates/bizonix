@@ -46,7 +46,7 @@ export function ProductDashboardSalesTrend() {
         <span className={styles.productHeroDashboard__cardIcon} aria-hidden="true">
           <TrendingUp size={12} strokeWidth={2.3} />
         </span>
-        <h3>Sales trend</h3>
+        <p>Sales trend</p>
         <small>Daily · last 16 days</small>
       </header>
 
@@ -118,7 +118,7 @@ export function ProductDashboardBranchSales() {
         <span className={styles.productHeroDashboard__cardIcon} aria-hidden="true">
           <BarChart3 size={12} strokeWidth={2.3} />
         </span>
-        <h3>Branch-wise sales</h3>
+        <p>Branch-wise sales</p>
         <small>comparison</small>
       </header>
 

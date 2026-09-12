@@ -30,7 +30,7 @@ const principles = [
 const journey = [
   { label: "Master", title: "Established at brand level", context: "Context: Product", image: "/images/product/operating-model/journey-master.webp", icon: Database },
   { label: "Stock", title: "Received by the responsible entity", context: "Context: Location", image: "/images/product/operating-model/journey-stock.webp", icon: PackagePlus },
-  { label: "Movement", title: "Carries source and destination", detail: "Every transfer keeps its full operating context.", context: "Context: Source + Destination", image: "/images/product/operating-model/journey-movement.webp", icon: ArrowLeftRight, active: true },
+  { label: "Movement", title: "Carries source and destination", context: "Context: Source + Destination", image: "/images/product/operating-model/journey-movement.webp", icon: ArrowLeftRight, active: true },
   { label: "Sale", title: "Posts to the operating channel", context: "Context: Channel", image: "/images/product/operating-model/journey-sale.webp", icon: ShoppingBag },
   { label: "Books", title: "Retains the same business context", context: "Context: Ledger", image: "/images/product/operating-model/journey-books.webp", icon: BookOpen },
 ] as const;
@@ -47,7 +47,10 @@ function SectionHeader() {
     <header className={styles.operatingModel__header}>
       <div>
         <span className={styles.operatingModel__eyebrow}><i /> Shared where useful. Separate where essential.</span>
-        <h2>A connected network<br />without <em>blurred boundaries.</em></h2>
+        <h2>
+          <span className={styles.operatingModel__titleLine}>Connected network,</span>{" "}
+          <span className={styles.operatingModel__titleLine}><em>clear boundaries.</em></span>
+        </h2>
       </div>
       <p>Common masters create consistency. Entity-level roles, movements and ledgers preserve responsibility from the first product record to the final posting.</p>
     </header>
@@ -99,7 +102,6 @@ function JourneyNode({ stage, index }: { stage: (typeof journey)[number]; index:
       </span>
       <span className={styles.operatingModel__stageCopy}>
         <small>{stage.label}</small><strong>{stage.title}</strong>
-        {"detail" in stage ? <em>{stage.detail}</em> : null}
         <b>{stage.context}</b>
       </span>
     </button>

@@ -53,7 +53,15 @@ export function SeriesPricing() {
               tone={feature.tone}
             />
             <h2 id="feature-series-title">
-              One purchase series. One approved set of rates.
+              <span className={styles.featuresHeading__blue}>
+                One purchase series.
+              </span>{" "}
+              <span className={styles.featuresHeading__violet}>
+                One approved
+              </span>{" "}
+              <span className={styles.featuresHeading__teal}>
+                set of rates.
+              </span>
             </h2>
           </div>
           <p className={styles.seriesPricing__why}>
@@ -79,8 +87,12 @@ export function SeriesPricing() {
               className={styles.seriesPricing__chip}
               onClick={() => setActiveId(item.id)}
             >
-              <span className={styles.seriesPricing__chipCode}>{item.code}</span>
-              <span className={styles.seriesPricing__chipTitle}>{item.title}</span>
+              <span className={styles.seriesPricing__chipCode}>
+                {item.code}
+              </span>
+              <span className={styles.seriesPricing__chipTitle}>
+                {item.title}
+              </span>
             </button>
           ))}
         </div>
@@ -91,7 +103,9 @@ export function SeriesPricing() {
               {series.code}
               <span>{series.title}</span>
             </p>
-            <p className={styles.seriesPricing__ladderArrival}>{series.arrival}</p>
+            <p className={styles.seriesPricing__ladderArrival}>
+              {series.arrival}
+            </p>
           </div>
 
           {series.rungs.map((rung, index) => (
@@ -111,7 +125,10 @@ export function SeriesPricing() {
                 <p className={styles.seriesPricing__rungNote}>{rung.note}</p>
               </div>
               <div className={styles.seriesPricing__rungTrack}>
-                <span className={styles.seriesPricing__rungFill} aria-hidden="true" />
+                <span
+                  className={styles.seriesPricing__rungFill}
+                  aria-hidden="true"
+                />
                 <span className={styles.seriesPricing__rungValue}>
                   ₹{inr.format(rung.value)}
                 </span>

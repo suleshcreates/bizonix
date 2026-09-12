@@ -9,14 +9,14 @@ export default function NotFound() {
           <Logo />
         </div>
         <p className="mt-10 text-xs font-extrabold uppercase tracking-[.2em] text-bz-blue">
-          404 · Phase 2 is still taking shape
+          404 · Page not found
         </p>
         <h1 className="h2 mx-auto mt-5 max-w-3xl">
-          This part of the operating map isn’t live yet.
+          We couldn’t find that page.
         </h1>
         <p className="lede mx-auto mt-5 max-w-xl">
-          Some solution and industry pages are intentionally reserved for the
-          next build phase. The core platform and demo flow are ready.
+          The link may be outdated, or the address may have been mistyped.
+          Return home or contact us for help.
         </p>
         <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
           <Link

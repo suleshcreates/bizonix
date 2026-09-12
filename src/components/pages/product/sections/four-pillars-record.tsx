@@ -9,10 +9,13 @@ import styles from "@/components/pages/product/product.module.css";
  * Four pillars, one record — asymmetric editorial composition.
  *
  * LEFT  ~34%  header copy + operating model rail
- * RIGHT ~66%  panoramic pillar strip + record convergence + timeline
+ * RIGHT ~66%  panoramic pillar strip + record convergence
  *
  * The two-column grid keeps the left editorial aligned with the right visual
- * story. The section ends after the timeline — nothing else follows.
+ * story. The record journey then breaks out to the full shell: it is one
+ * record travelling the whole operation, and squeezing it into the right-hand
+ * column made it read as a widget beside the argument rather than as the
+ * conclusion of it. The section ends there — nothing else follows.
  */
 export function FourPillarsRecordSection() {
   return (
@@ -30,6 +33,10 @@ export function FourPillarsRecordSection() {
           <OperatingModelRail />
           <div className={styles.fourPillarsRecord__bodyRight}>
             <RecordConvergence />
+          </div>
+
+          {/* Row 3: the record journey, across the full content width */}
+          <div className={styles.fourPillarsRecord__journeyRow}>
             <TransactionTimeline />
           </div>
         </div>

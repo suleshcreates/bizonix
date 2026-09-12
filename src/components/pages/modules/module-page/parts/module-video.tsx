@@ -2,6 +2,7 @@
 
 import { trackModuleEvent } from "@/lib/analytics";
 import type { ModuleVideo as Video } from "@/lib/content/modules/module-pages/types";
+import { ModuleHeading } from "./module-heading";
 import styles from "@/components/pages/modules/modules.module.css";
 
 /**
@@ -23,16 +24,20 @@ export function ModuleVideo({
   const seconds = String(video.duration % 60).padStart(2, "0");
 
   return (
-    <section className={styles.modulePage__video} aria-labelledby="module-video">
+    <section
+      className={styles.modulePage__video}
+      aria-labelledby="module-video"
+    >
       <div className={styles.modulePage__shell}>
         <header className={styles.modulePage__sectionHead}>
           <p className={styles.modulePage__eyebrow} data-reveal>
-            <span className={styles.modulePage__eyebrowDot} aria-hidden="true" />
+            <span
+              className={styles.modulePage__eyebrowDot}
+              aria-hidden="true"
+            />
             Walkthrough · {minutes}:{seconds}
           </p>
-          <h2 id="module-video" data-reveal>
-            {video.title}
-          </h2>
+          <ModuleHeading id="module-video" text={video.title} />
         </header>
 
         <div className={styles.modulePage__videoFrame} data-reveal>

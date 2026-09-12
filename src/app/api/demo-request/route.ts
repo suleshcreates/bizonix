@@ -7,7 +7,11 @@ import {
 } from "@/lib/content/contact/contact-content";
 
 type DemoRequest = {
+  fullName?: string;
   companyName?: string;
+  city?: string;
+  outletCount?: string;
+  currentSoftware?: string;
   role?: string;
   priorities?: string[];
   timeline?: string;
@@ -15,9 +19,7 @@ type DemoRequest = {
   phone?: string;
   notes?: string;
   consent?: boolean;
-  /** Honeypot: real users never see this field. */
   website?: string;
-  /** Milliseconds between first paint and submit; bots submit near-instantly. */
   elapsedMs?: number;
   utm?: Record<string, string>;
 };
@@ -42,8 +44,14 @@ const label = <T extends { value: string; label: string }>(
  *   Phone number given    +10 (opens the fastest channel)
  * Kept server-side so the weighting is not visible to form-fillers.
  */
-function scoreLead(role: string, timeline: string, priorities: string[], phone: string) {
-  const roleWeight = roleOptions.find((option) => option.value === role)?.weight ?? 0;
+function scoreLead(
+  role: string,
+  timeline: string,
+  priorities: string[],
+  phone: string,
+) {
+  const roleWeight =
+    roleOptions.find((option) => option.value === role)?.weight ?? 0;
   const timelineWeight =
     timelineOptions.find((option) => option.value === timeline)?.weight ?? 0;
   const breadth = priorities.length > 1 ? 15 : 0;
@@ -57,7 +65,10 @@ function priorityOf(score: number): "high" | "medium" | "low" {
   return "low";
 }
 
-async function notifySlack(summary: string, urgency: "high" | "medium" | "low") {
+async function notifySlack(
+  summary: string,
+  urgency: "high" | "medium" | "low",
+) {
   const webhook = process.env.SLACK_WEBHOOK_URL;
   if (!webhook) return;
   const icon = urgency === "high" ? "🔴" : urgency === "medium" ? "🟠" : "⚪";
@@ -65,7 +76,9 @@ async function notifySlack(summary: string, urgency: "high" | "medium" | "low") 
     await fetch(webhook, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: `${icon} *New Bizonix demo request*\n${summary}` }),
+      body: JSON.stringify({
+        text: `${icon} *New Bizonix demo request*\n${summary}`,
+      }),
     });
   } catch (error) {
     // Slack is a convenience channel; never fail the lead because it is down.
@@ -75,6 +88,12 @@ async function notifySlack(summary: string, urgency: "high" | "medium" | "low") 
 
 export async function POST(request: NextRequest) {
   try {
+    if (process.env.NEXT_PUBLIC_DEMO_REQUESTS_ENABLED !== "true") {
+      return NextResponse.json(
+        { error: "Demo requests are not available through this site yet." },
+        { status: 503 },
+      );
+    }
     const data = (await request.json()) as DemoRequest;
 
     // Honeypot and speed traps return success so bots do not learn the rule.
@@ -84,7 +103,8 @@ export async function POST(request: NextRequest) {
     }
 
     const ip =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      "unknown";
     const last = attempts.get(ip) || 0;
     if (Date.now() - last < WINDOW_MS) {
       return NextResponse.json(
@@ -93,7 +113,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const fullName = clean(data.fullName, 120);
     const companyName = clean(data.companyName, 160);
+    const city = clean(data.city, 100);
+    const outletCount = clean(data.outletCount, 60);
+    const currentSoftware = clean(data.currentSoftware, 160);
     const role = clean(data.role, 60);
     const timeline = clean(data.timeline, 60);
     const email = clean(data.email, 160);
@@ -102,17 +126,25 @@ export async function POST(request: NextRequest) {
     const priorities = Array.isArray(data.priorities)
       ? data.priorities
           .map((value) => clean(value, 60))
-          .filter((value) => priorityOptions.some((option) => option.value === value))
+          .filter((value) =>
+            priorityOptions.some((option) => option.value === value),
+          )
           .slice(0, 2)
       : [];
 
     const validRole = roleOptions.some((option) => option.value === role);
-    const validTimeline = timelineOptions.some((option) => option.value === timeline);
+    const validTimeline = timelineOptions.some(
+      (option) => option.value === timeline,
+    );
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const validPhone = !phone || /^[+\d][\d\s-]{7,17}$/.test(phone);
+    const validPhone = /^[+\d][\d\s-]{7,17}$/.test(phone);
 
     if (
+      !fullName ||
       !companyName ||
+      !city ||
+      !outletCount ||
+      !currentSoftware ||
       !validRole ||
       !validTimeline ||
       !validEmail ||
@@ -134,18 +166,27 @@ export async function POST(request: NextRequest) {
     const from = process.env.DEMO_REQUEST_FROM_EMAIL;
 
     const details: [string, string][] = [
+      ["Name", fullName],
       ["Company", companyName],
+      ["City", city],
+      ["Outlet count", outletCount],
+      ["Current software", currentSoftware],
       ["Role", label(roleOptions, role)],
-      ["Priorities", priorities.map((value) => label(priorityOptions, value)).join(", ")],
+      [
+        "Priorities",
+        priorities.map((value) => label(priorityOptions, value)).join(", "),
+      ],
       ["Timeline", label(timelineOptions, timeline)],
       ["Email", email],
-      ["Phone", phone || "Not provided"],
+      ["Phone", phone],
       ["Notes", notes || "Not provided"],
       ["Lead score", `${score} (${urgency} priority)`],
       ["Source", data.utm?.utm_source || "direct"],
       ["Campaign", data.utm?.utm_campaign || "none"],
     ];
-    const summary = details.map(([key, value]) => `${key}: ${value}`).join("\n");
+    const summary = details
+      .map(([key, value]) => `${key}: ${value}`)
+      .join("\n");
 
     if (!apiKey || !to || !from) {
       // Email delivery unconfigured: still record the lead where we can, and be
@@ -158,7 +199,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "We could not record your request automatically. Please message us on WhatsApp and we will pick it up straight away.",
+            "We could not record your request automatically. Please try again once demo request delivery has been configured.",
         },
         { status: 503 },
       );

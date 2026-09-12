@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
-export const metadata: Metadata = {
-  title: "Terms of use (Draft)",
-  description:
-    "Draft terms structure for the Bizonix website, pending legal review.",
-};
+import { pageMetadata } from "@/lib/seo/metadata";
+export const metadata: Metadata = pageMetadata("/terms");
 export default function Terms() {
   return (
     <LegalPage

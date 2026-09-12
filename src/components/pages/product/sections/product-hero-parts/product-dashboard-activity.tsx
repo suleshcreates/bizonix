@@ -20,7 +20,7 @@ export function ProductDashboardActivity() {
   return (
     <section className={`${styles.productHeroDashboard__card} ${styles.productHeroDashboard__activityCard}`}>
       <header className={styles.productHeroDashboard__cardHead}>
-        <h3>Real-time activity</h3>
+        <p>Real-time activity</p>
         <small>live feed</small>
       </header>
 

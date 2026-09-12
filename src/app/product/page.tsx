@@ -5,24 +5,13 @@ import { IntegrationSurface } from "@/components/pages/product/sections/integrat
 import { OperatingModel } from "@/components/pages/product/sections/operating-model";
 import { ProductHero } from "@/components/pages/product/sections/product-hero";
 import { SecurityTenancy } from "@/components/pages/product/sections/security-tenancy";
-import { siteConfig } from "@/lib/site-config";
-export const metadata: Metadata = {
-  title: "Platform",
-  description:
-    "See how Bizonix connects warehouse, retail, franchise, ecommerce and finance without mixing operating entities.",
-  openGraph: {
-    title: "One platform. Every operating entity.",
-    description: "The Bizonix operating model for multi-entity retail brands.",
-  },
-};
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Bizonix ERP",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web",
-  description: siteConfig.description,
-};
+import { JsonLd } from "@/components/seo/json-ld";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { getRoute } from "@/lib/seo/routes";
+import { breadcrumbSchema, softwareApplicationSchema } from "@/lib/seo/schema";
+
+export const metadata: Metadata = pageMetadata("/product");
+
 export default function ProductPage() {
   return (
     <>
@@ -32,9 +21,15 @@ export default function ProductPage() {
       <DayInLife />
       <SecurityTenancy />
       <IntegrationSurface />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      <JsonLd
+        schema={[
+          softwareApplicationSchema({
+            name: "Bizonix ERP",
+            description: getRoute("/product").description,
+            path: "/product",
+          }),
+          breadcrumbSchema("/product"),
+        ]}
       />
     </>
   );

@@ -28,7 +28,7 @@ export function OperatingEcosystem() {
               Multi-Entity
             </span>{" "}
             <br />
-            Operations <em>10x Faster</em>
+            Operations <em>Together</em>
           </h2>
           <p>
             The complete cloud ERP designed for modern retail, wholesale, and

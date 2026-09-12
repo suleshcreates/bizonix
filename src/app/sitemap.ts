@@ -1,22 +1,27 @@
 import type { MetadataRoute } from "next";
-import { moduleSlugs } from "@/lib/content/modules/module-pages";
-import { siteConfig } from "@/lib/site-config";
+import { IS_INDEXABLE_BUILD, absoluteUrl } from "@/lib/seo/config";
+import { indexableRoutes } from "@/lib/seo/routes";
 
+/**
+ * The sitemap, generated from the route registry.
+ *
+ * Because `indexableRoutes` is the same list the pages take their canonicals
+ * from, every URL here is by construction a real, public, self-canonical route
+ * — there is no second list to fall out of step with the first.
+ *
+ * No `lastModified`. The previous version stamped `new Date()` on every entry
+ * at build time, which told crawlers the entire site had changed on every
+ * deploy; that is a fabricated signal, and Google discounts a sitemap whose
+ * dates it learns not to trust. Omitting the field is the honest answer until
+ * page content carries a real modification date.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const core = ["", "/product", "/modules", "/contact", "/privacy", "/terms"];
-  const modules = moduleSlugs.map((slug) => `/modules/${slug}`);
+  /* A non-production host publishes nothing. See lib/seo/config.ts. */
+  if (!IS_INDEXABLE_BUILD) return [];
 
-  return [...core, ...modules].map((path) => ({
-    url: `${siteConfig.url}${path}`,
-    lastModified: new Date(),
-    changeFrequency: path === "" ? "weekly" : "monthly",
-    priority:
-      path === ""
-        ? 1
-        : path === "/product" || path === "/modules"
-          ? 0.9
-          : path.startsWith("/modules/")
-            ? 0.8
-            : 0.6,
+  return indexableRoutes.map((route) => ({
+    url: absoluteUrl(route.path),
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
   }));
 }

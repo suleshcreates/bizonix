@@ -8,13 +8,13 @@ import {
   moduleRoute,
   type ModuleSlug,
 } from "@/lib/content/modules/module-pages/types";
+import { ModuleHeading } from "./module-heading";
 import styles from "@/components/pages/modules/modules.module.css";
 
 /**
- * The three sibling modules this one is most often bought with. The
- * relationships live in module data — the template has no idea which modules
- * are related to which — and each card carries the sibling's own accent so the
- * row reads as a map of the system rather than three identical tiles.
+ * Three complementary modules, rendered from the relationships authored in
+ * module data. The shared geometry keeps this closing section consistent
+ * across every deep module page.
  */
 export function RelatedModules({
   related,
@@ -26,20 +26,32 @@ export function RelatedModules({
   moduleSlug: string;
 }) {
   return (
-    <section className={styles.modulePage__related} aria-labelledby="module-related">
+    <section
+      className={styles.modulePage__related}
+      aria-labelledby="module-related"
+    >
       <div className={styles.modulePage__shell}>
         <header className={styles.modulePage__sectionHead}>
           <p className={styles.modulePage__eyebrow} data-reveal>
-            <span className={styles.modulePage__eyebrowDot} aria-hidden="true" />
+            <span
+              className={styles.modulePage__eyebrowDot}
+              aria-hidden="true"
+            />
             Next
           </p>
-          <h2 id="module-related" data-reveal>
-            What {moduleTitle} works with
-          </h2>
+          <ModuleHeading
+            id="module-related"
+            text={"What " + moduleTitle + " works with"}
+            accent="works with"
+          />
+          <p data-reveal>
+            Follow the connected modules that carry the same operating record
+            into the next part of the business.
+          </p>
         </header>
 
         <div className={styles.modulePage__relatedGrid}>
-          {related.map((slug) => {
+          {related.map((slug, index) => {
             const sibling = modulePages[slug];
             const Icon = sibling.icon;
 
@@ -56,17 +68,32 @@ export function RelatedModules({
                   })
                 }
                 style={
-                  { "--related-accent": sibling.theme.accent } as React.CSSProperties
+                  {
+                    "--related-accent": sibling.theme.accent,
+                  } as React.CSSProperties
                 }
               >
-                <span className={styles.modulePage__relatedIcon} aria-hidden="true">
-                  <Icon size={20} />
+                <span
+                  className={styles.modulePage__relatedIcon}
+                  aria-hidden="true"
+                >
+                  <Icon size={21} strokeWidth={1.8} />
                 </span>
-                <span>
+
+                <span className={styles.modulePage__relatedCopy}>
+                  <small>
+                    Connected module · {String(index + 1).padStart(2, "0")}
+                  </small>
                   <strong>{sibling.title}</strong>
                   <span>{sibling.outcome}</span>
                 </span>
-                <ArrowRight size={18} aria-hidden="true" />
+
+                <span
+                  className={styles.modulePage__relatedArrow}
+                  aria-hidden="true"
+                >
+                  <ArrowRight size={17} />
+                </span>
               </Link>
             );
           })}

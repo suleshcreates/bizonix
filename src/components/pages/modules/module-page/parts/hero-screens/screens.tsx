@@ -23,11 +23,25 @@ type ScreenProps = { data: ModuleScreen; active: number };
 function RegisterScreen({ data, active }: ScreenProps) {
   if (data.shape !== "register") return null;
 
+  /* `data-sm` is what the narrow layout reads: the two cells the module chose
+     to keep, plus the status, in a fixed visual order. Every other cell is
+     hidden by CSS rather than dropped here, so the markup — and the reading
+     order for assistive technology — is the same at every width. */
+  const [main, detail] = data.compact;
+  const smRole = (index: number) =>
+    index === main ? "main" : index === detail ? "detail" : "off";
+
   return (
     <div className={styles.screens__table}>
       <div className={`${styles.screens__row} ${styles.screens__rowHead}`}>
         {data.columns.map((column, index) => (
-          <span key={column} data-col={index}>
+          <span
+            key={column}
+            data-col={index}
+            data-sm={
+              index === data.columns.length - 1 ? "status" : smRole(index)
+            }
+          >
             {column}
           </span>
         ))}
@@ -41,11 +55,11 @@ function RegisterScreen({ data, active }: ScreenProps) {
           style={{ "--i": index } as CSSProperties}
         >
           {row.cells.map((cell, cellIndex) => (
-            <span key={cellIndex} data-col={cellIndex}>
+            <span key={cellIndex} data-col={cellIndex} data-sm={smRole(cellIndex)}>
               {cell}
             </span>
           ))}
-          <span data-col={row.cells.length}>
+          <span data-col={row.cells.length} data-sm="status">
             <span className={styles.screens__pill} data-tone={row.tone}>
               {row.state}
             </span>

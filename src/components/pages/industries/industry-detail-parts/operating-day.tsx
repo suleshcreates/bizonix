@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import type { IndustryDetail } from "@/lib/content/industries/industry-detail";
 import styles from "@/components/pages/industries/industries.module.css";
@@ -12,11 +12,12 @@ import styles from "@/components/pages/industries/industries.module.css";
  */
 export function OperatingDay({ steps }: { steps: IndustryDetail["workflow"] }) {
   const [active, setActive] = useState(0);
+  const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const step = steps[active];
   const progress = steps.length > 1 ? (active / (steps.length - 1)) * 100 : 0;
 
   return (
-    <section className={styles.industryDetailPage__day} aria-labelledby="day-title">
+    <section className={styles.industryDetailPage__day} aria-labelledby="day-title" data-operating-day>
       <div className={styles.industryDetailPage__shell}>
         <div className={styles.industryDetailPage__dayHead}>
           <p className={styles.industryDetailPage__eyebrow}>
@@ -33,7 +34,8 @@ export function OperatingDay({ steps }: { steps: IndustryDetail["workflow"] }) {
             className={styles.industryDetailPage__stepper}
             style={{ "--progress": `${progress}%` } as React.CSSProperties}
             role="tablist"
-            aria-label="Steps in an apparel operating day"
+            aria-label="Steps in the operating day"
+            aria-orientation="vertical"
           >
             <span className={styles.industryDetailPage__stepperSpine} aria-hidden="true">
               <span className={styles.industryDetailPage__stepperFill} />
@@ -42,16 +44,27 @@ export function OperatingDay({ steps }: { steps: IndustryDetail["workflow"] }) {
             {steps.map((item, index) => (
               <button
                 key={item.order}
+                ref={(element) => { buttons.current[index] = element; }}
                 type="button"
                 role="tab"
                 id={`step-${item.order}`}
                 aria-selected={index === active}
+                tabIndex={index === active ? 0 : -1}
                 aria-controls="day-panel"
                 className={styles.industryDetailPage__step}
                 data-state={
                   index === active ? "active" : index < active ? "done" : "todo"
                 }
+                onMouseEnter={() => setActive(index)}
+                onFocus={() => setActive(index)}
                 onClick={() => setActive(index)}
+                onKeyDown={(event) => {
+                  const next = event.key === "ArrowDown" ? (index + 1) % steps.length : event.key === "ArrowUp" ? (index + steps.length - 1) % steps.length : event.key === "Home" ? 0 : event.key === "End" ? steps.length - 1 : null;
+                  if (next === null) return;
+                  event.preventDefault();
+                  buttons.current[next]?.focus({ preventScroll: true });
+                  setActive(next);
+                }}
               >
                 <span className={styles.industryDetailPage__stepMarker} aria-hidden="true">
                   {item.order}

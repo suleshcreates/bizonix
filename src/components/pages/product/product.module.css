@@ -930,7 +930,20 @@
 
 /* ======================================================== Header */
 .dayInSystem__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(380px, 0.82fr);
+  align-items: end;
+  justify-content: space-between;
+  gap: clamp(32px, 5vw, 64px);
   margin-bottom: clamp(36px, 4vw, 48px);
+}
+
+.dayInSystem__headerLeft {
+  min-width: 0;
+}
+
+.dayInSystem__headerRight {
+  min-width: 0;
 }
 
 .dayInSystem__eyebrow {
@@ -955,13 +968,18 @@
 
 .dayInSystem__title {
   max-width: 760px;
-  margin-bottom: 18px;
+  margin-bottom: 0;
   color: var(--bz-navy);
-  font-size: clamp(40px, 3.8vw, 56px);
-  font-weight: 850;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.018em;
+  word-spacing: 0.04em;
   text-wrap: balance;
+}
+
+.dayInSystem__titleLine {
+  display: block;
 }
 
 .dayInSystem__accentBlue {
@@ -972,10 +990,11 @@
   color: var(--bz-teal);
 }
 .dayInSystem__description {
-  max-width: 680px;
+  max-width: 540px;
+  margin: 0;
   color: var(--bz-muted);
-  font-size: clamp(16px, 1.15vw, 18px);
-  line-height: 1.55;
+  font-size: clamp(15.5px, 1.1vw, 17px);
+  line-height: 1.65;
 }
 
 /* ======================================================== Timeline Track */
@@ -1492,6 +1511,13 @@
   .dayInSystem__metricBand {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+  }
+}
+
+@media (max-width: 960px) {
+  .dayInSystem__header {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 
@@ -2341,11 +2367,16 @@
   max-width: 540px;
   margin-bottom: 24px;
   color: var(--bz-navy);
-  font-size: clamp(44px, 3.7vw, 58px);
-  font-weight: 850;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.018em;
+  word-spacing: 0.04em;
   text-wrap: balance;
+}
+
+.fourPillarsRecord__titleLine {
+  display: block;
 }
 
 .fourPillarsRecord__highlight {
@@ -2950,125 +2981,669 @@
 }
 
 /* ====================================================== LAYER 5 timeline */
-.fourPillarsRecord__timeline {
-  padding: 20px 28px 22px;
+/* ============================================ LAYER 4 the record journey
+
+   One record moving through five operational states.
+
+   The argument of this block is continuity, so it is built out of continuity:
+   a record chip opens the journey and an end cap closes it with the same
+   identifier, and the rail between them is assembled from per-step segments
+   rather than drawn as one absolute line. That is what makes the line finish
+   exactly on the last node at any step count, and what lets a hovered step
+   light its own segment instead of the whole track.
+
+   Wide viewports read left to right, narrow ones top to bottom. Both are the
+   same markup — the orientation is a media query, not a second component.
+   ======================================================================== */
+
+.fourPillarsRecord__journeyRow {
+  grid-column: 1 / -1;
+  margin-top: 44px;
+}
+
+.fourPillarsRecord__journey {
+  --j-blue: #2f6bff;
+  --j-cyan: #17c1cd;
+  --j-line: rgba(11, 31, 58, 0.1);
+  padding: 30px 32px 34px;
   border: 1px solid var(--bz-border);
-  border-radius: 22px;
-  background: var(--bz-surface);
-  box-shadow: 0 4px 18px rgba(11, 31, 58, 0.05);
+  border-radius: 24px;
+  background:
+    radial-gradient(
+      120% 140% at 88% -20%,
+      rgba(23, 193, 205, 0.07),
+      transparent 60%
+    ),
+    radial-gradient(
+      90% 130% at 4% -10%,
+      rgba(47, 107, 255, 0.06),
+      transparent 62%
+    ),
+    var(--bz-surface);
+  box-shadow: 0 4px 20px rgba(11, 31, 58, 0.05);
 }
 
-.fourPillarsRecord__timelineHead {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  margin-bottom: 22px;
-}
+/* ------------------------------------------------------------------ head */
 
-.fourPillarsRecord__timelineTitle {
-  color: var(--bz-navy);
-  font-size: 13.5px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+.fourPillarsRecord__journeyEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  color: var(--j-blue);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
 }
 
-.fourPillarsRecord__timelineNote {
+.fourPillarsRecord__journeyEyebrow::before {
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  opacity: 0.65;
+}
+
+.fourPillarsRecord__journeyTitle {
+  margin: 13px 0 0;
+  color: var(--bz-navy);
+  font-size: clamp(30px, 2.5vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
+}
+
+/* One phrase carries the accent, never the whole heading. */
+.fourPillarsRecord__journeyAccent {
+  background: linear-gradient(96deg, #286cff 0%, #16bfc0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.fourPillarsRecord__journeyNote {
+  max-width: 46ch;
+  margin: 12px 0 0;
   color: var(--bz-muted);
-  font-size: 13px;
-  font-weight: 550;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
-.fourPillarsRecord__track {
-  position: relative;
+/* -------------------------------------------------------- identity row */
+
+/* The same identifier at both ends of the journey. Whatever happens between
+   them, the record that arrives is the record that left. */
+.fourPillarsRecord__identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
 }
 
-.fourPillarsRecord__trackSvg {
-  position: absolute;
-  top: 48px;
-  left: 10%;
-  width: 80%;
-  height: 6px;
-  overflow: visible;
+.fourPillarsRecord__recordChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 13px 7px 11px;
+  border: 1px solid rgba(47, 107, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(47, 107, 255, 0.05);
+  color: var(--bz-navy);
+  white-space: nowrap;
 }
 
-.fourPillarsRecord__trackSvgVertical {
-  display: none;
+.fourPillarsRecord__recordChip svg {
+  flex: none;
+  color: var(--j-blue);
 }
 
-.fourPillarsRecord__events {
+.fourPillarsRecord__recordChip b {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.fourPillarsRecord__recordChip em {
+  padding-left: 9px;
+  border-left: 1px solid rgba(47, 107, 255, 0.24);
+  color: var(--j-blue);
+  font-size: 12.5px;
+  font-style: normal;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.fourPillarsRecord__identityRule {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(47, 107, 255, 0.24),
+    rgba(23, 193, 205, 0.24)
+  );
+}
+
+.fourPillarsRecord__identityEnd {
+  color: var(--bz-muted);
+  font-size: 11.5px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.fourPillarsRecord__identityEnd em {
+  color: var(--bz-navy);
+  font-style: normal;
+  font-weight: 800;
+}
+
+/* ----------------------------------------------------------- the states */
+
+/* Vertical is the base case: it needs no assumption about available width. */
+.fourPillarsRecord__steps {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding: 0;
+  margin: 22px 0 0;
+  gap: 0;
+  grid-template-columns: minmax(0, 1fr);
   list-style: none;
 }
 
-.fourPillarsRecord__event {
+/* Compact vertical row: number and badge open the line, title and context
+   below them, timestamp on the right. The narrowest phones stack it instead
+   (see below) — there the badge column costs the title ~90px. */
+.fourPillarsRecord__step {
+  display: grid;
+  align-items: start;
+  column-gap: 14px;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto auto;
+}
+
+/* Node first, then the segment reaching the next node — so the last step
+   simply has no segment and the rail ends on it. */
+.fourPillarsRecord__stepRail {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  padding-inline: 8px;
+  align-self: stretch;
+  grid-column: 1;
+  grid-row: 1 / -1;
 }
 
-.fourPillarsRecord__eventIcon {
+.fourPillarsRecord__stepNode {
   display: grid;
-  place-items: center;
   width: 34px;
   height: 34px;
-  margin-bottom: 12px;
+  flex: none;
+  place-items: center;
   border: 1px solid var(--bz-border);
   border-radius: 11px;
   background: var(--bz-surface);
-  color: var(--bz-blue);
-  box-shadow: 0 4px 12px rgba(11, 31, 58, 0.07);
+  box-shadow: 0 3px 10px rgba(11, 31, 58, 0.06);
+  color: var(--j-blue);
+  transition:
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    color 240ms ease;
 }
 
-.fourPillarsRecord__event[data-accent="teal"] .fourPillarsRecord__eventIcon {
-  color: #189e91;
+.fourPillarsRecord__connector {
+  position: relative;
+  overflow: hidden;
+  width: 2px;
+  min-height: 18px;
+  flex: 1;
+  background: var(--j-line);
 }
 
-.fourPillarsRecord__eventNode {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--bz-blue);
-  box-shadow:
-    0 0 0 4px var(--bz-surface),
-    0 0 0 5.5px rgba(47, 107, 255, 0.28);
+/* Each segment carries its slice of one blue-to-cyan run, so the rail reads
+   as a single gradient from the first node to the last. */
+.fourPillarsRecord__connectorFill {
+  --seg: max(calc(var(--step-count, 5) - 1), 1);
+  --from: calc(var(--i, 0) / var(--seg) * 100%);
+  --to: calc((var(--i, 0) + 1) / var(--seg) * 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, var(--j-blue), var(--j-cyan));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--j-cyan) var(--from), var(--j-blue)),
+    color-mix(in srgb, var(--j-cyan) var(--to), var(--j-blue))
+  );
+  transition: opacity 240ms ease;
 }
 
-.fourPillarsRecord__event[data-accent="teal"] .fourPillarsRecord__eventNode {
-  background: var(--bz-teal);
-  box-shadow:
-    0 0 0 4px var(--bz-surface),
-    0 0 0 5.5px rgba(46, 196, 182, 0.3);
+/* The record signal. One mark walks the whole path, then the path rests. */
+.fourPillarsRecord__connectorSignal {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 22px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 255, 255, 0.92),
+    transparent
+  );
+  opacity: 0;
+  translate: -50% 0;
 }
 
-.fourPillarsRecord__eventTitle {
-  margin-top: 18px;
-  color: var(--bz-navy);
-  font-size: 13px;
-  font-weight: 750;
-  letter-spacing: -0.015em;
-}
-
-.fourPillarsRecord__eventContext {
-  margin-top: 5px;
+.fourPillarsRecord__stepNumber {
+  align-self: center;
   color: var(--bz-muted);
-  font-size: 12px;
-  font-weight: 550;
-}
-
-.fourPillarsRecord__eventTime {
-  margin-top: 7px;
-  color: var(--bz-blue);
-  font-size: 11px;
-  font-weight: 750;
+  font-size: 10.5px;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
+  grid-column: 2;
+  grid-row: 1;
+  letter-spacing: 0.12em;
+  opacity: 0.75;
 }
 
-.fourPillarsRecord__event[data-accent="teal"] .fourPillarsRecord__eventTime {
-  color: #189e91;
+.fourPillarsRecord__stepTitle {
+  margin: 2px 0 0;
+  color: var(--bz-navy);
+  font-size: 16px;
+  font-weight: 760;
+  grid-column: 2;
+  grid-row: 2;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
+}
+
+.fourPillarsRecord__stepContext {
+  margin: 4px 0 22px;
+  color: var(--bz-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  grid-column: 2;
+  grid-row: 3;
+  line-height: 1.45;
+}
+
+.fourPillarsRecord__step:last-child .fourPillarsRecord__stepContext {
+  margin-bottom: 0;
+}
+
+.fourPillarsRecord__stepState {
+  align-self: center;
+  padding: 3px 9px;
+  border: 1px solid var(--j-line);
+  border-radius: 999px;
+  margin: 0;
+  background: rgba(11, 31, 58, 0.02);
+  color: var(--bz-muted);
+  font-size: 10px;
+  font-weight: 800;
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transition:
+    border-color 240ms ease,
+    color 240ms ease;
+}
+
+.fourPillarsRecord__stepTime {
+  align-self: center;
+  color: var(--bz-navy);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: end;
+  opacity: 0.7;
+}
+
+/* Below this the badge no longer fits beside the title without breaking every
+   heading in two, so the row stacks: number and time open the line, then the
+   title and its context take the full width, then the resulting state. */
+@media (max-width: 359px) {
+  .fourPillarsRecord__stepTime {
+    grid-row: 1;
+  }
+
+  .fourPillarsRecord__stepTitle,
+  .fourPillarsRecord__stepContext {
+    grid-column: 2 / -1;
+  }
+
+  .fourPillarsRecord__stepContext {
+    margin-bottom: 0;
+  }
+
+  .fourPillarsRecord__stepState {
+    margin: 9px 0 20px;
+    grid-column: 2;
+    grid-row: 4;
+    justify-self: start;
+  }
+
+  .fourPillarsRecord__step:last-child .fourPillarsRecord__stepState {
+    margin-bottom: 0;
+  }
+}
+
+/* -------------------------------------------------------------- horizontal */
+
+/* From here the same markup reads left to right: one row of equal columns,
+   each step a row-subgrid of the track so titles, contexts and timestamps
+   share baselines across every column, and the rail turned on its side. */
+@media (min-width: 1024px) {
+  .fourPillarsRecord__journey {
+    padding: 34px 38px 38px;
+  }
+
+  .fourPillarsRecord__steps {
+    --gutter: clamp(20px, 2vw, 34px);
+    margin-top: 26px;
+    grid-template-columns: repeat(var(--step-count, 5), minmax(0, 1fr));
+    grid-template-rows: auto auto auto auto auto;
+  }
+
+  .fourPillarsRecord__step {
+    column-gap: 0;
+    grid-row: 1 / -1;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: subgrid;
+  }
+
+  .fourPillarsRecord__stepRail {
+    flex-direction: row;
+    align-items: center;
+    align-self: auto;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .fourPillarsRecord__connector {
+    width: auto;
+    min-width: 18px;
+    height: 2px;
+    min-height: 0;
+  }
+
+  .fourPillarsRecord__connectorFill {
+    background: linear-gradient(90deg, var(--j-blue), var(--j-cyan));
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--j-cyan) var(--from), var(--j-blue)),
+      color-mix(in srgb, var(--j-cyan) var(--to), var(--j-blue))
+    );
+  }
+
+  .fourPillarsRecord__connectorSignal {
+    top: 50%;
+    left: 0;
+    width: 22px;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.92),
+      transparent
+    );
+    translate: 0 -50%;
+  }
+
+  .fourPillarsRecord__stepNumber {
+    align-self: start;
+    margin-top: 18px;
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  /* Top row reads "which state, and when"; the badge closes the column. */
+  .fourPillarsRecord__stepTime {
+    align-self: start;
+    margin-top: 18px;
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+  }
+
+  .fourPillarsRecord__stepTitle {
+    margin-top: 6px;
+    font-size: 17px;
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .fourPillarsRecord__stepContext {
+    margin: 5px 0 0;
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  /* The badge holds the closing row, so every column ends on the same line
+     however long its context ran. */
+  .fourPillarsRecord__stepState {
+    align-self: end;
+    margin: 14px 0 0;
+    grid-column: 1;
+    grid-row: 5;
+    justify-self: start;
+  }
+
+  /* The gutter lives on the copy, never on the step, so the rail still runs
+     the full width of its column and meets the next node exactly. */
+  .fourPillarsRecord__stepNumber,
+  .fourPillarsRecord__stepTitle,
+  .fourPillarsRecord__stepContext,
+  .fourPillarsRecord__stepState {
+    margin-right: var(--gutter);
+  }
+
+  .fourPillarsRecord__stepTime {
+    margin-right: var(--gutter);
+  }
+
+  .fourPillarsRecord__step:last-child > * {
+    margin-right: 0;
+  }
+}
+
+/* Subgrid is what aligns the columns. Without it, fall back to a flex column
+   and let the closing row hold the bottom edge. */
+@supports not (grid-template-rows: subgrid) {
+  @media (min-width: 1024px) {
+    .fourPillarsRecord__step {
+      display: flex;
+      flex-direction: column;
+    }
+    .fourPillarsRecord__stepContext {
+      flex: 1;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------- attention */
+
+/* Hover raises one state: its node, its outgoing segment, its badge. Nothing
+   moves — the change is entirely tonal. */
+.fourPillarsRecord__step:hover .fourPillarsRecord__stepNode,
+.fourPillarsRecord__step:focus-within .fourPillarsRecord__stepNode,
+.fourPillarsRecord__step:active .fourPillarsRecord__stepNode {
+  border-color: rgba(47, 107, 255, 0.45);
+  box-shadow: 0 4px 14px rgba(47, 107, 255, 0.16);
+  color: #1550d8;
+}
+
+.fourPillarsRecord__step:hover .fourPillarsRecord__stepState,
+.fourPillarsRecord__step:focus-within .fourPillarsRecord__stepState,
+.fourPillarsRecord__step:active .fourPillarsRecord__stepState {
+  border-color: rgba(47, 107, 255, 0.3);
+  color: var(--bz-navy);
+}
+
+/* -------------------------------------------------------------------- motion */
+
+/* The entrance. Head, record identity, then each state in turn — the rail
+   segment drawing before the node it delivers the record to. `data-in` is set
+   by an observer, so nothing plays while the section is still far below the
+   fold, and the resting state below is the finished state. */
+.fourPillarsRecord__journey[data-in="false"] .fourPillarsRecord__journeyHead,
+.fourPillarsRecord__journey[data-in="false"] .fourPillarsRecord__identity {
+  opacity: 0;
+}
+
+.fourPillarsRecord__journey[data-in="false"] .fourPillarsRecord__step > * {
+  opacity: 0;
+}
+
+.fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__journeyHead {
+  animation: fourPillarsRecord__journeyRise 520ms
+    cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__identity {
+  animation: fourPillarsRecord__journeyRise 520ms
+    cubic-bezier(0.22, 1, 0.36, 1) 160ms both;
+}
+
+.fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__step > * {
+  animation: fourPillarsRecord__journeyRise 460ms
+    cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(300ms + var(--i, 0) * 130ms);
+}
+
+.fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__stepRail {
+  animation-delay: calc(260ms + var(--i, 0) * 130ms);
+}
+
+/* The rail draws rather than fades: the record travels the segment before it
+   arrives at the next state. */
+.fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__connectorFill {
+  animation: fourPillarsRecord__journeyDraw 340ms linear both;
+  animation-delay: calc(330ms + var(--i, 0) * 130ms);
+}
+
+/* After the entrance, one signal walks the whole path and the path rests. */
+.fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__connectorSignal {
+  animation: fourPillarsRecord__journeySignalV 5.6s
+    calc(1.4s + var(--i, 0) * 0.42s) infinite;
+}
+
+@keyframes fourPillarsRecord__journeyRise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fourPillarsRecord__journeyDraw {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+/* The signal occupies only the first slice of the cycle, so the four segments
+   fire one after another and the path is still for the rest of it. */
+@keyframes fourPillarsRecord__journeySignalV {
+  0% {
+    opacity: 0;
+    top: -22px;
+  }
+  1% {
+    opacity: 1;
+  }
+  7% {
+    opacity: 1;
+  }
+  8% {
+    opacity: 0;
+    top: 100%;
+  }
+  100% {
+    opacity: 0;
+    top: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fourPillarsRecord__journey[data-in="true"]
+    .fourPillarsRecord__connectorFill {
+    animation-name: fourPillarsRecord__journeyDrawH;
+  }
+
+  .fourPillarsRecord__journey[data-in="true"]
+    .fourPillarsRecord__connectorSignal {
+    animation-name: fourPillarsRecord__journeySignalH;
+  }
+}
+
+@keyframes fourPillarsRecord__journeyDrawH {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes fourPillarsRecord__journeySignalH {
+  0% {
+    opacity: 0;
+    left: -22px;
+  }
+  1% {
+    opacity: 1;
+  }
+  7% {
+    opacity: 1;
+  }
+  8% {
+    opacity: 0;
+    left: 100%;
+  }
+  100% {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fourPillarsRecord__journey[data-in="false"] .fourPillarsRecord__journeyHead,
+  .fourPillarsRecord__journey[data-in="false"] .fourPillarsRecord__identity,
+  .fourPillarsRecord__journey[data-in="false"] .fourPillarsRecord__step > * {
+    opacity: 1;
+  }
+
+  /* Written with the same shape as the rules they cancel — a plain
+     descendant selector loses to the `[data-in="true"]` one. */
+  .fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__journeyHead,
+  .fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__identity,
+  .fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__step > *,
+  .fourPillarsRecord__journey[data-in="true"] .fourPillarsRecord__stepRail,
+  .fourPillarsRecord__journey[data-in="true"]
+    .fourPillarsRecord__connectorFill,
+  .fourPillarsRecord__journey[data-in="true"]
+    .fourPillarsRecord__connectorSignal {
+    animation: none;
+  }
+
+  .fourPillarsRecord__connectorSignal {
+    display: none;
+  }
 }
 
 /* ====================================================== gap between rows */
@@ -3213,56 +3788,34 @@
     display: none;
   }
 
-  .fourPillarsRecord__events {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
+  .fourPillarsRecord__journeyRow {
+    margin-top: 30px;
   }
 
-  .fourPillarsRecord__trackSvg {
+  .fourPillarsRecord__journey {
+    padding: 24px 20px 26px;
+    border-radius: 20px;
+  }
+
+  .fourPillarsRecord__journeyTitle {
+    font-size: clamp(27px, 7.6vw, 32px);
+  }
+
+  .fourPillarsRecord__journeyNote {
+    font-size: 14.5px;
+  }
+
+  /* The end cap moves under the chip rather than squeezing onto its row. */
+  .fourPillarsRecord__identity {
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    margin-top: 24px;
+  }
+
+  .fourPillarsRecord__identityRule {
+    order: 3;
+    flex-basis: 100%;
     display: none;
-  }
-
-  .fourPillarsRecord__trackSvgVertical {
-    display: block;
-    position: absolute;
-    top: 31px;
-    left: 14px;
-    width: 6px;
-    height: calc(100% - 62px);
-    overflow: visible;
-  }
-
-  .fourPillarsRecord__event {
-    display: grid;
-    grid-template-columns: 34px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 0 14px;
-    padding: 14px 0;
-    text-align: left;
-  }
-
-  .fourPillarsRecord__eventIcon {
-    grid-row: span 2;
-    margin-bottom: 0;
-  }
-
-  .fourPillarsRecord__eventNode {
-    display: none;
-  }
-
-  .fourPillarsRecord__eventTitle,
-  .fourPillarsRecord__eventContext {
-    margin-top: 0;
-  }
-
-  .fourPillarsRecord__eventContext {
-    grid-column: 2;
-  }
-
-  .fourPillarsRecord__eventTime {
-    grid-row: 1;
-    grid-column: 3;
-    margin-top: 0;
   }
 
   .fourPillarsRecord__pillarContent {
@@ -3329,10 +3882,6 @@
     grid-column: auto;
   }
 
-  .fourPillarsRecord__timelineHead {
-    flex-direction: column;
-    gap: 6px;
-  }
 }
 
 /* ==================================================== motion (opt-in only) */
@@ -3374,8 +3923,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fourPillarsRecord__streamParticles,
-  .fourPillarsRecord__trackParticle {
+  .fourPillarsRecord__streamParticles {
     display: none;
   }
 }
@@ -3389,7 +3937,7 @@
 .integrationSurface__section {
   position: relative;
   overflow: hidden;
-  padding: clamp(56px, 6.5vw, 96px) 0 clamp(64px, 7vw, 104px);
+  padding: clamp(44px, 4.8vw, 72px) 0 clamp(48px, 5.2vw, 80px);
   background: var(--bz-surface);
   border-top: 1px solid var(--bz-border);
 }
@@ -3446,10 +3994,10 @@
 
 .integrationSurface__heroGrid {
   display: grid;
-  grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
+  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
   align-items: center;
-  gap: clamp(28px, 3.5vw, 56px);
-  margin-bottom: clamp(36px, 4.5vw, 60px);
+  gap: clamp(24px, 3vw, 44px);
+  margin-bottom: clamp(28px, 3.5vw, 48px);
 }
 
 @media (max-width: 1320px) {
@@ -3478,7 +4026,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .integrationSurface__eyebrowLine {
@@ -3489,7 +4037,7 @@
 }
 
 .integrationSurface__eyebrowText {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -3497,13 +4045,13 @@
 }
 
 .integrationSurface__headline {
-  font-size: clamp(32px, 3.6vw, 58px);
-  font-weight: 850;
-  line-height: 1.02;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.85rem, 2.7vw, 2.45rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   color: #0b1f3a;
   text-wrap: balance;
-  margin: 0 0 18px;
+  margin: 0 0 14px;
 }
 
 .integrationSurface__highlightReal {
@@ -3515,10 +4063,10 @@
 }
 
 .integrationSurface__supportingCopy {
-  font-size: clamp(15px, 1.15vw, 17.5px);
-  line-height: 1.58;
+  font-size: clamp(14.5px, 1.05vw, 16px);
+  line-height: 1.6;
   color: #5b6b7c;
-  max-width: 520px;
+  max-width: 480px;
   margin: 0;
 }
 
@@ -4175,6 +4723,451 @@
   }
 }
 
+
+/* =================================================== narrow: the system ring
+
+   The wide layout reads left to right — two inputs, a core, three outputs.
+   A phone has no width for that, so the same idea becomes a ring: the core at
+   the centre with the three environments that meet at it placed around it.
+
+   The canvas is locked to the 320 x 496 viewBox of `integration-map.tsx`, so
+   one viewBox unit is always (canvasWidth / 320) px and the HTML nodes anchor
+   at the same coordinates as the connectors. The percentages below are those
+   coordinates; they and the module's geometry block must change together.
+   ------------------------------------------------------------------------ */
+
+.integrationSurface__map,
+.integrationSurface__summary {
+  display: none;
+}
+
+.integrationSurface__mapCanvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 320 / 496;
+}
+
+.integrationSurface__mapSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The track. Dashed, so it reads as a path rather than a drawn boundary —
+   the three coloured arcs ride on top of it. */
+.integrationSurface__mapOrbit {
+  fill: none;
+  stroke: rgba(47, 107, 255, 0.34);
+  stroke-width: 1.6;
+  stroke-dasharray: 3 6;
+  stroke-linecap: round;
+}
+
+/* One arc per hop, in the colour of the node it leaves. */
+.integrationSurface__mapArc {
+  fill: none;
+  stroke-dasharray: 1;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  transition:
+    stroke-width 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.integrationSurface__mapArcDot,
+.integrationSurface__mapArcArrow {
+  transition: opacity 0.25s ease;
+}
+
+/* Pointing at a node raises its hop and holds the other two back. */
+.integrationSurface__mapCanvas g[data-on="true"] .integrationSurface__mapArc {
+  stroke-width: 3.4;
+}
+
+.integrationSurface__mapCanvas:has(g[data-on="true"])
+  g[data-on="false"]
+  :is(
+    .integrationSurface__mapArc,
+    .integrationSurface__mapArcDot,
+    .integrationSurface__mapArcArrow
+  ) {
+  opacity: 0.24;
+}
+
+.integrationSurface__mapPath {
+  transition:
+    opacity 0.25s ease,
+    stroke-width 0.25s ease;
+}
+
+.integrationSurface__mapPort {
+  fill: rgba(47, 107, 255, 0.55);
+}
+
+/* The core. A white disc with the mark on it — no pedestal, no orb. */
+/* The core. With the decorative rings gone it carries its own weight through
+   size and elevation alone. */
+.integrationSurface__mapCore {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  display: grid;
+  width: 32%;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(47, 107, 255, 0.2);
+  border-radius: 50%;
+  background: var(--bz-surface);
+  box-shadow:
+    0 2px 8px rgba(11, 31, 58, 0.06),
+    0 14px 34px rgba(11, 31, 58, 0.09);
+  translate: -50% -50%;
+}
+
+.integrationSurface__mapCore svg {
+  width: 50%;
+  height: auto;
+}
+
+/* The three environments, as anchors on the orbit rather than cards beside
+   it. A disc, a border, an icon — the names are on `aria-label`. */
+.integrationSurface__mapNode {
+  position: absolute;
+  display: grid;
+  width: 16%;
+  aspect-ratio: 1;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--bz-border);
+  border-radius: 50%;
+  background: var(--bz-surface);
+  box-shadow:
+    0 1px 3px rgba(11, 31, 58, 0.05),
+    0 6px 18px rgba(11, 31, 58, 0.07);
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.integrationSurface__mapNode[data-node="storefront"] svg {
+  color: #2f6bff;
+}
+
+.integrationSurface__mapNode[data-node="operations"] svg {
+  color: #6a63f0;
+}
+
+.integrationSurface__mapNode[data-node="customers"] svg {
+  color: #12a35c;
+}
+
+/* On the orbit, not beside it — the ellipse runs through each node. */
+.integrationSurface__mapNode[data-node="storefront"] {
+  top: 23.4%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+.integrationSurface__mapNode[data-node="operations"] {
+  top: 74.6%;
+  left: 25.4%;
+  translate: -50% -50%;
+}
+
+.integrationSurface__mapNode[data-node="customers"] {
+  top: 74.6%;
+  left: 74.6%;
+  translate: -50% -50%;
+}
+
+/* --------------------------------------------------------- label cards
+
+   Each card sits just outside the orbit, on the far side of its icon, so no
+   card ever crosses the path: the top one above, the two lower ones below.
+   ---------------------------------------------------------------------- */
+
+.integrationSurface__mapLabel {
+  position: absolute;
+  display: grid;
+  gap: 2px;
+  padding: 8px 11px 9px;
+  border: 1px solid var(--bz-border);
+  border-radius: 12px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 2px 10px rgba(11, 31, 58, 0.06);
+  text-align: center;
+  transition: opacity 0.25s ease;
+}
+
+.integrationSurface__mapLabel b {
+  color: var(--bz-navy);
+  font-size: 13.5px;
+  font-weight: 780;
+  letter-spacing: -0.014em;
+  line-height: 1.2;
+}
+
+.integrationSurface__mapLabel span {
+  color: var(--bz-muted);
+  font-size: 11px;
+  font-weight: 550;
+  line-height: 1.3;
+}
+
+.integrationSurface__mapLabel[data-node="storefront"] {
+  bottom: 84.5%;
+  left: 50%;
+  width: 62%;
+  translate: -50% 0;
+}
+
+.integrationSurface__mapLabel[data-node="operations"] {
+  top: 82%;
+  left: 0;
+  width: 47%;
+}
+
+.integrationSurface__mapLabel[data-node="customers"] {
+  top: 82%;
+  right: 0;
+  width: 47%;
+}
+
+.integrationSurface__mapLabel[data-state="off"] {
+  opacity: 0.55;
+}
+
+.integrationSurface__mapNode[data-state="on"] {
+  border-color: rgba(47, 107, 255, 0.5);
+  box-shadow:
+    0 1px 3px rgba(11, 31, 58, 0.05),
+    0 6px 20px rgba(47, 107, 255, 0.18);
+}
+
+.integrationSurface__mapNode[data-state="off"] {
+  opacity: 0.6;
+}
+
+.integrationSurface__mapNode:focus-visible {
+  outline: 2px solid var(--bz-blue);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------ narrow: what it amounts to */
+
+.integrationSurface__summaryDivider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: #93a2b5;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.integrationSurface__summaryDivider::before,
+.integrationSurface__summaryDivider::after {
+  height: 1px;
+  flex: 1;
+  background: var(--bz-border);
+  content: "";
+}
+
+/* One surface, three columns, hairlines between — never three cards. */
+.integrationSurface__benefits {
+  display: grid;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--bz-border);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  box-shadow: 0 2px 14px rgba(11, 31, 58, 0.05);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+}
+
+.integrationSurface__benefits li {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 16px 8px 18px;
+  text-align: center;
+}
+
+/* The icon sits in its own tinted disc rather than bare on the surface. */
+.integrationSurface__benefitBadge {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 50%;
+  margin-bottom: 2px;
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+}
+
+.integrationSurface__benefits li + li {
+  border-left: 1px solid var(--bz-border);
+}
+
+.integrationSurface__benefits li[data-tone="blue"] {
+  --tone: #2f6bff;
+}
+
+.integrationSurface__benefits li[data-tone="violet"] {
+  --tone: #6a63f0;
+}
+
+.integrationSurface__benefits li[data-tone="teal"] {
+  --tone: #12a35c;
+}
+
+.integrationSurface__benefitIcon {
+  color: var(--tone);
+}
+
+.integrationSurface__benefitTitle {
+  color: var(--bz-navy);
+  font-size: 15px;
+  font-weight: 780;
+  letter-spacing: -0.014em;
+}
+
+.integrationSurface__benefitBody {
+  color: var(--bz-muted);
+  font-size: 11.5px;
+  font-weight: 550;
+  line-height: 1.36;
+  white-space: pre-line;
+}
+
+/* The section's only action. A bar, not a button. */
+.integrationSurface__summaryAction {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 30px;
+  background: var(--bz-navy);
+  box-shadow: 0 8px 24px rgba(11, 31, 58, 0.18);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.008em;
+  text-decoration: none;
+  transition: background 0.25s ease;
+}
+
+.integrationSurface__summaryAction:active {
+  background: #0a1a31;
+}
+
+.integrationSurface__summaryAction:focus-visible {
+  outline: 2px solid var(--bz-blue);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------ narrow: the composition
+
+   One centred vertical column: intro, ring, divider, outcomes, action. The
+   left-to-right flow and the three-lane rail are the wide story and step out
+   of the box tree here; the ring and the summary step into it.
+   ------------------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .integrationSurface__section {
+    padding-block: 44px 52px;
+  }
+
+  .integrationSurface__heroGrid {
+    gap: 0;
+  }
+
+  .integrationSurface__header {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .integrationSurface__eyebrowWrap {
+    justify-content: center;
+  }
+
+  /* Accent blue and a touch more tracking at this size — the desktop teal is
+     read against the wide composition and is left alone. */
+  .integrationSurface__eyebrowText {
+    color: #1f54d6;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+
+  .integrationSurface__headline {
+    max-width: 15ch;
+    margin-top: 14px;
+    font-size: clamp(28px, 8.7vw, 36px);
+    letter-spacing: -0.024em;
+    line-height: 1.06;
+    word-spacing: 0.015em;
+  }
+
+  .integrationSurface__supportingCopy {
+    max-width: 34ch;
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
+  /* The wide diagram and the wide rail leave; the ring and summary arrive. */
+  .integrationSurface__flowContainer,
+  .integrationSurface__surfaceContainer {
+    display: none;
+  }
+
+  .integrationSurface__map {
+    display: block;
+    width: min(350px, 100%);
+    margin: 28px auto 0;
+  }
+
+  .integrationSurface__summary {
+    display: grid;
+    justify-items: stretch;
+    gap: 0;
+    margin-top: 22px;
+  }
+
+  .integrationSurface__benefits {
+    margin-top: 18px;
+  }
+
+  .integrationSurface__summaryAction {
+    width: min(88%, 340px);
+    margin: 22px auto 0;
+  }
+}
+
+/* The narrowest phones give up internal spacing, never the three columns. */
+@media (max-width: 359px) {
+  .integrationSurface__benefits li {
+    padding: 13px 5px 15px;
+  }
+
+  .integrationSurface__benefitTitle {
+    font-size: 14px;
+  }
+
+  .integrationSurface__benefitBody {
+    font-size: 10.5px;
+  }
+
+}
+
 /* SECTION: sections/operating-model.module.css */
 .operatingModel__section {
   position: relative;
@@ -4235,10 +5228,14 @@
   max-width: 770px;
   margin-top: 18px;
   color: var(--bz-navy);
-  font-size: 3.75rem;
-  font-weight: 820;
-  line-height: 0.97;
-  letter-spacing: -0.06em;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.018em;
+  word-spacing: 0.04em;
+}
+.operatingModel__titleLine {
+  display: block;
 }
 .operatingModel__header h2 em {
   background: linear-gradient(100deg, var(--bz-blue), var(--bz-teal));
@@ -4811,7 +5808,10 @@
     gap: 46px;
   }
   .operatingModel__header h2 {
-    font-size: 3.25rem;
+    font-size: clamp(2.15rem, 3.2vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.016em;
+    word-spacing: 0.04em;
   }
   .operatingModel__layout {
     grid-template-columns: 350px minmax(0, 1fr);
@@ -4846,6 +5846,12 @@
   .operatingModel__header {
     grid-template-columns: 1fr;
     gap: 22px;
+  }
+  .operatingModel__header h2 {
+    font-size: clamp(1.95rem, 3.8vw, 2.45rem);
+    line-height: 1.16;
+    letter-spacing: -0.014em;
+    word-spacing: 0.05em;
   }
   .operatingModel__header > p {
     max-width: 650px;
@@ -4896,7 +5902,10 @@
     width: min(100% - 28px, 520px);
   }
   .operatingModel__header h2 {
-    font-size: clamp(2.15rem, 8.8vw, 2.75rem);
+    font-size: clamp(1.75rem, 7.4vw, 2.15rem);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    word-spacing: 0.06em;
   }
   .operatingModel__header > p {
     font-size: 0.94rem;
@@ -5002,6 +6011,15 @@
   .operatingModel__proof:nth-child(4) {
     border-top: 1px solid var(--bz-border);
     border-left: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .operatingModel__header h2 {
+    font-size: clamp(1.58rem, 6.8vw, 1.85rem);
+    line-height: 1.22;
+    letter-spacing: -0.006em;
+    word-spacing: 0.08em;
   }
 }
 
@@ -5350,7 +6368,11 @@
   padding: 9px 12px 8px;
 }
 
-.productHeroDashboard__cardHead h3 {
+/* A paragraph, not a heading: these are widget labels inside a simulated
+   product screen, and putting them in the document outline produced an
+   h1 -> h3 jump on a page whose only real heading is the hero. */
+.productHeroDashboard__cardHead p {
+  margin: 0;
   font-size: 11.5px;
   font-weight: 750;
   letter-spacing: -0.012em;
@@ -6611,8 +7633,9 @@
   color: #fff;
   font-size: clamp(2.55rem, 4.55vw, 4.75rem);
   font-weight: 830;
-  line-height: 1;
-  letter-spacing: -0.042em;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  word-spacing: 0.02em;
   text-wrap: balance;
   text-shadow: 0 6px 34px rgba(3, 12, 26, 0.55);
 }
@@ -6998,12 +8021,14 @@
   }
 
   .productHero__title {
-    font-size: clamp(2.15rem, 9vw, 3rem);
-    letter-spacing: -0.035em;
+    font-size: clamp(1.85rem, 7.6vw, 2.45rem);
+    line-height: 1.18;
+    letter-spacing: -0.012em;
+    word-spacing: 0.06em;
   }
 
   .productHero__titleLine {
-    display: inline;
+    display: block;
   }
 
   .productHero__summary {
@@ -7022,6 +8047,15 @@
   .productHero__footLabel {
     font-size: 8.5px;
     letter-spacing: 0.14em;
+  }
+}
+
+@media (max-width: 420px) {
+  .productHero__title {
+    font-size: clamp(1.65rem, 7.2vw, 1.95rem);
+    line-height: 1.2;
+    letter-spacing: -0.006em;
+    word-spacing: 0.08em;
   }
 }
 
@@ -7197,10 +8231,10 @@
 .securityTenancy__title {
   max-width: 920px;
   color: var(--bz-navy);
-  font-size: clamp(42px, 4.1vw, 64px);
-  font-weight: 850;
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
 }
 
 .securityTenancy__titleAccent {
@@ -7939,125 +8973,185 @@
 /* ======================================================== Mobile story
    Same architecture, told vertically: brand → entity → role → permission →
    action → audit, threaded on one rail. Never a stack of cards. */
+/* ------------------------------------------------- narrow: the access flow
+
+   The plan told as a descent. Tenant, the three scopes it contains, the role
+   in each, what that role may do, the one thing it did, the evidence.
+
+   The two connectors are the argument: the tenant branches down to all three
+   scopes so they read as one context, and the acting permission drops into the
+   action so the action reads as its consequence. Both are drawn with borders
+   rather than SVG — at these sizes a scaled viewBox distorts the stroke.
+   ------------------------------------------------------------------------ */
+
 .securityTenancy__flow {
   display: none;
 }
 
 .securityTenancy__flowTenant {
+  display: grid;
+  justify-items: center;
+}
+
+.securityTenancy__flowTenantLabel {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding-bottom: 14px;
-  border-bottom: 1px dashed rgba(47, 107, 255, 0.34);
+  align-items: center;
+  gap: 3px;
+  padding: 9px 16px;
+  border: 1px solid rgba(47, 107, 255, 0.2);
+  border-radius: 12px;
+  margin: 0;
+  background: var(--bz-surface);
+  box-shadow: 0 2px 10px rgba(11, 31, 58, 0.05);
   color: var(--bz-navy);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.15em;
+  text-align: center;
   text-transform: uppercase;
 }
 
-.securityTenancy__flowTenant span {
+.securityTenancy__flowTenantLabel span {
   color: var(--bz-muted);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 550;
+  letter-spacing: 0.01em;
   text-transform: none;
 }
 
-.securityTenancy__flowGallery {
-  display: flex;
-  gap: 18px;
-  margin: 22px 0 4px;
-  padding-bottom: 10px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
+/* Stem, cross-bar and three drops. The bar spans centre-of-first to
+   centre-of-last, which is one sixth of the row inset on each side. */
+.securityTenancy__flowBranch {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 26px;
 }
 
-.securityTenancy__flowGalleryItem {
-  flex: 0 0 clamp(220px, 29vw, 300px);
-  scroll-snap-align: start;
+.securityTenancy__flowBranch::before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 13px;
+  background: rgba(47, 107, 255, 0.4);
+  content: "";
 }
 
+.securityTenancy__flowBranch::after {
+  position: absolute;
+  top: 13px;
+  right: calc(100% / 6);
+  left: calc(100% / 6);
+  height: 13px;
+  border-top: 1px solid rgba(47, 107, 255, 0.28);
+  border-right: 1px solid rgba(47, 107, 255, 0.28);
+  border-left: 1px solid rgba(47, 107, 255, 0.28);
+  border-radius: 8px 8px 0 0;
+  content: "";
+}
+
+/* ---------------------------------------------------------- scope panels */
+
+.securityTenancy__flowScopes {
+  display: grid;
+  padding: 0;
+  margin: 0;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+}
+
+/* The drop from the cross-bar into each panel. */
+.securityTenancy__flowScope {
+  position: relative;
+  display: grid;
+  align-content: start;
+  padding-top: 13px;
+  gap: 6px;
+}
+
+.securityTenancy__flowScope::before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 7px;
+  background: rgba(47, 107, 255, 0.28);
+  content: "";
+}
+
+.securityTenancy__flowScope[data-state="active"]::before {
+  width: 2px;
+  background: var(--bz-blue);
+}
+
+/* Two lines of room whether or not a label needs them, so the three images
+   start on the same line however the words break. */
 .securityTenancy__flowScopeLabel {
   display: block;
-  margin-bottom: 8px;
-  color: var(--bz-muted);
-  font-size: 9.5px;
+  min-height: 2.6em;
+  margin: 0;
+  color: #93a2b5;
+  font-size: 9px;
   font-weight: 800;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
   text-transform: uppercase;
 }
 
-.securityTenancy__flowScopeLabel[data-state="active"][data-accent="blue"] {
+.securityTenancy__flowScope[data-state="active"]
+  .securityTenancy__flowScopeLabel {
   color: var(--bz-blue);
 }
 
-.securityTenancy__flowScopeLabel[data-state="active"][data-accent="teal"] {
-  color: #1f9d91;
-}
-
+/* The panel is the button. It carries its own height so the fill image has a
+   box to fill, and its name sits inside the frame the way it does on the plan
+   above — three panels, one ratio, one radius, one visual weight. */
 .securityTenancy__flowScene {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 11;
+  aspect-ratio: 4 / 3;
   padding: 0;
   border: 0;
-  border-radius: 4px;
+  border-radius: 10px;
   background: none;
   cursor: pointer;
   --accent: var(--bz-blue);
+}
+
+.securityTenancy__flowScene .securityTenancy__sceneSurface {
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(11, 31, 58, 0.1);
+}
+
+.securityTenancy__flowScope[data-state="active"]
+  .securityTenancy__sceneSurface {
+  box-shadow:
+    0 0 0 1.5px var(--bz-blue),
+    0 8px 20px rgba(11, 31, 58, 0.12);
+}
+
+.securityTenancy__flowScene .securityTenancy__sceneName {
+  right: 7px;
+  bottom: 6px;
+  left: 7px;
+  font-size: 11.5px;
+  letter-spacing: -0.018em;
+  line-height: 1.2;
 }
 
 .securityTenancy__flowScene[data-accent="teal"] {
   --accent: var(--bz-teal);
 }
 
-.securityTenancy__flowRail {
-  position: relative;
-  display: grid;
-  gap: 26px;
-  margin-top: 30px;
-  padding-left: 26px;
-  list-style: none;
-}
-
-.securityTenancy__flowRail::before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  bottom: 30px;
-  left: 4px;
-  width: 1px;
-  background: linear-gradient(
-    to bottom,
-    var(--bz-blue),
-    var(--bz-border) 30%,
-    var(--bz-border) 78%,
-    transparent
-  );
-}
-
-.securityTenancy__flowStep {
-  position: relative;
-}
-
-.securityTenancy__flowStep::before {
-  content: "";
-  position: absolute;
-  top: 6px;
-  left: -26px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--bz-surface);
-  box-shadow: 0 0 0 1px var(--bz-blue);
-}
+/* ----------------------------------------------------------- role states */
 
 .securityTenancy__flowStepLabel {
   display: block;
-  margin-bottom: 12px;
+  margin: 0;
   color: var(--bz-muted);
   font-size: 9.5px;
   font-weight: 800;
@@ -8065,77 +9159,182 @@
   text-transform: uppercase;
 }
 
+.securityTenancy__flowRoles {
+  display: grid;
+  padding: 0;
+  margin: 0;
+  gap: 6px;
+  list-style: none;
+}
+
 .securityTenancy__flowRole {
   display: flex;
-  align-items: center;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
   gap: 12px;
-  --accent: var(--bz-blue);
-}
-
-.securityTenancy__flowRole[data-accent="teal"] {
-  --accent: var(--bz-teal);
-}
-
-.securityTenancy__flowRole .securityTenancy__roleAvatar {
-  margin-bottom: 0;
-}
-
-.securityTenancy__flowRole .securityTenancy__roleName,
-.securityTenancy__flowRole .securityTenancy__roleAccess {
-  display: block;
+  padding: 10px 12px;
+  border: 1px solid var(--bz-border);
+  border-radius: 11px;
+  background: var(--bz-surface);
+  cursor: pointer;
   text-align: left;
+  transition:
+    border-color 240ms ease,
+    background 240ms ease;
 }
 
-.securityTenancy__flowRole .securityTenancy__roleAccess {
-  margin-top: 2px;
+.securityTenancy__flowRoleName {
+  color: #7b8a9c;
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: -0.012em;
 }
 
+.securityTenancy__flowRoleAccess {
+  flex: none;
+  color: #9aa8ba;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.securityTenancy__flowRole[data-state="active"] {
+  border-color: rgba(47, 107, 255, 0.42);
+  background: rgba(47, 107, 255, 0.045);
+}
+
+.securityTenancy__flowRole[data-state="active"]
+  .securityTenancy__flowRoleName {
+  color: var(--bz-navy);
+  font-weight: 760;
+}
+
+.securityTenancy__flowRole[data-state="active"]
+  .securityTenancy__flowRoleAccess {
+  color: var(--bz-blue);
+}
+
+.securityTenancy__flowRole:focus-visible {
+  outline: 2px solid var(--bz-blue);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------- permission path */
+
+/* One path, five stops. The row is a grid so the consequence line can be
+   placed on the acting column by index rather than by measurement. */
 .securityTenancy__flowPermissions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  padding-top: 12px;
-  border-top: 1px solid var(--bz-border);
+  position: relative;
+  display: grid;
+  padding: 0 0 46px;
+  margin: 0;
+  grid-template-columns: repeat(var(--stops, 5), minmax(0, 1fr));
   list-style: none;
 }
 
 .securityTenancy__flowPermissions li {
   position: relative;
-  color: #93a2b5;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.11em;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  color: #9aa8ba;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
   text-transform: uppercase;
+}
+
+/* The connector between stops, drawn from each node except the last. */
+.securityTenancy__flowPermissions li:not(:last-of-type)::before {
+  position: absolute;
+  top: 4px;
+  right: -50%;
+  left: 50%;
+  height: 1px;
+  background: var(--bz-border);
+  content: "";
+}
+
+.securityTenancy__flowPermNode {
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--bz-border);
+  border-radius: 50%;
+  background: var(--bz-surface);
 }
 
 .securityTenancy__flowPermissions li[data-state="granted"] {
   color: var(--bz-navy);
 }
 
+.securityTenancy__flowPermissions li[data-state="granted"]
+  .securityTenancy__flowPermNode {
+  border-color: rgba(47, 107, 255, 0.45);
+}
+
+.securityTenancy__flowPermissions li[data-state="granted"]:not(
+    :last-of-type
+  )::before {
+  background: rgba(47, 107, 255, 0.28);
+}
+
 .securityTenancy__flowPermissions li[data-state="acting"] {
   color: var(--bz-blue);
 }
 
-.securityTenancy__flowPermissions li[data-state="granted"]::after,
-.securityTenancy__flowPermissions li[data-state="acting"]::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: -4px;
-  left: 0;
-  height: 1.5px;
-  background: var(--bz-teal);
-  opacity: 0.32;
+.securityTenancy__flowPermissions li[data-state="acting"]
+  .securityTenancy__flowPermNode {
+  border-color: var(--bz-blue);
+  background: var(--bz-blue);
+  box-shadow: 0 0 0 3px rgba(47, 107, 255, 0.14);
 }
 
-.securityTenancy__flowPermissions li[data-state="acting"]::after {
-  opacity: 0.8;
+/* The consequence line. Its column centre is (acting + 0.5) / stops. */
+.securityTenancy__flowConsequence {
+  position: absolute;
+  top: 8px;
+  bottom: -34px;
+  left: calc((var(--acting, 1) + 0.5) / var(--stops, 5) * 100%);
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--bz-blue),
+    rgba(47, 107, 255, 0.25)
+  );
+  translate: -50% 0;
+}
+
+/* ---------------------------------------------------- action and evidence */
+
+.securityTenancy__flowActionWrap {
+  position: relative;
+  display: grid;
+  gap: 9px;
+  padding-top: 4px;
+}
+
+.securityTenancy__flowActionLabel {
+  margin: 0;
+  color: var(--bz-muted);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-align: right;
+  text-transform: uppercase;
 }
 
 .securityTenancy__flowAction {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 11px;
+  padding: 13px 14px;
+  border: 1px solid var(--bz-border);
+  border-radius: 16px;
+  background: var(--bz-surface);
+  box-shadow: 0 2px 12px rgba(11, 31, 58, 0.05);
   --accent: var(--bz-blue);
 }
 
@@ -8498,40 +9697,436 @@
 
 @media (max-width: 720px) {
   .securityTenancy__shell {
-    width: min(1480px, calc(100% - 36px));
+    width: min(1480px, calc(100% - 44px));
   }
 
+  .securityTenancy__header {
+    gap: 0;
+  }
+
+  .securityTenancy__eyebrow {
+    font-size: 10.5px;
+  }
+
+  /* A section heading, not a second page hero. The tracking is held well back
+     from the desktop -0.03em: at this size that much closes the word gaps. */
+  .securityTenancy__title {
+    margin-top: 13px;
+    font-size: clamp(28px, 8.6vw, 35px);
+    letter-spacing: -0.022em;
+    line-height: 1.06;
+    word-spacing: 0.015em;
+  }
+
+  .securityTenancy__lede {
+    max-width: 42ch;
+    margin-top: 13px;
+    margin-bottom: 0;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
+  /* Three principles as a compact explanatory band — never three cards, and
+     never taller than the security model they introduce. */
   .securityTenancy__principles {
+    gap: 0;
     grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
   }
 
-  .securityTenancy__flowGallery {
-    margin-inline: -18px;
-    padding-inline: 18px;
+  .securityTenancy__principle {
+    display: grid;
+    padding: 12px 0;
+    column-gap: 12px;
+    grid-template-columns: 22px minmax(0, 1fr);
+  }
+
+  .securityTenancy__principleTop {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .securityTenancy__principleIndex {
+    display: none;
+  }
+
+  .securityTenancy__principleTitle {
+    margin: 0;
+    font-size: 15px;
+    grid-column: 2;
+  }
+
+  .securityTenancy__principleBody {
+    margin: 3px 0 0;
+    font-size: 12.5px;
+    grid-column: 2;
+    line-height: 1.45;
+  }
+
+  .securityTenancy__rail {
+    margin-top: 22px;
+  }
+
+  /* The specified rhythm: scopes, roles, permissions, action, evidence. */
+  .securityTenancy__flow {
+    display: grid;
+    gap: 0;
+    margin-top: 26px;
+  }
+
+  .securityTenancy__flowScopes {
+    margin-bottom: 24px;
+  }
+
+  .securityTenancy__flowRoles {
+    margin: 12px 0 22px;
+  }
+
+  .securityTenancy__flowPermissions {
+    margin-top: 14px;
+  }
+
+  .securityTenancy__flowAction {
+    margin-top: 4px;
+  }
+
+  .securityTenancy__audit {
+    margin-top: 18px;
   }
 }
 
 /* Mobile content headings stay below the product promise, while each section
    keeps the scale its own layout needs. */
 @media (max-width: 640px) {
-  .dayInSystem__title {
-    font-size: clamp(2.05rem, 8.7vw, 2.35rem);
-    line-height: 1.08;
-  }
-
-  .fourPillarsRecord__title {
-    font-size: clamp(2.1rem, 8.9vw, 2.45rem);
-    line-height: 1.06;
-  }
-
+  .dayInSystem__title,
+  .fourPillarsRecord__title,
   .finalSystemMap__headline {
-    font-size: clamp(2.05rem, 8.6vw, 2.35rem);
-    line-height: 1.08;
+    font-size: clamp(1.75rem, 7.4vw, 2.15rem);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    word-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 420px) {
+  .dayInSystem__title,
+  .fourPillarsRecord__title,
+  .finalSystemMap__headline {
+    font-size: clamp(1.58rem, 6.8vw, 1.85rem);
+    line-height: 1.22;
+    letter-spacing: -0.006em;
+    word-spacing: 0.08em;
+  }
+}
+
+/* The desktop break in the heading; the phone measure sets its own. */
+@media (max-width: 720px) {
+  /* The desktop break lands after "designed" and, at this size, would strand
+     "model." on a third line of its own. Dropping it and blocking the accent
+     instead gives "Access designed / around the / operating model." — three
+     lines with the accent phrase whole. */
+  .securityTenancy__titleBreak {
+    display: none;
   }
 
-  .securityTenancy__title {
-    font-size: clamp(2.1rem, 8.9vw, 2.5rem);
-    line-height: 1.06;
+  .securityTenancy__titleAccent {
+    display: block;
+  }
+
+  .securityTenancy__lede {
+    max-width: none;
+    font-size: 14px;
+  }
+
+  /* The closing clause restates the heading; the disclaimer before it does
+     not, so the phone keeps the disclaimer and drops the restatement. */
+  .securityTenancy__ledeTail {
+    display: none;
+  }
+
+  .securityTenancy__flowPermissions {
+    padding-bottom: 14px;
+  }
+
+  .securityTenancy__flowAction {
+    margin-top: 0;
+  }
+}
+
+/* ------------------------------------------- narrow: entrance and signal
+
+   The descent arrives in its reading order — eyebrow, heading, principles,
+   tenant, scopes, roles, permissions, action, evidence — and then the section
+   is still apart from one signal walking the permission path. Both are gated
+   on the section's own `data-entered`, so nothing plays until it is reached,
+   and both are declared only under `prefers-reduced-motion: no-preference`.
+   ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 720px) {
+  .securityTenancy__eyebrow,
+  .securityTenancy__title,
+  .securityTenancy__lede,
+  .securityTenancy__principle,
+  .securityTenancy__flowTenant,
+  .securityTenancy__flowScopes,
+  .securityTenancy__flowRoles,
+  .securityTenancy__flowPermissions,
+  .securityTenancy__flowActionWrap,
+  .securityTenancy__flow .securityTenancy__audit {
+    opacity: 0;
+  }
+
+  .securityTenancy__section[data-entered="true"] :is(
+      .securityTenancy__eyebrow,
+      .securityTenancy__title,
+      .securityTenancy__lede,
+      .securityTenancy__principle,
+      .securityTenancy__flowTenant,
+      .securityTenancy__flowScopes,
+      .securityTenancy__flowRoles,
+      .securityTenancy__flowPermissions,
+      .securityTenancy__flowActionWrap
+    ),
+  .securityTenancy__section[data-entered="true"]
+    .securityTenancy__flow
+    .securityTenancy__audit {
+    animation: securityTenancy__flowRise 0.5s cubic-bezier(0.22, 1, 0.36, 1)
+      both;
+  }
+
+  .securityTenancy__section[data-entered="true"] .securityTenancy__title {
+    animation-delay: 0.07s;
+  }
+  .securityTenancy__section[data-entered="true"] .securityTenancy__lede {
+    animation-delay: 0.14s;
+  }
+  .securityTenancy__section[data-entered="true"] .securityTenancy__principle {
+    animation-delay: calc(0.2s + var(--i, 0) * 0.06s);
+  }
+  .securityTenancy__section[data-entered="true"] .securityTenancy__flowTenant {
+    animation-delay: 0.4s;
+  }
+  .securityTenancy__section[data-entered="true"] .securityTenancy__flowScopes {
+    animation-delay: 0.48s;
+  }
+  .securityTenancy__section[data-entered="true"] .securityTenancy__flowRoles {
+    animation-delay: 0.56s;
+  }
+  .securityTenancy__section[data-entered="true"]
+    .securityTenancy__flowPermissions {
+    animation-delay: 0.64s;
+  }
+  .securityTenancy__section[data-entered="true"]
+    .securityTenancy__flowActionWrap {
+    animation-delay: 0.72s;
+  }
+  .securityTenancy__section[data-entered="true"]
+    .securityTenancy__flow
+    .securityTenancy__audit {
+    animation-delay: 0.8s;
+  }
+
+  /* One mark travels the permission path, then the path rests. */
+  .securityTenancy__section[data-entered="true"]
+    .securityTenancy__flowPermissions::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(47, 107, 255, 0.55);
+    animation: securityTenancy__flowSignal 6.4s linear 1.6s infinite;
+    content: "";
+    pointer-events: none;
+  }
+}
+
+@keyframes securityTenancy__flowRise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The mark runs the width of the path in the first third of the cycle and is
+   absent for the rest, so the section is still far more often than not. */
+@keyframes securityTenancy__flowSignal {
+  0% {
+    opacity: 0;
+    transform: translateX(calc(100% / var(--stops, 5) * 0.5 - 4.5px));
+  }
+  4% {
+    opacity: 1;
+  }
+  26% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0;
+    transform: translateX(
+      calc(100% * (var(--stops, 5) - 0.5) / var(--stops, 5) - 4.5px)
+    );
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(
+      calc(100% * (var(--stops, 5) - 0.5) / var(--stops, 5) - 4.5px)
+    );
+  }
+}
+
+/* ------------------------------------ narrow: entrance, signals, still-ness
+
+   The column arrives in its reading order and then stops. The three signals
+   on the connectors are the only thing that keeps moving, and they are slow
+   and out of phase with one another so the ring reads as alive rather than
+   as animated. Reduced motion removes the entrance and the signals and
+   leaves the finished composition.
+   ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 900px) {
+  .integrationSurface__section[data-entered="false"] :is(
+      .integrationSurface__eyebrowWrap,
+      .integrationSurface__headline,
+      .integrationSurface__supportingCopy,
+      .integrationSurface__mapCore,
+      .integrationSurface__mapNode,
+      .integrationSurface__mapLabel,
+      .integrationSurface__summaryDivider,
+      .integrationSurface__benefits,
+      .integrationSurface__summaryAction
+    ) {
+    opacity: 0;
+  }
+
+  .integrationSurface__section[data-entered="false"] .integrationSurface__mapSvg {
+    opacity: 0;
+  }
+
+  .integrationSurface__section[data-entered="true"] :is(
+      .integrationSurface__eyebrowWrap,
+      .integrationSurface__headline,
+      .integrationSurface__supportingCopy,
+      .integrationSurface__mapCore,
+      .integrationSurface__mapNode,
+      .integrationSurface__mapLabel,
+      .integrationSurface__summaryDivider,
+      .integrationSurface__benefits,
+      .integrationSurface__summaryAction
+    ) {
+    animation: integrationSurface__mapRise 0.5s cubic-bezier(0.22, 1, 0.36, 1)
+      both;
+  }
+
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__headline {
+    animation-delay: 0.07s;
+  }
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__supportingCopy {
+    animation-delay: 0.14s;
+  }
+  /* Core, then its rings and connectors, then the three environments. */
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__mapCore {
+    animation-delay: 0.26s;
+  }
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__mapSvg {
+    animation: integrationSurface__mapFade 0.6s ease 0.3s both;
+  }
+
+  /* The arcs draw; the dashed track only fades. Drawing the track would mean
+     animating its stroke-dasharray, which is the same property that carries
+     its dash pattern — the reveal wins and the track renders solid. */
+  .integrationSurface__section[data-entered="false"]
+    .integrationSurface__mapOrbit,
+  .integrationSurface__section[data-entered="false"]
+    :is(.integrationSurface__mapArcDot, .integrationSurface__mapArcArrow) {
+    opacity: 0;
+  }
+
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__mapOrbit {
+    animation: integrationSurface__mapFade 0.5s ease 0.36s both;
+  }
+
+  .integrationSurface__section[data-entered="false"]
+    .integrationSurface__mapArc {
+    stroke-dashoffset: 1;
+  }
+
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__mapArc {
+    animation: integrationSurface__arcDraw 0.9s cubic-bezier(0.33, 0, 0.2, 1)
+      0.48s both;
+  }
+
+  .integrationSurface__section[data-entered="true"]
+    :is(.integrationSurface__mapArcDot, .integrationSurface__mapArcArrow) {
+    animation: integrationSurface__mapFade 0.4s ease 1.2s both;
+  }
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__mapNode[data-node="storefront"] {
+    animation-delay: 0.44s;
+  }
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__mapNode[data-node="operations"] {
+    animation-delay: 0.52s;
+  }
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__mapNode[data-node="customers"] {
+    animation-delay: 0.58s;
+  }
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__summaryDivider {
+    animation-delay: 0.7s;
+  }
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__benefits {
+    animation-delay: 0.78s;
+  }
+  .integrationSurface__section[data-entered="true"]
+    .integrationSurface__summaryAction {
+    animation-delay: 0.86s;
+  }
+}
+
+@keyframes integrationSurface__mapRise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes integrationSurface__arcDraw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes integrationSurface__mapFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .integrationSurface__mapSignal {
+    display: none;
   }
 }

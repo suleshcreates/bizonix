@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
-export const metadata: Metadata = {
-  title: "Privacy policy (Draft)",
-  description:
-    "Draft privacy structure for the Bizonix website, pending legal review.",
-};
+import { pageMetadata } from "@/lib/seo/metadata";
+export const metadata: Metadata = pageMetadata("/privacy");
 export default function Privacy() {
   return (
     <LegalPage

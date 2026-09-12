@@ -40,7 +40,8 @@ export const procurementModule: ModuleData = {
           y: 5,
           side: "right",
           label: "Received",
-          detail: "Separates what has physically arrived from what is still on order.",
+          detail:
+            "Separates what has physically arrived from what is still on order.",
         },
         {
           id: "purchase-no",
@@ -48,7 +49,8 @@ export const procurementModule: ModuleData = {
           y: 32,
           side: "right",
           label: "Purchase no",
-          detail: "One number the document keeps from draft through to received.",
+          detail:
+            "One number the document keeps from draft through to received.",
         },
         {
           id: "supplier",
@@ -56,7 +58,8 @@ export const procurementModule: ModuleData = {
           y: 62,
           side: "right",
           label: "Supplier",
-          detail: "The party the payable belongs to, carried on the same record.",
+          detail:
+            "The party the payable belongs to, carried on the same record.",
         },
       ],
     },
@@ -68,8 +71,9 @@ export const procurementModule: ModuleData = {
   },
 
   problemSection: {
+    presentation: "visual-stories",
     eyebrow: "Before Procurement",
-    title: "Where a purchase quietly loses its thread.",
+    title: "Where purchases lose their trail.",
     intro:
       "Three breaks between agreeing an order, receiving what actually turned up, and knowing what a supplier is owed.",
     problems: [
@@ -78,7 +82,7 @@ export const procurementModule: ModuleData = {
         number: "01",
         title: "The order and the receipt drift apart",
         description:
-          "The purchase is agreed in one place and what physically arrives is recorded in another. By the time the difference is noticed, the goods are already on the shelf and the short quantity has no document to attach itself to.",
+          "The order and the physical receipt stop sharing one record.",
         quote: "Ordered 120, received 108, and the file still reads 120.",
         visual: "order-receipt-drift",
       },
@@ -87,7 +91,7 @@ export const procurementModule: ModuleData = {
         number: "02",
         title: "Landed cost stops travelling with the goods",
         description:
-          "Purchase rate is captured for the invoice and then abandoned, so once the stock is put away the business can only see what it sells for — never what this particular intake cost it.",
+          "Stock keeps its selling price but loses the cost of its intake.",
         quote: "Margin is a guess because cost is an average of everything.",
         visual: "cost-detached",
       },
@@ -96,7 +100,7 @@ export const procurementModule: ModuleData = {
         number: "03",
         title: "The supplier position lives outside the system",
         description:
-          "Purchases, returns and payments are kept in three places, so the amount actually owed to a supplier is assembled by hand every time somebody asks for it.",
+          "Purchases, returns and payments must be assembled by hand.",
         quote: "A payment run starts with a phone call to the supplier.",
         visual: "supplier-scatter",
       },
@@ -126,8 +130,8 @@ export const procurementModule: ModuleData = {
 
   outcomesSection: {
     eyebrow: "After Procurement",
-    title: "Three things change about",
-    highlight: "how purchasing connects.",
+    title: "Three changes keep",
+    highlight: "purchasing connected.",
     intro: "From purchase to receipt, with costs and supplier context intact.",
     outcomes: [
       {
@@ -136,7 +140,8 @@ export const procurementModule: ModuleData = {
         visualVariant: "purchase-receiving",
         accent: "#ff9f43",
         title: "One document from order to receipt",
-        description: "A purchase moves through draft, received and cancelled states on the same record, so the quantity and the amount always describe the same transaction rather than two versions of it.",
+        description:
+          "A purchase moves through draft, received and cancelled states on the same record, so the quantity and the amount always describe the same transaction rather than two versions of it.",
       },
       {
         id: "cost-survives",
@@ -144,7 +149,8 @@ export const procurementModule: ModuleData = {
         visualVariant: "supplier-context",
         accent: "#ff9f43",
         title: "Cost survives the put-away",
-        description: "Purchase rate and cost stay attached to the stock the receipt opened, which is why the stock list can show cost and value alongside sale rate and MRP.",
+        description:
+          "Purchase rate and cost stay attached to the stock the receipt opened, which is why the stock list can show cost and value alongside sale rate and MRP.",
       },
       {
         id: "supplier-position",
@@ -152,7 +158,8 @@ export const procurementModule: ModuleData = {
         visualVariant: "return-continuity",
         accent: "#ff9f43",
         title: "A supplier position that is already assembled",
-        description: "Purchases, purchase returns and payments post against the same supplier, so what is owed is read rather than reconstructed.",
+        description:
+          "Purchases, purchase returns and payments post against the same supplier, so what is owed is read rather than reconstructed.",
       },
     ],
   },
@@ -200,7 +207,6 @@ export const procurementModule: ModuleData = {
   },
 
   workflow: {
-    variant: "operational-flow",
     title: "From commitment to shelf",
     intro:
       "Procurement is a hand-off problem. These are the five hand-offs, and what the system is holding after each one.",

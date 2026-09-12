@@ -148,18 +148,23 @@ export function DayInLife() {
       <div className={styles.dayInSystem__shell}>
         {/* ================= Header ================= */}
         <header className={styles.dayInSystem__header}>
-          <span className={styles.dayInSystem__eyebrow}>A Day In The System</span>
-          <h2 id="day-in-system-title" className={styles.dayInSystem__title}>
-            One operating rhythm,{" "}
-            <span>
-              from <span className={styles.dayInSystem__accentBlue}>opening stock</span> to{" "}
-              <span className={styles.dayInSystem__accentTeal}>closing books.</span>
-            </span>
-          </h2>
-          <p className={styles.dayInSystem__description}>
-            Every day follows a connected flow across inventory, retail,
-            network, and finance — all on the same operating record.
-          </p>
+          <div className={styles.dayInSystem__headerLeft}>
+            <span className={styles.dayInSystem__eyebrow}>A Day In The System</span>
+            <h2 id="day-in-system-title" className={styles.dayInSystem__title}>
+              <span className={styles.dayInSystem__titleLine}>
+                <span className={styles.dayInSystem__accentBlue}>Opening stock</span>
+              </span>{" "}
+              <span className={styles.dayInSystem__titleLine}>
+                to <span className={styles.dayInSystem__accentTeal}>closing books.</span>
+              </span>
+            </h2>
+          </div>
+          <div className={styles.dayInSystem__headerRight}>
+            <p className={styles.dayInSystem__description}>
+              Every day follows a connected flow across inventory, retail,
+              network, and finance — all on the same operating record.
+            </p>
+          </div>
         </header>
         {/* ================= Timeline Navigation ================= */}
         <nav

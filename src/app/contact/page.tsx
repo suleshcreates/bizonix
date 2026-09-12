@@ -1,36 +1,21 @@
 import type { Metadata } from "next";
 import { ContactPage } from "@/components/pages/contact/contact-page";
 import { demoFaq } from "@/lib/content/contact/contact-content";
+import { JsonLd } from "@/components/seo/json-ld";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 
-export const metadata: Metadata = {
-  title: "Book a demo",
-  description:
-    "See Bizonix ERP on your wholesale, retail and franchise workflows. Thirty minutes, no preparation needed.",
-  openGraph: {
-    title: "See Bizonix on your workflows",
-    description: "Book a practical workflow demo with the Bizonix team.",
-  },
-};
-
-/** The demo FAQ is genuine page content, so it is eligible for rich results. */
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: demoFaq.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: { "@type": "Answer", text: item.answer },
-  })),
-};
+/* The page is linked internally as `/contact?utm_source=…` from six places.
+   The canonical folds all of them onto one indexable URL. */
+export const metadata: Metadata = pageMetadata("/contact");
 
 export default function Page() {
   return (
     <>
       <ContactPage />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      {/* The demo FAQ is genuine, visible page content, so it is eligible for
+          rich results. */}
+      <JsonLd schema={[faqSchema(demoFaq), breadcrumbSchema("/contact")]} />
     </>
   );
 }

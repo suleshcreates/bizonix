@@ -49,14 +49,6 @@ export type HeroVisualVariant =
   | "analytics"
   | "security";
 
-/** Layout mode for the workflow section. One component, five presentations. */
-export type WorkflowVariant =
-  | "timeline"
-  | "step-cards"
-  | "operational-flow"
-  | "entity-lanes"
-  | "data-to-report";
-
 /** Layout mode for the screenshot gallery. */
 export type GalleryVariant =
   | "single-featured"
@@ -235,6 +227,8 @@ export type ProblemConsequenceItem = {
  * what that friction costs.
  */
 export type ProblemSectionData = {
+  /** Optional art direction for compact diagram-led story sections. */
+  presentation: "visual-stories";
   /** Small label above the headline, e.g. "Before Inventory". */
   eyebrow: string;
   /** Module-specific H2. Names the operational failure, not the product. */
@@ -295,12 +289,15 @@ export type WorkflowStep = {
   body: string;
   /** What the system holds once this step is done. */
   record: string;
-  /** Optional lane name — used by the entity-lanes variant. */
+  /**
+   * Which side of a two-entity operation holds the record at this step. Only
+   * set where the module genuinely has two sides (a franchise network does;
+   * a stock count does not), and then on every step, so the labels line up.
+   */
   lane?: string;
 };
 
 export type ModuleWorkflowData = {
-  variant: WorkflowVariant;
   title: string;
   intro: string;
   steps: readonly WorkflowStep[];
@@ -353,9 +350,9 @@ export type ModuleGallery = {
 };
 
 export type VerticalRelevance = {
-  apparel?: string;
-  jewellery?: string;
-  franchise?: string;
+  apparel: string;
+  jewellery: string;
+  franchise: string;
 };
 
 /**
@@ -411,7 +408,8 @@ export type ModuleData = {
   capabilities: ModuleCapabilities;
   workflow: ModuleWorkflowData;
   gallery: ModuleGallery;
-  verticalRelevance?: VerticalRelevance;
+  /** Required content for the universal context section on every module route. */
+  verticalRelevance: VerticalRelevance;
   proof?: ModuleProof;
   video?: ModuleVideo;
   faq: readonly ModuleFaqItem[];

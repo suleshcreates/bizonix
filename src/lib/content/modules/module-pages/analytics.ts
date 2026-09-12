@@ -68,8 +68,9 @@ export const analyticsModule: ModuleData = {
   },
 
   problemSection: {
+    presentation: "visual-stories",
     eyebrow: "Before Analytics",
-    title: "Why the number arrives too late to decide anything.",
+    title: "Where reports arrive too late.",
     intro:
       "Three failures between the operation producing data and anybody being able to read it together.",
     problems: [
@@ -78,7 +79,7 @@ export const analyticsModule: ModuleData = {
         number: "01",
         title: "Reporting is an assembly job",
         description:
-          "Numbers are exported from several places and joined in a spreadsheet, so the report is always a few days old and always slightly different depending on who built it.",
+          "Exports become reports that arrive late and disagree.",
         quote: "Two people, two exports, two versions of last week.",
         visual: "assembled-report",
       },
@@ -87,7 +88,7 @@ export const analyticsModule: ModuleData = {
         number: "02",
         title: "A number is a dead end",
         description:
-          "A dashboard shows a total but nothing behind it. Anyone who wants to know why has to leave the report and start searching the underlying system by hand.",
+          "A total cannot reveal the records that produced it.",
         quote: "The chart raises a question the chart cannot answer.",
         visual: "dead-end-number",
       },
@@ -96,7 +97,7 @@ export const analyticsModule: ModuleData = {
         number: "03",
         title: "The network cannot be read together",
         description:
-          "Each outlet or company reports on itself, and the group view only exists once someone has manually stacked those reports side by side.",
+          "The group view appears only after outlet reports are stacked.",
         quote: "Group performance is a quarterly spreadsheet exercise.",
         visual: "unreadable-network",
       },
@@ -198,7 +199,6 @@ export const analyticsModule: ModuleData = {
   },
 
   workflow: {
-    variant: "data-to-report",
     title: "From an operating record to a decision",
     intro:
       "Analytics is the last step of a chain that has already happened. Nothing here is entered.",

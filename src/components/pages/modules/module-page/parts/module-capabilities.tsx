@@ -1,5 +1,6 @@
 import { AlertTriangle, Check } from "lucide-react";
 import type { ModuleCapabilities as Capabilities } from "@/lib/content/modules/module-pages/types";
+import { ModuleHeading } from "./module-heading";
 import styles from "@/components/pages/modules/modules.module.css";
 
 /**
@@ -25,12 +26,17 @@ export function ModuleCapabilities({
       <div className={styles.modulePage__shell}>
         <header className={styles.modulePage__sectionHead}>
           <p className={styles.modulePage__eyebrow} data-reveal>
-            <span className={styles.modulePage__eyebrowDot} aria-hidden="true" />
+            <span
+              className={styles.modulePage__eyebrowDot}
+              aria-hidden="true"
+            />
             Capabilities
           </p>
-          <h2 id="module-capabilities" data-reveal>
-            What {moduleTitle} covers
-          </h2>
+          <ModuleHeading
+            id="module-capabilities"
+            text={"What " + moduleTitle + " covers"}
+            accent={moduleTitle + " covers"}
+          />
           <p data-reveal>
             Grouped by the job being done, using the function names you will see
             inside the product.
@@ -45,7 +51,9 @@ export function ModuleCapabilities({
               data-reveal
             >
               <h3>{group.title}</h3>
-              <p className={styles.modulePage__capabilityContext}>{group.context}</p>
+              <p className={styles.modulePage__capabilityContext}>
+                {group.context}
+              </p>
               <ul className={styles.modulePage__capabilityItems}>
                 {group.items.map((item) => (
                   <li key={item}>

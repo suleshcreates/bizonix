@@ -9,12 +9,12 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import {
+  featureLinks,
   hasSalesEmail,
   hasSalesPhone,
   industryLinks,
   siteConfig,
 } from "@/lib/site-config";
-import { moduleFilters } from "@/lib/content/modules/modules-index";
 import { FooterSubscribe } from "./footer-parts/footer-subscribe";
 import { Logo } from "./logo";
 
@@ -26,12 +26,14 @@ import { Logo } from "./logo";
 const LIVE_ROUTES = new Set([
   "/product",
   "/modules",
+  "/features",
   "/industries",
   "/about",
   "/contact",
   "/privacy",
   "/terms",
   ...industryLinks.map((link) => link.href),
+  ...featureLinks.map((link) => link.href),
 ]);
 
 type FooterLink = { label: string; href: string };
@@ -42,20 +44,18 @@ const footerGroups: { title: string; links: readonly FooterLink[] }[] = [
     links: [
       { label: "How it works", href: "/product" },
       { label: "All solutions", href: "/modules" },
-      { label: "Pricing", href: "/pricing" },
       { label: "Customers", href: "/customers" },
     ],
   },
   {
-    /* Built from the module index's own filters, so every entry lands on a
-       real, pre-filtered view instead of a module page that does not exist. */
-    title: "By function",
-    links: moduleFilters
-      .filter((filter) => filter.id !== "all")
-      .map((filter) => ({
-        label: filter.label,
-        href: `/modules?filter=${filter.id}`,
-      })),
+    /* Was a list of `/modules?filter=…` links. Those are query-string views of
+       /modules that serve identical HTML, so they added five duplicate URLs
+       and no new destination. The five feature pages are real, separately
+       indexable pages that previously hung off the header mega-menu alone —
+       a crawler that never opens a menu had no path to them. The filtered
+       views are still reachable from the deck's own filter rail. */
+    title: "Features",
+    links: featureLinks.map((link) => ({ ...link })),
   },
   {
     title: "Industries",

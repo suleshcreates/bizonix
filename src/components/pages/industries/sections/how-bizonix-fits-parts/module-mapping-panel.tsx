@@ -7,7 +7,7 @@ import styles from "@/components/pages/industries/industries.module.css";
 export function ModuleMappingPanel({ activeId }: { activeId: IndustryId }) {
   const industry = industries.find((item) => item.id === activeId);
   const mapping = industryModuleMap.find(
-    (entry) => entry.industryId === activeId
+    (entry) => entry.industryId === activeId,
   );
   const mapped = (mapping?.modules ?? []).flatMap((entry) => {
     const found = ecosystemModules.find((item) => item.slug === entry.slug);

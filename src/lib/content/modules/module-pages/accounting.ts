@@ -37,35 +37,33 @@ export const accountingModule: ModuleData = {
   },
 
   problemSection: {
+    presentation: "visual-stories",
     eyebrow: "Before Accounting",
-    title: "Where the books stop describing the day they came from.",
-    intro:
-      "Three breaks between what the operation actually did and what the ledger is able to say about it.",
+    title: "Where books lose the day.",
+    intro: "Three gaps between what happened and what the ledger knows.",
     problems: [
       {
         id: "re-entry",
         number: "01",
-        title: "The month is typed twice",
-        description:
-          "Operations happen in one system and the books are written from exports at the end of the month. The accounts are always describing a period that has already closed, from a summary that has already lost its detail.",
+        title: "Month typed twice",
+        description: "Same activity entered in operations and again in books.",
         quote: "Closing starts with a CSV and ends with a reconciliation.",
         visual: "period-relay",
       },
       {
         id: "context-lost",
         number: "02",
-        title: "A ledger line stops explaining itself",
-        description:
-          "By the time a transaction becomes a journal entry, the piece, the counter and the outlet it came from have been dropped. Every question about a number turns into an investigation.",
-        quote: "\"What is this ₹ figure?\" takes two people and an afternoon.",
+        title: "Ledger loses the trail",
+        description: "A simple line hides the full story behind the numbers.",
+        quote: '"What is this ₹ figure?" takes two people and an afternoon.',
         visual: "context-stripped",
       },
       {
         id: "multi-entity",
         number: "03",
-        title: "Multiple entities become multiple truths",
+        title: "Multiple books, one truth gap",
         description:
-          "Each company, store or partner keeps its own books, and the group view is assembled once a quarter in a spreadsheet nobody fully trusts.",
+          "Each entity keeps its own books, and the group view comes later.",
         quote: "Consolidation is an event, not a report.",
         visual: "entity-split",
       },
@@ -105,7 +103,8 @@ export const accountingModule: ModuleData = {
         visualVariant: "document-posted",
         accent: "#8b5cf6",
         title: "Entries that are posted, not typed",
-        description: "Operating documents create the accounting record, so the books move at the same speed as the business rather than trailing it by a month.",
+        description:
+          "Operating documents create the accounting record, so the books move at the same speed as the business rather than trailing it by a month.",
       },
       {
         id: "traceable",
@@ -113,7 +112,8 @@ export const accountingModule: ModuleData = {
         visualVariant: "traceable-number",
         accent: "#8b5cf6",
         title: "A number you can walk back",
-        description: "Because the journal is created from a document, a ledger line still points at the bill, receipt or transfer that caused it.",
+        description:
+          "Because the journal is created from a document, a ledger line still points at the bill, receipt or transfer that caused it.",
       },
       {
         id: "entity-clean",
@@ -121,7 +121,8 @@ export const accountingModule: ModuleData = {
         visualVariant: "entity-consolidation",
         accent: "#8b5cf6",
         title: "Entities that stay separate and still add up",
-        description: "Each operating entity keeps its own books while the group can be read across them, without a manual consolidation step in between.",
+        description:
+          "Each operating entity keeps its own books while the group can be read across them, without a manual consolidation step in between.",
       },
     ],
   },
@@ -153,7 +154,8 @@ export const accountingModule: ModuleData = {
       {
         id: "reporting",
         title: "Statements & tax",
-        context: "What the business, the auditor and the tax filing need to read.",
+        context:
+          "What the business, the auditor and the tax filing need to read.",
         items: [
           "Profit & loss",
           "Balance sheet",
@@ -165,7 +167,6 @@ export const accountingModule: ModuleData = {
   },
 
   workflow: {
-    variant: "data-to-report",
     title: "From an operating event to a statement",
     intro:
       "The path a single transaction takes. Nothing on it is re-keyed; each step reads the one before it.",

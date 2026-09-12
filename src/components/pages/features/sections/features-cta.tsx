@@ -64,7 +64,11 @@ export function FeaturesCta() {
         </div>
 
         <h2 id="features-cta-title">
-          Five details. One record. Nothing to reconcile.
+          <span className={styles.featuresHeading__blue}>Five details.</span>{" "}
+          <span className={styles.featuresHeading__violet}>One record.</span>{" "}
+          <span className={styles.featuresHeading__teal}>
+            Nothing to reconcile.
+          </span>
         </h2>
         <p className={styles.featuresCta__lede}>
           Bring your own workflow to the demo — a purchase series you argue

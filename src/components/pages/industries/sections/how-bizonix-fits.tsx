@@ -32,7 +32,7 @@ export function HowBizonixFitsSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.08 }
+      { threshold: 0.08 },
     );
     observer.observe(node);
     return () => observer.disconnect();

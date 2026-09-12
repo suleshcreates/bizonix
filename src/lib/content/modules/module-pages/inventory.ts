@@ -68,8 +68,9 @@ export const inventoryModule: ModuleData = {
   },
 
   problemSection: {
+    presentation: "visual-stories",
     eyebrow: "Before Inventory",
-    title: "What a stock count actually costs a team today.",
+    title: "Where stock counts lose the truth.",
     intro:
       "Three operational failures that turn a physical count into a negotiation, and an available piece into a refused sale.",
     problems: [
@@ -78,7 +79,7 @@ export const inventoryModule: ModuleData = {
         number: "01",
         title: "The count is a negotiation",
         description:
-          "Two people count the same rack and produce two numbers. Because stock is held as a quantity against a style, neither figure can be traced back to a specific piece — so the difference gets written off rather than explained.",
+          "Conflicting counts cannot be traced back to the pieces behind them.",
         quote: "Rack says 38. System says 41. Nobody can name the three.",
         visual: "count-mismatch",
       },
@@ -87,7 +88,7 @@ export const inventoryModule: ModuleData = {
         number: "02",
         title: "Stock is in the wrong place, and nobody can see it",
         description:
-          "Availability is reported for the business rather than for the shelf a customer is standing at. Stock exists, but it exists somewhere else, and the counter has no way to find out without a phone call.",
+          "Stock may exist elsewhere, but the counter cannot see where.",
         quote: "Sold out at the counter while the warehouse is holding forty.",
         visual: "location-mismatch",
       },
@@ -96,7 +97,7 @@ export const inventoryModule: ModuleData = {
         number: "03",
         title: "Identity is lost at receiving",
         description:
-          "One code is shared across an entire style, so the moment goods are put away the system can no longer say which intake a piece came from, what it cost, or which price series it belongs to.",
+          "Shared style codes erase the intake, cost and price trail.",
         quote: "A return arrives and nothing says which entry it came out of.",
         visual: "identity-loss",
       },
@@ -203,7 +204,6 @@ export const inventoryModule: ModuleData = {
   },
 
   workflow: {
-    variant: "timeline",
     title: "How stock actually moves",
     intro:
       "Five operational steps. Each one hands the next a record rather than a spreadsheet row.",

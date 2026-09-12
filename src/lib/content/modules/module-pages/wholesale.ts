@@ -37,8 +37,9 @@ export const wholesaleModule: ModuleData = {
   },
 
   problemSection: {
+    presentation: "visual-stories",
     eyebrow: "Before Wholesale",
-    title: "Where a bulk order stops behaving like one order.",
+    title: "Where bulk orders lose their shape.",
     intro:
       "Three failures that appear the moment an order leaves the warehouse in more than one consignment.",
     problems: [
@@ -47,7 +48,7 @@ export const wholesaleModule: ModuleData = {
         number: "01",
         title: "Part-shipped orders lose their shape",
         description:
-          "An order goes out in two or three consignments, but the system only understands whole orders. What is still owed to the buyer ends up being tracked in a side file that only one person maintains.",
+          "Partial consignments leave the outstanding quantity in a side file.",
         quote: "A pending list that lives in a spreadsheet on one laptop.",
         visual: "partial-shipment",
       },
@@ -56,7 +57,7 @@ export const wholesaleModule: ModuleData = {
         number: "02",
         title: "Picking works from a printout",
         description:
-          "The warehouse packs from a printed order while stock keeps moving underneath it. By the time the carton is sealed, the availability it was picked against is out of date.",
+          "Printed picks go stale while warehouse stock keeps moving.",
         quote: "Two orders promised the same forty pieces.",
         visual: "stale-pick",
       },
@@ -65,7 +66,7 @@ export const wholesaleModule: ModuleData = {
         number: "03",
         title: "Credit is an opinion",
         description:
-          "Bulk buyers pay against a running account, but billing, returns and receipts sit in different places — so the exposure to a partner is assembled by hand before every conversation about it.",
+          "Buyer exposure is rebuilt from billing, returns and receipts.",
         quote: "Nobody can say what a buyer owes without opening three files.",
         visual: "credit-scatter",
       },
@@ -166,7 +167,6 @@ export const wholesaleModule: ModuleData = {
   },
 
   workflow: {
-    variant: "operational-flow",
     title: "From order to dispatch",
     intro:
       "Bulk selling is a sequence of partial states. These are the five, and what the record holds at each.",

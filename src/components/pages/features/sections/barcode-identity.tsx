@@ -41,8 +41,14 @@ export function BarcodeIdentity() {
       style={{ "--accent": feature.accent } as CSSProperties}
       aria-labelledby="feature-barcode-title"
     >
-      <span className={styles.features__barcodeIdentity__rule} aria-hidden="true" />
-      <span className={styles.features__barcodeIdentity__ghost} aria-hidden="true">
+      <span
+        className={styles.features__barcodeIdentity__rule}
+        aria-hidden="true"
+      />
+      <span
+        className={styles.features__barcodeIdentity__ghost}
+        aria-hidden="true"
+      >
         {feature.index}
       </span>
 
@@ -54,7 +60,11 @@ export function BarcodeIdentity() {
             tone={feature.tone}
           />
           <h2 id="feature-barcode-title">
-            Every piece has to answer for itself.
+            <span className={styles.featuresHeading__blue}>Every piece</span>{" "}
+            <span className={styles.featuresHeading__cyan}>has to</span>{" "}
+            <span className={styles.featuresHeading__teal}>
+              answer for itself.
+            </span>
           </h2>
           <p className={styles.features__barcodeIdentity__why}>
             A style code tells you <em>what</em> something is. A piece barcode
@@ -77,10 +87,16 @@ export function BarcodeIdentity() {
                   </span>
                   <div>
                     <p className={styles.features__barcodeIdentity__stepHead}>
-                      <span className={styles.features__barcodeIdentity__stepKicker}>{step.step}</span>
+                      <span
+                        className={styles.features__barcodeIdentity__stepKicker}
+                      >
+                        {step.step}
+                      </span>
                       {step.title}
                     </p>
-                    <p className={styles.features__barcodeIdentity__stepBody}>{step.body}</p>
+                    <p className={styles.features__barcodeIdentity__stepBody}>
+                      {step.body}
+                    </p>
                   </div>
                 </li>
               );
@@ -97,11 +113,17 @@ export function BarcodeIdentity() {
         <div className={styles.features__barcodeIdentity__stage}>
           <div className={styles.features__barcodeIdentity__scanner}>
             <div className={styles.features__barcodeIdentity__scannerHead}>
-              <span className={styles.features__barcodeIdentity__scannerDot} aria-hidden="true" />
+              <span
+                className={styles.features__barcodeIdentity__scannerDot}
+                aria-hidden="true"
+              />
               Piece scan · label read
             </div>
 
-            <div className={styles.features__barcodeIdentity__bars} aria-hidden="true">
+            <div
+              className={styles.features__barcodeIdentity__bars}
+              aria-hidden="true"
+            >
               <div className={styles.features__barcodeIdentity__barLayer}>
                 {bars.map((weight, index) => (
                   <i key={index} style={{ flexGrow: weight }} />
@@ -115,16 +137,23 @@ export function BarcodeIdentity() {
               <span className={styles.features__barcodeIdentity__beam} />
             </div>
 
-            <p className={styles.features__barcodeIdentity__code} aria-hidden="true">
+            <p
+              className={styles.features__barcodeIdentity__code}
+              aria-hidden="true"
+            >
               <span>BZX</span>
               <span>2451</span>
               <span>0187</span>
-              <span className={styles.features__barcodeIdentity__codeCheck}>✓</span>
+              <span className={styles.features__barcodeIdentity__codeCheck}>
+                ✓
+              </span>
             </p>
           </div>
 
           <div className={styles.features__barcodeIdentity__record}>
-            <p className={styles.features__barcodeIdentity__recordHead}>Resolved piece record</p>
+            <p className={styles.features__barcodeIdentity__recordHead}>
+              Resolved piece record
+            </p>
             <dl>
               {pieceRecord.map((row, index) => (
                 <div

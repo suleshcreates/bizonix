@@ -31,7 +31,7 @@ export function IndustryPainRow({
 
   return (
     <div
-      className={`${styles.industryPainSection__story} ${styles["industryPainSection__" + (item.accent)]} ${isOpen ? styles.industryPainSection__isOpen : ""}`}
+      className={`${styles.industryPainSection__story} ${styles["industryPainSection__" + item.accent]} ${isOpen ? styles.industryPainSection__isOpen : ""}`}
       style={{ "--row-index": index } as React.CSSProperties}
     >
       <div className={styles.industryPainSection__summary}>
@@ -47,28 +47,48 @@ export function IndustryPainRow({
             onKeyDown={handleKeyDown}
           >
             <div className={styles.industryPainSection__identity}>
-              <span className={styles.industryPainSection__number}>{item.number}</span>
+              <span className={styles.industryPainSection__number}>
+                {item.number}
+              </span>
               <Icon aria-hidden="true" size={19} strokeWidth={1.7} />
               <h3>{item.name}</h3>
             </div>
             <IndustryCollapsedImage item={item} priority={index === 0} />
             <div className={styles.industryPainSection__pressureCell}>
               <div className={styles.industryPainSection__bottleneck}>
-                <span className={styles.industryPainSection__microLabel}>The pressure</span>
+                <span className={styles.industryPainSection__microLabel}>
+                  The pressure
+                </span>
                 <strong>{item.pressure}</strong>
                 <p>{item.pressureDetail}</p>
               </div>
-              <span className={styles.industryPainSection__transition} aria-hidden="true">
-                <i /><i /><i /><i /><b /><em />
+              <span
+                className={styles.industryPainSection__transition}
+                aria-hidden="true"
+              >
+                <i />
+                <i />
+                <i />
+                <i />
+                <b />
+                <em />
               </span>
             </div>
             <IndustryResponse item={item} />
-            <ArrowDownRight className={styles.industryPainSection__rowArrow} aria-hidden="true" size={20} />
+            <ArrowDownRight
+              className={styles.industryPainSection__rowArrow}
+              aria-hidden="true"
+              size={20}
+            />
           </div>
         </div>
       </div>
 
-      <div className={styles.industryPainSection__expansion} id={detailId} aria-hidden={!isOpen}>
+      <div
+        className={styles.industryPainSection__expansion}
+        id={detailId}
+        aria-hidden={!isOpen}
+      >
         <div className={styles.industryPainSection__expansionClip}>
           <div className={styles.industryPainSection__expandedStory}>
             <div className={styles.industryPainSection__expandedImageRegion}>
@@ -81,7 +101,9 @@ export function IndustryPainRow({
                 <Icon aria-hidden="true" size={17} strokeWidth={1.7} />
                 <strong>{item.name}</strong>
               </div>
-              <span className={styles.industryPainSection__microLabel}>Operational pressure</span>
+              <span className={styles.industryPainSection__microLabel}>
+                Operational pressure
+              </span>
               <h4>{item.pressure}</h4>
               <p>{item.pressureDetail}</p>
               <IndustryPainList pains={item.pains} />

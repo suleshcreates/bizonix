@@ -177,27 +177,27 @@ function JewelleryVisual() {
           <div className="flex justify-between">
             <span className="text-slate-400">SKU</span>
             <span className="font-bold text-slate-800 truncate">
-              JWL-R048-AU
+              DEMO-R048
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-400">Weight</span>
-            <span className="font-bold text-slate-800">5.84 g</span>
+            <span className="text-slate-400">Finish</span>
+            <span className="font-bold text-slate-800">Antique matt</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-400">Karat</span>
-            <span className="font-bold text-slate-800">22K Gold</span>
+            <span className="text-slate-400">Stone</span>
+            <span className="font-bold text-slate-800">Glass</span>
           </div>
         </div>
       </div>
 
       {/* Barcode strip */}
       <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between">
-        <span className="text-[7px] text-slate-400">BATCH: BZ-2026</span>
+        <span className="text-[7px] text-slate-400">SERIES: DEMO-26</span>
         <div className="flex flex-col items-end">
           <div className="h-4 w-16 bg-[repeating-linear-gradient(90deg,transparent,transparent_2px,#1e293b_2px,#1e293b_4px)]" />
           <span className="text-[6px] text-slate-400 tracking-wider mt-0.5">
-            *R048AU*
+            *DEMO-R048*
           </span>
         </div>
       </div>

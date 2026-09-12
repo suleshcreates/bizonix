@@ -20,21 +20,30 @@ function SolutionsHeroCopy() {
 
       <h1 id="modules-title">
         <span className={styles.modulesHero__headlineLead}>
-          Solutions built for how brands
+          <span className={styles.modulesHero__leadDesktop}>Solutions built </span>
+          <span className={styles.modulesHero__leadMobile}>Built </span>
+          for how brands
         </span>{" "}
         <span className={styles.modulesHero__accent}>actually operate</span>
       </h1>
 
       <p className={styles.modulesHero__lede}>
-        Run inventory, purchasing, sales, wholesale, franchise and finance from
-        one connected platform. Start with the workflow that needs attention
-        most, then expand when you&apos;re ready.
+        <span className={styles.modulesHero__ledeDesktop}>
+          Run inventory, purchasing, sales, wholesale, franchise and finance from
+          one connected platform. Start with the workflow that needs attention
+          most, then expand when you&apos;re ready.
+        </span>
+        <span className={styles.modulesHero__ledeMobile}>
+          Run inventory, sales, wholesale and finance from one connected platform —
+          start where you need it most, then expand as you grow.
+        </span>
       </p>
 
       <ul className={styles.modulesHero__proof}>
         <li className={styles.modulesHero__proofLive}>
           <span className={styles.modulesHero__pulse} aria-hidden="true" />
-          Real screens from Bizonix
+          <span className={styles.modulesHero__proofDesktop}>Real screens from Bizonix</span>
+          <span className={styles.modulesHero__proofMobile}>Real screens</span>
         </li>
         {proofPoints.map((point) => (
           <li key={point}>{point}</li>

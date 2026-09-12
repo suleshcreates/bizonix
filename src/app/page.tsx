@@ -10,27 +10,14 @@ import { HomeHero } from "@/components/pages/home/sections/home-hero";
 import { IndustryBand } from "@/components/pages/home/sections/industry-band";
 import { PlatformSpine } from "@/components/pages/home/sections/platform-spine";
 import { ModuleShowcase } from "@/components/pages/home/sections/module-showcase/module-showcase";
-import { siteConfig } from "@/lib/site-config";
+import { JsonLd } from "@/components/seo/json-ld";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { getRoute } from "@/lib/seo/routes";
+import { softwareApplicationSchema } from "@/lib/seo/schema";
 
-export const metadata: Metadata = {
-  title: "ERP for wholesale, retail & franchise brands",
-  description:
-    "Connect warehouse, stores, franchise operations and books with Bizonix ERP—built for Indian multi-entity retail brands.",
-  openGraph: {
-    title: "Wholesale, retail & franchise. One operating truth.",
-    description:
-      "Bizonix connects every operating entity without fragmenting the business.",
-  },
-};
-
-const softwareSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Bizonix ERP",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web",
-  description: siteConfig.description,
-};
+/* The homepage title already carries the brand, so it opts out of the
+   "%s | Bizonix" template rather than naming Bizonix twice. */
+export const metadata: Metadata = pageMetadata("/", { absoluteTitle: true });
 
 export default function Home() {
   return (
@@ -46,9 +33,12 @@ export default function Home() {
       <ComplianceBand />
       <FAQSection />
       <FinalCTA />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      <JsonLd
+        schema={softwareApplicationSchema({
+          name: "Bizonix ERP",
+          description: getRoute("/").description,
+          path: "/",
+        })}
       />
     </>
   );

@@ -354,9 +354,12 @@ export function CaseStudyTeaser() {
                           <span className="text-[9px] font-mono font-extrabold uppercase tracking-widest text-bz-teal block">
                             {node.category}
                           </span>
-                          <h4 className="text-sm font-bold text-white mt-0.5">
+                          {/* A card label inside the interactive map, not a
+                              document heading: as an h4 it jumped the outline
+                              straight from the section's h2. */}
+                          <p className="text-sm font-bold text-white mt-0.5">
                             {node.name}
-                          </h4>
+                          </p>
                         </div>
                       </div>
 

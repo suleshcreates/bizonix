@@ -15,7 +15,9 @@ import { ButtonLink } from "@/components/ui/button";
 import { calculateOrbitPositions, orbitPosition } from "./orbit-geometry";
 import styles from "@/components/pages/home/home.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const DEBUG_MODULE_ORBIT =
   process.env.NEXT_PUBLIC_DEBUG_MODULE_ORBIT === "true";
@@ -39,7 +41,7 @@ const modulesBySlug = new Map(
 );
 const displayModules = visualOrder
   .slice(0, 6)
-  .map((slug) => modulesBySlug.get(slug)!);
+  .map((slug, index) => ({ ...modulesBySlug.get(slug)!, number: String(index + 1).padStart(2, "0") }));
 
 function ModuleShowcaseCTA() {
   return (
@@ -56,11 +58,11 @@ function ModuleShowcaseCTA() {
 
 function ModuleShowcaseIntro() {
   return (
-    <header className={styles.moduleShowcase__header} data-orbit-header>
+    <header className={`${styles.moduleShowcase__header} ${styles.moduleShowcase__mobileHeader}`} data-orbit-header data-mobile-reveal>
       <span className={styles.moduleShowcase__eyebrow}>
         <i /> Our modules <i />
       </span>
-      <h2 id="module-showcase-title" className={styles.moduleShowcase__title}>
+      <h2 id="module-showcase-title" className={`${styles.moduleShowcase__title} ${styles.moduleShowcase__mobileTitle}`}>
         Everything you need, <br />
         in one <em>powerful system</em>
       </h2>
@@ -135,7 +137,7 @@ function ModuleMetric({ module }: { module: ShowcaseModule }) {
   return (
     <div className={styles.moduleShowcase__metric}>
       <span>
-        <small>{module.metric.label}</small>
+        <small>{module.metric.label} · Sample</small>
         <strong>{module.metric.value}</strong>
       </span>
       {module.metric.delta ? <b>{module.metric.delta} ↗</b> : null}
@@ -161,11 +163,12 @@ function ModuleMetric({ module }: { module: ShowcaseModule }) {
 function ModuleCard({ module }: { module: ShowcaseModule }) {
   return (
     <article
-      className={styles.moduleShowcase__card}
+      className={`${styles.moduleShowcase__card} ${styles.moduleShowcase__mobileCard}`}
       style={{ "--accent": module.accent } as React.CSSProperties}
       data-module-card
+      data-mobile-reveal
     >
-      <div className={styles.moduleShowcase__photo}>
+      <div className={`${styles.moduleShowcase__photo} ${styles.moduleShowcase__mobilePhoto}`}>
         <Image
           src={module.image}
           alt={module.imageAlt}
@@ -173,10 +176,11 @@ function ModuleCard({ module }: { module: ShowcaseModule }) {
           sizes="(max-width: 700px) 42vw, (max-width: 1120px) 34vw, 180px"
         />
       </div>
-      <div className={styles.moduleShowcase__panel}>
-        <div className={styles.moduleShowcase__cardHeading}>
+      <div className={`${styles.moduleShowcase__panel} ${styles.moduleShowcase__mobilePanel}`}>
+        <div className={`${styles.moduleShowcase__cardHeading} ${styles.moduleShowcase__mobileHeading}`}>
           <span>{module.number}</span>
           <h3>{module.title}</h3>
+          <ChevronRight className={styles.moduleShowcase__mobileChevron} size={18} aria-hidden="true" />
         </div>
         <p>{module.description}</p>
         <ModuleMetric module={module} />
@@ -196,7 +200,7 @@ function ModuleCard({ module }: { module: ShowcaseModule }) {
 
 function ModuleGrid() {
   return (
-    <div className={styles.moduleShowcase__moduleGrid} data-module-grid>
+    <div className={`${styles.moduleShowcase__moduleGrid} ${styles.moduleShowcase__mobileStories}`} data-module-grid>
       {displayModules.map((module) => (
         <ModuleCard key={module.slug} module={module} />
       ))}
@@ -230,85 +234,6 @@ function MobileModuleNavigation() {
   );
 }
 
-function MobileModuleCard({
-  module,
-  storyNumber,
-}: {
-  module: ShowcaseModule;
-  storyNumber: string;
-}) {
-  return (
-    <article
-      className={styles.moduleShowcase__mobileCard}
-      style={{ "--accent": module.accent } as React.CSSProperties}
-      data-mobile-reveal
-    >
-      <div className={styles.moduleShowcase__mobilePhoto}>
-        <Image
-          src={module.image}
-          alt={module.imageAlt}
-          fill
-          sizes="(max-width: 700px) 43vw, 1px"
-        />
-      </div>
-      <div className={styles.moduleShowcase__mobilePanel}>
-        <div className={styles.moduleShowcase__mobileHeading}>
-          <span>{storyNumber}</span>
-          <h3>{module.title}</h3>
-          <ChevronRight size={18} strokeWidth={2.3} aria-hidden="true" />
-        </div>
-        <p>{module.description}</p>
-        <ModuleMetric module={module} />
-      </div>
-      <Link
-        className={styles.moduleShowcase__cardLink}
-        href={module.route}
-        aria-label={`Explore ${module.title}`}
-      >
-        <span className={styles.moduleShowcase__srOnly}>
-          Explore {module.title}
-        </span>
-      </Link>
-    </article>
-  );
-}
-
-function MobileModuleHub() {
-  return (
-    <div className={styles.moduleShowcase__mobileHub}>
-      <header className={styles.moduleShowcase__mobileHeader}>
-        <span className={styles.moduleShowcase__eyebrow} data-mobile-reveal>
-          <i /> Our modules <i />
-        </span>
-        <h2 className={styles.moduleShowcase__mobileTitle} data-mobile-reveal>
-          Everything you need,
-          <br />
-          in one <em>powerful system.</em>
-        </h2>
-        <p data-mobile-reveal>
-          Integrated modules. Connected workflow. Complete control across your
-          entire business.
-        </p>
-      </header>
-
-      <MobileModuleNavigation />
-
-      <div className={styles.moduleShowcase__mobileStories}>
-        {displayModules.map((module, index) => (
-          <MobileModuleCard
-            key={module.slug}
-            module={module}
-            storyNumber={String(index + 1).padStart(2, "0")}
-          />
-        ))}
-      </div>
-
-      <div className={styles.moduleShowcase__mobileCta} data-mobile-reveal>
-        <ModuleShowcaseCTA />
-      </div>
-    </div>
-  );
-}
 export function ModuleShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -478,12 +403,12 @@ export function ModuleShowcase() {
             <div className={styles.moduleShowcase__storyColumn}>
               <ModuleShowcaseIntro />
               <ModuleOperatingVisual />
+              <MobileModuleNavigation />
             </div>
             <ModuleGrid />
           </div>
           <ModuleShowcaseCTA />
         </div>
-        <MobileModuleHub />
       </div>
     </section>
   );

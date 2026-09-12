@@ -3,14 +3,13 @@ import { ModuleMotion } from "./module-motion";
 import styles from "@/components/pages/modules/modules.module.css";
 import type { Crumb } from "./parts/breadcrumbs";
 import { ModuleCapabilities } from "./parts/module-capabilities";
-import { ModuleCta } from "./parts/module-cta";
 import { ModuleFaq } from "./parts/module-faq";
 import { ModuleGallery } from "./parts/module-gallery";
 import { ModuleHero } from "./parts/module-hero";
 import { ModuleOutcomes } from "./parts/module-outcomes";
 import { ModuleProblems } from "./parts/module-problems";
 import { ModuleProof } from "./parts/module-proof";
-import { ModuleRelevance } from "./parts/module-relevance";
+import { ModuleContextSection } from "./parts/module-relevance";
 import { ModuleVideo } from "./parts/module-video";
 import { ModuleWorkflow } from "./parts/module-workflow";
 import { RelatedModules } from "./parts/related-modules";
@@ -20,13 +19,13 @@ import { RelatedModules } from "./parts/related-modules";
  *
  * Every module page in the site is this component with different data. There
  * is deliberately no `if (slug === …)` anywhere below: visual differences come
- * from `theme`, `hero.visualVariant`, `workflow.variant` and `gallery.variant`,
- * all of which are data.
+ * from `theme`, `hero.visualVariant` and `gallery.variant`, all of which are
+ * data. The workflow has no variant at all: all nine render one timeline.
  *
  * Section order is the SRS sequence and is fixed:
  *   1 hero · 2 problem · 3 outcomes · 4 capabilities · 5 workflow ·
  *   6 screenshot gallery · 7 vertical relevance · 8 proof · 9 video ·
- *   10 FAQ · 11 related modules · 12 final CTA.
+ *   10 FAQ · 11 related modules.
  *
  * The four supporting beats —
  * vertical relevance, proof, video and (through its own guard) the limitations
@@ -67,26 +66,24 @@ export function ModuleTemplate({ data }: { data: ModuleData }) {
       />
       <ModuleWorkflow workflow={data.workflow} />
       <ModuleGallery gallery={data.gallery} moduleSlug={data.slug} />
-      {data.verticalRelevance ? (
-        <ModuleRelevance
-          relevance={data.verticalRelevance}
-          moduleTitle={data.title}
-        />
-      ) : null}
+      <ModuleContextSection
+        moduleSlug={data.slug}
+        moduleTitle={data.title}
+        relevance={data.verticalRelevance}
+      />
       {data.proof ? <ModuleProof proof={data.proof} /> : null}
       {data.video ? (
         <ModuleVideo video={data.video} moduleSlug={data.slug} />
       ) : null}
-      <ModuleFaq faq={data.faq} moduleTitle={data.title} moduleSlug={data.slug} />
+      <ModuleFaq
+        faq={data.faq}
+        moduleTitle={data.title}
+        moduleSlug={data.slug}
+      />
       <RelatedModules
         related={data.relatedModules}
         moduleTitle={data.title}
         moduleSlug={data.slug}
-      />
-      <ModuleCta
-        moduleTitle={data.title}
-        moduleSlug={data.slug}
-        outcome={data.outcome}
       />
     </div>
   );
