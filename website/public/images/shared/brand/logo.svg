@@ -1,0 +1,9 @@
+<svg width="220" height="52" viewBox="0 0 220 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(2 2)">
+    <path d="M24 0 45 12 24 24 3 12 24 0Z" fill="#2F6BFF"/>
+    <path d="M3 12 24 24v24L3 36V12Z" fill="#0B1F3A"/>
+    <path d="M45 12 24 24v24l21-12V12Z" fill="#2EC4B6"/>
+    <path d="M15 17.5 24 12l9 5.5-9 5.5-9-5.5Z" fill="white" fill-opacity=".9"/>
+  </g>
+  <text x="60" y="34" fill="#0B1F3A" font-family="Plus Jakarta Sans, sans-serif" font-size="27" font-weight="750" letter-spacing="-.8">Bizonix</text>
+</svg>

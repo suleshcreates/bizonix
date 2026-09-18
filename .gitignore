@@ -48,3 +48,8 @@ next-env.d.ts
 
 # Local logs and tooling output
 *.log
+
+backup/
+.pnpm-store/
+*.log
+.DS_Store
