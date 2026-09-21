@@ -549,7 +549,7 @@ export interface EmployeeAssignmentEmailOptions {
 }
 
 export function buildEmployeeAssignmentEmail(options: EmployeeAssignmentEmailOptions): string {
-  const { enquiry, assignee, assignedBy, adminUrl, loginUrl, isFirstAssignment, temporaryPassword } = options;
+  const { enquiry, assignee, assignedBy, adminUrl, loginUrl, isFirstAssignment } = options;
 
   const priorityConfig: Record<string, { bg: string; text: string; border: string; emoji: string }> = {
     URGENT: { bg: C.redLight,   text: C.red,   border: C.redBorder,   emoji: '&#128308;' },
@@ -565,7 +565,7 @@ export function buildEmployeeAssignmentEmail(options: EmployeeAssignmentEmailOpt
   const assigneeName = assignee.displayName || assignee.email;
   const assignerName = assignedBy.displayName || assignedBy.email;
 
-  const credentialsBlock = isFirstAssignment && temporaryPassword ? `
+  const credentialsBlock = isFirstAssignment ? `
   <!-- CREDENTIALS ACTIVATION BOX -->
   <tr>
     <td bgcolor="${C.white}" style="background-color:${C.white};padding:0 40px 24px 40px;" align="left">
@@ -580,10 +580,10 @@ export function buildEmployeeAssignmentEmail(options: EmployeeAssignmentEmailOpt
             </td>
             <td style="vertical-align:middle;">
               <span style="font-family:${FONT};font-size:15px;font-weight:800;color:#FFFFFF;display:block;">
-                Your Staff Portal Credentials
+                Your Staff Portal Access
               </span>
               <span style="font-family:${FONT};font-size:12px;color:#8BAFC5;display:block;margin-top:2px;">
-                Use these credentials to sign in and manage your assigned accounts.
+                Use your account details below to sign in and manage your assigned accounts.
               </span>
             </td>
           </tr>
@@ -616,19 +616,11 @@ export function buildEmployeeAssignmentEmail(options: EmployeeAssignmentEmailOpt
               ${assignee.email}
             </td>
           </tr>
-          <tr>
-            <td style="font-family:${FONT};font-size:11px;font-weight:700;color:#8BAFC5;padding:6px 0;text-transform:uppercase;letter-spacing:0.8px;">
-              Temporary Password
-            </td>
-            <td style="font-family:${FONT};font-size:13px;padding:6px 0;">
-              <code style="background-color:#0F243E;color:#34D399;padding:4px 10px;border-radius:5px;font-family:Consolas,Monaco,monospace;font-size:14px;font-weight:800;letter-spacing:1px;border:1px solid #1E3A5F;">${temporaryPassword}</code>
-            </td>
-          </tr>
         </table>
 
         <div style="background-color:#0F243E;border-radius:8px;padding:12px 14px;margin-top:16px;border:1px solid #1E3A5F;">
           <p style="font-family:${FONT};font-size:11px;color:#94A3B8;margin:0;line-height:1.6;">
-            &#128161; &nbsp;<strong style="color:#E2E8F0;">Security Tip:</strong> You can log in using either your Username or your Work Email. Please update your password once logged in.
+            &#128161; &nbsp;<strong style="color:#E2E8F0;">Security Tip:</strong> You can log in using either your Username or your Work Email. If you have not yet set your password, use the password reset link on the portal.
           </p>
         </div>
 

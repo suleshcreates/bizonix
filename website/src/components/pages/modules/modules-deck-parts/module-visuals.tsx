@@ -612,6 +612,25 @@ function SecurityVisual() {
   );
 }
 
+function StandardModuleVisual() {
+  return (
+    <svg className={s.moduleVisuals__svg} viewBox="0 0 300 140" aria-hidden="true">
+      <rect className={s.moduleVisuals__frame} x={40} y={20} width={220} height={100} rx={10} />
+      <line className={s.moduleVisuals__hair} x1={40} y1={50} x2={260} y2={50} />
+      <line className={s.moduleVisuals__hair} x1={40} y1={80} x2={260} y2={80} />
+      <circle className={s.moduleVisuals__solid} cx={60} cy={35} r={4} />
+      <rect className={s.moduleVisuals__soft} x={75} y={30} width={60} height={10} rx={4} />
+      <rect className={s.moduleVisuals__soft} x={180} y={30} width={60} height={10} rx={4} />
+      <circle className={s.moduleVisuals__solid} cx={60} cy={65} r={4} />
+      <rect className={s.moduleVisuals__soft} x={75} y={60} width={80} height={10} rx={4} />
+      <rect className={s.moduleVisuals__soft} x={200} y={60} width={40} height={10} rx={4} />
+      <circle className={s.moduleVisuals__solid} cx={60} cy={95} r={4} />
+      <rect className={s.moduleVisuals__soft} x={75} y={90} width={50} height={10} rx={4} />
+      <rect className={s.moduleVisuals__soft} x={160} y={90} width={80} height={10} rx={4} />
+    </svg>
+  );
+}
+
 const VISUALS: Record<string, () => React.JSX.Element> = {
   inventory: InventoryVisual,
   procurement: ProcurementVisual,
@@ -625,8 +644,7 @@ const VISUALS: Record<string, () => React.JSX.Element> = {
 };
 
 export function ModuleVisual({ slug }: { slug: string }) {
-  const Visual = VISUALS[slug];
-  if (!Visual) return null;
+  const Visual = VISUALS[slug] || StandardModuleVisual;
   return (
     <span className={s.moduleVisuals__stage} aria-hidden="true">
       <Visual />

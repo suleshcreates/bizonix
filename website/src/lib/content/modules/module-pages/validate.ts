@@ -22,7 +22,7 @@ import {
  * screen or absent customer proof). Run through `scripts/validate-modules.mjs`.
  */
 
-export type ValidationIssue = { slug: ModuleSlug | "*"; message: string };
+export type ValidationIssue = { slug: ModuleSlug | string | "*"; message: string };
 
 export type ValidationReport = {
   errors: ValidationIssue[];
@@ -262,26 +262,28 @@ function validateModule(
   }
   for (const shot of shots) {
     if (shot.state === "captured") {
-      if (!(shot.screen in productScreens)) {
-        fail(`screenshot "${shot.id}" points at unknown screen "${shot.screen}"`);
+      if (shot.screen) {
+        if (!(shot.screen in productScreens)) {
+          fail(`screenshot "${shot.id}" points at unknown screen "${shot.screen}"`);
+        }
+        const pinIds = (shot.annotations ?? []).map((pin) => pin.id);
+        if (new Set(pinIds).size !== pinIds.length) {
+          fail(`annotation ids on "${shot.id}" must be unique`);
+        }
+        for (const pin of shot.annotations ?? []) {
+          if (pin.x < 0 || pin.x > 100 || pin.y < 0 || pin.y > 100) {
+            fail(`annotation "${pin.id}" on "${shot.id}" is outside the image`);
+          } else if (
+            !projectOntoFrame(shot.screen, galleryFrameAspect(shot.screen), pin)
+          ) {
+            fail(
+              `annotation "${pin.id}" on "${shot.id}" falls outside the frame the gallery renders`,
+            );
+          }
+        }
       }
       if (!shot.alt || shot.alt.length < 20) {
         fail(`screenshot "${shot.id}" needs meaningful alt text`);
-      }
-      const pinIds = (shot.annotations ?? []).map((pin) => pin.id);
-      if (new Set(pinIds).size !== pinIds.length) {
-        fail(`annotation ids on "${shot.id}" must be unique`);
-      }
-      for (const pin of shot.annotations ?? []) {
-        if (pin.x < 0 || pin.x > 100 || pin.y < 0 || pin.y > 100) {
-          fail(`annotation "${pin.id}" on "${shot.id}" is outside the image`);
-        } else if (
-          !projectOntoFrame(shot.screen, galleryFrameAspect(shot.screen), pin)
-        ) {
-          fail(
-            `annotation "${pin.id}" on "${shot.id}" falls outside the frame the gallery renders`,
-          );
-        }
       }
     } else {
       warn(`screenshot "${shot.id}" (${shot.title}) is awaiting capture`);

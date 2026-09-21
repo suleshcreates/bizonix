@@ -13,12 +13,18 @@ export function BeforeAfter({ proof }: { proof: IndustryDetail["proof"] }) {
       <div className={styles.industryDetailPage__shell}>
         <div className={styles.industryDetailPage__proofPanel}>
           <div className={styles.industryDetailPage__proofMedia}>
-            <Image
-              src={proof.image}
-              alt={proof.alt}
-              fill
-              sizes="(max-width: 1080px) 100vw, 42vw"
-            />
+            {proof.image ? (
+              <Image
+                src={proof.image}
+                alt={proof.alt || proof.title}
+                fill
+                sizes="(max-width: 1080px) 100vw, 42vw"
+              />
+            ) : (
+              <div className="flex items-center justify-center w-full h-full bg-slate-900 text-slate-500 text-xs">
+                No proof image
+              </div>
+            )}
             <span className={styles.industryDetailPage__proofMediaWash} aria-hidden="true" />
           </div>
 

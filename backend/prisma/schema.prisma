@@ -4,7 +4,8 @@
 // --------------------------------------------------------------------------
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -27,7 +28,6 @@ model User {
   email            String     @unique
   username         String?    @unique
   passwordHash     String     @map("password_hash")
-  initialPassword  String?    @map("initial_password")
   displayName      String?    @map("display_name")
   status           UserStatus @default(ACTIVE)
   welcomeEmailSent Boolean    @default(false) @map("welcome_email_sent")
@@ -111,6 +111,21 @@ model RefreshSession {
   @@index([expiresAt])
   @@map("refresh_sessions")
 }
+
+model PasswordResetOtp {
+  id         String   @id @default(uuid())
+  email      String
+  otpHash    String   @map("otp_hash")
+  resetToken String?  @unique @map("reset_token")
+  expiresAt  DateTime @map("expires_at")
+  attempts   Int      @default(0)
+  used       Boolean  @default(false)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([email])
+  @@map("password_reset_otps")
+}
+
 
 // ═══════════════════════════════════════════════════════════════════════════
 // AUDIT
@@ -201,6 +216,7 @@ model HomeHeroPublishState {
 enum FaqLocation {
   HOME
   BOOK_DEMO
+  MODULE
 }
 
 model FaqCategory {
@@ -226,15 +242,139 @@ model FaqItem {
   tag         String?
   location    FaqLocation  @default(HOME)
   categoryId  String?      @map("category_id")
+  moduleId    String?      @map("module_id")
   sortOrder   Int          @default(0) @map("sort_order")
   isPublished Boolean      @default(true) @map("is_published")
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
 
   category    FaqCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  module      ModuleItem?  @relation("ModuleFaqs", fields: [moduleId], references: [id], onDelete: Cascade)
 
   @@index([location, isPublished, sortOrder])
+  @@index([moduleId])
   @@map("faq_items")
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// MODULES & SOLUTIONS (CMS)
+// ═══════════════════════════════════════════════════════════════════════════
+
+enum ModuleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ModuleThemeKey {
+  CYAN
+  ORANGE
+  CORAL
+  EMERALD
+  BLUE
+  PURPLE
+  PINK
+  INDIGO
+  SLATE
+}
+
+enum ModuleIconKey {
+  BOXES
+  TRUCK
+  SCAN_BARCODE
+  BUILDING
+  STORE
+  CALCULATOR
+  SHOPPING_BAG
+  BAR_CHART
+  SHIELD_CHECK
+  LAYERS
+  CPU
+  WORKFLOW
+  DATABASE
+  ZAP
+}
+
+model ModuleItem {
+  id              String         @id @default(uuid())
+  slug            String         @unique
+  title           String
+  category        String
+  summary         String         @db.Text
+  outcome         String         @db.Text
+  themeKey        ModuleThemeKey @default(BLUE) @map("theme_key")
+  iconKey         ModuleIconKey  @default(BOXES) @map("icon_key")
+  badge           String?
+  sortOrder       Int            @default(0) @map("sort_order")
+  status          ModuleStatus   @default(DRAFT)
+
+  everPublished   Boolean        @default(false) @map("ever_published")
+  version         Int            @default(1)
+  contentVersion  Int            @default(1) @map("content_version")
+
+  showInCatalog   Boolean        @default(true) @map("show_in_catalog")
+  showInMegaMenu  Boolean        @default(false) @map("show_in_mega_menu")
+  showInHomepage  Boolean        @default(false) @map("show_in_homepage")
+  showInFooter    Boolean        @default(false) @map("show_in_footer")
+
+  content         Json           @default("{}")
+
+  faqs            FaqItem[]      @relation("ModuleFaqs")
+
+  publishedAt     DateTime?      @map("published_at")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+
+  @@index([status, sortOrder])
+  @@index([category])
+  @@map("module_items")
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INDUSTRIES (CMS)
+// ═══════════════════════════════════════════════════════════════════════════
+
+enum IndustryStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum IndustryAccent {
+  BLUE
+  TEAL
+  VIOLET
+}
+
+model IndustryItem {
+  id              String         @id @default(uuid())
+  slug            String         @unique
+  name            String
+  category        String
+  summary         String         @db.Text
+  accent          IndustryAccent @default(BLUE)
+  badge           String?
+  sortOrder       Int            @default(0) @map("sort_order")
+  status          IndustryStatus @default(DRAFT)
+
+  everPublished   Boolean        @default(false) @map("ever_published")
+  version         Int            @default(1)
+  contentVersion  Int            @default(1) @map("content_version")
+
+  showInOverview  Boolean        @default(true) @map("show_in_overview")
+  showInMegaMenu  Boolean        @default(false) @map("show_in_mega_menu")
+  showInHomepage  Boolean        @default(false) @map("show_in_homepage")
+  showInFooter    Boolean        @default(false) @map("show_in_footer")
+
+  content         Json           @default("{}")
+
+  publishedAt     DateTime?      @map("published_at")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+
+  @@index([status, sortOrder])
+  @@index([category])
+  @@map("industry_items")
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -272,6 +412,21 @@ model NavigationItem {
   @@index([groupId, sortOrder])
   @@map("navigation_items")
 }
+
+model NavigationConfig {
+  id           String   @id @default("singleton")
+  announcement Json     @default("{}")
+  header       Json     @default("{}")
+  megaMenu     Json     @default("{}")
+  footer       Json     @default("{}")
+  footerCta    Json     @default("{}")
+  bottomBar    Json     @default("{}")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("navigation_configs")
+}
+
 
 // ═══════════════════════════════════════════════════════════════════════════
 // PRICING
@@ -441,15 +596,19 @@ model Partner {
   id          String    @id @default(uuid())
   name        String
   slug        String    @unique
+  category    String    @default("Technology Partner")
+  websiteUrl  String?   @map("website_url")
   description String?
   logoUrl     String?   @map("logo_url")
   sortOrder   Int       @default(0) @map("sort_order")
-  isPublished Boolean   @default(false) @map("is_published")
+  isFeatured  Boolean   @default(true) @map("is_featured")
+  isPublished Boolean   @default(true) @map("is_published")
   deletedAt   DateTime? @map("deleted_at")
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
   @@index([isPublished])
+  @@index([sortOrder])
   @@map("partners")
 }
 
@@ -622,3 +781,4 @@ model EnquiryActivity {
   @@index([createdAt])
   @@map("enquiry_activities")
 }
+

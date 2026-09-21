@@ -325,7 +325,6 @@ export class EnquiriesService {
             email: true,
             username: true,
             displayName: true,
-            initialPassword: true,
             welcomeEmailSent: true,
           },
         });
@@ -376,14 +375,14 @@ export class EnquiriesService {
 
   private async sendAssignmentEmail(
     enquiry: any,
-    assignee: { id: string; email: string; displayName: string | null; username: string | null; initialPassword: string | null; welcomeEmailSent: boolean },
+    assignee: { id: string; email: string; displayName: string | null; username: string | null; welcomeEmailSent: boolean },
     assignedBy: { email: string; displayName?: string | null }
   ) {
     const adminOrigin = process.env.ADMIN_ORIGIN || 'http://localhost:3002';
     const adminUrl = `${adminOrigin}/enquiries/${enquiry.id}`;
     const loginUrl = `${adminOrigin}/login`;
 
-    const isFirstAssignment = !assignee.welcomeEmailSent && Boolean(assignee.initialPassword);
+    const isFirstAssignment = !assignee.welcomeEmailSent;
 
     const emailHtml = buildEmployeeAssignmentEmail({
       enquiry,
@@ -392,7 +391,6 @@ export class EnquiriesService {
       adminUrl,
       loginUrl,
       isFirstAssignment,
-      temporaryPassword: isFirstAssignment ? assignee.initialPassword : null,
     });
 
     const subject = isFirstAssignment
@@ -400,7 +398,7 @@ export class EnquiriesService {
       : `New Lead Assigned: ${enquiry.companyName} (${enquiry.priority || 'MEDIUM'})`;
 
     const textBody = isFirstAssignment
-      ? `Welcome to Bizonix! A new lead (${enquiry.companyName}) has been assigned to you by ${assignedBy.email}.\n\nPortal Login: ${loginUrl}\nUsername: ${assignee.username || assignee.email}\nTemporary Password: ${assignee.initialPassword}\n\nView Deal: ${adminUrl}`
+      ? `Welcome to Bizonix! A new lead (${enquiry.companyName}) has been assigned to you by ${assignedBy.email}.\n\nPortal Login: ${loginUrl}\nUsername: ${assignee.username || assignee.email}\n\nTo access your portal, visit the login URL above.\n\nView Deal: ${adminUrl}`
       : `A new lead (${enquiry.companyName}) has been assigned to you by ${assignedBy.email}.\n\nView Deal: ${adminUrl}`;
 
     try {

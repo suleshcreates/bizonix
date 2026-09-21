@@ -441,3 +441,26 @@ export const moduleScreens: Record<ModuleSlug, ModuleScreen> = {
     foot: "A blocked action is still recorded — the trail does not have gaps",
   },
 };
+
+export const standardScreen: ModuleScreen = {
+  shape: "register",
+  app: "Operating Core",
+  title: "Live Activity Ledger",
+  context: "Real-time records across every location",
+  control: "Filter by outlet",
+  metrics: [
+    { label: "Active Nodes", value: "24", note: "All online", tone: "live" },
+    { label: "Ledger State", value: "Settled", note: "Zero drift", tone: "ok" },
+    { label: "Sync Latency", value: "< 120ms", note: "Direct link", tone: "info" },
+  ],
+  columns: ["Transaction ID", "Outlet / Hub", "Action Type", "Status"],
+  compact: [2, 0],
+  rows: [
+    { id: "TX-9041", cells: ["TX-9041", "Flagship Store · BLR", "Stock Movement", "Posted"], state: "Verified", tone: "ok" },
+    { id: "TX-9042", cells: ["TX-9042", "Central Warehouse · PNE", "Inward Processing", "Active"], state: "Processing", tone: "live" },
+    { id: "TX-9043", cells: ["TX-9043", "Franchise Hub · DEL", "Session Close", "Settled"], state: "Audited", tone: "ok" },
+    { id: "TX-9044", cells: ["TX-9044", "Omnichannel Fulfillment", "Order Dispatched", "Delivered"], state: "Closed", tone: "info" },
+  ],
+  foot: "Continuous operational truth across multi-entity retail networks",
+};
+

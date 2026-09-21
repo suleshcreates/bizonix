@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 42" fill="none">
+  <!-- Salesforce Cloud Icon -->
+  <g transform="translate(6, 4)">
+    <path d="M14.5 9c1.6-3.8 5.4-6.5 9.8-6.5 4.8 0 8.8 3.2 10.1 7.6 1.8-.8 3.8-1.2 5.9-1.2 6.5 0 11.7 5.2 11.7 11.7 0 .5 0 1-.1 1.5 2.5 1.5 4.1 4.2 4.1 7.3 0 4.8-3.9 8.6-8.6 8.6H12c-5.5 0-10-4.5-10-10 0-4.6 3.1-8.5 7.4-9.6.6-4.2 4.2-7.4 8.6-7.4 1.2 0 2.3.2 3.3.7-.4-1.2-.6-2.5-.6-3.8 0-4.9 3.5-9 8.2-10 1.2 3.3 3.9 5.8 7.3 6.6z" fill="#00A1E0"/>
+  </g>
+  <!-- Salesforce Typography -->
+  <text x="70" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#032D60" letter-spacing="-0.3">salesforce</text>
+</svg>

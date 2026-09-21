@@ -21,7 +21,7 @@ export function RelatedModules({
   moduleTitle,
   moduleSlug,
 }: {
-  related: readonly ModuleSlug[];
+  related: readonly (ModuleSlug | string)[];
   moduleTitle: string;
   moduleSlug: string;
 }) {
@@ -52,7 +52,8 @@ export function RelatedModules({
 
         <div className={styles.modulePage__relatedGrid}>
           {related.map((slug, index) => {
-            const sibling = modulePages[slug];
+            const sibling = modulePages[slug as ModuleSlug];
+            if (!sibling) return null;
             const Icon = sibling.icon;
 
             return (

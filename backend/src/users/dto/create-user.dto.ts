@@ -9,10 +9,14 @@ export class CreateUserDto {
   displayName!: string;
 
   @IsOptional()
-  @IsIn(['SITE_ADMIN', 'SUPER_ADMIN'])
-  role?: 'SITE_ADMIN' | 'SUPER_ADMIN';
+  @IsIn(['SUPER_ADMIN', 'SITE_ADMIN', 'EDITOR', 'VIEWER'])
+  role?: 'SUPER_ADMIN' | 'SITE_ADMIN' | 'EDITOR' | 'VIEWER';
 
   @IsOptional()
   @IsString()
   username?: string;
+
+  @IsOptional()
+  @IsString()
+  password?: string;
 }

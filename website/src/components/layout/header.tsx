@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { ButtonLink } from "@/components/ui/button";
-import { hasWhatsApp, primaryNav, siteConfig } from "@/lib/site-config";
+import { hasWhatsApp, siteConfig } from "@/lib/site-config";
 import { Logo } from "./logo";
 import { DesktopMegaMenu, MobileMegaMenu } from "./mega-menu";
 import {
@@ -14,6 +14,11 @@ import {
   type MegaMenuDefinition,
   type MegaMenuKind,
 } from "./mega-menu-data";
+import { AnnouncementBar } from "./announcement-bar";
+import type {
+  AnnouncementBarData,
+  HeaderConfigData,
+} from "@/lib/content/navigation/navigation-resolver";
 
 /**
  * Which nav item the current URL belongs to.
@@ -63,7 +68,17 @@ function DesktopMenuNav({
   );
 }
 
-function DesktopNavLink({ href, label }: { href: string; label: string }) {
+function DesktopNavLink({
+  href,
+  label,
+  isExternal,
+  badge,
+}: {
+  href: string;
+  label: string;
+  isExternal?: boolean;
+  badge?: string;
+}) {
   const { active, exact } = useNavState(href);
   return (
     <Link
@@ -71,8 +86,17 @@ function DesktopNavLink({ href, label }: { href: string; label: string }) {
       href={href}
       data-active={active}
       aria-current={exact ? "page" : undefined}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
     >
-      {label}
+      <span className="inline-flex items-center gap-1.5">
+        {label}
+        {badge && (
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-blue-700">
+            {badge}
+          </span>
+        )}
+      </span>
     </Link>
   );
 }
@@ -85,10 +109,14 @@ function MobileNavLink({
   href,
   label,
   close,
+  isExternal,
+  badge,
 }: {
   href: string;
   label: string;
   close: () => void;
+  isExternal?: boolean;
+  badge?: string;
 }) {
   const { active, exact } = useNavState(href);
   return (
@@ -98,8 +126,17 @@ function MobileNavLink({
       href={href}
       data-active={active}
       aria-current={exact ? "page" : undefined}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
     >
-      {label}
+      <span className="inline-flex items-center gap-2">
+        {label}
+        {badge && (
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-700">
+            {badge}
+          </span>
+        )}
+      </span>
     </Link>
   );
 }
@@ -127,11 +164,17 @@ function MobileMenuNav({
   );
 }
 
-export function Header() {
+export interface HeaderProps {
+  announcement?: AnnouncementBarData;
+  headerConfig?: HeaderConfigData;
+  megaMenus?: Record<string, MegaMenuDefinition>;
+}
+
+export function Header({ announcement, headerConfig, megaMenus }: HeaderProps) {
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [desktopMenu, setDesktopMenu] = useState<MegaMenuKind | null>(null);
-  const [mobileMenu, setMobileMenu] = useState<MegaMenuKind | null>(null);
+  const [desktopMenu, setDesktopMenu] = useState<string | null>(null);
+  const [mobileMenu, setMobileMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -166,131 +209,160 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [mobileOpen]);
 
+  // Resolving navigation items with fallbacks
+  const navItems = headerConfig?.items?.filter((item) => item.isActive !== false) || [
+    { id: "h-product", label: "Product", href: "/product", type: "link" as const, isActive: true, sortOrder: 1 },
+    { id: "h-solutions", label: "Solutions", href: "/modules", type: "mega-menu" as const, menu: "solutions", isActive: true, sortOrder: 2 },
+    { id: "h-features", label: "Features", href: "/features", type: "mega-menu" as const, menu: "features", isActive: true, sortOrder: 3 },
+    { id: "h-industries", label: "Industries", href: "/industries", type: "mega-menu" as const, menu: "industries", isActive: true, sortOrder: 4 },
+    { id: "h-about", label: "About", href: "/about", type: "link" as const, isActive: true, sortOrder: 5 },
+  ];
+
+  const headerAction = headerConfig?.action || {
+    isEnabled: true,
+    label: "Book a demo",
+    href: "/contact",
+  };
+
+  const activeMenus: Record<string, MegaMenuDefinition> = {
+    ...megaMenuDefinitions,
+    ...(megaMenus || {}),
+  };
+
   return (
     <>
+      <AnnouncementBar announcement={announcement} />
+
       <header
-      className={`sticky top-0 z-50 h-16 border-b transition lg:h-20 ${
-        scrolled
-          ? "border-bz-border/80 bg-white/90 shadow-nav backdrop-blur-xl"
-          : "border-transparent bg-white"
-      }`}
-    >
-      <div className="shell flex h-full items-center justify-between">
-        <Logo />
+        className={`sticky top-0 z-50 h-16 border-b transition lg:h-20 ${
+          scrolled
+            ? "border-bz-border/80 bg-white/90 shadow-nav backdrop-blur-xl"
+            : "border-transparent bg-white"
+        }`}
+      >
+        <div className="shell flex h-full items-center justify-between">
+          <Logo />
 
-        <nav aria-label="Primary" className="hidden items-center gap-5 lg:flex">
-          {primaryNav.map((item) => {
-            if ("menu" in item) {
-              const menu = item.menu as MegaMenuKind;
+          <nav aria-label="Primary" className="hidden items-center gap-5 lg:flex">
+            {navItems.map((item) => {
+              if (item.type === "mega-menu" && item.menu && activeMenus[item.menu]) {
+                const menu = item.menu;
+                const def = activeMenus[menu];
+                return (
+                  <DesktopMenuNav
+                    key={item.href}
+                    definition={def}
+                    isOpen={desktopMenu === menu}
+                    onOpen={() => setDesktopMenu(menu)}
+                    onClose={() =>
+                      setDesktopMenu((current) =>
+                        current === menu ? null : current,
+                      )
+                    }
+                  />
+                );
+              }
+
               return (
-                <DesktopMenuNav
-                  key={item.href}
-                  definition={megaMenuDefinitions[menu]}
-                  isOpen={desktopMenu === menu}
-                  onOpen={() => setDesktopMenu(menu)}
-                  onClose={() =>
-                    setDesktopMenu((current) =>
-                      current === menu ? null : current,
-                    )
-                  }
-                />
-              );
-            }
-
-            return (
-              <DesktopNavLink
-                key={item.href}
-                href={item.href}
-                label={item.label}
-              />
-            );
-          })}
-        </nav>
-
-        <div className="hidden items-center lg:flex">
-          <ButtonLink href="/contact" className="min-h-11 px-5">
-            Book a demo
-          </ButtonLink>
-        </div>
-
-        <button
-          type="button"
-          className="relative z-[60] ml-auto -mr-2 inline-flex size-11 items-center justify-center rounded-xl text-bz-navy transition active:bg-bz-surface-alt lg:hidden"
-          aria-label="Open navigation"
-          aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen(true)}
-        >
-          <Menu />
-        </button>
-      </div>
-    </header>
-
-    {mounted &&
-      mobileOpen &&
-      createPortal(
-        <div className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-white lg:hidden">
-          <div className="shell flex h-16 items-center justify-between border-b border-bz-border/60">
-            <Logo />
-            <button
-              type="button"
-              className="-mr-2 inline-flex size-11 items-center justify-center rounded-xl text-bz-navy transition active:bg-bz-surface-alt"
-              aria-label="Close navigation"
-              onClick={closeMobile}
-            >
-              <X />
-            </button>
-          </div>
-
-          <nav
-            className="shell pb-[calc(40px+env(safe-area-inset-bottom))] pt-4"
-            aria-label="Mobile primary"
-          >
-            <MobileNavLink
-              href="/product"
-              label="Product"
-              close={closeMobile}
-            />
-
-            {(["solutions", "features", "industries"] as const).map((menu) => (
-              <MobileMenuNav
-                key={menu}
-                definition={megaMenuDefinitions[menu]}
-                isOpen={mobileMenu === menu}
-                onToggle={() =>
-                  setMobileMenu((current) => (current === menu ? null : menu))
-                }
-                close={closeMobile}
-              />
-            ))}
-
-            {primaryNav
-              .filter((item) => !("menu" in item) && item.href !== "/product")
-              .map((item) => (
-                <MobileNavLink
+                <DesktopNavLink
                   key={item.href}
                   href={item.href}
                   label={item.label}
-                  close={closeMobile}
+                  isExternal={item.isExternal}
+                  badge={item.badge}
                 />
-              ))}
-
-            <div className="mt-7 grid gap-3">
-              <ButtonLink href="/contact" className="min-h-13 w-full">
-                Book a demo <ArrowRight size={16} />
-              </ButtonLink>
-              {hasWhatsApp && (
-                <a
-                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-bz-border bg-white text-sm font-bold text-bz-navy transition active:bg-bz-surface-alt"
-                  href={siteConfig.whatsappUrl}
-                >
-                  <MessageCircle size={16} /> Chat on WhatsApp
-                </a>
-              )}
-            </div>
+              );
+            })}
           </nav>
-        </div>,
-        document.body,
-      )}
+
+          {headerAction.isEnabled && (
+            <div className="hidden items-center lg:flex">
+              <ButtonLink href={headerAction.href} className="min-h-11 px-5">
+                {headerAction.label}
+              </ButtonLink>
+            </div>
+          )}
+
+          <button
+            type="button"
+            className="relative z-[60] ml-auto -mr-2 inline-flex size-11 items-center justify-center rounded-xl text-bz-navy transition active:bg-bz-surface-alt lg:hidden"
+            aria-label="Open navigation"
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen(true)}
+          >
+            <Menu />
+          </button>
+        </div>
+      </header>
+
+      {mounted &&
+        mobileOpen &&
+        createPortal(
+          <div className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-white lg:hidden">
+            <div className="shell flex h-16 items-center justify-between border-b border-bz-border/60">
+              <Logo />
+              <button
+                type="button"
+                className="-mr-2 inline-flex size-11 items-center justify-center rounded-xl text-bz-navy transition active:bg-bz-surface-alt"
+                aria-label="Close navigation"
+                onClick={closeMobile}
+              >
+                <X />
+              </button>
+            </div>
+
+            <nav
+              className="shell pb-[calc(40px+env(safe-area-inset-bottom))] pt-4"
+              aria-label="Mobile primary"
+            >
+              {navItems.map((item) => {
+                if (item.type === "mega-menu" && item.menu && activeMenus[item.menu]) {
+                  const menu = item.menu;
+                  const def = activeMenus[menu];
+                  return (
+                    <MobileMenuNav
+                      key={menu}
+                      definition={def}
+                      isOpen={mobileMenu === menu}
+                      onToggle={() =>
+                        setMobileMenu((current) => (current === menu ? null : menu))
+                      }
+                      close={closeMobile}
+                    />
+                  );
+                }
+
+                return (
+                  <MobileNavLink
+                    key={item.href}
+                    href={item.href}
+                    label={item.label}
+                    isExternal={item.isExternal}
+                    badge={item.badge}
+                    close={closeMobile}
+                  />
+                );
+              })}
+
+              <div className="mt-7 grid gap-3">
+                {headerAction.isEnabled && (
+                  <ButtonLink href={headerAction.href} className="min-h-13 w-full">
+                    {headerAction.label} <ArrowRight size={16} />
+                  </ButtonLink>
+                )}
+                {hasWhatsApp && (
+                  <a
+                    className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-bz-border bg-white text-sm font-bold text-bz-navy transition active:bg-bz-surface-alt"
+                    href={siteConfig.whatsappUrl}
+                  >
+                    <MessageCircle size={16} /> Chat on WhatsApp
+                  </a>
+                )}
+              </div>
+            </nav>
+          </div>,
+          document.body,
+        )}
     </>
   );
 }

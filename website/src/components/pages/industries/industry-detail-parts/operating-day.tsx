@@ -83,14 +83,20 @@ export function OperatingDay({ steps }: { steps: IndustryDetail["workflow"] }) {
             role="tabpanel"
             aria-labelledby={`step-${step.order}`}
           >
-            <Image
-              key={step.image}
-              className={styles.industryDetailPage__dayImage}
-              src={step.image}
-              alt={step.alt}
-              fill
-              sizes="(max-width: 1080px) 100vw, 52vw"
-            />
+            {step.image ? (
+              <Image
+                key={step.image}
+                className={styles.industryDetailPage__dayImage}
+                src={step.image}
+                alt={step.alt || step.title}
+                fill
+                sizes="(max-width: 1080px) 100vw, 52vw"
+              />
+            ) : (
+              <div className="flex items-center justify-center w-full h-full bg-slate-900 text-slate-500 text-xs">
+                No preview available
+              </div>
+            )}
             <span className={styles.industryDetailPage__dayWash} aria-hidden="true" />
 
             <figcaption className={styles.industryDetailPage__dayCaption}>

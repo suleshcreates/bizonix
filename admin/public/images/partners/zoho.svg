@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40" fill="none">
+  <!-- Zoho 4 Color Blocks -->
+  <g transform="translate(6, 8)">
+    <rect x="0" y="0" width="11" height="11" rx="2" fill="#E42528"/>
+    <rect x="13" y="0" width="11" height="11" rx="2" fill="#226CB4"/>
+    <rect x="0" y="13" width="11" height="11" rx="2" fill="#0E9F4A"/>
+    <rect x="13" y="13" width="11" height="11" rx="2" fill="#F8B126"/>
+  </g>
+  <!-- Zoho Wordmark -->
+  <text x="38" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" font-size="22" font-weight="900" fill="#0C2340" letter-spacing="-0.5">ZOHO</text>
+</svg>

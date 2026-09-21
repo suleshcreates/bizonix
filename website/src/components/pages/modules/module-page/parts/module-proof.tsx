@@ -1,4 +1,5 @@
 import type { ModuleProof as Proof } from "@/lib/content/modules/module-pages/types";
+import Image from "next/image";
 import styles from "@/components/pages/modules/modules.module.css";
 
 /**
@@ -25,7 +26,17 @@ export function ModuleProof({ proof }: { proof: Proof }) {
 
         <figure className={styles.modulePage__proofPanel} data-reveal>
           <blockquote>{proof.statement}</blockquote>
-          <figcaption>
+          <figcaption style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginTop: "1rem" }}>
+            {proof.image && (
+              <div style={{ position: "relative", width: "2.5rem", height: "2.5rem", borderRadius: "9999px", overflow: "hidden", flexShrink: 0, border: "1px solid rgba(255,255,255,0.15)" }}>
+                <Image
+                  src={proof.image}
+                  alt={proof.attribution}
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            )}
             <cite>{proof.attribution}</cite>
           </figcaption>
         </figure>

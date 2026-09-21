@@ -1,27 +1,57 @@
 import type { MetadataRoute } from "next";
 import { IS_INDEXABLE_BUILD, absoluteUrl } from "@/lib/seo/config";
 import { indexableRoutes } from "@/lib/seo/routes";
+import { getAllPublicModules } from "@/lib/content/modules/module-resolver";
+import { getAllPublicIndustries } from "@/lib/content/industries/industry-resolver";
 
 /**
- * The sitemap, generated from the route registry.
- *
- * Because `indexableRoutes` is the same list the pages take their canonicals
- * from, every URL here is by construction a real, public, self-canonical route
- * — there is no second list to fall out of step with the first.
- *
- * No `lastModified`. The previous version stamped `new Date()` on every entry
- * at build time, which told crawlers the entire site had changed on every
- * deploy; that is a fabricated signal, and Google discounts a sitemap whose
- * dates it learns not to trust. Omitting the field is the honest answer until
- * page content carries a real modification date.
+ * The sitemap, generated from the route registry and dynamic published modules & industries.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   /* A non-production host publishes nothing. See lib/seo/config.ts. */
   if (!IS_INDEXABLE_BUILD) return [];
 
-  return indexableRoutes.map((route) => ({
+  const entries: MetadataRoute.Sitemap = indexableRoutes.map((route) => ({
     url: absoluteUrl(route.path),
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
+
+  const existingPaths = new Set(indexableRoutes.map((r) => r.path));
+
+  try {
+    const publicModules = await getAllPublicModules();
+    for (const m of publicModules) {
+      const modulePath = `/modules/${m.slug}`;
+      if (!existingPaths.has(modulePath)) {
+        entries.push({
+          url: absoluteUrl(modulePath),
+          changeFrequency: "weekly",
+          priority: 0.8,
+        });
+        existingPaths.add(modulePath);
+      }
+    }
+  } catch {
+    // Graceful fallback to static routes
+  }
+
+  try {
+    const publicIndustries = await getAllPublicIndustries();
+    for (const ind of publicIndustries) {
+      const industryPath = `/industries/${ind.slug}`;
+      if (!existingPaths.has(industryPath)) {
+        entries.push({
+          url: absoluteUrl(industryPath),
+          changeFrequency: "weekly",
+          priority: 0.7,
+        });
+        existingPaths.add(industryPath);
+      }
+    }
+  } catch {
+    // Graceful fallback to static routes
+  }
+
+  return entries;
 }

@@ -20,9 +20,45 @@ import styles from "@/components/pages/modules/modules.module.css";
  * Deliberately compact: two links and a position, one row on desktop and a
  * stacked pair on a phone. It is orientation, not a second navigation system.
  */
-export function ModuleNavigator({ slug }: { slug: ModuleSlug }) {
-  const index = moduleSlugs.indexOf(slug);
+export function ModuleNavigator({ slug }: { slug: ModuleSlug | string }) {
+  const index = moduleSlugs.indexOf(slug as ModuleSlug);
   const total = moduleSlugs.length;
+
+  if (index === -1) {
+    return (
+      <nav className={styles.modulePage__navigator} aria-label="Module sequence" data-reveal>
+        <Link
+          className={styles.modulePage__navStep}
+          href="/modules"
+          data-direction="previous"
+        >
+          <ArrowLeft size={15} aria-hidden="true" />
+          <span>
+            <span className={styles.modulePage__navDirection}>Solutions</span>
+            <strong>All Modules</strong>
+          </span>
+        </Link>
+
+        <p className={styles.modulePage__navPosition}>
+          <span className={styles.modulePage__srOnly}>Currently reading: </span>
+          <strong>{slug}</strong>
+        </p>
+
+        <Link
+          className={styles.modulePage__navStep}
+          href="/contact"
+          data-direction="next"
+        >
+          <span>
+            <span className={styles.modulePage__navDirection}>Action</span>
+            <strong>Request Demo</strong>
+          </span>
+          <ArrowRight size={15} aria-hidden="true" />
+        </Link>
+      </nav>
+    );
+  }
+
   const previous = modulePages[moduleSlugs[(index - 1 + total) % total]];
   const next = modulePages[moduleSlugs[(index + 1) % total]];
 
@@ -42,7 +78,7 @@ export function ModuleNavigator({ slug }: { slug: ModuleSlug }) {
 
       <p className={styles.modulePage__navPosition}>
         <span className={styles.modulePage__srOnly}>Currently reading: </span>
-        <strong>{modulePages[slug].title}</strong>
+        <strong>{modulePages[slug as ModuleSlug].title}</strong>
         <span aria-hidden="true">·</span>
         <span>
           {String(index + 1).padStart(2, "0")} of {String(total).padStart(2, "0")}

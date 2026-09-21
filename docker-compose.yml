@@ -1,0 +1,138 @@
+services:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # 1. PostgreSQL 16
+  # ─────────────────────────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: bizonix_dev
+      POSTGRES_DB: bizonix
+    volumes:
+      - bizonix_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d bizonix"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # 2. DB Init — runs migrations then seed; exits 0 on success, non-zero on fail
+  # ─────────────────────────────────────────────────────────────────────────────
+  db-init:
+    build:
+      context: .
+      dockerfile: docker/db-init.Dockerfile
+    environment:
+      DATABASE_URL: postgresql://postgres:bizonix_dev@db:5432/bizonix
+      DIRECT_URL: postgresql://postgres:bizonix_dev@db:5432/bizonix
+      SEED_ADMIN_EMAIL: admin
+      SEED_ADMIN_PASSWORD: admin_bizonix123
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # 3. NestJS Backend
+  # ─────────────────────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://postgres:bizonix_dev@db:5432/bizonix
+      DIRECT_URL: postgresql://postgres:bizonix_dev@db:5432/bizonix
+      NODE_ENV: development
+      PORT: 3001
+      FRONTEND_ORIGIN: http://localhost:3000
+      ADMIN_ORIGIN: http://localhost:3002
+      CORS_ORIGINS: "http://localhost:3000,http://localhost:3002"
+      JWT_ACCESS_SECRET: "docker_dev_access_secret_change_in_production_min32chars"
+      JWT_REFRESH_SECRET: "docker_dev_refresh_secret_change_in_production_min32chars"
+      ACCESS_TOKEN_TTL: 15m
+      REFRESH_TOKEN_TTL: 7d
+      SEED_ADMIN_EMAIL: admin
+      SEED_ADMIN_PASSWORD: admin_bizonix123
+      # Optional integrations — leave blank, app handles gracefully
+      RESEND_API_KEY: ""
+      DEMO_REQUEST_FROM_EMAIL: ""
+      DEMO_REQUEST_TO_EMAIL: ""
+      EMAILJS_SERVICE_ID: ""
+      EMAILJS_TEMPLATE_ID: ""
+      EMAILJS_PUBLIC_KEY: ""
+      EMAILJS_PRIVATE_KEY: ""
+    depends_on:
+      db:
+        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3001/health/ready', (r) => { let d=''; r.on('data',c=>d+=c); r.on('end',()=>{ const j=JSON.parse(d); process.exit(j.status==='ok'?0:1); }); }).on('error',()=>process.exit(1));\""]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
+    restart: unless-stopped
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # 4. Next.js Admin
+  # ─────────────────────────────────────────────────────────────────────────────
+  admin:
+    build:
+      context: .
+      dockerfile: docker/admin.Dockerfile
+      args:
+        # Baked into client bundle at build time — must be host-reachable
+        NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+    ports:
+      - "3002:3002"
+    environment:
+      NODE_ENV: production
+      PORT: 3002
+      # Runtime-only (not baked into bundle)
+      NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # 5. Next.js Website
+  # ─────────────────────────────────────────────────────────────────────────────
+  website:
+    build:
+      context: .
+      dockerfile: docker/website.Dockerfile
+      args:
+        # Browser-visible — must point to host-accessible backend
+        NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+        # Placeholder values for SEO env vars (non-production, won't affect functionality)
+        NEXT_PUBLIC_SITE_URL: http://localhost:3000
+        NEXT_PUBLIC_WHATSAPP_URL: ""
+        NEXT_PUBLIC_LOGIN_URL: ""
+        NEXT_PUBLIC_BROCHURE_URL: /brochure-coming-soon
+        NEXT_PUBLIC_SALES_EMAIL: ""
+        NEXT_PUBLIC_SALES_PHONE: ""
+        NEXT_PUBLIC_CALENDLY_URL: ""
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+      # Server-side internal URL — SSR/RSC fetches go directly to backend container
+      INTERNAL_API_URL: http://backend:3001/api/v1
+      BIZONIX_API_URL: http://backend:3001/api/v1
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  bizonix_pgdata:
+    name: bizonix_pgdata

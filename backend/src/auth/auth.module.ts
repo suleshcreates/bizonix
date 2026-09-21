@@ -4,11 +4,13 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
+import { EmailModule } from '../email/email.module';
 import { AuthGuard, PermissionsGuard } from '../common/guards';
 
 @Module({
   imports: [
     UsersModule,
+    EmailModule,
     JwtModule.register({}),
   ],
   controllers: [AuthController],

@@ -3,6 +3,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
+import { ForgotPasswordDto, VerifyOtpDto, ResetPasswordDto, ChangePasswordDto } from './dto/password-reset.dto';
 import { Public, CurrentUser, AuthenticatedUser } from '../common/decorators';
 import { Throttle } from '@nestjs/throttler';
 
@@ -84,6 +85,93 @@ export class AuthController {
   @ApiOperation({ summary: 'Get current authenticated user' })
   me(@CurrentUser() user: AuthenticatedUser) {
     return user;
+  }
+
+  @Public()
+  @Throttle({ short: { limit: 5, ttl: 60000 } })
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Request 6-digit OTP verification code to reset password' })
+  async forgotPassword(
+    @Body() dto: ForgotPasswordDto,
+    @Req() request: Request,
+  ) {
+    const ip = request.ip || (request.headers['x-forwarded-for'] as string) || 'unknown';
+    const userAgent = (request.headers['user-agent'] as string) || 'unknown';
+    return this.authService.requestPasswordReset(dto.identifier, ip, userAgent);
+  }
+
+  @Public()
+  @Throttle({ short: { limit: 10, ttl: 60000 } })
+  @Post('verify-otp')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Verify 6-digit OTP and receive one-time reset token' })
+  async verifyOtp(@Body() dto: VerifyOtpDto) {
+    return this.authService.verifyPasswordResetOtp(dto.email, dto.otp);
+  }
+
+  @Public()
+  @Throttle({ short: { limit: 5, ttl: 60000 } })
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Reset password using reset token' })
+  async resetPassword(
+    @Body() dto: ResetPasswordDto,
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const ip = request.ip || (request.headers['x-forwarded-for'] as string) || 'unknown';
+    const userAgent = (request.headers['user-agent'] as string) || 'unknown';
+    const result = await this.authService.completePasswordReset(
+      dto.email.trim(),
+      dto.resetToken.trim(),
+      dto.newPassword,
+      ip,
+      userAgent,
+    );
+
+    if (result.session) {
+      this.setAuthCookies(
+        response,
+        result.session.accessToken,
+        result.session.refreshToken,
+        result.session.expiresAt,
+      );
+    }
+
+    return result;
+  }
+
+  @Throttle({ short: { limit: 5, ttl: 60000 } })
+  @Post('change-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Change password for currently authenticated user' })
+  async changePassword(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() dto: ChangePasswordDto,
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const ip = request.ip || (request.headers['x-forwarded-for'] as string) || 'unknown';
+    const userAgent = (request.headers['user-agent'] as string) || 'unknown';
+    const result = await this.authService.changePassword(
+      user.id,
+      dto.currentPassword,
+      dto.newPassword,
+      ip,
+      userAgent,
+    );
+
+    if (result.session) {
+      this.setAuthCookies(
+        response,
+        result.session.accessToken,
+        result.session.refreshToken,
+        result.session.expiresAt,
+      );
+    }
+
+    return result;
   }
 
   private setAuthCookies(response: Response, accessToken: string, refreshToken: string, refreshExpiresAt: Date) {

@@ -289,6 +289,8 @@ export type WorkflowStep = {
   body: string;
   /** What the system holds once this step is done. */
   record: string;
+  /** Optional step illustration or preview image */
+  image?: string;
   /**
    * Which side of a two-entity operation holds the record at this step. Only
    * set where the module genuinely has two sides (a franchise network does;
@@ -327,11 +329,14 @@ export type ModuleScreenshot = {
   /** Context line: where in the operating flow this screen sits. */
   context: string;
   featured?: boolean;
+  src?: string;
+  alt?: string;
 } & (
   | {
       state: "captured";
-      screen: ProductScreenId;
-      alt: string;
+      screen?: ProductScreenId;
+      src?: string;
+      alt?: string;
       /** Focal point for tight crops. */
       focus?: string;
       annotations?: readonly ScreenshotAnnotation[];
@@ -339,6 +344,8 @@ export type ModuleScreenshot = {
   | {
       /** No capture exists yet. Renders a labelled placeholder, never an image. */
       state: "pending";
+      src?: string;
+      alt?: string;
     }
 );
 
@@ -363,6 +370,7 @@ export type ModuleProof = {
   kind: "quote" | "metric";
   statement: string;
   attribution: string;
+  image?: string;
 };
 
 /** A real recorded walkthrough. Absent until the file exists. */
@@ -391,7 +399,7 @@ export type ModuleSeo = {
 /* ------------------------------------------------------------------- module */
 
 export type ModuleData = {
-  slug: ModuleSlug;
+  slug: ModuleSlug | string;
   /** Module name as it appears in navigation and breadcrumbs. */
   title: string;
   eyebrow: string;
@@ -413,12 +421,12 @@ export type ModuleData = {
   proof?: ModuleProof;
   video?: ModuleVideo;
   faq: readonly ModuleFaqItem[];
-  /** Exactly three sibling modules. Validated at build time. */
-  relatedModules: readonly ModuleSlug[];
+  /** Sibling modules. */
+  relatedModules: readonly (ModuleSlug | string)[];
   seo: ModuleSeo;
 };
 
 /** Canonical route for a module page. Nothing builds this string by hand. */
-export function moduleRoute(slug: ModuleSlug): string {
+export function moduleRoute(slug: ModuleSlug | string): string {
   return `/modules/${slug}`;
 }

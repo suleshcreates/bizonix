@@ -2,7 +2,11 @@
 
 import { Bell, ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 import { useEffect, useState, type CSSProperties } from "react";
-import { moduleScreens } from "@/lib/content/modules/module-hero-screens";
+import {
+  moduleScreens,
+  standardScreen,
+  type ModuleScreen,
+} from "@/lib/content/modules/module-hero-screens";
 import type { ModuleSlug } from "@/lib/content/modules/module-pages/types";
 import { ModuleScreenBody } from "./screens";
 import styles from "@/components/pages/modules/modules.module.css";
@@ -23,8 +27,9 @@ const TICK_MS = 3200;
  *
  * Every figure is synthetic marketing data; nothing is captured from a tenant.
  */
-export function ProductSimulation({ slug }: { slug: ModuleSlug }) {
-  const data = moduleScreens[slug];
+export function ProductSimulation({ slug }: { slug: ModuleSlug | string }) {
+  const data: ModuleScreen =
+    (moduleScreens as Record<string, ModuleScreen>)[slug] || standardScreen;
   const [active, setActive] = useState(0);
 
   useEffect(() => {

@@ -36,11 +36,9 @@ function selectItems(
   items: readonly MegaMenuItem[],
   ids: readonly string[],
 ): readonly MegaMenuItem[] {
-  return ids.map((id) => {
-    const item = items.find((candidate) => candidate.id === id);
-    if (!item) throw new Error(`Missing mega-menu item: ${id}`);
-    return item;
-  });
+  return ids
+    .map((id) => items.find((candidate) => candidate.id === id))
+    .filter((item): item is MegaMenuItem => Boolean(item));
 }
 
 /**

@@ -10,6 +10,7 @@ import { HomeHero } from "@/components/pages/home/sections/home-hero";
 import { IndustryBand } from "@/components/pages/home/sections/industry-band";
 import { PlatformSpine } from "@/components/pages/home/sections/platform-spine";
 import { ModuleShowcase } from "@/components/pages/home/sections/module-showcase/module-showcase";
+import { PartnersMarquee } from "@/components/pages/home/sections/partners-marquee";
 import { JsonLd } from "@/components/seo/json-ld";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { getRoute } from "@/lib/seo/routes";
@@ -35,7 +36,9 @@ export default async function Home({
 
   try {
     const apiBase = (
-      process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/v1"
+      process.env.INTERNAL_API_URL ||
+      process.env.NEXT_PUBLIC_API_URL ||
+      "http://localhost:3001/api/v1"
     ).replace(/\/$/, "");
 
     let url = `${apiBase}/public/hero/current`;
@@ -83,6 +86,7 @@ export default async function Home({
       )}
       <HomeScrollMotion />
       <HomeHero config={heroConfig} />
+      <PartnersMarquee />
       <ModuleShowcase />
       <AudienceSection />
       <ChallengesSection />

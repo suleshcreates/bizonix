@@ -18,8 +18,45 @@ async function bootstrap() {
   const port = config.get<number>('PORT', 3001);
   const nodeEnv = config.get<string>('NODE_ENV', 'development');
   const frontendOrigin = config.get<string>('FRONTEND_ORIGIN', 'http://localhost:3000');
-  const adminOrigin = config.get<string>('ADMIN_ORIGIN', 'http://localhost:3000');
+  const adminOrigin = config.get<string>('ADMIN_ORIGIN', 'http://localhost:3002');
   const corsOrigins = config.get<string>('CORS_ORIGINS', '');
+
+  // --- Cryptographic Secret Validation (BIZ-SEC-002) ---
+  const jwtAccessSecret = config.get<string>('JWT_ACCESS_SECRET', '');
+  const jwtRefreshSecret = config.get<string>('JWT_REFRESH_SECRET', '');
+  const knownPlaceholders = new Set([
+    'CHANGE_ME_GENERATE_A_RANDOM_SECRET_AT_LEAST_32_CHARS',
+    'CHANGE_ME_GENERATE_A_DIFFERENT_RANDOM_SECRET_AT_LEAST_32_CHARS',
+    'docker_dev_access_secret_change_in_production_min32chars',
+    'docker_dev_refresh_secret_change_in_production_min32chars',
+    'secret',
+    'changeme',
+    'password',
+  ]);
+
+  if (nodeEnv === 'production') {
+    if (!jwtAccessSecret || jwtAccessSecret.length < 32 || knownPlaceholders.has(jwtAccessSecret)) {
+      throw new Error(
+        '[FATAL SECURITY CONFIGURATION ERROR] JWT_ACCESS_SECRET is missing, shorter than 32 characters, or using a known placeholder in production. Refusing to start.',
+      );
+    }
+    if (!jwtRefreshSecret || jwtRefreshSecret.length < 32 || knownPlaceholders.has(jwtRefreshSecret)) {
+      throw new Error(
+        '[FATAL SECURITY CONFIGURATION ERROR] JWT_REFRESH_SECRET is missing, shorter than 32 characters, or using a known placeholder in production. Refusing to start.',
+      );
+    }
+    if (jwtAccessSecret === jwtRefreshSecret) {
+      throw new Error(
+        '[FATAL SECURITY CONFIGURATION ERROR] JWT_ACCESS_SECRET and JWT_REFRESH_SECRET must not be identical. Refusing to start.',
+      );
+    }
+  } else {
+    if (knownPlaceholders.has(jwtAccessSecret) || jwtAccessSecret.length < 16) {
+      console.warn(
+        '[SECURITY WARNING] Running with weak or placeholder JWT_ACCESS_SECRET. Ensure strong secrets are set before deployment.',
+      );
+    }
+  }
 
   // --- Security ---
   app.use(helmet({
@@ -45,7 +82,7 @@ async function bootstrap() {
       }
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id'],
   });
 

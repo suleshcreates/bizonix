@@ -46,6 +46,12 @@ export type ModuleIndexItem = {
   accent: string;
   accentDark: string;
   icon: LucideIcon;
+  iconKey?: string;
+};
+
+export type SerializableModuleIndexItem = Omit<ModuleIndexItem, "icon"> & {
+  icon?: LucideIcon;
+  iconKey?: string;
 };
 
 export const moduleIndexItems: readonly ModuleIndexItem[] = [

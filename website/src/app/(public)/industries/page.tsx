@@ -4,7 +4,7 @@ import { IndustriesHero } from "@/components/pages/industries/sections/industrie
 import { IndustryPainSection } from "@/components/pages/industries/sections/industry-pain-section";
 import { IndustryWorkflowSection } from "@/components/pages/industries/sections/industry-workflow-section";
 import { ProofSection } from "@/components/pages/industries/sections/proof-section";
-import { industryDetails } from "@/lib/content/industries/industry-detail";
+import { getAllPublicIndustries } from "@/lib/content/industries/industry-resolver";
 import { JsonLd } from "@/components/seo/json-ld";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { getRoute } from "@/lib/seo/routes";
@@ -12,10 +12,9 @@ import { breadcrumbSchema, itemListSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = pageMetadata("/industries");
 
-export default function IndustriesPage() {
-  const detail = Object.values(industryDetails).filter(
-    (industry) => industry !== undefined,
-  );
+export default async function IndustriesPage() {
+  const allIndustries = await getAllPublicIndustries();
+  const overviewIndustries = allIndustries.filter((ind) => ind.showInOverview);
 
   return (
     <>
@@ -28,7 +27,7 @@ export default function IndustriesPage() {
         schema={[
           itemListSchema({
             name: "Industries Bizonix ERP serves",
-            items: detail.map((industry) => ({
+            items: overviewIndustries.map((industry) => ({
               name: industry.name,
               path: `/industries/${industry.slug}`,
               description: getRoute(`/industries/${industry.slug}`).description,

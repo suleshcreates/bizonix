@@ -45,11 +45,14 @@ next-env.d.ts
 # Hero QA measurement artifacts (debug screenshots + reports)
 .hero-qa/
 .audit/
+backup/
 
-# Local logs and tooling output
+# Local logs, tokens and tooling output
 *.log
+*cookies.txt
+*.cookies
+cookies.txt
 
 backup/
 .pnpm-store/
-*.log
 .DS_Store

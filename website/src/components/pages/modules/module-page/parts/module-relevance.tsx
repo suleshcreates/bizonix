@@ -51,11 +51,11 @@ export function ModuleContextSection({
   moduleTitle,
   relevance,
 }: {
-  moduleSlug: ModuleSlug;
+  moduleSlug: ModuleSlug | string;
   moduleTitle: string;
   relevance: VerticalRelevance;
 }) {
-  const data = moduleContextData[moduleSlug];
+  const data = moduleContextData[moduleSlug as ModuleSlug] || moduleContextData.inventory;
 
   return (
     <section

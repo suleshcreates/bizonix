@@ -1,0 +1,3327 @@
+[
+  {
+    "slug": "inventory",
+    "title": "Inventory",
+    "category": "Core Operations",
+    "summary": "Real-time stock visibility across locations, with control at piece and series level.",
+    "outcome": "Piece-level truth, live across every location.",
+    "themeKey": "CYAN",
+    "iconKey": "BOXES",
+    "badge": null,
+    "sortOrder": 1,
+    "status": "PUBLISHED",
+    "everPublished": true,
+    "showInCatalog": true,
+    "showInMegaMenu": true,
+    "showInHomepage": true,
+    "showInFooter": false,
+    "content": {
+      "hero": {
+        "eyebrow": "Inventory",
+        "headline": "Know every piece. Stay in control.",
+        "headlineAccent": "Stay in control.",
+        "body": "Track every piece across locations, movements and counts.",
+        "primaryCta": {
+          "label": "Book a demo",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Explore all modules",
+          "href": "/modules"
+        },
+        "templateKey": "inventory",
+        "chain": [
+          {
+            "id": "piece",
+            "label": "Piece",
+            "detail": "Own barcode"
+          },
+          {
+            "id": "entry",
+            "label": "Entry",
+            "detail": "Opened · sold · left"
+          },
+          {
+            "id": "location",
+            "label": "Location",
+            "detail": "Warehouse or store"
+          },
+          {
+            "id": "count",
+            "label": "Count",
+            "detail": "Variance by entry"
+          }
+        ],
+        "screen": {
+          "id": "stock-list",
+          "focus": "left top",
+          "alt": "Bizonix stock list showing quantity, rate, warehouse and barcode for each stock line.",
+          "annotations": [
+            {
+              "id": "in-stock",
+              "x": 5,
+              "y": 7,
+              "side": "right",
+              "label": "In stock",
+              "detail": "Counted in pieces, not in lines — the tile reads the rows below it."
+            },
+            {
+              "id": "qty",
+              "x": 29,
+              "y": 40,
+              "side": "right",
+              "label": "QTY",
+              "detail": "What is held against this line right now, at this location."
+            },
+            {
+              "id": "mrc",
+              "x": 57,
+              "y": 68,
+              "side": "left",
+              "label": "MRC no",
+              "detail": "The entry the line came in on, so a shortage names a receipt."
+            }
+          ]
+        },
+        "facts": [
+          {
+            "label": "Held at",
+            "value": "Piece & entry"
+          },
+          {
+            "label": "Scoped to",
+            "value": "Warehouse, store, partner"
+          },
+          {
+            "label": "Read by",
+            "value": "POS, transfers, books"
+          }
+        ]
+      },
+      "problemSection": {
+        "presentation": "visual-stories",
+        "eyebrow": "Before Inventory",
+        "title": "Where stock counts lose the truth.",
+        "intro": "Three operational failures that turn a physical count into a negotiation, and an available piece into a refused sale.",
+        "problems": [
+          {
+            "id": "count-argument",
+            "number": "01",
+            "title": "The count is a negotiation",
+            "description": "Conflicting counts cannot be traced back to the pieces behind them.",
+            "quote": "Rack says 38. System says 41. Nobody can name the three.",
+            "visual": "count-mismatch"
+          },
+          {
+            "id": "wrong-place",
+            "number": "02",
+            "title": "Stock is in the wrong place, and nobody can see it",
+            "description": "Stock may exist elsewhere, but the counter cannot see where.",
+            "quote": "Sold out at the counter while the warehouse is holding forty.",
+            "visual": "location-mismatch"
+          },
+          {
+            "id": "identity-lost",
+            "number": "03",
+            "title": "Identity is lost at receiving",
+            "description": "Shared style codes erase the intake, cost and price trail.",
+            "quote": "A return arrives and nothing says which entry it came out of.",
+            "visual": "identity-loss"
+          }
+        ],
+        "consequence": {
+          "title": "None of this arrives as a loss. It arrives as time spent arguing, and as sales that quietly did not happen.",
+          "items": [
+            {
+              "id": "variance",
+              "label": "Variance without a cause",
+              "body": "A difference is written off because no entry can be named as the one that is short."
+            },
+            {
+              "id": "refused",
+              "label": "Available stock refused",
+              "body": "The counter turns a customer away while the piece sits in a location it cannot see."
+            },
+            {
+              "id": "returns",
+              "label": "Returns nobody can place",
+              "body": "A piece comes back and no record says which intake, cost or price series it belongs to."
+            }
+          ]
+        }
+      },
+      "outcomesSection": {
+        "eyebrow": "After Inventory",
+        "title": "Three things change about",
+        "highlight": "how stock moves.",
+        "intro": "Piece-level identity. Location-aware stock. A history that stays intact.",
+        "outcomes": [
+          {
+            "id": "named-variance",
+            "number": "01",
+            "visualVariant": "piece-identity",
+            "accent": "#22b8cf",
+            "title": "A count that names the piece",
+            "description": "Stock audit compares physical scans against the entries the system is holding, so a variance points at a specific entry and location instead of producing a bare quantity gap."
+          },
+          {
+            "id": "location-truth",
+            "number": "02",
+            "visualVariant": "location-aware",
+            "accent": "#22b8cf",
+            "title": "Availability that knows where it is",
+            "description": "Every line carries the warehouse or store holding it. The counter, the transfer screen and the stock list are all reading the same location-aware number."
+          },
+          {
+            "id": "movement-trail",
+            "number": "03",
+            "visualVariant": "movement-trace",
+            "accent": "#22b8cf",
+            "title": "Movement that leaves a trail",
+            "description": "Transfers, damage entries and adjustments post against the same piece identity that receiving issued, so the history of a piece survives every hand it passes through."
+          }
+        ]
+      },
+      "capabilities": {
+        "groups": [
+          {
+            "id": "visibility",
+            "title": "Stock visibility",
+            "context": "One list that answers what is on hand, what it is worth and where it is sitting.",
+            "items": [
+              "Stock overview",
+              "Location-wise stock",
+              "Low-stock alerts",
+              "Expiry filtering",
+              "Stock value at cost",
+              "Stock list export"
+            ]
+          },
+          {
+            "id": "identity",
+            "title": "Piece & series identity",
+            "context": "Identity is issued once, at intake, and every later screen reads it.",
+            "items": [
+              "Series entries",
+              "Piece barcodes",
+              "Barcode printing",
+              "Legacy code mapping",
+              "Label reprint",
+              "Pack and HSN attributes"
+            ]
+          },
+          {
+            "id": "movement",
+            "title": "Movement & correction",
+            "context": "The three things that actually change a stock number, all posted against the same record.",
+            "items": [
+              "Stock transfers",
+              "Stock audit",
+              "Damage entries",
+              "Quantity adjustments"
+            ]
+          }
+        ]
+      },
+      "workflow": {
+        "title": "How stock actually moves",
+        "intro": "Five operational steps. Each one hands the next a record rather than a spreadsheet row.",
+        "steps": [
+          {
+            "id": "receive",
+            "index": "01",
+            "title": "Stock is received",
+            "body": "Goods arrive against a purchase and are opened as a stock entry for the receiving location.",
+            "record": "Entry created · opened quantity set"
+          },
+          {
+            "id": "identify",
+            "index": "02",
+            "title": "Identity is issued",
+            "body": "Each piece is given its own barcode and the labels are printed in the same pass, before anything is put away.",
+            "record": "Barcode issued against the entry"
+          },
+          {
+            "id": "hold",
+            "index": "03",
+            "title": "Stock is held at a location",
+            "body": "The line joins the stock list under the warehouse or store that physically holds it, with rate, MRP and tax attributes attached.",
+            "record": "Line live in the stock list"
+          },
+          {
+            "id": "move",
+            "index": "04",
+            "title": "Stock moves",
+            "body": "A transfer takes pieces out of the source location and leaves them awaiting receipt at the destination — the same identity on both sides.",
+            "record": "Out at source · awaiting receipt"
+          },
+          {
+            "id": "count",
+            "index": "05",
+            "title": "Stock is counted",
+            "body": "An audit scans what is physically there and compares it with the entries on file, so a difference names the entry it belongs to.",
+            "record": "Variance attached to an entry"
+          }
+        ]
+      },
+      "gallery": {
+        "variant": "featured-plus-grid",
+        "title": "The screens this runs on",
+        "intro": "Real captures from the product. Annotations point only at fields that are visible in the frame.",
+        "shots": [
+          {
+            "id": "stock-list",
+            "state": "captured",
+            "screen": "stock-list",
+            "featured": true,
+            "order": 1,
+            "context": "Daily view",
+            "title": "Stock list",
+            "description": "Every stock line with its current quantity, sale rate, MRP, cost, warehouse and barcode, filtered by expiry or low stock and exportable as it stands.",
+            "alt": "Bizonix stock list screen with in-stock, stock value, lines and locations tiles above a table of stock lines.",
+            "annotations": [
+              {
+                "id": "qty",
+                "x": 29,
+                "y": 42,
+                "label": "QTY",
+                "detail": "Quantity currently held, per line and per location."
+              },
+              {
+                "id": "warehouse",
+                "x": 64,
+                "y": 22,
+                "label": "WAREHOUSE",
+                "detail": "The location actually holding the line."
+              },
+              {
+                "id": "barcode",
+                "x": 76,
+                "y": 22,
+                "label": "BARCODE",
+                "detail": "The piece identity issued at receiving."
+              },
+              {
+                "id": "value",
+                "x": 31,
+                "y": 7,
+                "label": "Stock value",
+                "detail": "At cost, computed from the lines below it."
+              }
+            ]
+          },
+          {
+            "id": "series-ledger",
+            "state": "captured",
+            "screen": "series-ledger",
+            "order": 2,
+            "context": "Per entry",
+            "title": "Series entries",
+            "description": "Each stock entry with the quantity opened, the quantity sold, what is still in stock and the sell-through that follows from those three numbers.",
+            "alt": "Bizonix series entry ledger with location, opened, sold, in-stock, sell-through and value columns.",
+            "annotations": [
+              {
+                "id": "opened",
+                "x": 38,
+                "y": 5,
+                "label": "OPENED vs SOLD",
+                "detail": "What went in against what has left, per entry."
+              },
+              {
+                "id": "sell-through",
+                "x": 62,
+                "y": 5,
+                "label": "SELL-THROUGH",
+                "detail": "Derived from the same two columns, not entered."
+              }
+            ]
+          },
+          {
+            "id": "barcode-queue",
+            "state": "captured",
+            "screen": "barcode-queue",
+            "order": 3,
+            "context": "At intake",
+            "title": "Barcode printing",
+            "description": "The print queue that turns a received entry into labels — new barcode, in-stock count, print quantity and the legacy code it replaces.",
+            "alt": "Bizonix barcode printing queue listing new barcodes against in-stock counts, print quantities and legacy codes.",
+            "annotations": [
+              {
+                "id": "legacy",
+                "x": 31,
+                "y": 15,
+                "label": "Legacy",
+                "detail": "The old code the new barcode is mapped to."
+              },
+              {
+                "id": "print-qty",
+                "x": 24,
+                "y": 15,
+                "label": "Print qty",
+                "detail": "Labels to produce for this line."
+              }
+            ]
+          },
+          {
+            "id": "transfer",
+            "state": "pending",
+            "order": 4,
+            "context": "Between locations",
+            "title": "Stock transfer",
+            "description": "Dispatch from one location and receipt at the other, against the same piece identity."
+          },
+          {
+            "id": "audit",
+            "state": "pending",
+            "order": 5,
+            "context": "Verification",
+            "title": "Stock audit",
+            "description": "A physical count reconciled against the entries the system is holding."
+          }
+        ]
+      },
+      "verticalRelevance": {
+        "apparel": "Size and colour are separate pieces, not one style quantity, so a rack that is short is short in a specific size rather than in the abstract.",
+        "jewellery": "High-SKU assortments with near-identical designs stay separable, because the piece carries the barcode rather than the design name.",
+        "franchise": "Every line names the outlet holding it, so head office reads one stock list without asking nine people for theirs."
+      },
+      "proof": null,
+      "video": null,
+      "relatedModules": [
+        "procurement",
+        "sales-pos",
+        "franchise"
+      ],
+      "seo": {
+        "title": "Inventory module",
+        "description": "Piece and series level stock control across warehouses, stores and partner outlets — barcodes issued at receiving, transfers, audits and damage entries on one record.",
+        "ogTitle": "Bizonix Inventory — piece-level stock, live by location",
+        "ogDescription": "Stock held as pieces against the location that has them, with barcode identity issued at intake and carried through every movement."
+      }
+    },
+    "faqs": [
+      {
+        "question": "Is stock tracked per piece or per batch?",
+        "answer": "Both are represented. A stock entry holds the intake — what was opened, what has sold and what remains — and individual pieces within it carry their own barcode. That is why a variance can name an entry instead of reporting a bare quantity gap.",
+        "sortOrder": 1,
+        "isPublished": true
+      },
+      {
+        "question": "We already have barcodes from an older system. Do they survive?",
+        "answer": "Existing codes are held against the new barcode as the legacy code, and both appear on the printing screen. Scanning history and old labels stay meaningful while the new identity takes over.",
+        "sortOrder": 2,
+        "isPublished": true
+      },
+      {
+        "question": "Does the stock number differ by location?",
+        "answer": "Yes. Every line is held against the warehouse or store that has it, and the stock list can be read for one location or across them. There is no single blended figure that hides where stock actually is.",
+        "sortOrder": 3,
+        "isPublished": true
+      },
+      {
+        "question": "How are damage and shrinkage handled?",
+        "answer": "Through damage entries and adjustments, posted against the affected stock entry rather than typed over the quantity. The stock number changes and the reason for the change stays attached to it.",
+        "sortOrder": 4,
+        "isPublished": true
+      },
+      {
+        "question": "How often do we have to do a full count?",
+        "answer": "That remains an operating decision. Stock audit supports counting a location or a section against the entries on file, so partial counts are meaningful on their own instead of only being useful once everything is counted.",
+        "sortOrder": 5,
+        "isPublished": true
+      }
+    ]
+  },
+  {
+    "slug": "procurement",
+    "title": "Procurement",
+    "category": "Supply & Purchasing",
+    "summary": "From purchase order to payment, with receiving and supplier context kept together.",
+    "outcome": "Receiving, pricing and payables on one trail.",
+    "themeKey": "ORANGE",
+    "iconKey": "TRUCK",
+    "badge": null,
+    "sortOrder": 2,
+    "status": "PUBLISHED",
+    "everPublished": true,
+    "showInCatalog": true,
+    "showInMegaMenu": true,
+    "showInHomepage": true,
+    "showInFooter": false,
+    "content": {
+      "hero": {
+        "eyebrow": "Procurement",
+        "headline": "What you order is what arrives.",
+        "headlineAccent": "what arrives.",
+        "body": "Keep the order, the receipt and the shortfall on one document.",
+        "primaryCta": {
+          "label": "Book a demo",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Explore all modules",
+          "href": "/modules"
+        },
+        "templateKey": "procurement",
+        "chain": [
+          {
+            "id": "purchase",
+            "label": "Purchase",
+            "detail": "Supplier · quantity"
+          },
+          {
+            "id": "receive",
+            "label": "Receive",
+            "detail": "What actually arrived"
+          },
+          {
+            "id": "stock",
+            "label": "Stock",
+            "detail": "Entry opened"
+          },
+          {
+            "id": "payable",
+            "label": "Payable",
+            "detail": "Supplier position"
+          }
+        ],
+        "screen": {
+          "id": "purchase-list",
+          "focus": "left top",
+          "alt": "Bizonix purchases screen filtered by received, draft and cancelled, showing supplier, quantity, amount and status per purchase.",
+          "annotations": [
+            {
+              "id": "received",
+              "x": 24,
+              "y": 5,
+              "side": "right",
+              "label": "Received",
+              "detail": "Separates what has physically arrived from what is still on order."
+            },
+            {
+              "id": "purchase-no",
+              "x": 11,
+              "y": 32,
+              "side": "right",
+              "label": "Purchase no",
+              "detail": "One number the document keeps from draft through to received."
+            },
+            {
+              "id": "supplier",
+              "x": 34,
+              "y": 62,
+              "side": "right",
+              "label": "Supplier",
+              "detail": "The party the payable belongs to, carried on the same record."
+            }
+          ]
+        },
+        "facts": [
+          {
+            "label": "States",
+            "value": "Draft · received · cancelled"
+          },
+          {
+            "label": "Carries",
+            "value": "Supplier, invoice, cost"
+          },
+          {
+            "label": "Opens",
+            "value": "Stock at the location"
+          }
+        ]
+      },
+      "problemSection": {
+        "presentation": "visual-stories",
+        "eyebrow": "Before Procurement",
+        "title": "Where purchases lose their trail.",
+        "intro": "Three breaks between agreeing an order, receiving what actually turned up, and knowing what a supplier is owed.",
+        "problems": [
+          {
+            "id": "receipt-drift",
+            "number": "01",
+            "title": "The order and the receipt drift apart",
+            "description": "The order and the physical receipt stop sharing one record.",
+            "quote": "Ordered 120, received 108, and the file still reads 120.",
+            "visual": "order-receipt-drift"
+          },
+          {
+            "id": "cost-lost",
+            "number": "02",
+            "title": "Landed cost stops travelling with the goods",
+            "description": "Stock keeps its selling price but loses the cost of its intake.",
+            "quote": "Margin is a guess because cost is an average of everything.",
+            "visual": "cost-detached"
+          },
+          {
+            "id": "supplier-blind",
+            "number": "03",
+            "title": "The supplier position lives outside the system",
+            "description": "Purchases, returns and payments must be assembled by hand.",
+            "quote": "A payment run starts with a phone call to the supplier.",
+            "visual": "supplier-scatter"
+          }
+        ],
+        "consequence": {
+          "title": "The order itself is rarely the problem. Everything downstream of it is rebuilt by hand.",
+          "items": [
+            {
+              "id": "absorbed",
+              "label": "Short receipts absorbed",
+              "body": "A shortfall reaches the shelf before anyone notices, and no document is left holding the difference."
+            },
+            {
+              "id": "margin",
+              "label": "Margin as an estimate",
+              "body": "Selling price is exact and cost is an average, so profitability is stated with more confidence than it has."
+            },
+            {
+              "id": "payment",
+              "label": "Payment runs by phone",
+              "body": "What is owed to a supplier is reassembled from three places every time somebody asks."
+            }
+          ]
+        }
+      },
+      "outcomesSection": {
+        "eyebrow": "After Procurement",
+        "title": "Three changes keep",
+        "highlight": "purchasing connected.",
+        "intro": "From purchase to receipt, with costs and supplier context intact.",
+        "outcomes": [
+          {
+            "id": "one-document",
+            "number": "01",
+            "visualVariant": "purchase-receiving",
+            "accent": "#ff9f43",
+            "title": "One document from order to receipt",
+            "description": "A purchase moves through draft, received and cancelled states on the same record, so the quantity and the amount always describe the same transaction rather than two versions of it."
+          },
+          {
+            "id": "cost-survives",
+            "number": "02",
+            "visualVariant": "supplier-context",
+            "accent": "#ff9f43",
+            "title": "Cost survives the put-away",
+            "description": "Purchase rate and cost stay attached to the stock the receipt opened, which is why the stock list can show cost and value alongside sale rate and MRP."
+          },
+          {
+            "id": "supplier-position",
+            "number": "03",
+            "visualVariant": "return-continuity",
+            "accent": "#ff9f43",
+            "title": "A supplier position that is already assembled",
+            "description": "Purchases, purchase returns and payments post against the same supplier, so what is owed is read rather than reconstructed."
+          }
+        ]
+      },
+      "capabilities": {
+        "groups": [
+          {
+            "id": "buying",
+            "title": "Buying",
+            "context": "Raising and tracking what has been committed to a supplier.",
+            "items": [
+              "Direct purchases",
+              "Draft purchases",
+              "Supplier invoice reference",
+              "Purchase cancellation",
+              "Supplier-wise filtering"
+            ]
+          },
+          {
+            "id": "receiving",
+            "title": "Receiving",
+            "context": "The step that turns a commitment into stock, and issues identity while doing it.",
+            "items": [
+              "Goods receipt against a purchase",
+              "Received / pending states",
+              "Stock entry creation",
+              "Barcode issue at intake",
+              "Purchase returns"
+            ]
+          },
+          {
+            "id": "payables",
+            "title": "Cost & payables",
+            "context": "What the intake cost and what is still owed for it, held against the same trail.",
+            "items": [
+              "Purchase rate and cost capture",
+              "Series pricing",
+              "Supplier ledger",
+              "Purchase value reporting"
+            ]
+          }
+        ]
+      },
+      "workflow": {
+        "title": "From commitment to shelf",
+        "intro": "Procurement is a hand-off problem. These are the five hand-offs, and what the system is holding after each one.",
+        "steps": [
+          {
+            "id": "raise",
+            "index": "01",
+            "title": "The purchase is raised",
+            "body": "A purchase is created against a supplier with the lines, quantities and rates being committed to. It sits in draft until it is acted on.",
+            "record": "Purchase · draft"
+          },
+          {
+            "id": "receive",
+            "index": "02",
+            "title": "Goods are received",
+            "body": "What physically arrived is receipted against that purchase. The purchase moves to received and the supplier's invoice reference is captured with it.",
+            "record": "Purchase · received"
+          },
+          {
+            "id": "open",
+            "index": "03",
+            "title": "Stock is opened",
+            "body": "The receipt opens a stock entry at the receiving location, carrying purchase rate, MRP and tax attributes across with it.",
+            "record": "Stock entry · opened quantity"
+          },
+          {
+            "id": "label",
+            "index": "04",
+            "title": "Identity is printed",
+            "body": "Barcodes are issued for the received pieces and labels are printed before the goods are put away.",
+            "record": "Barcodes issued"
+          },
+          {
+            "id": "settle",
+            "index": "05",
+            "title": "The supplier position updates",
+            "body": "The received value and any purchase return post against the supplier, so payables reflect the goods that were actually accepted.",
+            "record": "Supplier ledger · updated"
+          }
+        ]
+      },
+      "gallery": {
+        "variant": "featured-plus-grid",
+        "title": "The screens this runs on",
+        "intro": "Real captures from the product. Annotations point only at fields that are visible in the frame.",
+        "shots": [
+          {
+            "id": "purchase-list",
+            "state": "captured",
+            "screen": "purchase-list",
+            "featured": true,
+            "order": 1,
+            "context": "Daily view",
+            "title": "Purchases",
+            "description": "Every purchase with its supplier, date, invoice reference, quantity, amount and state — filtered to all, received, draft or cancelled.",
+            "alt": "Bizonix purchases screen showing received, draft and cancelled filters over purchase number, supplier, quantity, amount and status columns.",
+            "annotations": [
+              {
+                "id": "states",
+                "x": 24,
+                "y": 5,
+                "label": "Received / Draft / Cancelled",
+                "detail": "The states a purchase moves through, with counts."
+              },
+              {
+                "id": "invoice",
+                "x": 50,
+                "y": 13,
+                "label": "INVOICE",
+                "detail": "The supplier's own reference held on the purchase."
+              },
+              {
+                "id": "status",
+                "x": 82,
+                "y": 19,
+                "label": "STATUS",
+                "detail": "Whether the goods have actually been received."
+              }
+            ]
+          },
+          {
+            "id": "stock-after-receipt",
+            "state": "captured",
+            "screen": "stock-list",
+            "order": 2,
+            "context": "After receiving",
+            "title": "What receiving opened",
+            "description": "The stock list a receipt writes into — the same line now carrying purchase rate, cost, MRC reference and the warehouse holding it.",
+            "alt": "Bizonix stock list showing cost, MRC number and warehouse columns for lines opened by receiving.",
+            "annotations": [
+              {
+                "id": "mrc",
+                "x": 56,
+                "y": 22,
+                "label": "MRC NO",
+                "detail": "The intake reference the line was opened against."
+              },
+              {
+                "id": "rates",
+                "x": 40,
+                "y": 22,
+                "label": "SRATE / MRP / COST",
+                "detail": "Sale rate, MRP and cost held on the same line."
+              }
+            ]
+          },
+          {
+            "id": "grn-detail",
+            "state": "pending",
+            "order": 3,
+            "context": "At the dock",
+            "title": "Goods receipt",
+            "description": "Line-by-line receipt against a purchase, including short and excess quantities."
+          },
+          {
+            "id": "supplier-ledger",
+            "state": "pending",
+            "order": 4,
+            "context": "Payables",
+            "title": "Supplier ledger",
+            "description": "Purchases, returns and payments against one supplier on a single running position."
+          },
+          {
+            "id": "purchase-return",
+            "state": "pending",
+            "order": 5,
+            "context": "Exceptions",
+            "title": "Purchase return",
+            "description": "Goods sent back to a supplier, posted against the purchase they arrived on."
+          }
+        ]
+      },
+      "verticalRelevance": {
+        "apparel": "Season intakes arrive as many small consignments; each one stays separable, so a slow-moving colour can be traced back to the buy that brought it in.",
+        "jewellery": "Designs repeat across suppliers, so holding the intake reference on the line is what keeps two visually identical items from merging into one cost.",
+        "franchise": "Central buying keeps the cost on the record that is later transferred out, so an outlet is not receiving stock with an unexplained value."
+      },
+      "proof": null,
+      "video": null,
+      "relatedModules": [
+        "inventory",
+        "accounting",
+        "wholesale"
+      ],
+      "seo": {
+        "title": "Procurement module",
+        "description": "Purchases, goods receipt, purchase returns and supplier position on one trail — with intake cost and series pricing carried through to stock.",
+        "ogTitle": "Bizonix Procurement — order, receipt and payables on one trail",
+        "ogDescription": "A purchase that moves through draft, received and cancelled while opening stock and updating the supplier position."
+      }
+    },
+    "faqs": [
+      {
+        "question": "Can we receive less than we ordered?",
+        "answer": "Yes. Receiving is recorded against the purchase, so the received quantity can differ from the ordered quantity and the difference stays visible on the purchase rather than being edited away.",
+        "sortOrder": 1,
+        "isPublished": true
+      },
+      {
+        "question": "Which cost does the stock carry?",
+        "answer": "The cost captured on the intake that opened the line. That is why the stock list can show purchase rate and cost next to sale rate and MRP for the same row.",
+        "sortOrder": 2,
+        "isPublished": true
+      },
+      {
+        "question": "How are supplier returns handled?",
+        "answer": "As purchase returns posted against the supplier and the stock they came from, so both the stock position and the amount owed move together.",
+        "sortOrder": 3,
+        "isPublished": true
+      },
+      {
+        "question": "What is series pricing used for here?",
+        "answer": "It lets an intake carry its own rate rather than inheriting a single price for the style, so two consignments bought at different rates stay priced as they were bought.",
+        "sortOrder": 4,
+        "isPublished": true
+      },
+      {
+        "question": "How does opening stock come in?",
+        "answer": "Through the same purchase and receiving path, recorded as a system opening entry. The stock arrives with a reference attached instead of appearing as an unexplained quantity.",
+        "sortOrder": 5,
+        "isPublished": true
+      }
+    ]
+  },
+  {
+    "slug": "sales-pos",
+    "title": "Sales & POS",
+    "category": "Commerce",
+    "summary": "Retail, wholesale and counter billing on the same stock and accounting foundation.",
+    "outcome": "Every bill posts itself to stock and to books.",
+    "themeKey": "CORAL",
+    "iconKey": "SCAN_BARCODE",
+    "badge": null,
+    "sortOrder": 3,
+    "status": "PUBLISHED",
+    "everPublished": true,
+    "showInCatalog": true,
+    "showInMegaMenu": true,
+    "showInHomepage": true,
+    "showInFooter": false,
+    "content": {
+      "hero": {
+        "eyebrow": "Sales & POS",
+        "headline": "Every sale closes the stock line.",
+        "headlineAccent": "the stock line.",
+        "body": "Billing, stock and the counter's shift all close together.",
+        "primaryCta": {
+          "label": "Book a demo",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Explore all modules",
+          "href": "/modules"
+        },
+        "templateKey": "pos",
+        "chain": [
+          {
+            "id": "scan",
+            "label": "Scan",
+            "detail": "Piece identity"
+          },
+          {
+            "id": "bill",
+            "label": "Bill",
+            "detail": "Counter · payment"
+          },
+          {
+            "id": "fulfil",
+            "label": "Fulfil",
+            "detail": "Goods handed over"
+          },
+          {
+            "id": "close",
+            "label": "Close",
+            "detail": "Session totals"
+          }
+        ],
+        "screen": {
+          "id": "order-list",
+          "focus": "left top",
+          "alt": "Bizonix orders screen showing order totals above rows with customer, billing counter, payment state, amount and fulfilment.",
+          "annotations": [
+            {
+              "id": "totals",
+              "x": 8,
+              "y": 5,
+              "side": "right",
+              "label": "Totals",
+              "detail": "The filtered set summed — the day as it currently stands."
+            },
+            {
+              "id": "counter",
+              "x": 39,
+              "y": 30,
+              "side": "left",
+              "label": "Counter",
+              "detail": "Which billing counter raised the order, so a session can be closed."
+            },
+            {
+              "id": "payment",
+              "x": 47,
+              "y": 62,
+              "side": "left",
+              "label": "Payment",
+              "detail": "Whether the counter actually took the money, held per order."
+            }
+          ]
+        },
+        "facts": [
+          {
+            "label": "Raised at",
+            "value": "A named counter"
+          },
+          {
+            "label": "Carries",
+            "value": "Payment & fulfilment state"
+          },
+          {
+            "label": "Moves",
+            "value": "Stock and books together"
+          }
+        ]
+      },
+      "problemSection": {
+        "presentation": "visual-stories",
+        "eyebrow": "Before Sales & POS",
+        "title": "Where counter days stop closing.",
+        "intro": "Three failures that put the day's work back on somebody's desk long after the customer has left.",
+        "problems": [
+          {
+            "id": "double-entry",
+            "number": "01",
+            "title": "The sale is typed twice",
+            "description": "Counter sales are re-keyed into stock and accounts after the day.",
+            "quote": "Yesterday's sales get entered tomorrow, from a printout.",
+            "visual": "duplicate-entry"
+          },
+          {
+            "id": "session-blind",
+            "number": "02",
+            "title": "Nobody can close a counter",
+            "description": "Without shift boundaries, a cash difference has nowhere to belong.",
+            "quote": "The drawer is short and the day is the only suspect.",
+            "visual": "session-boundary"
+          },
+          {
+            "id": "returns",
+            "number": "03",
+            "title": "Returns break the record",
+            "description": "A returned piece no longer points to the bill that sold it.",
+            "quote": "Two records for one piece, and stock believes both.",
+            "visual": "return-orphan"
+          }
+        ],
+        "consequence": {
+          "title": "The counter is fast. Everything that happens behind the counter is not.",
+          "items": [
+            {
+              "id": "late",
+              "label": "The day arrives late",
+              "body": "Stock and books describe yesterday, because yesterday is still being typed in."
+            },
+            {
+              "id": "unbounded",
+              "label": "Shortfalls with no boundary",
+              "body": "Cash cannot be attributed to a counter, a shift or a person, so the difference is absorbed."
+            },
+            {
+              "id": "twice",
+              "label": "Stock counted twice",
+              "body": "A returned piece re-enters as new quantity while the sale that released it still reads complete."
+            }
+          ]
+        }
+      },
+      "outcomesSection": {
+        "eyebrow": "After Sales & POS",
+        "title": "Three things change about",
+        "highlight": "how the counter runs.",
+        "intro": "Billing, stock and books stay connected through the trading day.",
+        "outcomes": [
+          {
+            "id": "posts-itself",
+            "number": "01",
+            "visualVariant": "payment-flow",
+            "accent": "#ff6b6b",
+            "title": "The bill posts itself",
+            "description": "Billing moves the piece out of the stock line it was held on and lands the sale value in the books. There is no end-of-day re-entry step to get wrong."
+          },
+          {
+            "id": "counter-boundary",
+            "number": "02",
+            "visualVariant": "counter-session",
+            "accent": "#ff6b6b",
+            "title": "A counter you can actually close",
+            "description": "Every order carries the counter it was raised at and the state of its payment, so the day can be read one counter at a time instead of as a single blur."
+          },
+          {
+            "id": "return-to-source",
+            "number": "03",
+            "visualVariant": "return-record",
+            "accent": "#ff6b6b",
+            "title": "A return that finds its bill",
+            "description": "Because the piece carries its own identity, a return posts against the sale that issued it — the stock goes back to a real line rather than becoming a new one."
+          }
+        ]
+      },
+      "capabilities": {
+        "groups": [
+          {
+            "id": "counter",
+            "title": "At the counter",
+            "context": "What the person serving a customer actually touches.",
+            "items": [
+              "Retail POS billing",
+              "Barcode scanning",
+              "Walk-in and named customers",
+              "Multi-counter billing",
+              "Item-level discounting"
+            ]
+          },
+          {
+            "id": "money",
+            "title": "Payment & session",
+            "context": "The controls that let a shift be reconciled rather than estimated.",
+            "items": [
+              "Billing sessions",
+              "Payment status per order",
+              "Cash handover",
+              "Order totals by filter"
+            ]
+          },
+          {
+            "id": "aftersale",
+            "title": "After the sale",
+            "context": "What happens once the customer has the goods — or brings them back.",
+            "items": [
+              "Fulfilment state",
+              "Sales returns",
+              "Order lookup and reprint",
+              "Order-level item history"
+            ]
+          }
+        ]
+      },
+      "workflow": {
+        "title": "A sale, end to end",
+        "intro": "Five steps at the counter, and the record the system is holding after each one.",
+        "steps": [
+          {
+            "id": "open",
+            "index": "01",
+            "title": "The counter opens",
+            "body": "A billing session is started for the counter, so everything billed from here belongs to a shift that can be closed later.",
+            "record": "Session open at a named counter"
+          },
+          {
+            "id": "scan",
+            "index": "02",
+            "title": "The piece is scanned",
+            "body": "The barcode issued at receiving is read at the counter. Price, tax treatment and the stock line it belongs to come with it.",
+            "record": "Line added against a real piece"
+          },
+          {
+            "id": "pay",
+            "index": "03",
+            "title": "Payment is taken",
+            "body": "The order records what was paid against what was owed, and the payment state moves with it.",
+            "record": "Order · paid / total"
+          },
+          {
+            "id": "fulfil",
+            "index": "04",
+            "title": "Goods are handed over",
+            "body": "Fulfilment marks the pieces as gone. The stock line they were held on drops by exactly those pieces.",
+            "record": "Order fulfilled · stock reduced"
+          },
+          {
+            "id": "close",
+            "index": "05",
+            "title": "The session is closed",
+            "body": "The counter is handed over against its own totals, and the day's sales are already sitting in the books.",
+            "record": "Session closed · books posted"
+          }
+        ]
+      },
+      "gallery": {
+        "variant": "featured-plus-grid",
+        "title": "The screens this runs on",
+        "intro": "Real captures from the product. Annotations point only at fields that are visible in the frame.",
+        "shots": [
+          {
+            "id": "order-list",
+            "state": "captured",
+            "screen": "order-list",
+            "featured": true,
+            "order": 1,
+            "context": "Daily view",
+            "title": "Orders",
+            "description": "The day's orders with customer, billing counter, payment state, paid and total value, item count and fulfilment state — totalled across whatever filter is applied.",
+            "alt": "Bizonix orders screen with a totals bar above rows showing customer, counter, payment, paid, total, items and fulfilment.",
+            "annotations": [
+              {
+                "id": "counter",
+                "x": 39,
+                "y": 9,
+                "label": "COUNTER",
+                "detail": "The billing counter the order was raised at."
+              },
+              {
+                "id": "payment",
+                "x": 48,
+                "y": 9,
+                "label": "PAYMENT",
+                "detail": "Whether the money against this order actually landed."
+              },
+              {
+                "id": "fulfilment",
+                "x": 82,
+                "y": 9,
+                "label": "FULFILMENT",
+                "detail": "Whether the goods have left the counter."
+              },
+              {
+                "id": "totals",
+                "x": 60,
+                "y": 5,
+                "label": "Totals bar",
+                "detail": "Paid, total and item count for the current filter."
+              }
+            ]
+          },
+          {
+            "id": "scan-identity",
+            "state": "captured",
+            "screen": "barcode-queue",
+            "order": 2,
+            "context": "What the counter scans",
+            "title": "The identity behind the scan",
+            "description": "The barcodes the counter reads are the ones issued at intake — each one already tied to a design, an in-stock count, an MRP and a selling price.",
+            "alt": "Bizonix barcode screen listing new barcodes with in-stock counts, design names, MRP and selling price.",
+            "annotations": [
+              {
+                "id": "sell",
+                "x": 73,
+                "y": 15,
+                "label": "MRP / Sell",
+                "detail": "The price the counter reads, held against the barcode."
+              }
+            ]
+          },
+          {
+            "id": "pos-counter",
+            "state": "pending",
+            "order": 3,
+            "context": "At the counter",
+            "title": "POS billing screen",
+            "description": "The live counter view: scan, cart, discount and payment in one pass."
+          },
+          {
+            "id": "session",
+            "state": "pending",
+            "order": 4,
+            "context": "Shift control",
+            "title": "Billing session & handover",
+            "description": "Opening, closing and handing over a counter against its own totals."
+          },
+          {
+            "id": "sales-return",
+            "state": "pending",
+            "order": 5,
+            "context": "Exceptions",
+            "title": "Sales return",
+            "description": "A piece coming back, posted against the bill that sold it."
+          }
+        ]
+      },
+      "verticalRelevance": {
+        "apparel": "Exchanges are the normal case, not the exception; a size swap posts against the original bill instead of becoming an unexplained pair of movements.",
+        "jewellery": "Small, high-value, visually similar pieces make scanning the only reliable way to know which one actually left the counter.",
+        "franchise": "An outlet bills on its own counters while head office reads the same order records, without the outlet having to send a day sheet."
+      },
+      "proof": null,
+      "video": null,
+      "relatedModules": [
+        "inventory",
+        "accounting",
+        "ecommerce"
+      ],
+      "seo": {
+        "title": "Sales & POS module",
+        "description": "Retail counter billing with barcode scanning, billing sessions, cash handover and returns — every bill moving stock and books in the same pass.",
+        "ogTitle": "Bizonix Sales & POS — a bill that posts itself",
+        "ogDescription": "Scan, bill, fulfil and close a counter against its own session, with stock and accounts already updated."
+      }
+    },
+    "faqs": [
+      {
+        "question": "What is a billing session for?",
+        "answer": "It gives the day a boundary. Bills belong to a session at a named counter, so cash can be handed over against what that counter actually took rather than against a whole-day estimate.",
+        "sortOrder": 1,
+        "isPublished": true
+      },
+      {
+        "question": "Do we have to capture customer details for every sale?",
+        "answer": "No. Orders can be raised as walk-in, and a name is attached only when it is useful — both appear on the same order list.",
+        "sortOrder": 2,
+        "isPublished": true
+      },
+      {
+        "question": "When does stock actually reduce?",
+        "answer": "At fulfilment, when the goods are handed over. The order carries its fulfilment state, so a billed-but-not-yet-collected order does not silently disappear from stock.",
+        "sortOrder": 3,
+        "isPublished": true
+      },
+      {
+        "question": "How is a return connected to the original sale?",
+        "answer": "Through the piece. The barcode scanned on the way out is the same one scanned on the way back, which is what lets the return post against the order it came from.",
+        "sortOrder": 4,
+        "isPublished": true
+      },
+      {
+        "question": "Can more than one counter bill at the same time?",
+        "answer": "Yes. Each order records the counter it was raised at, which is what makes per-counter totals and separate handovers possible.",
+        "sortOrder": 5,
+        "isPublished": true
+      }
+    ]
+  },
+  {
+    "slug": "wholesale",
+    "title": "Wholesale",
+    "category": "Commerce",
+    "summary": "Bulk orders, fulfilment, dispatch and partner credit without side systems.",
+    "outcome": "Bulk orders that dispatch without a spreadsheet.",
+    "themeKey": "EMERALD",
+    "iconKey": "BUILDING",
+    "badge": null,
+    "sortOrder": 4,
+    "status": "PUBLISHED",
+    "everPublished": true,
+    "showInCatalog": true,
+    "showInMegaMenu": true,
+    "showInHomepage": true,
+    "showInFooter": false,
+    "content": {
+      "hero": {
+        "eyebrow": "Wholesale",
+        "headline": "One order, billed and dispatched.",
+        "headlineAccent": "and dispatched.",
+        "body": "Hold what was ordered, fulfilled and still owed on one record.",
+        "primaryCta": {
+          "label": "Book a demo",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Explore all modules",
+          "href": "/modules"
+        },
+        "templateKey": "wholesale",
+        "chain": [
+          {
+            "id": "order",
+            "label": "Order",
+            "detail": "Buyer · lines"
+          },
+          {
+            "id": "pick",
+            "label": "Fulfil",
+            "detail": "What is packed"
+          },
+          {
+            "id": "dispatch",
+            "label": "Dispatch",
+            "detail": "What has left"
+          },
+          {
+            "id": "credit",
+            "label": "Credit",
+            "detail": "What is still owed"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Sells from",
+            "value": "The same stock lines"
+          },
+          {
+            "label": "Tracks",
+            "value": "Fulfilment separately from billing"
+          },
+          {
+            "label": "Holds",
+            "value": "A running buyer position"
+          }
+        ]
+      },
+      "problemSection": {
+        "presentation": "visual-stories",
+        "eyebrow": "Before Wholesale",
+        "title": "Where bulk orders lose their shape.",
+        "intro": "Three failures that appear the moment an order leaves the warehouse in more than one consignment.",
+        "problems": [
+          {
+            "id": "part-shipment",
+            "number": "01",
+            "title": "Part-shipped orders lose their shape",
+            "description": "Partial consignments leave the outstanding quantity in a side file.",
+            "quote": "A pending list that lives in a spreadsheet on one laptop.",
+            "visual": "partial-shipment"
+          },
+          {
+            "id": "picking-blind",
+            "number": "02",
+            "title": "Picking works from a printout",
+            "description": "Printed picks go stale while warehouse stock keeps moving.",
+            "quote": "Two orders promised the same forty pieces.",
+            "visual": "stale-pick"
+          },
+          {
+            "id": "credit",
+            "number": "03",
+            "title": "Credit is an opinion",
+            "description": "Buyer exposure is rebuilt from billing, returns and receipts.",
+            "quote": "Nobody can say what a buyer owes without opening three files.",
+            "visual": "credit-scatter"
+          }
+        ],
+        "consequence": {
+          "title": "Volume is not the hard part. Holding one order together across three separate events is.",
+          "items": [
+            {
+              "id": "pending",
+              "label": "Pending held in memory",
+              "body": "What is still due to a buyer survives in a side file that one person maintains."
+            },
+            {
+              "id": "collide",
+              "label": "Promises that collide",
+              "body": "Two orders are committed against the same pieces because picking read a printout."
+            },
+            {
+              "id": "exposure",
+              "label": "Exposure assembled by hand",
+              "body": "A buyer's balance is rebuilt from billing, returns and receipts before every conversation."
+            }
+          ]
+        }
+      },
+      "outcomesSection": {
+        "eyebrow": "After Wholesale",
+        "title": "Three things change about",
+        "highlight": "how bulk orders move.",
+        "intro": "Orders, stock commitments and buyer positions stay on one record.",
+        "outcomes": [
+          {
+            "id": "order-truth",
+            "number": "01",
+            "visualVariant": "order-fulfillment",
+            "accent": "#2d9d78",
+            "title": "An order that knows what is still outstanding",
+            "description": "Billing and fulfilment are tracked separately on the same order, so a partly dispatched order reads as partly dispatched rather than as done or not started."
+          },
+          {
+            "id": "one-stock",
+            "number": "02",
+            "visualVariant": "shared-stock",
+            "accent": "#2d9d78",
+            "title": "One stock pool, not a wholesale copy of it",
+            "description": "Wholesale sells from the same stock lines the counter and the warehouse read, so a commitment made in bulk is visible everywhere else immediately."
+          },
+          {
+            "id": "buyer-position",
+            "number": "03",
+            "visualVariant": "credit-context",
+            "accent": "#2d9d78",
+            "title": "A buyer position that is already assembled",
+            "description": "Bills, returns and receipts post against the same partner, so the amount outstanding is read off the record instead of being reconstructed."
+          }
+        ]
+      },
+      "capabilities": {
+        "groups": [
+          {
+            "id": "selling",
+            "title": "Selling in bulk",
+            "context": "Raising and pricing an order that is larger than a counter sale.",
+            "items": [
+              "Wholesale billing",
+              "Partner / buyer records",
+              "Rate and series pricing",
+              "Multi-line orders"
+            ]
+          },
+          {
+            "id": "fulfilment",
+            "title": "Fulfilment & dispatch",
+            "context": "The part that happens after the bill and before the goods arrive.",
+            "items": [
+              "Fulfilment against an order",
+              "Carton packing",
+              "Dispatch records",
+              "Pending fulfilment view"
+            ]
+          },
+          {
+            "id": "credit",
+            "title": "Credit & settlement",
+            "context": "What the buyer owes, and what has actually been received.",
+            "items": [
+              "Credit management",
+              "Receipts against a partner",
+              "Sales returns",
+              "Outstanding position"
+            ]
+          }
+        ]
+      },
+      "workflow": {
+        "title": "From order to dispatch",
+        "intro": "Bulk selling is a sequence of partial states. These are the five, and what the record holds at each.",
+        "steps": [
+          {
+            "id": "order",
+            "index": "01",
+            "title": "The order is raised",
+            "body": "A wholesale order is created against a buyer, with the lines, quantities and rates being committed to.",
+            "record": "Order · lines committed"
+          },
+          {
+            "id": "reserve",
+            "index": "02",
+            "title": "Stock is drawn against",
+            "body": "The order is picked from the same stock lines everything else reads, so the commitment is visible to the counter and the warehouse at once.",
+            "record": "Stock drawn from live lines"
+          },
+          {
+            "id": "pack",
+            "index": "03",
+            "title": "Goods are packed",
+            "body": "Fulfilment records what has actually been packed against the order, which may be less than the whole order.",
+            "record": "Fulfilled quantity · per line"
+          },
+          {
+            "id": "dispatch",
+            "index": "04",
+            "title": "The consignment leaves",
+            "body": "Dispatch marks the packed goods as gone and leaves the unfulfilled remainder still open on the order.",
+            "record": "Dispatched · remainder pending"
+          },
+          {
+            "id": "settle",
+            "index": "05",
+            "title": "The buyer position moves",
+            "body": "The billed value, any return and any receipt post against the buyer, so the outstanding amount reflects the goods that actually shipped.",
+            "record": "Partner position · updated"
+          }
+        ]
+      },
+      "gallery": {
+        "variant": "stacked",
+        "title": "The screens this runs on",
+        "intro": "One real capture of the stock these orders are drawn from. The wholesale-specific screens have not been captured yet and are marked as such rather than mocked up.",
+        "shots": [
+          {
+            "id": "stock-source",
+            "state": "captured",
+            "screen": "stock-list",
+            "featured": true,
+            "order": 1,
+            "context": "What fulfilment draws from",
+            "title": "The stock a bulk order is picked from",
+            "description": "Wholesale is not a separate stock pool. Orders are picked from the same lines shown here, with the warehouse column deciding which location a consignment can actually ship from.",
+            "alt": "Bizonix stock list showing available quantity and warehouse per line, the pool wholesale orders are picked from.",
+            "annotations": [
+              {
+                "id": "qty",
+                "x": 29,
+                "y": 42,
+                "label": "QTY",
+                "detail": "The quantity a bulk order can be committed against."
+              },
+              {
+                "id": "warehouse",
+                "x": 64,
+                "y": 22,
+                "label": "WAREHOUSE",
+                "detail": "Which location the consignment would ship from."
+              }
+            ]
+          },
+          {
+            "id": "wholesale-bill",
+            "state": "pending",
+            "order": 2,
+            "context": "Order entry",
+            "title": "Wholesale billing",
+            "description": "A multi-line bulk order raised against a partner, at partner rates."
+          },
+          {
+            "id": "fulfilment",
+            "state": "pending",
+            "order": 3,
+            "context": "In the warehouse",
+            "title": "Fulfilment & cartons",
+            "description": "What has been packed against an order, and what is still outstanding on it."
+          },
+          {
+            "id": "dispatch",
+            "state": "pending",
+            "order": 4,
+            "context": "Leaving the building",
+            "title": "Dispatch",
+            "description": "The consignment record for goods that have left."
+          },
+          {
+            "id": "credit",
+            "state": "pending",
+            "order": 5,
+            "context": "Accounts",
+            "title": "Partner credit position",
+            "description": "Bills, returns and receipts against one buyer on a running position."
+          }
+        ]
+      },
+      "verticalRelevance": {
+        "apparel": "Bulk orders arrive as size ratios rather than single quantities, so a part shipment has to be readable at the size that is short.",
+        "jewellery": "Assorted bulk lots are made of many small designs; fulfilment has to record which designs were actually packed, not just a carton count.",
+        "franchise": "The same fulfilment path serves partner outlets, which is why a franchise transfer and a wholesale dispatch behave like relatives rather than strangers."
+      },
+      "proof": null,
+      "video": null,
+      "relatedModules": [
+        "inventory",
+        "franchise",
+        "accounting"
+      ],
+      "seo": {
+        "title": "Wholesale module",
+        "description": "Bulk billing, fulfilment, dispatch and partner credit on one order record — drawn from the same stock the counter and warehouse read.",
+        "ogTitle": "Bizonix Wholesale — orders that survive partial dispatch",
+        "ogDescription": "Billing and fulfilment tracked separately on one order, with a running buyer position behind it."
+      }
+    },
+    "faqs": [
+      {
+        "question": "Can an order be dispatched in parts?",
+        "answer": "Yes. Fulfilment is recorded against the order rather than replacing it, so a partly shipped order keeps its remainder open instead of being closed early or duplicated.",
+        "sortOrder": 1,
+        "isPublished": true
+      },
+      {
+        "question": "Does wholesale keep its own stock?",
+        "answer": "No. It sells from the same stock lines as the counter and the warehouse. That is the point — a bulk commitment is visible to everyone reading stock, immediately.",
+        "sortOrder": 2,
+        "isPublished": true
+      },
+      {
+        "question": "Can wholesale buyers have their own rates?",
+        "answer": "Rates are set on the order, and series pricing lets an intake carry its own rate, so partner pricing does not force a change to the master price of the style.",
+        "sortOrder": 3,
+        "isPublished": true
+      },
+      {
+        "question": "How is buyer credit tracked?",
+        "answer": "Bills, sales returns and receipts post against the same partner record, so the outstanding position is read from the account rather than assembled before each conversation.",
+        "sortOrder": 4,
+        "isPublished": true
+      },
+      {
+        "question": "What happens when a partner sends stock back?",
+        "answer": "A sales return posts against the order it came from and moves the stock back into the location that receives it, so both the goods and the amount owed move together.",
+        "sortOrder": 5,
+        "isPublished": true
+      }
+    ]
+  },
+  {
+    "slug": "franchise",
+    "title": "Franchise",
+    "category": "Core Operations",
+    "summary": "Network control without micromanagement—partner autonomy with central oversight.",
+    "outcome": "Autonomy at the outlet, oversight at the centre.",
+    "themeKey": "BLUE",
+    "iconKey": "STORE",
+    "badge": null,
+    "sortOrder": 5,
+    "status": "PUBLISHED",
+    "everPublished": true,
+    "showInCatalog": true,
+    "showInMegaMenu": true,
+    "showInHomepage": true,
+    "showInFooter": false,
+    "content": {
+      "hero": {
+        "eyebrow": "Franchise",
+        "headline": "One network. Every outlet visible.",
+        "headlineAccent": "outlet visible.",
+        "body": "Give partners independence while head office reads one position.",
+        "primaryCta": {
+          "label": "Book a demo",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Explore all modules",
+          "href": "/modules"
+        },
+        "templateKey": "network",
+        "chain": [
+          {
+            "id": "hq",
+            "label": "HQ",
+            "detail": "Shared masters"
+          },
+          {
+            "id": "entity",
+            "label": "Entity",
+            "detail": "Outlet boundary"
+          },
+          {
+            "id": "transfer",
+            "label": "Transfer",
+            "detail": "Out · awaiting receipt"
+          },
+          {
+            "id": "view",
+            "label": "Oversight",
+            "detail": "Network position"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Separated by",
+            "value": "Entity boundary"
+          },
+          {
+            "label": "Shared",
+            "value": "Masters and identity"
+          },
+          {
+            "label": "Moved by",
+            "value": "Recorded transfers"
+          }
+        ]
+      },
+      "problemSection": {
+        "presentation": "visual-stories",
+        "eyebrow": "Before Franchise",
+        "title": "Where networks lose visibility.",
+        "intro": "Three failures that reduce a network of outlets to a summary assembled at the end of the month.",
+        "problems": [
+          {
+            "id": "off-system",
+            "number": "01",
+            "title": "Outlets operate off-system",
+            "description": "Head office reconstructs outlet sales from month-end summaries.",
+            "quote": "The network's stock position is a WhatsApp thread.",
+            "visual": "off-system-outlet"
+          },
+          {
+            "id": "transfer-limbo",
+            "number": "02",
+            "title": "Transfers sit in limbo",
+            "description": "Dispatch and receipt live apart, leaving stock between owners.",
+            "quote": "Sent 48. Received 44. No document holds both numbers.",
+            "visual": "transfer-limbo"
+          },
+          {
+            "id": "boundary",
+            "number": "03",
+            "title": "Visibility and control get confused",
+            "description": "Visibility often grants too much control or too little information.",
+            "quote": "Either everyone is an admin, or nobody can see anything.",
+            "visual": "access-overreach"
+          }
+        ],
+        "consequence": {
+          "title": "The brand is distributed. The record of the brand is not.",
+          "items": [
+            {
+              "id": "monthly",
+              "label": "A network described monthly",
+              "body": "What sold, at what price, and what is still on a shelf all arrive after the fact."
+            },
+            {
+              "id": "orphan",
+              "label": "Stock that belongs to nobody",
+              "body": "Between dispatch and receipt the goods sit outside every location's record."
+            },
+            {
+              "id": "switch",
+              "label": "Access as a blunt switch",
+              "body": "Visibility can only be bought with control, so brands over-share rights or under-see the network."
+            }
+          ]
+        }
+      },
+      "outcomesSection": {
+        "eyebrow": "After Franchise",
+        "title": "Three things change about",
+        "highlight": "how the network runs.",
+        "intro": "Independent outlets. Connected movements. A shared operating view.",
+        "outcomes": [
+          {
+            "id": "entity-real",
+            "number": "01",
+            "visualVariant": "outlet-control",
+            "accent": "#2f6bff",
+            "title": "The outlet is a real boundary, not a filter",
+            "description": "Each franchise operates as its own entity with its own stock and counters, so partner autonomy is a structural fact rather than a permission that can be forgotten."
+          },
+          {
+            "id": "transfer-record",
+            "number": "02",
+            "visualVariant": "entity-transfer",
+            "accent": "#2f6bff",
+            "title": "A transfer that has two ends",
+            "description": "Stock leaves the source and is awaiting receipt at the destination. Both sides of the movement exist on the same record, which is what makes a short receipt a question instead of a loss."
+          },
+          {
+            "id": "read-not-ask",
+            "number": "03",
+            "visualVariant": "hq-allocation",
+            "accent": "#2f6bff",
+            "title": "Oversight without micromanagement",
+            "description": "The centre reads outlet positions from the same operating records the outlet is creating, so seeing the network does not require reaching into it."
+          }
+        ]
+      },
+      "capabilities": {
+        "groups": [
+          {
+            "id": "network",
+            "title": "Network structure",
+            "context": "How the brand and its outlets are actually modelled.",
+            "items": [
+              "Franchise list",
+              "Entity boundaries",
+              "Shared product masters",
+              "Outlet-scoped users"
+            ]
+          },
+          {
+            "id": "supply",
+            "title": "Supplying the outlet",
+            "context": "Moving goods to a partner and knowing that they arrived.",
+            "items": [
+              "Stock transfer to outlet",
+              "Dispatch and receipt states",
+              "Piece identity across entities",
+              "Transfer history"
+            ]
+          },
+          {
+            "id": "oversight",
+            "title": "Oversight & commercials",
+            "context": "What head office reads, and how the relationship itself is administered.",
+            "items": [
+              "Franchise dashboard",
+              "Outlet-wise stock position",
+              "Subscriptions and plans",
+              "Consolidated network view"
+            ]
+          }
+        ]
+      },
+      "workflow": {
+        "title": "How the network operates",
+        "intro": "Two entities, one movement. The lane shows which side of the network is holding the record at each step.",
+        "steps": [
+          {
+            "id": "onboard",
+            "index": "01",
+            "lane": "Head office",
+            "title": "The outlet is set up as an entity",
+            "body": "A franchise is created with its own scope, its own users and access to the shared product masters.",
+            "record": "Entity created · masters shared"
+          },
+          {
+            "id": "dispatch",
+            "index": "02",
+            "lane": "Head office",
+            "title": "Stock is transferred out",
+            "body": "Pieces are dispatched from the central location to the outlet, carrying the identity they were issued at receiving.",
+            "record": "Out at source · awaiting receipt"
+          },
+          {
+            "id": "receive",
+            "index": "03",
+            "lane": "Outlet",
+            "title": "The outlet receives",
+            "body": "The partner receipts the transfer. Any difference between what was sent and what arrived stays on the same record.",
+            "record": "Received · variance visible"
+          },
+          {
+            "id": "sell",
+            "index": "04",
+            "lane": "Outlet",
+            "title": "The outlet sells",
+            "body": "The partner bills on their own counters, against their own stock, as an independent operation.",
+            "record": "Outlet orders · outlet stock"
+          },
+          {
+            "id": "consolidate",
+            "index": "05",
+            "lane": "Head office",
+            "title": "The centre reads the network",
+            "body": "Head office sees each outlet's position from the records the outlet created, without operating inside it.",
+            "record": "Network position · read only"
+          }
+        ]
+      },
+      "gallery": {
+        "variant": "stacked",
+        "title": "The screens this runs on",
+        "intro": "One real capture showing how stock is held against a location. The franchise-specific screens have not been captured yet and are marked as such rather than mocked up.",
+        "shots": [
+          {
+            "id": "location-entries",
+            "state": "captured",
+            "screen": "series-ledger",
+            "featured": true,
+            "order": 1,
+            "context": "How location is held",
+            "title": "Stock entries carry their location",
+            "description": "Every stock entry names the location holding it. That column is what lets a network be read outlet by outlet instead of as one merged number.",
+            "alt": "Bizonix series entry ledger with a location column naming the store that holds each entry.",
+            "annotations": [
+              {
+                "id": "location",
+                "x": 24,
+                "y": 5,
+                "label": "LOCATION",
+                "detail": "The outlet or warehouse the entry belongs to."
+              },
+              {
+                "id": "instock",
+                "x": 51,
+                "y": 5,
+                "label": "IN STOCK",
+                "detail": "What remains at that location, per entry."
+              }
+            ]
+          },
+          {
+            "id": "franchise-list",
+            "state": "pending",
+            "order": 2,
+            "context": "Network",
+            "title": "Franchise list",
+            "description": "Every outlet in the network with its operating scope."
+          },
+          {
+            "id": "transfer",
+            "state": "pending",
+            "order": 3,
+            "context": "Supply",
+            "title": "Stock transfer to an outlet",
+            "description": "Dispatch and receipt across an entity boundary, on one record."
+          },
+          {
+            "id": "outlet-dashboard",
+            "state": "pending",
+            "order": 4,
+            "context": "Oversight",
+            "title": "Franchise dashboard",
+            "description": "Outlet-wise position as head office reads it."
+          },
+          {
+            "id": "plans",
+            "state": "pending",
+            "order": 5,
+            "context": "Commercials",
+            "title": "Subscriptions & plans",
+            "description": "The commercial arrangement attached to each partner."
+          }
+        ]
+      },
+      "verticalRelevance": {
+        "apparel": "Allocation to outlets is a size-and-colour decision, so a transfer has to be readable at the variant an outlet is actually short of.",
+        "jewellery": "Partner outlets carry deep assortments of similar designs, which is exactly where a shared piece identity stops a transfer from becoming an argument.",
+        "franchise": "This is the module the model is built around — entity separation, recorded transfers and a network view that does not require asking each partner for numbers."
+      },
+      "proof": null,
+      "video": null,
+      "relatedModules": [
+        "inventory",
+        "security",
+        "analytics"
+      ],
+      "seo": {
+        "title": "Franchise module",
+        "description": "Run a franchise network as separate operating entities with shared masters, recorded stock transfers between centre and outlet, and network-level oversight.",
+        "ogTitle": "Bizonix Franchise — autonomy at the outlet, oversight at the centre",
+        "ogDescription": "Outlets operate as their own entities while head office reads the whole network from the same operating records."
+      }
+    },
+    "faqs": [
+      {
+        "question": "Does head office control the outlet's day-to-day?",
+        "answer": "No. The outlet operates as its own entity — its own stock, its own counters and its own users. The centre reads the network position; it does not have to bill on the partner's behalf to see it.",
+        "sortOrder": 1,
+        "isPublished": true
+      },
+      {
+        "question": "What happens between dispatch and receipt?",
+        "answer": "The stock is out at the source and awaiting receipt at the destination. Both states sit on the same transfer, so goods in transit are never unaccounted for.",
+        "sortOrder": 2,
+        "isPublished": true
+      },
+      {
+        "question": "Do outlets have to maintain their own product data?",
+        "answer": "Product masters are shared, so a style means the same thing everywhere in the network. Stock, orders and counters remain the outlet's own.",
+        "sortOrder": 3,
+        "isPublished": true
+      },
+      {
+        "question": "What if an outlet receives less than was sent?",
+        "answer": "The difference stays visible on the transfer rather than being absorbed. The conversation then starts from a document instead of from two conflicting counts.",
+        "sortOrder": 4,
+        "isPublished": true
+      },
+      {
+        "question": "How is partner access restricted?",
+        "answer": "Through entity scope in the Security module — a user is attached to the entity they work in, which is what keeps one outlet from reading another.",
+        "sortOrder": 5,
+        "isPublished": true
+      }
+    ]
+  },
+  {
+    "slug": "accounting",
+    "title": "Accounting",
+    "category": "Finance",
+    "summary": "Books that retain operating context, with multi-entity control and GST-ready reporting.",
+    "outcome": "Books that already know what operations did.",
+    "themeKey": "PURPLE",
+    "iconKey": "CALCULATOR",
+    "badge": null,
+    "sortOrder": 6,
+    "status": "PUBLISHED",
+    "everPublished": true,
+    "showInCatalog": true,
+    "showInMegaMenu": true,
+    "showInHomepage": true,
+    "showInFooter": false,
+    "content": {
+      "hero": {
+        "eyebrow": "Accounting",
+        "headline": "Your books follow the work.",
+        "headlineAccent": "the work.",
+        "body": "Operating documents become journals, ledgers and returns without re-entry.",
+        "primaryCta": {
+          "label": "Book a demo",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Explore all modules",
+          "href": "/modules"
+        },
+        "templateKey": "finance",
+        "chain": [
+          {
+            "id": "event",
+            "label": "Operation",
+            "detail": "Bill · receipt · return"
+          },
+          {
+            "id": "journal",
+            "label": "Journal",
+            "detail": "Dr · Cr"
+          },
+          {
+            "id": "ledger",
+            "label": "Ledger",
+            "detail": "Account position"
+          },
+          {
+            "id": "report",
+            "label": "Report",
+            "detail": "P&L · balance sheet"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Posted from",
+            "value": "Operating documents"
+          },
+          {
+            "label": "Scoped by",
+            "value": "Operating entity"
+          },
+          {
+            "label": "Produces",
+            "value": "Ledgers, P&L, GST reports"
+          }
+        ]
+      },
+      "problemSection": {
+        "presentation": "visual-stories",
+        "eyebrow": "Before Accounting",
+        "title": "Where books lose the day.",
+        "intro": "Three gaps between what happened and what the ledger knows.",
+        "problems": [
+          {
+            "id": "re-entry",
+            "number": "01",
+            "title": "Month typed twice",
+            "description": "Same activity entered in operations and again in books.",
+            "quote": "Closing starts with a CSV and ends with a reconciliation.",
+            "visual": "period-relay"
+          },
+          {
+            "id": "context-lost",
+            "number": "02",
+            "title": "Ledger loses the trail",
+            "description": "A simple line hides the full story behind the numbers.",
+            "quote": "\"What is this ₹ figure?\" takes two people and an afternoon.",
+            "visual": "context-stripped"
+          },
+          {
+            "id": "multi-entity",
+            "number": "03",
+            "title": "Multiple books, one truth gap",
+            "description": "Each entity keeps its own books, and the group view comes later.",
+            "quote": "Consolidation is an event, not a report.",
+            "visual": "entity-split"
+          }
+        ],
+        "consequence": {
+          "title": "The books still close. They simply close on a period nobody can interrogate.",
+          "items": [
+            {
+              "id": "behind",
+              "label": "Books behind the operation",
+              "body": "The accounts describe a period that has already ended, from a summary that lost its detail."
+            },
+            {
+              "id": "investigate",
+              "label": "Figures that need an investigation",
+              "body": "A ledger line no longer carries the piece, counter or outlet that produced it."
+            },
+            {
+              "id": "event",
+              "label": "Consolidation as an event",
+              "body": "The group position is assembled once a quarter, in a file outside the system."
+            }
+          ]
+        }
+      },
+      "outcomesSection": {
+        "eyebrow": "After Accounting",
+        "title": "Three things change about",
+        "highlight": "how the work runs.",
+        "intro": "From operating documents to traceable, connected accounting.",
+        "outcomes": [
+          {
+            "id": "posted-not-typed",
+            "number": "01",
+            "visualVariant": "document-posted",
+            "accent": "#8b5cf6",
+            "title": "Entries that are posted, not typed",
+            "description": "Operating documents create the accounting record, so the books move at the same speed as the business rather than trailing it by a month."
+          },
+          {
+            "id": "traceable",
+            "number": "02",
+            "visualVariant": "traceable-number",
+            "accent": "#8b5cf6",
+            "title": "A number you can walk back",
+            "description": "Because the journal is created from a document, a ledger line still points at the bill, receipt or transfer that caused it."
+          },
+          {
+            "id": "entity-clean",
+            "number": "03",
+            "visualVariant": "entity-consolidation",
+            "accent": "#8b5cf6",
+            "title": "Entities that stay separate and still add up",
+            "description": "Each operating entity keeps its own books while the group can be read across them, without a manual consolidation step in between."
+          }
+        ]
+      },
+      "capabilities": {
+        "groups": [
+          {
+            "id": "structure",
+            "title": "Book structure",
+            "context": "The chart the rest of the module posts into.",
+            "items": [
+              "Chart of accounts",
+              "Journals",
+              "Ledgers",
+              "Entity-wise books"
+            ]
+          },
+          {
+            "id": "flows",
+            "title": "Money in and out",
+            "context": "The two running positions most operators check first.",
+            "items": [
+              "Accounts receivable",
+              "Accounts payable",
+              "Receipts",
+              "Supplier and customer positions"
+            ]
+          },
+          {
+            "id": "reporting",
+            "title": "Statements & tax",
+            "context": "What the business, the auditor and the tax filing need to read.",
+            "items": [
+              "Profit & loss",
+              "Balance sheet",
+              "GST reports",
+              "Tax treatment carried on the document"
+            ]
+          }
+        ]
+      },
+      "workflow": {
+        "title": "From an operating event to a statement",
+        "intro": "The path a single transaction takes. Nothing on it is re-keyed; each step reads the one before it.",
+        "steps": [
+          {
+            "id": "event",
+            "index": "01",
+            "title": "An operating document is created",
+            "body": "A bill is raised, goods are received, a return is processed. The document carries its entity, its value and its tax treatment.",
+            "record": "Document · with context attached"
+          },
+          {
+            "id": "post",
+            "index": "02",
+            "title": "The entry is posted",
+            "body": "The document becomes a journal entry against the chart of accounts for the entity it belongs to.",
+            "record": "Journal · Dr / Cr"
+          },
+          {
+            "id": "ledger",
+            "index": "03",
+            "title": "Ledgers move",
+            "body": "Account positions update — including the receivable or payable side for the customer or supplier involved.",
+            "record": "Ledger balances · updated"
+          },
+          {
+            "id": "settle",
+            "index": "04",
+            "title": "Settlement is recorded",
+            "body": "A receipt or payment closes the open position, leaving the trail from invoice to cash intact.",
+            "record": "Open item · settled"
+          },
+          {
+            "id": "report",
+            "index": "05",
+            "title": "Statements are read",
+            "body": "Profit & loss, balance sheet and GST reports are produced from those ledgers for the entity or across entities.",
+            "record": "Statements · per entity or group"
+          }
+        ]
+      },
+      "gallery": {
+        "variant": "stacked",
+        "title": "The screens this runs on",
+        "intro": "The accounting screens have not been captured for the website yet. They are listed here as the actual set rather than represented by a mock-up.",
+        "shots": [
+          {
+            "id": "coa",
+            "state": "pending",
+            "featured": true,
+            "order": 1,
+            "context": "Structure",
+            "title": "Chart of accounts",
+            "description": "The account structure each entity's books post into."
+          },
+          {
+            "id": "journal",
+            "state": "pending",
+            "order": 2,
+            "context": "Posting",
+            "title": "Journal entries",
+            "description": "Entries created from operating documents, with the source still attached."
+          },
+          {
+            "id": "ledger",
+            "state": "pending",
+            "order": 3,
+            "context": "Positions",
+            "title": "Ledgers",
+            "description": "Running account positions across a period."
+          },
+          {
+            "id": "ar-ap",
+            "state": "pending",
+            "order": 4,
+            "context": "Money",
+            "title": "Receivables & payables",
+            "description": "Open items by customer and supplier, and their receipts."
+          },
+          {
+            "id": "statements",
+            "state": "pending",
+            "order": 5,
+            "context": "Reporting",
+            "title": "P&L, balance sheet and GST reports",
+            "description": "Statements read from the same ledgers."
+          }
+        ]
+      },
+      "verticalRelevance": {
+        "apparel": "Season-end markdowns and returns move margin after the sale, so the books have to follow the document rather than the original price.",
+        "jewellery": "High-value, high-count movement makes the link between a ledger line and the specific piece behind it worth keeping.",
+        "franchise": "Each outlet is its own set of books, and the group is readable across them without a manual consolidation pass."
+      },
+      "proof": null,
+      "video": null,
+      "relatedModules": [
+        "procurement",
+        "sales-pos",
+        "analytics"
+      ],
+      "seo": {
+        "title": "Accounting module",
+        "description": "Chart of accounts, journals, ledgers, AR/AP, receipts, P&L, balance sheet and GST reports — posted from the operating documents that created them.",
+        "ogTitle": "Bizonix Accounting — books downstream of the work",
+        "ogDescription": "Operating documents become journals and ledgers per entity, so the month is read rather than re-typed."
+      }
+    },
+    "faqs": [
+      {
+        "question": "When does an operating document reach the books?",
+        "answer": "As part of the same flow that creates it. A bill, receipt or return is an accounting event as well as an operating one, which is why closing does not begin with an export.",
+        "sortOrder": 1,
+        "isPublished": true
+      },
+      {
+        "question": "Can we keep separate books per company or outlet?",
+        "answer": "Yes. Books are held per operating entity, and reporting can be read for one entity or across the group.",
+        "sortOrder": 2,
+        "isPublished": true
+      },
+      {
+        "question": "What does GST support cover?",
+        "answer": "Tax treatment is captured on the transaction — the stock line itself carries tax inclusion, tax rate and HSN — and GST reports are produced from those postings. The exact filing workflow should be confirmed against your own compliance process during a demo.",
+        "sortOrder": 3,
+        "isPublished": true
+      },
+      {
+        "question": "Can we get from a ledger line back to the transaction?",
+        "answer": "That is the design intent of posting from documents: the entry exists because a document does, so the operating record behind a number is still identifiable.",
+        "sortOrder": 4,
+        "isPublished": true
+      },
+      {
+        "question": "How are opening balances handled at go-live?",
+        "answer": "Through opening entries in the same structure, so the first period starts from a recorded position rather than an assumed one. The scope of migration is agreed during implementation.",
+        "sortOrder": 5,
+        "isPublished": true
+      }
+    ]
+  },
+  {
+    "slug": "ecommerce",
+    "title": "Ecommerce",
+    "category": "Commerce",
+    "summary": "Catalog, storefront and order flow connected to the same inventory truth.",
+    "outcome": "One catalogue, one stock number, everywhere.",
+    "themeKey": "PINK",
+    "iconKey": "SHOPPING_BAG",
+    "badge": null,
+    "sortOrder": 7,
+    "status": "PUBLISHED",
+    "everPublished": true,
+    "showInCatalog": true,
+    "showInMegaMenu": true,
+    "showInHomepage": true,
+    "showInFooter": false,
+    "content": {
+      "hero": {
+        "eyebrow": "Ecommerce",
+        "headline": "Sell the stock you actually have.",
+        "headlineAccent": "actually have.",
+        "body": "Catalogue, orders and availability run on the warehouse's own stock.",
+        "primaryCta": {
+          "label": "Book a demo",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Explore all modules",
+          "href": "/modules"
+        },
+        "templateKey": "commerce",
+        "chain": [
+          {
+            "id": "catalog",
+            "label": "Catalogue",
+            "detail": "Shared masters"
+          },
+          {
+            "id": "storefront",
+            "label": "Storefront",
+            "detail": "What shoppers see"
+          },
+          {
+            "id": "order",
+            "label": "Order",
+            "detail": "Same order flow"
+          },
+          {
+            "id": "stock",
+            "label": "Stock",
+            "detail": "Same lines"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Publishes",
+            "value": "The existing catalogue"
+          },
+          {
+            "label": "Sells against",
+            "value": "The same stock lines"
+          },
+          {
+            "label": "Lands in",
+            "value": "The order list"
+          }
+        ]
+      },
+      "problemSection": {
+        "presentation": "visual-stories",
+        "eyebrow": "Before Ecommerce",
+        "title": "Where online stock drifts apart.",
+        "intro": "Three failures that make an online channel a second business to run rather than a second counter.",
+        "problems": [
+          {
+            "id": "two-catalogues",
+            "number": "01",
+            "title": "The catalogue exists twice",
+            "description": "Shop and website catalogues drift whenever one copy changes.",
+            "quote": "The site is still selling last season's price.",
+            "visual": "duplicate-catalogue"
+          },
+          {
+            "id": "oversell",
+            "number": "02",
+            "title": "Online stock is a copy that goes stale",
+            "description": "Scheduled stock copies oversell pieces already sold at the counter.",
+            "quote": "An order is confirmed for a piece that sold an hour ago.",
+            "visual": "stale-availability"
+          },
+          {
+            "id": "order-import",
+            "number": "03",
+            "title": "Online orders arrive as an import job",
+            "description": "Web orders are re-entered before fulfilment and accounting.",
+            "quote": "Web orders are processed in a batch, once a day.",
+            "visual": "batched-orders"
+          }
+        ],
+        "consequence": {
+          "title": "The website works perfectly. It is simply describing a shop that has already moved on.",
+          "items": [
+            {
+              "id": "twice",
+              "label": "Two versions of one product",
+              "body": "A price or a design is maintained in two places, and is inevitably changed in one."
+            },
+            {
+              "id": "gone",
+              "label": "Confidence in stock that is gone",
+              "body": "Between two syncs the storefront sells what the counter has already sold."
+            },
+            {
+              "id": "backlog",
+              "label": "A channel with its own backlog",
+              "body": "Web orders wait for an import before they can be fulfilled or accounted for."
+            }
+          ]
+        }
+      },
+      "outcomesSection": {
+        "eyebrow": "After Ecommerce",
+        "title": "Three things change about",
+        "highlight": "how channels connect.",
+        "intro": "One catalogue, one stock position and a connected order flow.",
+        "outcomes": [
+          {
+            "id": "one-catalogue",
+            "number": "01",
+            "visualVariant": "catalog-order",
+            "accent": "#ec4899",
+            "title": "One catalogue, maintained once",
+            "description": "The storefront publishes the product masters the rest of the business already uses, so a change is made in one place and is true everywhere."
+          },
+          {
+            "id": "one-number",
+            "number": "02",
+            "visualVariant": "inventory-connection",
+            "accent": "#ec4899",
+            "title": "One stock number, not a synced copy",
+            "description": "Online availability is read from the same stock lines the counter sells from, which removes the window in which the two disagree."
+          },
+          {
+            "id": "one-order-flow",
+            "number": "03",
+            "visualVariant": "storefront-sync",
+            "accent": "#ec4899",
+            "title": "One order flow for every channel",
+            "description": "An online order is fulfilled and accounted for the same way a counter order is, so the channel does not need its own process behind it."
+          }
+        ]
+      },
+      "capabilities": {
+        "groups": [
+          {
+            "id": "catalogue",
+            "title": "Catalogue",
+            "context": "What is published, and where the product information comes from.",
+            "items": [
+              "Catalog sync from product masters",
+              "Product content and media",
+              "Pricing and MRP display",
+              "Stock availability"
+            ]
+          },
+          {
+            "id": "storefront",
+            "title": "Storefront & content",
+            "context": "The customer-facing surface and the pages around it.",
+            "items": [
+              "Storefront",
+              "CMS pages",
+              "Category and collection structure"
+            ]
+          },
+          {
+            "id": "orders",
+            "title": "Orders",
+            "context": "What happens after a shopper checks out.",
+            "items": [
+              "Online orders in the same order list",
+              "Payment status",
+              "Fulfilment state",
+              "Returns"
+            ]
+          }
+        ],
+        "limitations": [
+          "A public API is not yet available — the site states it as coming soon. Integrations that would depend on one should be scoped during implementation rather than assumed."
+        ]
+      },
+      "workflow": {
+        "title": "From catalogue to delivered order",
+        "intro": "The online channel reuses the operating path the rest of the business is already on.",
+        "steps": [
+          {
+            "id": "publish",
+            "index": "01",
+            "title": "The catalogue is published",
+            "body": "Products already held as masters are made available on the storefront, with their content and pricing.",
+            "record": "Catalogue · live"
+          },
+          {
+            "id": "availability",
+            "index": "02",
+            "title": "Availability is read, not copied",
+            "body": "What the storefront can sell is drawn from the same stock lines the counter and the warehouse read.",
+            "record": "Availability · from live stock"
+          },
+          {
+            "id": "order",
+            "index": "03",
+            "title": "An order is placed",
+            "body": "Checkout creates an order in the same order list as every other channel, with its payment state attached.",
+            "record": "Order · payment state"
+          },
+          {
+            "id": "fulfil",
+            "index": "04",
+            "title": "The order is fulfilled",
+            "body": "Goods are picked and dispatched, and the stock line they came from moves at that point.",
+            "record": "Fulfilled · stock reduced"
+          },
+          {
+            "id": "account",
+            "index": "05",
+            "title": "The sale reaches the books",
+            "body": "The order posts like any other sale, so the online channel does not need its own reconciliation.",
+            "record": "Posted to books"
+          }
+        ]
+      },
+      "gallery": {
+        "variant": "stacked",
+        "title": "The screens this runs on",
+        "intro": "The ecommerce screens have not been captured for the website yet. They are listed here as the actual set rather than represented by a mock-up.",
+        "shots": [
+          {
+            "id": "catalog",
+            "state": "pending",
+            "featured": true,
+            "order": 1,
+            "context": "Publishing",
+            "title": "Catalog sync",
+            "description": "Which products are published to the storefront, and with what content."
+          },
+          {
+            "id": "storefront",
+            "state": "pending",
+            "order": 2,
+            "context": "Customer-facing",
+            "title": "Storefront",
+            "description": "The shopping surface built on the same catalogue."
+          },
+          {
+            "id": "cms",
+            "state": "pending",
+            "order": 3,
+            "context": "Content",
+            "title": "CMS pages",
+            "description": "Editorial and category pages around the catalogue."
+          },
+          {
+            "id": "online-orders",
+            "state": "pending",
+            "order": 4,
+            "context": "Fulfilment",
+            "title": "Online orders",
+            "description": "Web orders inside the same order list as every channel."
+          }
+        ]
+      },
+      "verticalRelevance": {
+        "apparel": "Size and colour are separate sellable pieces, so an online listing can go out of stock in one variant without pulling the whole style down.",
+        "jewellery": "Deep catalogues of similar designs need product content and identity that stay attached to the specific design being sold.",
+        "franchise": "One brand storefront can be operated centrally while outlets keep their own counters and stock underneath it."
+      },
+      "proof": null,
+      "video": null,
+      "relatedModules": [
+        "inventory",
+        "sales-pos",
+        "analytics"
+      ],
+      "seo": {
+        "title": "Ecommerce module",
+        "description": "Catalog, CMS, storefront and online orders connected to the same product masters and stock lines the counter and warehouse already use.",
+        "ogTitle": "Bizonix Ecommerce — one catalogue, one stock number",
+        "ogDescription": "A storefront that sells from live stock, with online orders landing in the same order flow as every other channel."
+      }
+    },
+    "faqs": [
+      {
+        "question": "How often does stock sync to the storefront?",
+        "answer": "The storefront reads the same stock the rest of the system uses rather than maintaining a copy on a schedule. That is what closes the window in which online and in-store availability disagree.",
+        "sortOrder": 1,
+        "isPublished": true
+      },
+      {
+        "question": "Where do online orders arrive?",
+        "answer": "In the same order list as counter and wholesale orders, carrying their own payment and fulfilment state, so there is no separate import step.",
+        "sortOrder": 2,
+        "isPublished": true
+      },
+      {
+        "question": "Can we manage content as well as products?",
+        "answer": "Yes — CMS pages sit alongside the catalogue so category, collection and editorial pages are maintained in the same place as the products they point at.",
+        "sortOrder": 3,
+        "isPublished": true
+      },
+      {
+        "question": "Can we connect our own storefront or marketplace?",
+        "answer": "A public API is listed as coming soon, so any external connection should be scoped during implementation rather than assumed to be available today.",
+        "sortOrder": 4,
+        "isPublished": true
+      },
+      {
+        "question": "How are online returns handled?",
+        "answer": "As sales returns against the order that shipped, moving the stock back into the location that receives it — the same path an in-store return follows.",
+        "sortOrder": 5,
+        "isPublished": true
+      }
+    ]
+  },
+  {
+    "slug": "analytics",
+    "title": "Analytics",
+    "category": "Intelligence & Security",
+    "summary": "Real-time dashboards across purchase, inventory, sales and every operating entity.",
+    "outcome": "The whole network on one screen, in real time.",
+    "themeKey": "INDIGO",
+    "iconKey": "BAR_CHART",
+    "badge": null,
+    "sortOrder": 8,
+    "status": "PUBLISHED",
+    "everPublished": true,
+    "showInCatalog": true,
+    "showInMegaMenu": true,
+    "showInHomepage": true,
+    "showInFooter": false,
+    "content": {
+      "hero": {
+        "eyebrow": "Analytics",
+        "headline": "Numbers you open, not just read.",
+        "headlineAccent": "not just read.",
+        "body": "Every figure leads back to the transactions that produced it.",
+        "primaryCta": {
+          "label": "Book a demo",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Explore all modules",
+          "href": "/modules"
+        },
+        "templateKey": "analytics",
+        "chain": [
+          {
+            "id": "records",
+            "label": "Records",
+            "detail": "Bills · receipts · stock"
+          },
+          {
+            "id": "entity",
+            "label": "Entity",
+            "detail": "Whose numbers"
+          },
+          {
+            "id": "view",
+            "label": "View",
+            "detail": "Purchase · stock · sales"
+          },
+          {
+            "id": "decision",
+            "label": "Decision",
+            "detail": "What to do next"
+          }
+        ],
+        "screen": {
+          "id": "stock-list",
+          "focus": "left top",
+          "alt": "Bizonix stock screen showing summary tiles and an Analytics tab beside the stock list.",
+          "annotations": [
+            {
+              "id": "tile",
+              "x": 5,
+              "y": 7,
+              "side": "right",
+              "label": "In stock",
+              "detail": "A figure computed from the lines below, not typed into a report."
+            },
+            {
+              "id": "tab",
+              "x": 44,
+              "y": 15,
+              "side": "left",
+              "label": "Analytics",
+              "detail": "The same screen and the same records, read as analysis."
+            },
+            {
+              "id": "rates",
+              "x": 42,
+              "y": 55,
+              "side": "left",
+              "label": "SRATE / MRP",
+              "detail": "Per-line figures the analytics views are built from."
+            }
+          ]
+        },
+        "facts": [
+          {
+            "label": "Built from",
+            "value": "Operating documents"
+          },
+          {
+            "label": "Scoped to",
+            "value": "One entity or the group"
+          },
+          {
+            "label": "Covers",
+            "value": "Purchase, stock, sales"
+          }
+        ]
+      },
+      "problemSection": {
+        "presentation": "visual-stories",
+        "eyebrow": "Before Analytics",
+        "title": "Where reports arrive too late.",
+        "intro": "Three failures between the operation producing data and anybody being able to read it together.",
+        "problems": [
+          {
+            "id": "assembled",
+            "number": "01",
+            "title": "Reporting is an assembly job",
+            "description": "Exports become reports that arrive late and disagree.",
+            "quote": "Two people, two exports, two versions of last week.",
+            "visual": "assembled-report"
+          },
+          {
+            "id": "dead-end",
+            "number": "02",
+            "title": "A number is a dead end",
+            "description": "A total cannot reveal the records that produced it.",
+            "quote": "The chart raises a question the chart cannot answer.",
+            "visual": "dead-end-number"
+          },
+          {
+            "id": "no-network",
+            "number": "03",
+            "title": "The network cannot be read together",
+            "description": "The group view appears only after outlet reports are stacked.",
+            "quote": "Group performance is a quarterly spreadsheet exercise.",
+            "visual": "unreadable-network"
+          }
+        ],
+        "consequence": {
+          "title": "The data already exists. It is the reading of it that costs a week.",
+          "items": [
+            {
+              "id": "disagree",
+              "label": "Reports that disagree",
+              "body": "Two people export the same period and produce two versions of it."
+            },
+            {
+              "id": "unanswerable",
+              "label": "Questions the report cannot take",
+              "body": "A total shows what happened and nothing about why, so the search restarts by hand."
+            },
+            {
+              "id": "quarterly",
+              "label": "A group view once a quarter",
+              "body": "Outlets report on themselves, and the network exists only when someone stacks them."
+            }
+          ]
+        }
+      },
+      "outcomesSection": {
+        "eyebrow": "After Analytics",
+        "title": "Three things change about",
+        "highlight": "how the business sees.",
+        "intro": "Read the operation, reach the source and see the group together.",
+        "outcomes": [
+          {
+            "id": "same-source",
+            "number": "01",
+            "visualVariant": "data-signal",
+            "accent": "#6366f1",
+            "title": "One source for every view",
+            "description": "Purchase, inventory and sales analytics all read the operating records rather than an extract, so two people asking the same question get the same answer."
+          },
+          {
+            "id": "openable",
+            "number": "02",
+            "visualVariant": "decision-state",
+            "accent": "#6366f1",
+            "title": "A total that can be opened",
+            "description": "Because the view is built on documents, the lines behind a figure are still reachable — the report is a way into the detail rather than a substitute for it."
+          },
+          {
+            "id": "consolidated",
+            "number": "03",
+            "visualVariant": "consolidated-view",
+            "accent": "#6366f1",
+            "title": "Entity and group in the same place",
+            "description": "Numbers can be read for one outlet or across the network without anybody rebuilding the consolidation each time."
+          }
+        ]
+      },
+      "capabilities": {
+        "groups": [
+          {
+            "id": "operational",
+            "title": "Operational views",
+            "context": "The three questions asked most often, each on its own records.",
+            "items": [
+              "Purchase analytics",
+              "Inventory analytics",
+              "Sales analytics",
+              "Sell-through by entry"
+            ]
+          },
+          {
+            "id": "dashboards",
+            "title": "Dashboards",
+            "context": "The at-a-glance surface, and the summary tiles behind it.",
+            "items": [
+              "Dashboards",
+              "Stock value and stock count summaries",
+              "Order totals by filter",
+              "Low-stock signals"
+            ]
+          },
+          {
+            "id": "scope",
+            "title": "Scope & export",
+            "context": "Reading the same view for a location, an entity or the group.",
+            "items": [
+              "Entity-wise views",
+              "Consolidated network view",
+              "Location filtering",
+              "CSV export"
+            ]
+          }
+        ],
+        "limitations": [
+          "A public API is not yet available — the site states it as coming soon. External BI connections should be scoped during implementation rather than assumed."
+        ]
+      },
+      "workflow": {
+        "title": "From an operating record to a decision",
+        "intro": "Analytics is the last step of a chain that has already happened. Nothing here is entered.",
+        "steps": [
+          {
+            "id": "capture",
+            "index": "01",
+            "title": "Operations write the record",
+            "body": "Receiving, billing, transfers and returns each create a document with its entity, value and location attached.",
+            "record": "Documents · with context"
+          },
+          {
+            "id": "scope",
+            "index": "02",
+            "title": "Records are scoped",
+            "body": "Every record already knows which entity and location it belongs to, so a view can be built for one outlet or for all of them.",
+            "record": "Scope · entity and location"
+          },
+          {
+            "id": "aggregate",
+            "index": "03",
+            "title": "Views are built",
+            "body": "Purchase, inventory and sales views summarise those records — stock value, sell-through, order totals — without a separate load step.",
+            "record": "View · derived, not entered"
+          },
+          {
+            "id": "inspect",
+            "index": "04",
+            "title": "A figure is opened",
+            "body": "The lines behind a summary remain reachable, so a surprising number can be examined rather than argued about.",
+            "record": "Lines behind the total"
+          },
+          {
+            "id": "act",
+            "index": "05",
+            "title": "The decision goes back into the system",
+            "body": "A transfer, a purchase or a price change is made in the module that owns it, and the next view already reflects it.",
+            "record": "Action · back on the record"
+          }
+        ]
+      },
+      "gallery": {
+        "variant": "featured-plus-grid",
+        "title": "The screens this runs on",
+        "intro": "One real capture showing how summaries and detail share a screen. The dedicated dashboards have not been captured yet and are marked as such.",
+        "shots": [
+          {
+            "id": "summary-tiles",
+            "state": "captured",
+            "screen": "stock-list",
+            "featured": true,
+            "order": 1,
+            "context": "Summary and detail together",
+            "title": "Summaries sit on top of the records",
+            "description": "Stock count, stock value, line count and location count are summarised above the very lines they are computed from, with an Analytics tab beside the list.",
+            "alt": "Bizonix stock screen with in-stock, stock value, lines and locations tiles above the stock list, next to an Analytics tab.",
+            "annotations": [
+              {
+                "id": "tiles",
+                "x": 20,
+                "y": 7,
+                "label": "Summary tiles",
+                "detail": "Computed from the rows underneath, not entered."
+              },
+              {
+                "id": "tab",
+                "x": 44,
+                "y": 15,
+                "label": "Analytics tab",
+                "detail": "The analysed view of the same records."
+              },
+              {
+                "id": "export",
+                "x": 87,
+                "y": 15,
+                "label": "Export CSV",
+                "detail": "The current view, exported as it stands."
+              }
+            ]
+          },
+          {
+            "id": "sell-through",
+            "state": "captured",
+            "screen": "series-ledger",
+            "order": 2,
+            "context": "Inventory analytics",
+            "title": "Sell-through per entry",
+            "description": "Opened, sold and remaining quantity on each entry, with the sell-through that follows from them — analysis on the operating record itself.",
+            "alt": "Bizonix series entry ledger showing opened, sold, in-stock and a sell-through bar per entry.",
+            "annotations": [
+              {
+                "id": "bar",
+                "x": 62,
+                "y": 5,
+                "label": "SELL-THROUGH",
+                "detail": "Derived from opened and sold on the same row."
+              }
+            ]
+          },
+          {
+            "id": "order-totals",
+            "state": "captured",
+            "screen": "order-list",
+            "order": 3,
+            "context": "Sales analytics",
+            "title": "Totals across a filter",
+            "description": "Order count, paid value, total value and item count for whatever filter is applied — the sales view resolving on the orders themselves.",
+            "alt": "Bizonix orders screen showing a totals bar with order count, paid, total and item count above the order rows.",
+            "annotations": [
+              {
+                "id": "totals",
+                "x": 40,
+                "y": 5,
+                "label": "Totals",
+                "detail": "Recomputed for the current filter."
+              }
+            ]
+          },
+          {
+            "id": "dashboard",
+            "state": "pending",
+            "order": 4,
+            "context": "At a glance",
+            "title": "Dashboard",
+            "description": "The consolidated operating view across modules."
+          },
+          {
+            "id": "purchase-analytics",
+            "state": "pending",
+            "order": 5,
+            "context": "Buying",
+            "title": "Purchase analytics",
+            "description": "Buying patterns read from the purchase records."
+          }
+        ]
+      },
+      "verticalRelevance": {
+        "apparel": "Sell-through matters at size and colour, which is only possible because the record underneath is held at that level.",
+        "jewellery": "With very large design counts, the useful question is which entries are moving — not which category is.",
+        "franchise": "The same view can be read for one outlet or for the whole network, which is what makes a partner conversation factual."
+      },
+      "proof": null,
+      "video": null,
+      "relatedModules": [
+        "inventory",
+        "accounting",
+        "franchise"
+      ],
+      "seo": {
+        "title": "Analytics module",
+        "description": "Purchase, inventory and sales views built on the operating records themselves, readable per entity or consolidated across the network.",
+        "ogTitle": "Bizonix Analytics — numbers you can open",
+        "ogDescription": "Dashboards derived from live operating documents, scoped to one entity or the whole group."
+      }
+    },
+    "faqs": [
+      {
+        "question": "How current are the numbers?",
+        "answer": "Views are built from the operating records rather than a nightly extract, so what a dashboard shows moves with the documents the business is creating.",
+        "sortOrder": 1,
+        "isPublished": true
+      },
+      {
+        "question": "Can we see the whole network in one place?",
+        "answer": "Yes. Records carry the entity and location they belong to, so the same view can be read for one outlet or consolidated across the group.",
+        "sortOrder": 2,
+        "isPublished": true
+      },
+      {
+        "question": "Can we get from a summary to the underlying lines?",
+        "answer": "The summaries are computed from records that stay in the system — the stock tiles sit directly above the lines they are derived from, and order totals recompute against the orders in view.",
+        "sortOrder": 3,
+        "isPublished": true
+      },
+      {
+        "question": "Can we take the data out?",
+        "answer": "Views can be exported as CSV as they stand. A public API is listed as coming soon, so a live BI connection should be scoped during implementation.",
+        "sortOrder": 4,
+        "isPublished": true
+      },
+      {
+        "question": "Can reports be tailored to how we work?",
+        "answer": "The shipped views cover purchase, inventory and sales with entity and location filtering. Anything beyond that is worth walking through in a demo against your actual reporting pack.",
+        "sortOrder": 5,
+        "isPublished": true
+      }
+    ]
+  },
+  {
+    "slug": "security",
+    "title": "Security",
+    "category": "Intelligence & Security",
+    "summary": "Users, roles, permissions and entity scope shaped around real responsibilities.",
+    "outcome": "People see exactly the entity they run.",
+    "themeKey": "SLATE",
+    "iconKey": "SHIELD_CHECK",
+    "badge": null,
+    "sortOrder": 9,
+    "status": "PUBLISHED",
+    "everPublished": true,
+    "showInCatalog": true,
+    "showInMegaMenu": true,
+    "showInHomepage": true,
+    "showInFooter": false,
+    "content": {
+      "hero": {
+        "eyebrow": "Security",
+        "headline": "One system. Every boundary held.",
+        "headlineAccent": "boundary held.",
+        "body": "Each role, outlet and entity sees exactly what it should, and no more.",
+        "primaryCta": {
+          "label": "Book a demo",
+          "href": "/contact"
+        },
+        "secondaryCta": {
+          "label": "Explore all modules",
+          "href": "/modules"
+        },
+        "templateKey": "security",
+        "chain": [
+          {
+            "id": "user",
+            "label": "User",
+            "detail": "A named person"
+          },
+          {
+            "id": "role",
+            "label": "Role",
+            "detail": "What they may do"
+          },
+          {
+            "id": "scope",
+            "label": "Entity scope",
+            "detail": "Where it applies"
+          },
+          {
+            "id": "trail",
+            "label": "Trail",
+            "detail": "What they did"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Granted by",
+            "value": "Role"
+          },
+          {
+            "label": "Bounded by",
+            "value": "Entity"
+          },
+          {
+            "label": "Recorded as",
+            "value": "An action on a document"
+          }
+        ]
+      },
+      "problemSection": {
+        "presentation": "visual-stories",
+        "eyebrow": "Before Security",
+        "title": "Where access loses its boundaries.",
+        "intro": "Three failures that turn permission into a social arrangement instead of a property of the system.",
+        "problems": [
+          {
+            "id": "admin-everyone",
+            "number": "01",
+            "title": "Everyone ends up an administrator",
+            "description": "Permissions widen until full access becomes the easiest option.",
+            "quote": "Four people can delete anything, and all of them need to.",
+            "visual": "permission-creep"
+          },
+          {
+            "id": "no-boundary",
+            "number": "02",
+            "title": "Sharing a system means sharing the business",
+            "description": "One login can expose stock, pricing and performance across entities.",
+            "quote": "A partner logs in and can read the outlet next door.",
+            "visual": "absent-boundary"
+          },
+          {
+            "id": "who-did",
+            "number": "03",
+            "title": "Nobody can say who did it",
+            "description": "A changed record cannot identify the person or context behind it.",
+            "quote": "The number moved and the explanation is a guess.",
+            "visual": "unattributed-change"
+          }
+        ],
+        "consequence": {
+          "title": "None of this looks like a breach. It looks like a system nobody can answer for.",
+          "items": [
+            {
+              "id": "widen",
+              "label": "Rights that only widen",
+              "body": "Granting is faster than shaping, so the working set of permissions becomes everyone's."
+            },
+            {
+              "id": "inside",
+              "label": "A partner inside the business",
+              "body": "With no entity boundary, joining the platform means seeing what was never theirs to see."
+            },
+            {
+              "id": "author",
+              "label": "Changes without an author",
+              "body": "A price moves or a bill is cancelled, and the record holds the change but not the person."
+            }
+          ]
+        }
+      },
+      "outcomesSection": {
+        "eyebrow": "After Security",
+        "title": "Three things change about",
+        "highlight": "how access works.",
+        "intro": "Clear responsibilities, defined boundaries and attributable actions.",
+        "outcomes": [
+          {
+            "id": "role-shaped",
+            "number": "01",
+            "visualVariant": "user-role-entity",
+            "accent": "#64748b",
+            "title": "Roles shaped like real responsibilities",
+            "description": "Access is defined around what a job actually involves — billing, receiving, transferring, reporting — rather than around a small number of coarse tiers."
+          },
+          {
+            "id": "entity-bounded",
+            "number": "02",
+            "visualVariant": "permission-scope",
+            "accent": "#64748b",
+            "title": "A boundary that holds by default",
+            "description": "Entity scope decides where a permission applies, so a user with a genuine right in their own outlet does not acquire it everywhere else."
+          },
+          {
+            "id": "attributable",
+            "number": "03",
+            "visualVariant": "audit-trace",
+            "accent": "#64748b",
+            "title": "Actions that stay attributable",
+            "description": "Because operations are documents, an action is recorded against the document it changed and the person who took it — which is what makes a question answerable later."
+          }
+        ]
+      },
+      "capabilities": {
+        "groups": [
+          {
+            "id": "identity",
+            "title": "Users",
+            "context": "Who is on the system, and what they belong to.",
+            "items": [
+              "Users",
+              "User status",
+              "Entity assignment",
+              "Outlet-scoped logins"
+            ]
+          },
+          {
+            "id": "permission",
+            "title": "Roles & permissions",
+            "context": "What a person is allowed to do, defined once and reused.",
+            "items": [
+              "Roles",
+              "Permissions per function",
+              "Approval boundaries",
+              "Role assignment"
+            ]
+          },
+          {
+            "id": "scope",
+            "title": "Scope & accountability",
+            "context": "Where those rights apply, and what is kept about their use.",
+            "items": [
+              "Entity scope",
+              "Location-level visibility",
+              "Audit trail",
+              "Action attribution on documents"
+            ]
+          }
+        ]
+      },
+      "workflow": {
+        "title": "How access is decided",
+        "intro": "Four decisions, in order. Each one narrows the last, which is why the result is predictable.",
+        "steps": [
+          {
+            "id": "user",
+            "index": "01",
+            "title": "A user is created",
+            "body": "A named person is added to the system and attached to the entity they actually work in.",
+            "record": "User · entity assigned"
+          },
+          {
+            "id": "role",
+            "index": "02",
+            "title": "A role is assigned",
+            "body": "The role carries the permissions for the functions that job performs — billing, receiving, transferring, reporting.",
+            "record": "Role · permissions attached"
+          },
+          {
+            "id": "scope",
+            "index": "03",
+            "title": "Scope is applied",
+            "body": "Entity scope decides where those permissions take effect, so a right held in one outlet does not extend to another.",
+            "record": "Permission × entity"
+          },
+          {
+            "id": "act",
+            "index": "04",
+            "title": "Work is done, and recorded",
+            "body": "Every action lands on a document, so what was changed stays attached to who changed it and where.",
+            "record": "Action · on a document"
+          }
+        ]
+      },
+      "gallery": {
+        "variant": "stacked",
+        "title": "The screens this runs on",
+        "intro": "The access-management screens have not been captured for the website yet. They are listed here as the actual set rather than represented by a mock-up.",
+        "shots": [
+          {
+            "id": "users",
+            "state": "pending",
+            "featured": true,
+            "order": 1,
+            "context": "Identity",
+            "title": "Users",
+            "description": "Everyone with access, and the entity each belongs to."
+          },
+          {
+            "id": "roles",
+            "state": "pending",
+            "order": 2,
+            "context": "Permission",
+            "title": "Roles & permissions",
+            "description": "What each role may do, function by function."
+          },
+          {
+            "id": "scope",
+            "state": "pending",
+            "order": 3,
+            "context": "Boundary",
+            "title": "Entity scope",
+            "description": "Where a role's permissions actually apply."
+          },
+          {
+            "id": "audit",
+            "state": "pending",
+            "order": 4,
+            "context": "Accountability",
+            "title": "Audit trail",
+            "description": "Actions recorded against the documents they changed."
+          }
+        ]
+      },
+      "verticalRelevance": {
+        "apparel": "Store staff bill and receive; buying and pricing stay with the people who own them. The split is defined once and applies in every store.",
+        "jewellery": "High-value stock makes adjustment and cancellation rights worth restricting deliberately rather than by convention.",
+        "franchise": "This is what makes a shared platform acceptable to a partner: they operate fully inside their own entity and cannot read anyone else's."
+      },
+      "proof": null,
+      "video": null,
+      "relatedModules": [
+        "franchise",
+        "accounting",
+        "analytics"
+      ],
+      "seo": {
+        "title": "Security module",
+        "description": "Users, roles, permissions and entity scope shaped around real responsibilities, with actions recorded against the documents they change.",
+        "ogTitle": "Bizonix Security — access bounded by the entity it belongs to",
+        "ogDescription": "A role decides what a person may do; entity scope decides where it applies. One platform, separate businesses."
+      }
+    },
+    "faqs": [
+      {
+        "question": "Can roles be defined for how we actually work?",
+        "answer": "Roles carry permissions per function, so access can follow a real job — a counter user, a warehouse user, an accounts user — rather than a single administrator-or-not switch.",
+        "sortOrder": 1,
+        "isPublished": true
+      },
+      {
+        "question": "What exactly does entity scope control?",
+        "answer": "Where a permission applies. A user attached to one outlet exercises their rights inside that outlet, which is what keeps a shared platform from becoming shared visibility.",
+        "sortOrder": 2,
+        "isPublished": true
+      },
+      {
+        "question": "Can franchise partners have their own logins?",
+        "answer": "Yes — partner users are scoped to their own entity, so they run their outlet in the same product without reading the rest of the network.",
+        "sortOrder": 3,
+        "isPublished": true
+      },
+      {
+        "question": "What is kept about who did what?",
+        "answer": "Actions are recorded against the documents they affect, so a change stays attached to the person and the entity behind it. Retention and export specifics are worth confirming against your own policy during a demo.",
+        "sortOrder": 4,
+        "isPublished": true
+      },
+      {
+        "question": "What can you say about hosting and certifications?",
+        "answer": "Nothing is claimed here that has not been verified. Hosting arrangement, backup policy and any certification status should be confirmed directly during the demo rather than read off a marketing page.",
+        "sortOrder": 5,
+        "isPublished": true
+      }
+    ]
+  }
+]

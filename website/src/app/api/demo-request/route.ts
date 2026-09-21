@@ -8,10 +8,57 @@ type DemoRequest = {
   elapsedMs?: number; utm?: Record<string, string>;
 };
 
-const attempts = new Map<string, number>();
+type RateLimitRecord = { count: number; firstAttempt: number; lastAttempt: number };
+const ipRateLimits = new Map<string, RateLimitRecord>();
+const emailRateLimits = new Map<string, RateLimitRecord>();
+
 const WINDOW_MS = 60_000;
+const MAX_ATTEMPTS_PER_IP = 5;
+const MAX_ATTEMPTS_PER_EMAIL = 2;
 const MIN_FILL_MS = 2_500;
 const clean = (value: unknown, max = 400) => typeof value === "string" ? value.trim().slice(0, max) : "";
+
+function getClientIp(request: NextRequest): string {
+  const reqIp = (request as any).ip;
+  if (reqIp) return reqIp;
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const parts = forwarded.split(",").map((p) => p.trim()).filter(Boolean);
+    // Use last hop or first if single
+    if (parts.length > 0) return parts[parts.length - 1];
+  }
+  return request.headers.get("x-real-ip") || "unknown";
+}
+
+function checkAndRecordRateLimit(
+  map: Map<string, RateLimitRecord>,
+  key: string,
+  maxAllowed: number,
+  windowMs: number
+): boolean {
+  const now = Date.now();
+  if (map.size > 1000) {
+    for (const [k, v] of map.entries()) {
+      if (now - v.lastAttempt > windowMs * 2) {
+        map.delete(k);
+      }
+    }
+  }
+
+  const record = map.get(key);
+  if (!record || now - record.firstAttempt > windowMs) {
+    map.set(key, { count: 1, firstAttempt: now, lastAttempt: now });
+    return true;
+  }
+
+  if (record.count >= maxAllowed) {
+    return false;
+  }
+
+  record.count += 1;
+  record.lastAttempt = now;
+  return true;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,9 +68,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    if (Date.now() - (attempts.get(ip) || 0) < WINDOW_MS) {
-      return NextResponse.json({ error: "Please wait a minute before trying again." }, { status: 429 });
+    const ip = getClientIp(request);
+    if (!checkAndRecordRateLimit(ipRateLimits, ip, MAX_ATTEMPTS_PER_IP, WINDOW_MS)) {
+      return NextResponse.json({ error: "Too many requests. Please wait a minute before trying again." }, { status: 429 });
     }
 
     const fullName = clean(data.fullName, 120);
@@ -46,6 +93,11 @@ export async function POST(request: NextRequest) {
       priorities.length > 0 && data.consent;
     if (!valid) return NextResponse.json({ error: "Please check the required fields." }, { status: 400 });
 
+    // Secondary rate limiting by recipient email to stop distributed bot floods targeting same victim or backend
+    if (!checkAndRecordRateLimit(emailRateLimits, email.toLowerCase(), MAX_ATTEMPTS_PER_EMAIL, WINDOW_MS)) {
+      return NextResponse.json({ error: "A demo request has already been submitted for this email. Please wait a moment." }, { status: 429 });
+    }
+
     const apiUrl = (process.env.BIZONIX_API_URL || "http://localhost:3001/api/v1").replace(/\/$/, "");
     const response = await fetch(`${apiUrl}/enquiries`, {
       method: "POST",
@@ -61,7 +113,6 @@ export async function POST(request: NextRequest) {
     if (!response.ok) {
       return NextResponse.json({ error: result?.message || "We could not record your request. Please try again." }, { status: response.status >= 500 ? 503 : response.status });
     }
-    attempts.set(ip, Date.now());
     return NextResponse.json({ success: true, id: result.id, message: "Your demo request has been forwarded to the Bizonix team. We will get back to you shortly." });
   } catch (error) {
     console.error("Demo request intake failed", error);

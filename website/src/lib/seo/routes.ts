@@ -388,11 +388,54 @@ export const seoRoutes: readonly SeoRoute[] = [
 
 const routesByPath = new Map(seoRoutes.map((route) => [route.path, route]));
 
-/** Every path is registered at module load, so a typo fails the build. */
+/** Every path is registered at module load, with dynamic fallback for CMS modules. */
 export function getRoute(path: string): SeoRoute {
   const route = routesByPath.get(path);
-  if (!route) throw new Error(`[seo] no route registered for "${path}"`);
-  return route;
+  if (route) return route;
+
+  if (path.startsWith("/modules/")) {
+    const slug = path.replace("/modules/", "");
+    const title = slug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+
+    return {
+      path,
+      kind: "indexable",
+      breadcrumbLeaf: title,
+      title: `${title} | Bizonix Enterprise Solutions`,
+      description: `Bizonix ERP ${title} module for multi-entity retail, distribution and supply chain operations.`,
+      ogTitle: `${title} — Enterprise Solutions`,
+      ogDescription: `Explore the Bizonix ${title} module for operational excellence.`,
+      breadcrumb: [HOME, SOLUTIONS],
+      priority: 0.8,
+      changeFrequency: "monthly",
+    };
+  }
+
+  if (path.startsWith("/industries/")) {
+    const slug = path.replace("/industries/", "");
+    const title = slug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+
+    return {
+      path,
+      kind: "indexable",
+      breadcrumbLeaf: title,
+      title: `${title} ERP Software | Bizonix`,
+      description: `Bizonix vertical ERP solutions for ${title} retail, distribution and multi-entity networks.`,
+      ogTitle: `${title} — Vertical ERP Solutions`,
+      ogDescription: `Explore Bizonix connected operations for ${title}.`,
+      breadcrumb: [HOME, INDUSTRIES],
+      priority: 0.7,
+      changeFrequency: "monthly",
+    };
+  }
+
+  throw new Error(`[seo] no route registered for "${path}"`);
 }
 
 /** Routes eligible for the sitemap: public, canonical and indexable. */

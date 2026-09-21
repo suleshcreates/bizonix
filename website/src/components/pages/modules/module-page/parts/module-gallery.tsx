@@ -35,7 +35,10 @@ function ShotFrame({
   shot: ModuleScreenshot;
   moduleSlug: string;
 }) {
-  if (shot.state === "pending") {
+  const customSrc = (shot as any).src;
+  const isPending = shot.state === "pending" && !customSrc;
+
+  if (isPending) {
     return (
       <div
         className={`${styles.modulePage__shotViewport} ${styles.modulePage__pending}`}
@@ -53,17 +56,10 @@ function ShotFrame({
     );
   }
 
-  const screen = getProductScreen(shot.screen);
-  const aspect = galleryFrameAspect(shot.screen);
+  const screen = (shot as any).screen ? getProductScreen((shot as any).screen) : null;
+  const screenSrc = customSrc || screen?.src;
+  const aspect = (shot as any).screen ? galleryFrameAspect((shot as any).screen) : "16 / 9";
 
-  /* The evidence frame carries the capture's own aspect ratio rather than a
-     house one, so no column the page has annotated is cropped out of view and
-     a pin's authored per-cent is the per-cent it renders at.
-
-     Below the layout breakpoint the surface holds a minimum readable width and
-     the frame scrolls it, rather than shrinking a dense ERP table to an
-     illegible strip. The frame is focusable because a scrollable region has to
-     be reachable without a pointer. */
   return (
     <div
       className={styles.modulePage__shotViewport}
@@ -73,20 +69,27 @@ function ShotFrame({
       aria-label={`${shot.title} — scrollable product screen`}
     >
       <div className={styles.modulePage__shotSurface}>
-        <Image
-          src={screen.src}
-          alt={shot.alt}
-          fill
-          loading="lazy"
-          sizes="(max-width: 900px) 860px, (max-width: 1240px) 92vw, 1180px"
-          onLoad={() =>
-            trackModuleEvent("module_screenshot_viewed", {
-              module: moduleSlug,
-              screenshot: shot.id,
-            })
-          }
-        />
-        {shot.annotations?.map((pin, index) => (
+        {screenSrc ? (
+          <Image
+            src={screenSrc}
+            alt={(shot as any).alt || shot.title}
+            fill
+            loading="lazy"
+            sizes="(max-width: 900px) 860px, (max-width: 1240px) 92vw, 1180px"
+            className="object-contain"
+            onLoad={() =>
+              trackModuleEvent("module_screenshot_viewed", {
+                module: moduleSlug,
+                screenshot: shot.id,
+              })
+            }
+          />
+        ) : (
+          <div className="flex items-center justify-center w-full h-full bg-slate-900 text-slate-500 text-xs">
+            No capture available
+          </div>
+        )}
+        {(shot as any).annotations?.map((pin: any, index: number) => (
           <span
             key={pin.id}
             className={styles.modulePage__pin}
@@ -143,6 +146,10 @@ export function ModuleGallery({
   gallery: Gallery;
   moduleSlug: string;
 }) {
+  if (!gallery?.shots || gallery.shots.length === 0) {
+    return null;
+  }
+
   const shots = [...gallery.shots].sort((a, b) => a.order - b.order);
   const featuredIndex = Math.max(
     0,
@@ -165,44 +172,47 @@ export function ModuleGallery({
         <div className={styles.modulePage__shell}>
           <GalleryHeader gallery={gallery} />
           <div className={styles.modulePage__stack}>
-            {shots.map((shot) => (
-              <article
-                key={shot.id}
-                className={styles.modulePage__stackRow}
-                data-reveal
-              >
-                <figure className={styles.modulePage__shotStage}>
-                  <ShotFrame shot={shot} moduleSlug={moduleSlug} />
-                  {shot.state === "captured" ? <ScrollHint /> : null}
-                </figure>
-                <div className={styles.modulePage__stackCopy}>
-                  <p className={styles.modulePage__shotContext}>
-                    {shot.context}
-                  </p>
-                  <h3>{shot.title}</h3>
-                  <p>{shot.description}</p>
-                  <p
-                    className={
-                      shot.state === "captured"
-                        ? styles.modulePage__stateCaptured
-                        : styles.modulePage__statePending
-                    }
-                  >
-                    {shot.state === "captured" ? (
-                      <>
-                        <Camera size={13} aria-hidden="true" /> Real product
-                        screen
-                      </>
-                    ) : (
-                      <>
-                        <CircleSlash2 size={13} aria-hidden="true" /> Capture
-                        pending
-                      </>
-                    )}
-                  </p>
-                </div>
-              </article>
-            ))}
+            {shots.map((shot) => {
+              const isCaptured = shot.state === "captured" || Boolean((shot as any).src);
+              return (
+                <article
+                  key={shot.id}
+                  className={styles.modulePage__stackRow}
+                  data-reveal
+                >
+                  <figure className={styles.modulePage__shotStage}>
+                    <ShotFrame shot={shot} moduleSlug={moduleSlug} />
+                    {isCaptured ? <ScrollHint /> : null}
+                  </figure>
+                  <div className={styles.modulePage__stackCopy}>
+                    <p className={styles.modulePage__shotContext}>
+                      {shot.context}
+                    </p>
+                    <h3>{shot.title}</h3>
+                    <p>{shot.description}</p>
+                    <p
+                      className={
+                        isCaptured
+                          ? styles.modulePage__stateCaptured
+                          : styles.modulePage__statePending
+                      }
+                    >
+                      {isCaptured ? (
+                        <>
+                          <Camera size={13} aria-hidden="true" /> Real product
+                          screen
+                        </>
+                      ) : (
+                        <>
+                          <CircleSlash2 size={13} aria-hidden="true" /> Capture
+                          pending
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -237,7 +247,7 @@ export function ModuleGallery({
                 }}
               >
                 <ShotFrame shot={active} moduleSlug={moduleSlug} />
-                {active.state === "captured" ? <ScrollHint /> : null}
+                {(active.state === "captured" || Boolean((active as any).src)) ? <ScrollHint /> : null}
                 <figcaption>
                   <ShotCaption shot={active} />
                 </figcaption>
@@ -252,61 +262,64 @@ export function ModuleGallery({
               aria-label={`${gallery.title} — choose a screen`}
               data-reveal
             >
-              {shots.map((shot, index) => (
-                <button
-                  key={shot.id}
-                  type="button"
-                  role="tab"
-                  id={`${tabsId}-${shot.id}`}
-                  aria-selected={index === activeIndex}
-                  aria-controls={`${tabsId}-panel`}
-                  tabIndex={index === activeIndex ? 0 : -1}
-                  className={styles.modulePage__shotTab}
-                  onClick={() => {
-                    setActiveIndex(index);
-                    trackModuleEvent("module_screenshot_selected", {
-                      module: moduleSlug,
-                      screenshot: shot.id,
-                    });
-                  }}
-                  onKeyDown={(event) => {
-                    if (
-                      event.key !== "ArrowRight" &&
-                      event.key !== "ArrowLeft"
-                    ) {
-                      return;
-                    }
-                    event.preventDefault();
-                    const next =
-                      event.key === "ArrowRight"
-                        ? (index + 1) % shots.length
-                        : (index - 1 + shots.length) % shots.length;
-                    setActiveIndex(next);
-                    document
-                      .getElementById(`${tabsId}-${shots[next].id}`)
-                      ?.focus();
-                  }}
-                >
-                  <span className={styles.modulePage__shotTabTop}>
-                    <span>{shot.context}</span>
-                    <span
-                      className={
-                        shot.state === "captured"
-                          ? styles.modulePage__stateCaptured
-                          : styles.modulePage__statePending
+              {shots.map((shot, index) => {
+                const isCaptured = shot.state === "captured" || Boolean((shot as any).src);
+                return (
+                  <button
+                    key={shot.id}
+                    type="button"
+                    role="tab"
+                    id={`${tabsId}-${shot.id}`}
+                    aria-selected={index === activeIndex}
+                    aria-controls={`${tabsId}-panel`}
+                    tabIndex={index === activeIndex ? 0 : -1}
+                    className={styles.modulePage__shotTab}
+                    onClick={() => {
+                      setActiveIndex(index);
+                      trackModuleEvent("module_screenshot_selected", {
+                        module: moduleSlug,
+                        screenshot: shot.id,
+                      });
+                    }}
+                    onKeyDown={(event) => {
+                      if (
+                        event.key !== "ArrowRight" &&
+                        event.key !== "ArrowLeft"
+                      ) {
+                        return;
                       }
-                    >
-                      {shot.state === "captured" ? (
-                        <Camera size={12} aria-hidden="true" />
-                      ) : (
-                        <CircleSlash2 size={12} aria-hidden="true" />
-                      )}
-                      {shot.state === "captured" ? "Captured" : "Pending"}
+                      event.preventDefault();
+                      const next =
+                        event.key === "ArrowRight"
+                          ? (index + 1) % shots.length
+                          : (index - 1 + shots.length) % shots.length;
+                      setActiveIndex(next);
+                      document
+                        .getElementById(`${tabsId}-${shots[next].id}`)
+                        ?.focus();
+                    }}
+                  >
+                    <span className={styles.modulePage__shotTabTop}>
+                      <span>{shot.context}</span>
+                      <span
+                        className={
+                          isCaptured
+                            ? styles.modulePage__stateCaptured
+                            : styles.modulePage__statePending
+                        }
+                      >
+                        {isCaptured ? (
+                          <Camera size={12} aria-hidden="true" />
+                        ) : (
+                          <CircleSlash2 size={12} aria-hidden="true" />
+                        )}
+                        {isCaptured ? "Captured" : "Pending"}
+                      </span>
                     </span>
-                  </span>
-                  <strong>{shot.title}</strong>
-                </button>
-              ))}
+                    <strong>{shot.title}</strong>
+                  </button>
+                );
+              })}
             </div>
           ) : null}
         </div>

@@ -17,6 +17,11 @@ import {
 } from "@/lib/site-config";
 import { FooterSubscribe } from "./footer-parts/footer-subscribe";
 import { Logo } from "./logo";
+import type {
+  FooterColumnData,
+  FooterCtaData,
+  BottomBarData,
+} from "@/lib/content/navigation/navigation-resolver";
 
 /*
  * Routes that exist today. Anything not listed renders as a "Soon" label
@@ -38,7 +43,7 @@ const LIVE_ROUTES = new Set([
 
 type FooterLink = { label: string; href: string };
 
-const footerGroups: { title: string; links: readonly FooterLink[] }[] = [
+const defaultFooterGroups: { title: string; links: readonly FooterLink[] }[] = [
   {
     title: "Platform",
     links: [
@@ -48,12 +53,6 @@ const footerGroups: { title: string; links: readonly FooterLink[] }[] = [
     ],
   },
   {
-    /* Was a list of `/modules?filter=…` links. Those are query-string views of
-       /modules that serve identical HTML, so they added five duplicate URLs
-       and no new destination. The five feature pages are real, separately
-       indexable pages that previously hung off the header mega-menu alone —
-       a crawler that never opens a menu had no path to them. The filtered
-       views are still reachable from the deck's own filter rail. */
     title: "Features",
     links: featureLinks.map((link) => ({ ...link })),
   },
@@ -72,10 +71,22 @@ const footerGroups: { title: string; links: readonly FooterLink[] }[] = [
 ];
 
 function isLive(href: string) {
-  return LIVE_ROUTES.has(href.split("?")[0]);
+  return LIVE_ROUTES.has(href.split("?")[0]) || href.startsWith("/modules/") || href.startsWith("/industries/");
 }
 
-function FooterCta() {
+function FooterCta({ config }: { config?: FooterCtaData }) {
+  if (config && config.isEnabled === false) {
+    return null;
+  }
+
+  const eyebrow = config?.eyebrow || "One platform, every entity";
+  const title = config?.title || "Ready to run your brand on one operating truth?";
+  const lede = config?.lede || "Thirty minutes, your numbers, no obligation. We will walk your warehouse, stores and partners through a single record.";
+  const primaryLabel = config?.primaryLabel || "Book a free consultation";
+  const primaryHref = config?.primaryHref || "/contact?utm_source=footer-cta";
+  const secondaryLabel = config?.secondaryLabel || "See the platform";
+  const secondaryHref = config?.secondaryHref || "/product";
+
   return (
     <section className="footer-cta-banner" aria-labelledby="footer-cta-title">
       <Image
@@ -92,26 +103,24 @@ function FooterCta() {
       <div className="shell footer-cta-content">
         <p className="footer-cta-eyebrow">
           <span aria-hidden="true" />
-          One platform, every entity
+          {eyebrow}
         </p>
         <h2 id="footer-cta-title">
-          Ready to run your brand on
-          <span>one operating truth?</span>
+          {title}
         </h2>
         <p className="footer-cta-lede">
-          Thirty minutes, your numbers, no obligation. We will walk your
-          warehouse, stores and partners through a single record.
+          {lede}
         </p>
         <div className="footer-cta-actions">
           <Link
             className="footer-cta-primary"
-            href="/contact?utm_source=footer-cta"
+            href={primaryHref}
           >
-            Book a free consultation
+            {primaryLabel}
             <ArrowUpRight size={17} aria-hidden="true" />
           </Link>
-          <Link className="footer-cta-ghost" href="/product">
-            See the platform
+          <Link className="footer-cta-ghost" href={secondaryHref}>
+            {secondaryLabel}
             <ChevronRight size={16} aria-hidden="true" />
           </Link>
         </div>
@@ -120,12 +129,35 @@ function FooterCta() {
   );
 }
 
-export function Footer() {
+export interface FooterProps {
+  footerColumns?: FooterColumnData[];
+  footerCta?: FooterCtaData;
+  bottomBar?: BottomBarData;
+}
+
+export function Footer({ footerColumns, footerCta, bottomBar }: FooterProps) {
   const year = new Date().getFullYear();
+
+  const groups = footerColumns && footerColumns.length > 0
+    ? footerColumns.filter((c) => c.isActive !== false)
+    : defaultFooterGroups;
+
+  const copyright = bottomBar?.copyrightNotice
+    ? `© ${year} ${bottomBar.copyrightNotice}`
+    : `© ${year} ${siteConfig.company} All rights reserved.`;
+
+  const tagline = bottomBar?.tagline || "Built in India for multi-entity retail operators.";
+
+  const legalLinks = bottomBar?.links && bottomBar.links.length > 0
+    ? bottomBar.links.filter((l) => l.isActive !== false)
+    : [
+        { id: "b-privacy", label: "Privacy", href: "/privacy", isActive: true },
+        { id: "b-terms", label: "Terms", href: "/terms", isActive: true },
+      ];
 
   return (
     <>
-      <FooterCta />
+      <FooterCta config={footerCta} />
 
       <footer className="site-footer">
         <span className="footer-topline" aria-hidden="true" />
@@ -169,7 +201,7 @@ export function Footer() {
             </div>
 
             <nav className="footer-links-grid" aria-label="Footer">
-              {footerGroups.map((group) => (
+              {groups.map((group) => (
                 <div key={group.title}>
                   <h3 className="footer-group-title">{group.title}</h3>
                   <ul className="footer-link-list">
@@ -199,18 +231,17 @@ export function Footer() {
 
           <div className="footer-bottom-bar">
             <p className="footer-copy">
-              © {year} {siteConfig.company} All rights reserved.
+              {copyright}
             </p>
 
             <div className="footer-bottom-links">
-              <Link href="/privacy" className="footer-bottom-link">
-                Privacy
-              </Link>
-              <Link href="/terms" className="footer-bottom-link">
-                Terms
-              </Link>
+              {legalLinks.map((link) => (
+                <Link key={link.href} href={link.href} className="footer-bottom-link">
+                  {link.label}
+                </Link>
+              ))}
               <span className="footer-built-in">
-                Built in India for multi-entity retail operators.
+                {tagline}
               </span>
             </div>
 

@@ -1,8 +1,9 @@
 import { EnquiriesModule } from './enquiries/enquiries.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { PrismaModule } from './prisma/prisma.module';
 import { HealthModule } from './health/health.module';
 import { AuthModule } from './auth/auth.module';
@@ -31,17 +32,17 @@ import { EmailModule } from './email/email.module';
       {
         name: 'short',
         ttl: 1000,
-        limit: 3,
+        limit: 10,
       },
       {
         name: 'medium',
         ttl: 10000,
-        limit: 20,
+        limit: 50,
       },
       {
         name: 'long',
         ttl: 60000,
-        limit: 100,
+        limit: 120,
       },
     ]),
     PrismaModule,
@@ -63,6 +64,12 @@ import { EmailModule } from './email/email.module';
     EmailModule,
     EnquiriesModule,
     DashboardModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class AppModule {}

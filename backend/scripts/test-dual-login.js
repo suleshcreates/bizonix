@@ -19,7 +19,11 @@ async function main() {
   console.log('=== STEP 1: TEST LOGIN WITH USERNAME VS EMAIL ===');
   
   // Test 1: Login with username 'admin'
-  const adminPw = process.env.SEED_ADMIN_PASSWORD || 'Admin@12345678';
+  const adminPw = process.env.SEED_ADMIN_PASSWORD;
+  if (!adminPw) {
+    console.error('SEED_ADMIN_PASSWORD environment variable is required to run this test.');
+    process.exit(1);
+  }
   let adminRes = await request(`${API_BASE}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

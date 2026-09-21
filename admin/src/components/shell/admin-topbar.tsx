@@ -3,8 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search, ExternalLink, Bell, ChevronRight } from "lucide-react";
+import { Menu, Search, ExternalLink, ChevronRight } from "lucide-react";
 import { useAuth } from "@/lib/auth/context";
+import { NotificationsDropdown } from "./notifications-dropdown";
 
 interface AdminTopBarProps {
   onOpenMobileNav: () => void;
@@ -90,14 +91,8 @@ export function AdminTopBar({ onOpenMobileNav, onOpenSearch }: AdminTopBarProps)
           <ExternalLink className="w-3 h-3 text-slate-400" />
         </a>
 
-        {/* Notification Bell */}
-        <button
-          title="Notifications"
-          className="relative p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
-        >
-          <Bell className="w-4 h-4" />
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-blue-600" />
-        </button>
+        {/* Notification Bell Dropdown */}
+        <NotificationsDropdown />
 
         <div className="h-5 w-[1px] bg-[#E5EAF2] hidden sm:block" />
 

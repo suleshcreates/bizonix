@@ -13,6 +13,8 @@ import {
   moduleFilters,
   moduleIndexItems,
   type ModuleFilter,
+  type ModuleIndexItem,
+  type SerializableModuleIndexItem,
 } from "@/lib/content/modules/modules-index";
 import { FilterRail } from "./modules-deck-parts/filter-rail";
 import { ModuleCard } from "./modules-deck-parts/module-card";
@@ -49,7 +51,7 @@ function commitFilter(filter: ModuleFilter) {
 }
 
 const matches = (
-  module: (typeof moduleIndexItems)[number],
+  module: { filters: readonly string[] },
   filter: ModuleFilter,
 ) =>
   filter === "all" || (module.filters as readonly string[]).includes(filter);
@@ -69,7 +71,13 @@ const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
  * and finally the arrivals rise into the gaps. Everything runs through the Web
  * Animations API so React never has to own a frame of it.
  */
-export function ModulesDeck() {
+export function ModulesDeck({
+  items,
+}: {
+  items?: readonly (SerializableModuleIndexItem | ModuleIndexItem)[];
+}) {
+  const allModules = items && items.length > 0 ? items : moduleIndexItems;
+
   const active = useSyncExternalStore(
     subscribeFilter,
     readFilter,
@@ -83,19 +91,19 @@ export function ModulesDeck() {
   const [stuck, setStuck] = useState(false);
 
   const visible = useMemo(
-    () => moduleIndexItems.filter((module) => matches(module, active)),
-    [active],
+    () => allModules.filter((module) => matches(module, active)),
+    [active, allModules],
   );
 
   const counts = useMemo(() => {
     const tally = {} as Record<ModuleFilter, number>;
     for (const filter of moduleFilters) {
-      tally[filter.id] = moduleIndexItems.filter((module) =>
+      tally[filter.id] = allModules.filter((module) =>
         matches(module, filter.id),
       ).length;
     }
     return tally;
-  }, []);
+  }, [allModules]);
 
   const register = useCallback((slug: string, element: HTMLElement | null) => {
     if (element) cardsRef.current.set(slug, element);

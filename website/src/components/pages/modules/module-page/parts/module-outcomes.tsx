@@ -65,8 +65,8 @@ const iconRegistry = {
 } as const;
 
 export function OutcomeVisual({ outcome }: { outcome: ModuleOutcome }) {
-  const visual = outcomeVisualRegistry[outcome.visualVariant];
-  const Icon = iconRegistry[visual.icon];
+  const visual = outcomeVisualRegistry[outcome.visualVariant] || outcomeVisualRegistry["document-posted"];
+  const Icon = (visual && iconRegistry[visual.icon]) || iconRegistry.file;
   return (
     <div
       className={styles.outcomes__visual}
@@ -120,8 +120,8 @@ export function OutcomeHeader({ data }: { data: OutcomesSectionData }) {
 }
 
 export function OutcomeRow({ outcome }: { outcome: ModuleOutcome }) {
-  const visual = outcomeVisualRegistry[outcome.visualVariant];
-  const Icon = iconRegistry[visual.icon];
+  const visual = outcomeVisualRegistry[outcome.visualVariant] || outcomeVisualRegistry["document-posted"];
+  const Icon = (visual && iconRegistry[visual.icon]) || iconRegistry.file;
   return (
     <article className={styles.outcomes__row} data-outcome-row>
       <p className={styles.outcomes__mark}>

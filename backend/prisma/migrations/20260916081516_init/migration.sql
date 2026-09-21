@@ -14,9 +14,12 @@ CREATE TYPE "ContentStatus" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED');
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "username" TEXT,
     "password_hash" TEXT NOT NULL,
+    "initial_password" TEXT,
     "display_name" TEXT,
     "status" "UserStatus" NOT NULL DEFAULT 'ACTIVE',
+    "welcome_email_sent" BOOLEAN NOT NULL DEFAULT false,
     "failed_login_count" INTEGER NOT NULL DEFAULT 0,
     "locked_until" TIMESTAMP(3),
     "last_login_at" TIMESTAMP(3),
@@ -335,6 +338,9 @@ CREATE TABLE "seo_pages" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 
 -- CreateIndex
 CREATE INDEX "users_status_idx" ON "users"("status");

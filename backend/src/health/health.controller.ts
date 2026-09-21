@@ -20,10 +20,10 @@ export class HealthController {
   @ApiOperation({ summary: 'Readiness check — verifies PostgreSQL connectivity' })
   async ready() {
     try {
-      const result = await this.prisma.$queryRaw<{ db: string }[]>`SELECT current_database() as db`;
+      await this.prisma.$queryRaw`SELECT 1`;
       return {
         status: 'ok',
-        database: result[0]?.db,
+        database: 'connected',
         timestamp: new Date().toISOString(),
       };
     } catch {

@@ -1,0 +1,79 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Bizonix .dockerignore
+# Root build context is the monorepo root.
+# Keep: source code, configs, Prisma schema/migrations/seed, workspace manifests
+# Exclude: generated artifacts, secrets, local tooling
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Local generated directories ────────────────────────────────────────────────
+node_modules
+.pnpm-store
+**/node_modules
+**/.pnpm-store
+
+# ── Next.js build output ───────────────────────────────────────────────────────
+**/.next
+**/out
+
+# ── NestJS build output ────────────────────────────────────────────────────────
+**/dist
+
+# ── TypeScript incremental build info ─────────────────────────────────────────
+**/*.tsbuildinfo
+
+# ── Test & coverage ────────────────────────────────────────────────────────────
+**/coverage
+**/__tests__
+**/*.test.ts
+**/*.spec.ts
+**/test
+
+# ── Git ────────────────────────────────────────────────────────────────────────
+.git
+.gitignore
+
+# ── Environment files (secrets stay on the host) ──────────────────────────────
+**/.env
+**/.env.local
+**/.env.*.local
+# .env.example files are NOT excluded — they document variable names
+
+# ── Docker files (don't copy docker config into itself) ───────────────────────
+docker
+docker-compose.yml
+docker-compose*.yml
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+**/*.log
+**/logs
+
+# ── OS artifacts ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE / Editor ──────────────────────────────────────────────────────────────
+.vscode
+.idea
+*.swp
+
+# ── QA / audit artifacts ──────────────────────────────────────────────────────
+**/.hero-qa
+**/.audit
+**/backup
+
+# ── Playwright browsers ───────────────────────────────────────────────────────
+**/playwright/.local-browsers
+
+# ── Vercel ────────────────────────────────────────────────────────────────────
+**/.vercel
+
+# ── IMPORTANT: Do NOT exclude ─────────────────────────────────────────────────
+# backend/prisma/migrations/  ← Prisma migration history
+# backend/prisma/schema.prisma
+# backend/prisma/seed.ts
+# backend/src/
+# admin/src/
+# website/src/
+# pnpm-lock.yaml              ← lockfile for reproducible installs
+# pnpm-workspace.yaml
+# package.json

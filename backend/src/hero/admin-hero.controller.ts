@@ -25,6 +25,13 @@ export class AdminHeroController {
     return this.heroService.getVariant(id);
   }
 
+  @Get(':id/preview')
+  @RequirePermissions('hero.preview')
+  @ApiOperation({ summary: 'Preview a hero variant via admin GET' })
+  previewGet(@Param('id') id: string) {
+    return this.heroService.getVariant(id);
+  }
+
   @Post(':id/preview')
   @HttpCode(HttpStatus.OK)
   @RequirePermissions('hero.preview')

@@ -1,12 +1,16 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, type CSSProperties } from "react";
-import type { ModuleIndexItem } from "@/lib/content/modules/modules-index";
+import type {
+  ModuleIndexItem,
+  SerializableModuleIndexItem,
+} from "@/lib/content/modules/modules-index";
+import { resolveModuleIcon } from "@/lib/content/modules/module-resolver";
 import { ModuleVisual } from "./module-visuals";
 import styles from "@/components/pages/modules/modules.module.css";
 
 type Props = {
-  module: ModuleIndexItem;
+  module: SerializableModuleIndexItem | ModuleIndexItem;
   /** Position in the full catalogue, not in the filtered view. */
   number: number;
   register: (slug: string, element: HTMLElement | null) => void;
@@ -20,7 +24,7 @@ type Props = {
  * the deck never writes style more than once a frame.
  */
 export function ModuleCard({ module, number, register }: Props) {
-  const Icon = module.icon;
+  const Icon = module.icon || resolveModuleIcon(module.iconKey);
   const elementRef = useRef<HTMLElement | null>(null);
   const frameRef = useRef(0);
   const pointRef = useRef({ x: 0, y: 0 });

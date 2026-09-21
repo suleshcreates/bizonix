@@ -2,6 +2,7 @@ import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { HeroService } from './hero.service';
 import { Public } from '../common/decorators';
+import { HeroStatus } from '@prisma/client';
 
 @ApiTags('Public/Hero')
 @Controller('public/hero')
@@ -24,10 +25,12 @@ export class HeroController {
 
   @Public()
   @Get(':id/preview')
-  @ApiOperation({ summary: 'Get a specific hero configuration for preview' })
+  @ApiOperation({ summary: 'Get a specific hero configuration for preview (published variants only)' })
   async getPreview(@Param('id') id: string) {
     const variant = await this.heroService.getVariant(id);
-    if (!variant) throw new NotFoundException();
+    if (!variant || variant.status !== HeroStatus.PUBLISHED) {
+      throw new NotFoundException('Hero variant not found or not publicly available');
+    }
     const configObj = (typeof variant.config === 'object' && variant.config !== null) ? variant.config : {};
     return {
       id: variant.id,
